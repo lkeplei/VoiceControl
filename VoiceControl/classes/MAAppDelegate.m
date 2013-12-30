@@ -25,9 +25,6 @@
     
     [self.window addSubview:navigation.view];
     [self.window makeKeyAndVisible];
-    
-    
-    there is test code
 
     return YES;
 }
