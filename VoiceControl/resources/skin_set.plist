@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>skin_default</key>
+	<dict>
+		<key>skin_set_image</key>
+		<dict>
+			<key>skin_image_More</key>
+			<dict>
+				<key>describe</key>
+				<string>更多页面背景</string>
+				<key>image</key>
+				<string>more_bg.png</string>
+			</dict>
+		</dict>
+		<key>skin_set_color</key>
+		<dict>
+			<key>skin_color_def_white</key>
+			<dict>
+				<key>describe</key>
+				<string>自定义白色</string>
+				<key>color</key>
+				<string>255,255,255,1</string>
+			</dict>
+			<key>skin_color_def_black</key>
+			<dict>
+				<key>describe</key>
+				<string>自定义黑色</string>
+				<key>color</key>
+				<string>0,0,0,1</string>
+			</dict>
+			<key>skin_color_def_gray</key>
+			<dict>
+				<key>describe</key>
+				<string>自定义灰色</string>
+				<key>color</key>
+				<string>194,204,208,1</string>
+			</dict>
+			<key>skin_color_def_blue</key>
+			<dict>
+				<key>describe</key>
+				<string>自定义蓝色</string>
+				<key>color</key>
+				<string>0,0,255,1</string>
+			</dict>
+			<key>skin_color_home_bg</key>
+			<dict>
+				<key>describe</key>
+				<string>首页背景色</string>
+				<key>color</key>
+				<string>25,37,52,1</string>
+			</dict>
+			<key>skin_color_table_label</key>
+			<dict>
+				<key>describe</key>
+				<string>列表标签颜色</string>
+				<key>color</key>
+				<string>58,55,54,1</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

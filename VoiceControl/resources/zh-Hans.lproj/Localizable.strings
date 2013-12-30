@@ -1,0 +1,85 @@
+/* 
+  Localizable.strings
+  VoiceControl
+
+  Created by ken on 13-7-23.
+  Copyright (c) 2013年 ken. All rights reserved.
+*/
+
+"start" = "开始";
+"stop" = "结束";
+"history" = "历史";
+"play" = "播放";
+"prompting" = "提示";
+"delete" = "删除";
+
+//time
+"time_second" = "%d秒";
+"time_minute" = "%d分";
+"time_hour" = "%d小时";
+"time_day" = "%d天";
+"time_num_second" = "%02d";
+"time_num_minute" = "%02d:";
+"time_num_hour" = "%02d:";
+"time_num_day" = "%d:";
+
+//vocice
+"voice_max" = "最大: %.1f";
+"voice_min" = "最小: %.1f";
+"voice_current" = "当前: %.1f";
+"voice_average" = "平均: %.1f";
+"voice_message" = "最大: %.1f\
+最小: %.1f\
+当前: %.1f\
+平均: %.1f";
+
+//setting
+"setting_file_time_max" = "单文件最大时长:  ";
+"setting_time_1minute" = "1分";
+"setting_time_2minute" = "2分";
+"setting_time_5minute" = "5分";
+"setting_time_10minute" = "10分";
+"setting_time_30minute" = "30分";
+"setting_time_60minute" = "1小时";
+"setting_time_120minute" = "2小时";
+
+"setting_file_time_min" = "单文件最小时长:  ";
+"setting_time_3second" = "3秒";
+"setting_time_5second" = "5秒";
+"setting_time_10second" = "10秒";
+"setting_time_20second" = "20秒";
+"setting_time_30second" = "30秒";
+"setting_time_50second" = "50秒";
+"setting_time_60second" = "1分";
+
+"setting_voice_min" = "最低录音分贝:  ";
+"setting_voice_10" = "10";
+"setting_voice_20" = "20";
+"setting_voice_30" = "30";
+"setting_voice_40" = "40";
+"setting_voice_50" = "50";
+"setting_voice_60" = "60";
+"setting_voice_70" = "70";
+"setting_voice_80" = "80";
+"setting_voice_90" = "90";
+
+//file
+"file_add_ever" = "添加永久";
+"file_cancel_ever" = "取消永久";
+"file_cannot_open" = "无法打开文件！";
+"file_send_email" = "发邮件";
+
+"file_ever" = "永久";
+"file_today" = "今天";
+"file_yestoday" = "昨天";
+"file_week" = "一周内";
+"file_week_ago" = "一周前";
+
+//email
+"mail_subject" = "vc 录音";
+"mail_body" = "hello, everyone:";
+
+"mail_cancel" = "邮件发送取消";
+"mail_save_succeed" = "邮件保存成功";
+"mail_send_succeed" = "邮件发送成功";
+"mail_send_failed" = "邮件发送失败";
