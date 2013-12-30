@@ -27,6 +27,15 @@ typedef enum {
     MATypeColorDefBlue,
     MATypeColorHomeBg,
     MATypeColorTableLabel,
+    
+    MATypeImgHomePhone = 300,
+    MATypeImgHomeMenu,
+    MATypeImgPlayPlay,
+    MATypeImgPlayNext,
+    MATypeImgPlayPause,
+    MATypeImgPlayPre,
+    MATypeImgBtnsec,
+    MATypeImgBtn
 } MAType;
 
 @interface MAModel : NSObject

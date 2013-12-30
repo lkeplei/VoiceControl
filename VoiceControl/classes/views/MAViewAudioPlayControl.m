@@ -82,24 +82,24 @@
     
     //add contrl button
     UIButton* preBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                         image:[UIImage imageNamed:@"play_control_pre.png"]
-                                      imagesec:[UIImage imageNamed:@"play_control_pre.png"]
+                                         image:[[MAModel shareModel] getImageByType:MATypeImgPlayPre default:NO]
+                                      imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPre default:NO]
                                         target:self
                                         action:@selector(preBtnClicked:)];
     preBtn.frame = CGRectOffset(preBtn.frame, 30, 40);
     [self addSubview:preBtn];
     
     _playBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                 image:[UIImage imageNamed:@"play_control_play.png"]
-                              imagesec:[UIImage imageNamed:@"play_control_play.png"]
+                                 image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
                                 target:self
                                 action:@selector(playBtnClicked:)];
     _playBtn.frame = CGRectOffset(_playBtn.frame, 70, 40);
     [self addSubview:_playBtn];
     
     UIButton* nextBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                          image:[UIImage imageNamed:@"play_control_next.png"]
-                                       imagesec:[UIImage imageNamed:@"play_control_next.png"]
+                                          image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                       imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
                                          target:self
                                          action:@selector(nextBtnClicked:)];
     nextBtn.frame = CGRectOffset(nextBtn.frame, 110, 40);
@@ -149,9 +149,12 @@
     
     //set btn
     if (_playBtn) {
-        [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateNormal];
-        [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateHighlighted];
-        [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateSelected];
+        [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                            forState:UIControlStateNormal];
+        [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                            forState:UIControlStateHighlighted];
+        [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                            forState:UIControlStateSelected];
     }
 
     //play
@@ -173,9 +176,12 @@
         
         //set btn
         if (_playBtn) {
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateNormal];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateHighlighted];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateSelected];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateNormal];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateSelected];
         }
     }
 }
@@ -199,18 +205,24 @@
 
         //set btn
         if (_playBtn) {
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateNormal];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateHighlighted];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_play.png"] forState:UIControlStateSelected];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateNormal];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateSelected];
         }
     } else {
         [_avPlay play];
         
         //set btn
         if (_playBtn) {
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateNormal];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateHighlighted];
-            [_playBtn setBackgroundImage:[UIImage imageNamed:@"play_control_pause.png"] forState:UIControlStateSelected];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateNormal];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateSelected];
         }
     }
 }

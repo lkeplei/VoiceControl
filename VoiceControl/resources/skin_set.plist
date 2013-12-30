@@ -6,12 +6,61 @@
 	<dict>
 		<key>skin_set_image</key>
 		<dict>
-			<key>skin_image_More</key>
+			<key>skin_image_home_phone</key>
 			<dict>
 				<key>describe</key>
-				<string>更多页面背景</string>
+				<string>首页的话筒</string>
 				<key>image</key>
-				<string>more_bg.png</string>
+				<string>microphone.png</string>
+			</dict>
+			<key>skin_image_home_menu</key>
+			<dict>
+				<key>describe</key>
+				<string>首页主菜单按钮</string>
+				<key>image</key>
+				<string>home_menu.png</string>
+			</dict>
+			<key>skin_image_play_play</key>
+			<dict>
+				<key>describe</key>
+				<string>播放按钮</string>
+				<key>image</key>
+				<string>play_control_play.png</string>
+			</dict>
+			<key>skin_image_play_next</key>
+			<dict>
+				<key>describe</key>
+				<string>首页的话筒</string>
+				<key>image</key>
+				<string>play_control_next.png</string>
+			</dict>
+			<key>skin_image_play_pause</key>
+			<dict>
+				<key>describe</key>
+				<string>首页的话筒</string>
+				<key>image</key>
+				<string>play_control_pause.png</string>
+			</dict>
+			<key>skin_image_play_pre</key>
+			<dict>
+				<key>describe</key>
+				<string>首页的话筒</string>
+				<key>image</key>
+				<string>play_control_pre.png</string>
+			</dict>
+			<key>skin_image_btn_sec</key>
+			<dict>
+				<key>describe</key>
+				<string>首页的话筒</string>
+				<key>image</key>
+				<string>button_sec.png</string>
+			</dict>
+			<key>skin_image_play_btn</key>
+			<dict>
+				<key>describe</key>
+				<string>首页的话筒</string>
+				<key>image</key>
+				<string>button.png</string>
 			</dict>
 		</dict>
 		<key>skin_set_color</key>

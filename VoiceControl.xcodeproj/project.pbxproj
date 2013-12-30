@@ -12,7 +12,6 @@
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
 		04559A1C17C98EE000DCEB8A /* MADropDownControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A1B17C98EE000DCEB8A /* MADropDownControlView.m */; };
 		04559A1E17C990BB00DCEB8A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04559A1D17C990BB00DCEB8A /* QuartzCore.framework */; };
-		04559A2017C994EB00DCEB8A /* dropdown_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04559A1F17C994EB00DCEB8A /* dropdown_bg@2x.png */; };
 		04559A2317CA076300DCEB8A /* MASectionHeadBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A2217CA076300DCEB8A /* MASectionHeadBase.m */; };
 		045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 045DFA9117A9422500F517AA /* MAViewTableBase.m */; };
 		045DFA9417A9430300F517AA /* table_resource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 045DFA9317A9430300F517AA /* table_resource.plist */; };
@@ -73,7 +72,6 @@
 		04559A1A17C98EE000DCEB8A /* MADropDownControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADropDownControlView.h; sourceTree = "<group>"; };
 		04559A1B17C98EE000DCEB8A /* MADropDownControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADropDownControlView.m; sourceTree = "<group>"; };
 		04559A1D17C990BB00DCEB8A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		04559A1F17C994EB00DCEB8A /* dropdown_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropdown_bg@2x.png"; sourceTree = "<group>"; };
 		04559A2117CA076300DCEB8A /* MASectionHeadBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASectionHeadBase.h; sourceTree = "<group>"; };
 		04559A2217CA076300DCEB8A /* MASectionHeadBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASectionHeadBase.m; sourceTree = "<group>"; };
 		045DFA9017A9422500F517AA /* MAViewTableBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTableBase.h; sourceTree = "<group>"; };
@@ -330,7 +328,6 @@
 			isa = PBXGroup;
 			children = (
 				0422DDF817EC01660004C289 /* microphone.png */,
-				04559A1F17C994EB00DCEB8A /* dropdown_bg@2x.png */,
 				04DD53AC17C7FDDA003FF77C /* home_menu@2x.png */,
 				04D7DE6E17A4D90900AF0450 /* play_control_play@2x.png */,
 				04D7DE6417A4BB7900AF0450 /* play_control_next@2x.png */,
@@ -449,7 +446,6 @@
 				04D7DE6F17A4D90900AF0450 /* play_control_play@2x.png in Resources */,
 				045DFA9417A9430300F517AA /* table_resource.plist in Resources */,
 				04DD53AD17C7FDDA003FF77C /* home_menu@2x.png in Resources */,
-				04559A2017C994EB00DCEB8A /* dropdown_bg@2x.png in Resources */,
 				0422DDF917EC01660004C289 /* microphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -89,6 +89,14 @@
 #define KSkinSetColorTableLabel     @"skin_color_table_label"
 
 #define KSkinSetDicImage            @"skin_set_image"
+#define KSkinSetImgHomePhone        @"skin_image_home_phone"
+#define KSkinSetImgHomeMenu         @"skin_image_home_menu"
+#define KSkinSetImgPlayPlay         @"skin_image_play_play"
+#define KSkinSetImgPlayNext         @"skin_image_play_next"
+#define KSkinSetImgPlayPause        @"skin_image_play_pause"
+#define KSkinSetImgPlayPre          @"skin_image_play_pre"
+#define KSkinSetImgBtnSec           @"skin_image_btn_sec"
+#define KSkinSetImgBtn              @"skin_image_play_btn"
 
 //资源Key值宏定义
 #define KID                     @"id"

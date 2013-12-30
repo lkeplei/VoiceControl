@@ -70,9 +70,9 @@
     [self.view addSubview:_topView];
     
     _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                 image:[UIImage imageNamed:@"home_menu.png"]
-                              imagesec:[UIImage imageNamed:@"home_menu.png"]
-                                target:self
+                                 image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+                               target:self
                                 action:@selector(homeBtnClicked:)];
     float off = (_topView.frame.size.height - _homeBtn.frame.size.height) / 2;
     _homeBtn.frame = CGRectMake(_topView.frame.size.width - _homeBtn.frame.size.width - off, off,
@@ -80,8 +80,8 @@
     [_topView addSubview:_homeBtn];
     
     _menuBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                 image:[UIImage imageNamed:@"play_control_play.png"]
-                              imagesec:[UIImage imageNamed:@"play_control_play.png"]
+                                 image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
                                 target:self
                                 action:@selector(menuBtnClicked:)];
     _menuBtn.frame = CGRectMake(off, 0, KTopViewHeight, KTopViewHeight);

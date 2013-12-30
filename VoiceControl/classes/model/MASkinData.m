@@ -102,6 +102,31 @@
         case MATypeColorTableLabel:
             return KSkinSetColorTableLabel;
             break;
+            
+        case MATypeImgHomePhone:
+            return KSkinSetImgHomePhone;
+            break;
+        case MATypeImgHomeMenu:
+            return KSkinSetImgHomeMenu;
+            break;
+        case MATypeImgPlayPlay:
+            return KSkinSetImgPlayPlay;
+            break;
+        case MATypeImgPlayNext:
+            return KSkinSetImgPlayNext;
+            break;
+        case MATypeImgPlayPause:
+            return KSkinSetImgPlayPause;
+            break;
+        case MATypeImgPlayPre:
+            return KSkinSetImgPlayPre;
+            break;
+        case MATypeImgBtnsec:
+            return KSkinSetImgBtnSec;
+            break;
+        case MATypeImgBtn:
+            return KSkinSetImgBtn;
+            break;
         default:
             return nil;
             break;

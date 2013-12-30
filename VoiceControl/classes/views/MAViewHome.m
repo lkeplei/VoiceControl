@@ -73,7 +73,7 @@
 
 #pragma mark - init area
 -(void)initHud{
-    _imagePhone = [UIImage imageNamed:@"microphone"];
+    _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
     hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), self.center.y - (KHudSizeWidth / 2), KHudSizeWidth, KHudSizeHeight);
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;
@@ -83,17 +83,17 @@
 
 -(void)initBtns{
     _startBtn = [MAUtils buttonWithImg:MyLocal(@"start") off:0 zoomIn:NO
-                                  image:[UIImage imageNamed:@"button.png"]
-                               imagesec:[UIImage imageNamed:@"button_sec.png"]
+                                  image:[[MAModel shareModel] getImageByType:MATypeImgBtn default:NO]
+                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnsec default:NO]
                                  target:self
                                  action:@selector(startBtnClicked:)];
     _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 50);
     [self addSubview:_startBtn];
     
     _playBtn = [MAUtils buttonWithImg:MyLocal(@"play") off:0 zoomIn:NO
-                                 image:[UIImage imageNamed:@"button.png"]
-                              imagesec:[UIImage imageNamed:@"button_sec.png"]
-                                target:self
+                                 image:[[MAModel shareModel] getImageByType:MATypeImgBtn default:NO]
+                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnsec default:NO]
+                               target:self
                                 action:@selector(playRecordSound:)];
     _playBtn.frame = CGRectOffset(_playBtn.frame, 30, 100);
     [self addSubview:_playBtn];
