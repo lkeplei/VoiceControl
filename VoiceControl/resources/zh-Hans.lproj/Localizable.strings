@@ -68,6 +68,7 @@
 "file_cancel_ever" = "取消永久";
 "file_cannot_open" = "无法打开文件！";
 "file_send_email" = "发邮件";
+"file_add_pwd" = "加密";
 
 "file_ever" = "永久";
 "file_today" = "今天";

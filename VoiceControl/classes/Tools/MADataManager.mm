@@ -77,6 +77,7 @@ static MADataManager* _shareDataManager = nil;
 -(void)createTabel:(NSString*)tableName{
     BOOL res = NO;
     if ([tableName compare:KTableVoiceFiles] == NSOrderedSame) {
+        //ever 文件类型：MATypeFileNormal-普通文件；MATypeFileForEver-永久文件；MATypeFilePwd-加密文件
         res = sqlite.DirectStatement([[NSString stringWithFormat:@"create table if not exists %@ (id integer primary key \
                                        , time varchar(32) \
                                        , name varchar(64) \
@@ -113,7 +114,7 @@ static MADataManager* _shareDataManager = nil;
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(2).c_str()] forKey:KDataBaseFileName];
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(3).c_str()] forKey:KDataBaseDuration];
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(4).c_str()] forKey:KDataBasePath];
-                [resDic setObject:[MAUtils getNumberByBool:stmt->ValueInt(5)] forKey:KDataBaseDataEver];
+                [resDic setObject:[MAUtils getNumberByInt:stmt->ValueInt(5)] forKey:KDataBaseDataEver];
             }
             [resArr addObject:resDic];
 		}

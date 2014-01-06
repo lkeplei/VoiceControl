@@ -15,6 +15,10 @@ typedef enum {
     MATypeSkinDefault = 50,
     MATypeSkinBlack,
     
+    MATypeFileNormal = 70,
+    MATypeFileForEver,
+    MATypeFilePwd,
+    
     MATypeChangeViewCurlDown = 100,
     MATypeChangeViewCurlUp,
     MATypeChangeViewFlipFromLeft,

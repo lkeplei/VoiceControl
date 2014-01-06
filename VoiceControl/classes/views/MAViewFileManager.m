@@ -210,12 +210,12 @@
         NSMutableArray* week = nil;
         NSMutableArray* weekago = nil;
         for (NSDictionary* dic in array) {
-            if ([[dic objectForKey:KDataBaseDataEver] boolValue]) {
+            if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileForEver) {
                 if (ever == nil) {
                     ever = [[NSMutableArray alloc] init];
                 }
                 [ever addObject:dic];
-            } else {
+            } else if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileNormal) {
                 NSDate* date = [MAUtils getDateFromString:[dic objectForKey:KDataBaseTime] format:KTimeFormat];
                 NSDateComponents* subcom = [MAUtils getSubFromTwoDate:date to:[NSDate date]];
                 
@@ -325,12 +325,19 @@
         [menuItems addObject:item2];
     }
     
-    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_add_pwd")
+                                       image:nil
+                                    userInfo:[NSNumber numberWithInt:sender.tag]
+                                      target:self
+                                      action:@selector(addPwd:)];
+    [menuItems addObject:item3];
+    
+    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil
                                     userInfo:[NSNumber numberWithInt:sender.tag]
                                       target:self
                                       action:@selector(sendEmail:)];
-    [menuItems addObject:item3];
+    [menuItems addObject:item4];
     
     first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
     first.alignment = NSTextAlignmentCenter;
@@ -369,7 +376,7 @@
     [SysDelegate.viewController sendEMail:array];
 }
 
--(void)addFileToEver:(id)sender{
+-(void)changeFileType:(MAType)type sender:(id)sender{
     int tag = [(NSNumber*)[sender userInfo] intValue];
     int row = KCellButtonRow(tag);
     int section = KCellButtonSec(tag);
@@ -379,28 +386,23 @@
     [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
     //添加数据
     NSMutableArray* resArr = [[NSMutableArray alloc] init];
-    [resDic setObject:[MAUtils getNumberByBool:YES] forKey:KDataBaseDataEver];
+    [resDic setObject:[MAUtils getNumberByInt:type] forKey:KDataBaseDataEver];
     [resArr addObject:resDic];
     [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
     
     [self reloadData];
 }
 
+-(void)addPwd:(id)sender{
+    [self changeFileType:MATypeFilePwd sender:sender];
+}
+
+-(void)addFileToEver:(id)sender{
+    [self changeFileType:MATypeFileForEver sender:sender];
+}
+
 -(void)cancelFileToEver:(id)sender{
-    int tag = [(NSNumber*)[sender userInfo] intValue];
-    int row = KCellButtonRow(tag);
-    int section = KCellButtonSec(tag);
-    
-    NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-    //删除数据库与文件
-    [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
-    //添加数据
-    NSMutableArray* resArr = [[NSMutableArray alloc] init];
-    [resDic setObject:[MAUtils getNumberByBool:NO] forKey:KDataBaseDataEver];
-    [resArr addObject:resDic];
-    [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
-    
-    [self reloadData];
+    [self changeFileType:MATypeFileNormal sender:sender];
 }
 
 #pragma mark - email
