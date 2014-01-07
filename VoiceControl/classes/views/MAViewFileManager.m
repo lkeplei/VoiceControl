@@ -46,6 +46,8 @@
         [self initTable];
         
         self.viewType = MAViewTypeFileManager;
+        self.viewTitle = MyLocal(@"view_title_file_manager");
+        
         showAudioPlay = NO;
     }
     return self;

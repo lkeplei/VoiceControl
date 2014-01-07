@@ -61,6 +61,8 @@
         [self initHud];
         
         self.viewType = MAViewTypeHome;
+        self.viewTitle = MyLocal(@"view_title_home");
+        
         isRecording = NO;
         isPlaying = NO;
         voiceMax = 0;

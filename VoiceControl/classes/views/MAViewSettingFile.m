@@ -8,6 +8,7 @@
 
 #import "MAViewSettingFile.h"
 #import "MAModel.h"
+#import "MAConfig.h"
 
 @implementation MAViewSettingFile
 
@@ -17,6 +18,7 @@
     if (self) {
         // Initialization code
         self.viewType = MAViewTypeSettingFile;
+        self.viewTitle = MyLocal(@"view_title_set_file");
         
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }

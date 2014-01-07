@@ -39,7 +39,13 @@ typedef enum {
     MATypeImgPlayPause,
     MATypeImgPlayPre,
     MATypeImgBtnsec,
-    MATypeImgBtn
+    MATypeImgBtn,
+    
+    MATypeBaiduMobLogEvent = 400,
+    MATypeBaiduMobEventStart,
+    MATypeBaiduMobEventEnd,
+    MATypeBaiduMobPageStart,
+    MATypeBaiduMobPageEnd,
 } MAType;
 
 @interface MAModel : NSObject
@@ -62,4 +68,7 @@ typedef enum {
 -(int)getFileTimeMax;
 //获取录音分贝开始点
 -(int)getVoiceStatPos;
+
+//百度统计统一入口
+-(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label;
 @end

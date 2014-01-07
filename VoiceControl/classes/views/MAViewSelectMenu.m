@@ -18,6 +18,7 @@
     if (self) {
         // Initialization code
         self.viewType = MAViewTypeSelectMenu;
+        self.viewTitle = MyLocal(@"view_title_select_menu");
         
         [self setTableResource:KMenuTableView];
         

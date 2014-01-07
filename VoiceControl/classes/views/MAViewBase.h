@@ -13,5 +13,6 @@
 -(void)showView;
 
 @property (assign)MAViewType viewType;
+@property (nonatomic, strong)NSString* viewTitle;
 
 @end

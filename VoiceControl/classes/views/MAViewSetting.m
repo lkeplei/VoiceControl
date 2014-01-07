@@ -29,6 +29,7 @@
     if (self) {
         // Initialization code
         self.viewType = MAViewTypeSetting;
+        self.viewTitle = MyLocal(@"view_title_setting");
         
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
         

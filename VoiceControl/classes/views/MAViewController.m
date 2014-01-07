@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UIView* topView;
 @property (nonatomic, strong) UIButton* menuBtn;
 @property (nonatomic, strong) UIButton* homeBtn;
+@property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic) UIPanGestureRecognizer* panGestureRecongnize;
 @property (nonatomic, strong) MAViewBase* currentShowView;
 @property (nonatomic, strong) MAViewBase* preShowView;
@@ -62,12 +63,19 @@
     [self.view addSubview:_selectMenu];
     
     _currentShowView = [self getView:MAViewTypeHome];
+    [_titleLabel setText:_currentShowView.viewTitle];
 }
 
 -(void)initTopView{
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KTopViewHeight)];
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [self.view addSubview:_topView];
+    
+    _titleLabel = [MAUtils laeblWithTxt:nil
+                                  frame:_topView.frame
+                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
+                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    [_topView addSubview:_titleLabel];
     
     _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                  image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
@@ -194,6 +202,11 @@
                             selector:@selector(animationFinished:)];
     
     [_currentShowView showView];
+    
+    [_titleLabel setText:_currentShowView.viewTitle];
+    //添加百度页面统计
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobPageStart eventName:_currentShowView.viewTitle label:nil];
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobPageEnd eventName:_preShowView.viewTitle label:nil];
     
     //hide menu
     if (isMenuOpening) {

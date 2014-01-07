@@ -10,6 +10,7 @@
 #import "MAConfig.h"
 #import "MADataManager.h"
 #import "MASkinData.h"
+#import "BaiduMobStat.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface MAModel ()
@@ -53,6 +54,33 @@ static MAModel* _sharedModel = nil;
 
 -(UIImage*)getImageByType:(MAType)type default:(BOOL)defult{
     return [_skinData getImageByType:type default:defult];
+}
+
+-(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label{
+    switch (type) {
+        case MATypeBaiduMobLogEvent:{
+            [[BaiduMobStat defaultStat] logEvent:eventName eventLabel:label];
+        }
+            break;
+        case MATypeBaiduMobEventStart:{
+            [[BaiduMobStat defaultStat] eventStart:eventName eventLabel:label];
+        }
+            break;
+        case MATypeBaiduMobEventEnd:{
+            [[BaiduMobStat defaultStat] eventEnd:eventName eventLabel:label];
+        }
+            break;
+        case MATypeBaiduMobPageStart:{
+            [[BaiduMobStat defaultStat] pageviewStartWithName:eventName];
+        }
+            break;
+        case MATypeBaiduMobPageEnd:{
+            [[BaiduMobStat defaultStat] pageviewEndWithName:eventName];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 -(NSString*)getStringTime:(int32_t)time type:(MAType)type{
