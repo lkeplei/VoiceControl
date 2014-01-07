@@ -243,7 +243,7 @@
         [res setObject:_fileName forKey:KDataBaseFileName];
         [res setObject:_fileTime forKey:KDataBaseTime];
         [res setObject:[MAUtils getStringByFloat:duration decimal:0] forKey:KDataBaseDuration];
-        [res setObject:[MAUtils getNumberByBool:NO] forKey:KDataBaseDataEver];
+        [res setObject:[MAUtils getNumberByInt:MATypeFileNormal] forKey:KDataBaseDataEver];
         [resArr addObject:res];
         [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
         
