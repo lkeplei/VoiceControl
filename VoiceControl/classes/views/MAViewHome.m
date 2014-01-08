@@ -234,7 +234,7 @@
 
 -(void)stopRecorder{
     double duration = _recorder.currentTime;
-    if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
+    if (duration > 0 && duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
         //删除记录的文件
         [_recorder deleteRecording];
     } else {
@@ -275,6 +275,16 @@
     [_recorder updateMeters];//刷新音量数据
     //获取音量的平均值  [recorder averagePowerForChannel:0];
     //音量的最大值  [recorder peakPowerForChannel:0];
+    double duration = _recorder.currentTime;
+    if ( duration > 0 && duration > [[MAModel shareModel] getFileTimeMax] ) {
+        isRecording = NO;
+        [self stopRecorder];
+        //停止计时
+        [timer invalidate];
+        
+        [self startBtnClicked:nil];
+        return;
+    }
     
     double lowPassResults = pow(10, (0.05 * [_recorder peakPowerForChannel:0]));
     
