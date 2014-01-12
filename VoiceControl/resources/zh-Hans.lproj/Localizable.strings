@@ -84,6 +84,12 @@
 "file_week" = "一周内";
 "file_week_ago" = "一周前";
 
+//set file
+"setfile_setpassword" = "设置密码";
+"setfile_changepassword" = "修改密码";
+"setfile_resetpassword" = "重置密码";
+"setfile_encryptfile" = "文件加密";
+
 //email
 "mail_subject" = "vc 录音";
 "mail_body" = "hello, everyone:";
