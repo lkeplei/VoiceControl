@@ -56,6 +56,7 @@
 #define KUserDefaultVoiceStartPos          @"voice_start_pos"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserPassword                      @"user_password"
+#define KUserResetPassword                 @"user_reset_password"
 
 //数据库部分
 #define KSqliteDBName           @"SQLiteVoiceControl.db"

@@ -12,11 +12,16 @@
 #import "MAUtils.h"
 #import "MADataManager.h"
 
+//@interface MAViewSettingFile ()
+//@property (nonatomic,strong)  UIButton* btnChangePassword;
+//@property (nonatomic,strong)  UIButton* btnResetPassword;
+//@property (nonatomic,strong)  UIButton* btnEncryptFile;
+//@end
+
 @interface MAViewSettingFile ()
-@property (nonatomic,strong)  UIButton* btnChangePassword;
-@property (nonatomic,strong)  UIButton* btnResetPassword;
-@property (nonatomic,strong)  UIButton* btnEncryptFile;
+@property (nonatomic, strong) UIView* menuView;
 @end
+
 @implementation MAViewSettingFile
 
 - (id)initWithFrame:(CGRect)frame
@@ -35,6 +40,10 @@
 }
 
 - (void)initView{
+    if (_menuView) {
+        [_menuView removeFromSuperview];
+    }
+    _menuView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - 40)];
     NSString* str = nil;
     NSString* strPassword = [MADataManager getDataByKey:KUserPassword];
     if ((strPassword == nil) || ([strPassword compare:@"123456"] == NSOrderedSame) ) {
@@ -42,38 +51,59 @@
     } else {
         str = MyLocal(@"setfile_changepassword");
     }
-    _btnChangePassword = [MAUtils buttonWithImg:str off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(chaPwBtnClicked:)];
-    _btnResetPassword  = [MAUtils buttonWithImg:MyLocal(@"setfile_resetpassword") off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(resPwBtnClicked:)];
-    _btnEncryptFile    = [MAUtils buttonWithImg:MyLocal(@"setfile_encryptfile") off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(encryBtnClicked:)];
+    UIButton* btnChangePassword = [MAUtils buttonWithImg:str off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(chaPWBtnClicked:)];
+    UIButton* btnResetPassword  = [MAUtils buttonWithImg:MyLocal(@"setfile_resetpassword") off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(resPWBtnClicked:)];
+    UIButton* btnEncryptFile    = [MAUtils buttonWithImg:MyLocal(@"setfile_encryptfile") off:0 zoomIn:NO image:nil imagesec:nil target:self action:@selector(encryBtnClicked:)];
     
-    _btnChangePassword.frame = CGRectMake(self.frame.size.width/2 - 80, 100, 160, 40);
-    _btnResetPassword.frame  = CGRectMake(self.frame.size.width/2 - 80, 150, 160, 40);
-    _btnEncryptFile.frame    = CGRectMake(self.frame.size.width/2 - 80, 200, 160, 40);
+    btnChangePassword.frame = CGRectMake(self.frame.size.width/2 - 80, 100, 160, 40);
+    btnResetPassword.frame  = CGRectMake(self.frame.size.width/2 - 80, 150, 160, 40);
+    btnEncryptFile.frame    = CGRectMake(self.frame.size.width/2 - 80, 200, 160, 40);
     
-    [_btnChangePassword setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
-    [_btnChangePassword setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-    [_btnResetPassword setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
-    [_btnResetPassword setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-    [_btnEncryptFile setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
-    [_btnEncryptFile setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [btnChangePassword setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+    [btnChangePassword setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [btnResetPassword setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+    [btnResetPassword setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [btnEncryptFile setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+    [btnEncryptFile setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
     
-    [self addSubview:_btnChangePassword];
-    [self addSubview:_btnResetPassword];
-    [self addSubview:_btnEncryptFile];
+    [_menuView addSubview:btnChangePassword];
+    [_menuView addSubview:btnResetPassword];
+    [_menuView addSubview:btnEncryptFile];
+    
+    [self addSubview:_menuView];
 }
 
 #pragma mark - btn clicked
-- (void)chaPwBtnClicked:(id)sender{
-
+- (void)chaPWBtnClicked:(id)sender{
+    [_menuView setHidden:YES];
+    MAViewFilePasswordManager* view = [[MAViewFilePasswordManager alloc] initWithFrame:CGRectMake(0, 0,
+                                                                    self.frame.size.width,
+                                                                    self.frame.size.height - 40)];
+    view.delegate = self;
+    [self addSubview:view];
 }
 
-- (void)resPwBtnClicked:(id)sender{
-    
+- (void)resPWBtnClicked:(id)sender{
+    [MADataManager setDataByKey:[NSNumber numberWithBool:YES] forkey:KUserResetPassword];
+    [_menuView setHidden:YES];
+    MAViewFilePasswordManager* view = [[MAViewFilePasswordManager alloc] initWithFrame:CGRectMake(0, 0,
+                                                                                                  self.frame.size.width,
+                                                                                                  self.frame.size.height - 40)];
+    view.delegate = self;
+    [self addSubview:view];
 }
 
 - (void)encryBtnClicked:(id)sender{
     
 }
+
+#pragma mark - MAClickPasswordBtn
+- (void)Passwordclick:(id)view btnState:(BOOL)btnState{
+//    [view setHidden:YES];
+    [view removeFromSuperview];
+    [_menuView setHidden:NO];
+}
+
 
 
 @end
