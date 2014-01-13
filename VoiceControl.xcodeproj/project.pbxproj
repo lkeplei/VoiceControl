@@ -713,11 +713,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
+				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/liukun/Desktop/liukun/workspace/github/VoiceControl/VoiceControl/classes/Tools/baidu,
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -737,11 +742,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
+				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/liukun/Desktop/liukun/workspace/github/VoiceControl/VoiceControl/classes/Tools/baidu,
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
