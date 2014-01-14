@@ -8,6 +8,15 @@
 
 #import "MAViewBase.h"
 
+typedef enum {
+    MASetPasswordType = 1000,
+    MAConfirmPasswordType,
+    MAOldPasswordType,
+    MANewPasswordType,
+    MACaptchaType
+} MAPasswordTypeTag;
+
+
 @protocol MAClickPasswordBtn <NSObject>
 - (void)Passwordclick:(id)view btnState:(BOOL)btnState ;
 @end

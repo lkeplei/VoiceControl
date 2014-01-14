@@ -10,6 +10,7 @@
 #import "MAConfig.h"
 #import "MAUtils.h"
 #import "MADataManager.h"
+#import "RegexKitLite.h"
 
 @implementation MAViewFilePasswordManager
 
@@ -57,6 +58,7 @@
                                         secu:NO
                                         font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                         text:nil];
+    Password.tag = MASetPasswordType;
     Password.delegate = self;
     Password.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:Password];
@@ -65,9 +67,10 @@
     UITextField* confirmPassword = [MAUtils textFieldInit:CGRectMake(130, 150, 130, 40)
                                            color:[UIColor blueColor]
                                          bgcolor:[UIColor grayColor]
-                                            secu:YES
+                                            secu:NO
                                             font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                             text:nil];
+    confirmPassword.tag = MAConfirmPasswordType;
     confirmPassword.delegate = self;
     confirmPassword.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:confirmPassword];
@@ -101,6 +104,7 @@
                                               secu:NO
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                               text:[MADataManager getDataByKey:KUserPassword]];
+    oldPassword.tag = MAOldPasswordType;
     oldPassword.delegate = self;
     oldPassword.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [oldPassword setEnabled:NO];
@@ -126,6 +130,7 @@
                                               secu:NO
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                               text:nil];
+    Password.tag = MANewPasswordType;
     Password.delegate = self;
     Password.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:Password];
@@ -134,9 +139,10 @@
     UITextField* confirmPassword = [MAUtils textFieldInit:CGRectMake(130, 150, 130, 40)
                                                     color:[UIColor blueColor]
                                                   bgcolor:[UIColor grayColor]
-                                                     secu:YES
+                                                     secu:NO
                                                      font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                      text:nil];
+    confirmPassword.tag = MAConfirmPasswordType;
     confirmPassword.delegate = self;
     confirmPassword.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:confirmPassword];
@@ -166,9 +172,10 @@
     UITextField* Captcha = [MAUtils textFieldInit:CGRectMake(20, 150, 100, 40)
                                                     color:[UIColor blueColor]
                                                   bgcolor:[UIColor grayColor]
-                                                     secu:YES
+                                                     secu:NO
                                                      font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                      text:nil];
+    Captcha.tag = MACaptchaType;
     Captcha.delegate = self;
     Captcha.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:Captcha];
@@ -187,6 +194,55 @@
 }
 
 - (void)okBtnClicked:(id)sender{
+    //密码验证
+    NSString* passwordFormatstr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$";
+    UITextField* textfielsetPW = (UITextField*)[self viewWithTag:MASetPasswordType];
+    UITextField* textfielconPW = (UITextField*)[self viewWithTag:MAConfirmPasswordType];
+    UITextField* textfielnewPW = (UITextField*)[self viewWithTag:MANewPasswordType];
+    if (textfielsetPW) {
+        if (textfielsetPW.text == nil) {
+            //密码不能为空
+            [[MAUtils shareUtils] showWeakRemind:@"密码不能为空" time:1];
+            return;
+        }else{
+            if (![textfielsetPW.text isMatchedByRegex:passwordFormatstr]) {
+                //密码格式不正确
+                [[MAUtils shareUtils] showWeakRemind:@"密码格式不正确" time:1];
+                return;
+            }
+        }
+    }
+    if (textfielnewPW) {
+        if (textfielnewPW.text == nil) {
+            //密码不能为空
+            [[MAUtils shareUtils] showWeakRemind:@"密码不能为空" time:1];
+            return;
+        }else{
+            if (![textfielnewPW.text isMatchedByRegex:passwordFormatstr]) {
+                //密码格式不正确
+                [[MAUtils shareUtils] showWeakRemind:@"密码格式不正确" time:1];
+                return;
+            }
+        }
+    }
+    if (textfielconPW) {
+        if (textfielconPW.text == nil) {
+            //再次输入密码不能为空
+            [[MAUtils shareUtils] showWeakRemind:@"再次输入密码不能为空" time:1];
+            return;
+        }else{
+            if ((textfielsetPW && [textfielconPW.text compare:textfielsetPW.text] != NSOrderedSame) ||
+                (textfielnewPW && [textfielconPW.text compare:textfielnewPW.text] != NSOrderedSame) ) {
+                //密码不匹配
+                [[MAUtils shareUtils] showWeakRemind:@"密码不匹配" time:1];
+                return;
+            }
+        }
+    }
+    
+    
+    
+
     [_delegate Passwordclick:self btnState:YES];
 }
 
