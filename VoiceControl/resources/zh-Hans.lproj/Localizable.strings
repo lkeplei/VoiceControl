@@ -84,6 +84,22 @@
 "file_week" = "一周内";
 "file_week_ago" = "一周前";
 
+//set file
+"setfile_setpassword" = "设置密码";
+"setfile_changepassword" = "修改密码";
+"setfile_resetpassword" = "重置密码";
+"setfile_encryptfile" = "文件加密";
+
+//password manager
+"file_password" = "输入密码：";
+"file_old_password" = "旧密码：";
+"file_new_password" = "新密码：";
+"file_confirm_password" = "再次输入密码：";
+"file_password_OK" = "确定";
+"file_password_cancel" = "取消";
+"file_get_captcha" = "获取验证码方式:";
+"file_clicke_captcha" = "点击获取验证码";
+
 //email
 "mail_subject" = "vc 录音";
 "mail_body" = "hello, everyone:";

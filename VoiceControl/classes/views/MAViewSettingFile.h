@@ -7,7 +7,8 @@
 //
 
 #import "MAViewBase.h"
+#import "MAViewFilePasswordManager.h"
 
-@interface MAViewSettingFile : MAViewBase
+@interface MAViewSettingFile : MAViewBase<MAClickPasswordBtn>
 
 @end
