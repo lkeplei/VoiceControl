@@ -25,7 +25,7 @@
 +(UIButton*)buttonWithImg:(NSString*)buttonText off:(int)off zoomIn:(BOOL)zoomIn image:(UIImage*)image
                  imagesec:(UIImage*)imagesec target:(id)target action:(SEL)action;
 
-+(UILabel*)laeblWithTxt:(NSString *)buttonText frame:(CGRect)frame
++(UILabel*)labelWithTxt:(NSString *)buttonText frame:(CGRect)frame
                    font:(UIFont*)font color:(UIColor*)color;
 
 +(UITextField*)textFieldInit:(CGRect)frame color:(UIColor*)color bgcolor:(UIColor*)bgcolor

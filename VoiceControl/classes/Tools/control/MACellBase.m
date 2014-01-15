@@ -127,7 +127,7 @@
     if (label) {
         label.text = [resDic objectForKey:KContent];
     } else {
-        label = [MAUtils laeblWithTxt:[resDic objectForKey:KContent]
+        label = [MAUtils labelWithTxt:[resDic objectForKey:KContent]
                                           frame:CGRectMake(offx, 0,
                                                            self.frame.size.width,
                                                            self.frame.size.height)

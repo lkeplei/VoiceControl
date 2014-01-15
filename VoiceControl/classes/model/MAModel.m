@@ -56,6 +56,10 @@ static MAModel* _sharedModel = nil;
     return [_skinData getImageByType:type default:defult];
 }
 
+- (UIFont *)getLaberFontSize:(NSString *)fontName size:(CGFloat)fontSize{
+    return [UIFont fontWithName:fontName size:fontSize];
+}
+
 -(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label{
     switch (type) {
         case MATypeBaiduMobLogEvent:{
