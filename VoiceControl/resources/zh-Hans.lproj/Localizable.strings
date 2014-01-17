@@ -113,3 +113,7 @@
 "mail_save_succeed" = "邮件保存成功";
 "mail_send_succeed" = "邮件发送成功";
 "mail_send_failed" = "邮件发送失败";
+
+//文件管理设置
+"file_set_reset_email" = "邮件";
+"file_set_reset_sms" = "短信";

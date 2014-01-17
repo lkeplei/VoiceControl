@@ -37,7 +37,7 @@
     NSDictionary* property = [resDic objectForKey:KSectionProperty];
     _enabled = [[property objectForKey:KEnabled] boolValue];
     if (_enabled) {
-        _titleLabel = [MAUtils laeblWithTxt:[property objectForKey:KTitle]
+        _titleLabel = [MAUtils labelWithTxt:[property objectForKey:KTitle]
                                           frame:CGRectMake(0, 0, 200, 40)
                                            font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                                           color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];

@@ -114,7 +114,7 @@
         NSString* str = [@"" stringByAppendingFormat:@"%@ - (%@)", [resDic objectForKey:KDataBaseFileName],
                          [[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeCh]];
         if (name == nil) {
-            name = [MAUtils laeblWithTxt:str
+            name = [MAUtils labelWithTxt:str
                                     frame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)
                                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];

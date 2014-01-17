@@ -58,6 +58,12 @@
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
 		04E6567A178C5150003A6ACA /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65678178C5150003A6ACA /* MAViewController.m */; };
 		04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6567C178C5188003A6ACA /* MAAppDelegate.m */; };
+		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
+		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; };
+		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
+		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
+		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
 		BE0443FC179FC50C00537368 /* icon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443F9179FC50C00537368 /* icon-ipad.png */; };
@@ -162,6 +168,15 @@
 		04E65678178C5150003A6ACA /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
 		04E6567B178C5188003A6ACA /* MAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppDelegate.h; sourceTree = "<group>"; };
 		04E6567C178C5188003A6ACA /* MAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppDelegate.m; sourceTree = "<group>"; };
+		187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
+		187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
+		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		187F5A92188682BB00D72FA6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		187F5A94188682FE00D72FA6 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		187F5A961886863A00D72FA6 /* MACheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACheckBox.h; sourceTree = "<group>"; };
+		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
+		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
+		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -204,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */,
 				046B184A187C283400387497 /* Security.framework in Frameworks */,
 				046B1848187C282C00387497 /* AdSupport.framework in Frameworks */,
 				046B1846187C280F00387497 /* CoreTelephony.framework in Frameworks */,
@@ -317,6 +333,7 @@
 		04E65644178C4F15003A6ACA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				187F5A94188682FE00D72FA6 /* libicucore.dylib */,
 				046B1849187C283300387497 /* Security.framework */,
 				046B1847187C282C00387497 /* AdSupport.framework */,
 				046B1845187C280F00387497 /* CoreTelephony.framework */,
@@ -390,6 +407,7 @@
 		04E65673178C5150003A6ACA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				187F5A90188682BB00D72FA6 /* RegexKitLite */,
 				046B1818187C253700387497 /* baidu */,
 				BE4C565017B22BC300E675CA /* ZipArchive */,
 				BE073A65179E9A1400340A47 /* control */,
@@ -405,6 +423,8 @@
 		04E65676178C5150003A6ACA /* views */ = {
 			isa = PBXGroup;
 			children = (
+				187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */,
+				187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */,
 				0407464D17ABEFF100B70537 /* MAViewHome.h */,
 				0407464E17ABEFF100B70537 /* MAViewHome.m */,
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
@@ -429,9 +449,20 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		187F5A90188682BB00D72FA6 /* RegexKitLite */ = {
+			isa = PBXGroup;
+			children = (
+				187F5A91188682BB00D72FA6 /* RegexKitLite.h */,
+				187F5A92188682BB00D72FA6 /* RegexKitLite.m */,
+			);
+			path = RegexKitLite;
+			sourceTree = "<group>";
+		};
 		BE073A65179E9A1400340A47 /* control */ = {
 			isa = PBXGroup;
 			children = (
+				187F5A961886863A00D72FA6 /* MACheckBox.h */,
+				187F5A971886863A00D72FA6 /* MACheckBox.m */,
 				BEFE8E7E17DECCF0003150F9 /* MAMenu.h */,
 				BEFE8E7F17DECCF0003150F9 /* MAMenu.m */,
 				04559A1A17C98EE000DCEB8A /* MADropDownControlView.h */,
@@ -449,6 +480,8 @@
 		BE073A75179E9F3400340A47 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */,
+				187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */,
 				0422DDF817EC01660004C289 /* microphone.png */,
 				04DD53AC17C7FDDA003FF77C /* home_menu@2x.png */,
 				04D7DE6E17A4D90900AF0450 /* play_control_play@2x.png */,
@@ -567,12 +600,14 @@
 				BE0443FD179FC50C00537368 /* icon-iphone.png in Resources */,
 				BE0443FE179FC50C00537368 /* icon-iphone@2x.png in Resources */,
 				04D7DE6817A4BB7900AF0450 /* play_control_next@2x.png in Resources */,
+				187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */,
 				04D7DE6917A4BB7900AF0450 /* play_control_pause@2x.png in Resources */,
 				18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */,
 				04D7DE6B17A4BB7900AF0450 /* play_control_pre@2x.png in Resources */,
 				04D7DE6F17A4D90900AF0450 /* play_control_play@2x.png in Resources */,
 				045DFA9417A9430300F517AA /* table_resource.plist in Resources */,
 				04DD53AD17C7FDDA003FF77C /* home_menu@2x.png in Resources */,
+				187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */,
 				0422DDF917EC01660004C289 /* microphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,6 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E65652178C4F15003A6ACA /* main.m in Sources */,
+				187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
@@ -595,12 +631,14 @@
 				046B1838187C253700387497 /* CJSONSerialization.m in Sources */,
 				BE073A64179E998900340A47 /* MADataManager.mm in Sources */,
 				BE073A68179E9A1400340A47 /* MBProgressHUD.m in Sources */,
+				187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */,
 				046B1837187C253700387497 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				046B1835187C253700387497 /* CDataScanner.m in Sources */,
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				046B183C187C253700387497 /* CJSONDeserializer.m in Sources */,
+				187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */,
 				046B183B187C253700387497 /* NSDictionary_JSONExtensions.m in Sources */,
 				045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */,
 				0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */,
@@ -713,11 +751,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
+				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/liukun/Desktop/liukun/workspace/github/VoiceControl/VoiceControl/classes/Tools/baidu,
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -737,11 +780,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode\\ 2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
+				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/liukun/Desktop/liukun/workspace/github/VoiceControl/VoiceControl/classes/Tools/baidu,
+					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

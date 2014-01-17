@@ -102,7 +102,7 @@
 }
 
 -(void)initLabels{
-    _labelVoice = [MAUtils laeblWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
+    _labelVoice = [MAUtils labelWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
                                    frame:CGRectMake(210, 50, 100, 80)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];

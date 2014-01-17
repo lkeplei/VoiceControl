@@ -11,6 +11,11 @@
 #import "MAUtils.h"
 #import "MADataManager.h"
 #import "RegexKitLite.h"
+#import "MACheckBox.h"
+
+#define KBoxSendEmail   (100)
+#define KBoxSendSMS     (101)
+#define KBoxGroupId     @"reset_box"
 
 @implementation MAViewFilePasswordManager
 
@@ -38,14 +43,14 @@
 }
 
 - (void)initSetPassword{
-    UILabel* labelPassword = [MAUtils laeblWithTxt:MyLocal(@"file_password")
+    UILabel* labelPassword = [MAUtils labelWithTxt:MyLocal(@"file_password")
                                              frame:CGRectMake(20, 100, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
     labelPassword.textAlignment = UITextAlignmentRight;
     [self addSubview:labelPassword];
     
-    UILabel* labelconfirmPassword = [MAUtils laeblWithTxt:MyLocal(@"file_confirm_password")
+    UILabel* labelconfirmPassword = [MAUtils labelWithTxt:MyLocal(@"file_confirm_password")
                                              frame:CGRectMake(20, 150, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
@@ -62,7 +67,6 @@
     Password.delegate = self;
     Password.autocapitalizationType = UITextAutocapitalizationTypeNone;
     [self addSubview:Password];
-
     
     UITextField* confirmPassword = [MAUtils textFieldInit:CGRectMake(130, 150, 130, 40)
                                            color:[UIColor blueColor]
@@ -91,7 +95,7 @@
 }
 
 - (void)initChangePassword{
-    UILabel* oldLabelPassword = [MAUtils laeblWithTxt:MyLocal(@"file_old_password")
+    UILabel* oldLabelPassword = [MAUtils labelWithTxt:MyLocal(@"file_old_password")
                                              frame:CGRectMake(20, 50, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
@@ -110,14 +114,14 @@
     [oldPassword setEnabled:NO];
     [self addSubview:oldPassword];
     
-    UILabel* labelPassword = [MAUtils laeblWithTxt:MyLocal(@"file_new_password")
+    UILabel* labelPassword = [MAUtils labelWithTxt:MyLocal(@"file_new_password")
                                              frame:CGRectMake(20, 100, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
     labelPassword.textAlignment = UITextAlignmentRight;
     [self addSubview:labelPassword];
     
-    UILabel* labelconfirmPassword = [MAUtils laeblWithTxt:MyLocal(@"file_confirm_password")
+    UILabel* labelconfirmPassword = [MAUtils labelWithTxt:MyLocal(@"file_confirm_password")
                                                     frame:CGRectMake(20, 150, 110, 40)
                                                      font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                     color:[UIColor whiteColor] ];
@@ -162,13 +166,25 @@
 }
 
 - (void)initResetPassword{
-    UILabel* labelGetCaptcha= [MAUtils laeblWithTxt:MyLocal(@"file_get_captcha")
+    UILabel* labelGetCaptcha= [MAUtils labelWithTxt:MyLocal(@"file_get_captcha")
                                                 frame:CGRectMake(20, 50, 110, 40)
                                                  font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                 color:[UIColor whiteColor] ];
     labelGetCaptcha.textAlignment = UITextAlignmentLeft;
     [self addSubview:labelGetCaptcha];
     
+    //添加多选框
+    MACheckBox *box1 = [[MACheckBox alloc] initWithGroupId:KBoxGroupId index:KBoxSendEmail text:MyLocal(@"file_set_reset_email")];
+	box1.frame = CGRectMake(40, 100, 115, 40);
+	[self addSubview:box1];
+    
+	MACheckBox *box2 = [[MACheckBox alloc] initWithGroupId:KBoxGroupId index:KBoxSendSMS text:MyLocal(@"file_set_reset_sms")];
+	box2.frame = CGRectMake(180, 100, 115, 40);
+	[self addSubview:box2];
+    
+    [MACheckBox addObserverForGroupId:KBoxGroupId observer:self];
+    
+    //输入
     UITextField* Captcha = [MAUtils textFieldInit:CGRectMake(20, 150, 100, 40)
                                                     color:[UIColor blueColor]
                                                   bgcolor:[UIColor grayColor]
@@ -259,8 +275,6 @@
      [_delegate Passwordclick:self btnState:YES];
 }
 
-
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return YES;
@@ -289,6 +303,19 @@
 - (void)tapAnywhereToDismissKeyboard:(UIGestureRecognizer *)gestureRecognizer {
     //此method会将self.view里所有的subview的first responder都resign掉
     [self endEditing:YES];
+}
+
+#pragma mark - checkbox Delegate
+-(void)checkBoxSelectedAtIndex:(MACheckBox*)box curSeleckeds:(NSMutableArray *)selecteds{
+    if (box.index == KBoxSendEmail) {
+        if ([box checkboxSelected:nil]) {
+
+        }
+    } else if (box.index == KBoxSendSMS) {
+        if (![box checkboxSelected:nil]) {
+
+        }
+    }
 }
 
 @end

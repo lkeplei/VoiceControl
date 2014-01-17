@@ -59,7 +59,7 @@
 
 #pragma mark - init area
 -(void)initView{
-    _timeLabel = [MAUtils laeblWithTxt:@""
+    _timeLabel = [MAUtils labelWithTxt:@""
                                    frame:CGRectMake(self.frame.size.width - KSpaceOff - KTimeLabelWidth,
                                                     self.frame.size.height - KTimeLabelHeight, KTimeLabelWidth, KTimeLabelHeight)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]

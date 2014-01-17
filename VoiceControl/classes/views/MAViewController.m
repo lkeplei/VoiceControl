@@ -71,7 +71,7 @@
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [self.view addSubview:_topView];
     
-    _titleLabel = [MAUtils laeblWithTxt:nil
+    _titleLabel = [MAUtils labelWithTxt:nil
                                   frame:_topView.frame
                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];

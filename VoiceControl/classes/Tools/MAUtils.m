@@ -202,7 +202,7 @@ static MAUtils* _shareUtils = nil;
     return button;
 }
 
-+(UILabel*)laeblWithTxt:(NSString *)buttonText frame:(CGRect)frame
++(UILabel*)labelWithTxt:(NSString *)buttonText frame:(CGRect)frame
                    font:(UIFont*)font color:(UIColor*)color{
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
     label.text = buttonText;
