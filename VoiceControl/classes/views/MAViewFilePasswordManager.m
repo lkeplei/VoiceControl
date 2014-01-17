@@ -195,19 +195,19 @@
 
 - (void)okBtnClicked:(id)sender{
     //密码验证
-    NSString* passwordFormatstr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$";
+    NSString* passwordFormatstr = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$";//@"^[0-9A-Za-z]{6,}$";
     UITextField* textfielsetPW = (UITextField*)[self viewWithTag:MASetPasswordType];
     UITextField* textfielconPW = (UITextField*)[self viewWithTag:MAConfirmPasswordType];
     UITextField* textfielnewPW = (UITextField*)[self viewWithTag:MANewPasswordType];
     if (textfielsetPW) {
         if (textfielsetPW.text == nil) {
             //密码不能为空
-            [[MAUtils shareUtils] showWeakRemind:@"密码不能为空" time:1];
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_null") time:1];
             return;
         }else{
             if (![textfielsetPW.text isMatchedByRegex:passwordFormatstr]) {
                 //密码格式不正确
-                [[MAUtils shareUtils] showWeakRemind:@"密码格式不正确" time:1];
+                [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_error") time:2];
                 return;
             }
         }
@@ -215,12 +215,12 @@
     if (textfielnewPW) {
         if (textfielnewPW.text == nil) {
             //密码不能为空
-            [[MAUtils shareUtils] showWeakRemind:@"密码不能为空" time:1];
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_null") time:1];
             return;
         }else{
             if (![textfielnewPW.text isMatchedByRegex:passwordFormatstr]) {
                 //密码格式不正确
-                [[MAUtils shareUtils] showWeakRemind:@"密码格式不正确" time:1];
+                [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_error") time:1];
                 return;
             }
         }
@@ -228,20 +228,21 @@
     if (textfielconPW) {
         if (textfielconPW.text == nil) {
             //再次输入密码不能为空
-            [[MAUtils shareUtils] showWeakRemind:@"再次输入密码不能为空" time:1];
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_confirm_null") time:1];
             return;
         }else{
             if ((textfielsetPW && [textfielconPW.text compare:textfielsetPW.text] != NSOrderedSame) ||
                 (textfielnewPW && [textfielconPW.text compare:textfielnewPW.text] != NSOrderedSame) ) {
                 //密码不匹配
-                [[MAUtils shareUtils] showWeakRemind:@"密码不匹配" time:1];
+                [[MAUtils shareUtils] showWeakRemind:MyLocal(@"password_mismatching") time:1];
                 return;
             }
         }
     }
     
-    
-    
+    //保存密码
+    NSString *password = textfielsetPW ? textfielsetPW.text : textfielnewPW.text;
+    [MADataManager setDataByKey:password forkey:KUserPassword];
 
     [_delegate Passwordclick:self btnState:YES];
 }

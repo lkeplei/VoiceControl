@@ -59,6 +59,12 @@
 
 +(NSString*)getFilePathInDocument:(NSString*)fileName;
 
+//打电话发邮件
++ (void) makeCall:(NSString *)phoneNumber msg:(NSString *)msg;
++ (void) sendSms:(NSString *)phoneNumber msg:(NSString *)msg;
++ (void) sendEmail:(NSString *)phoneNumber;
++ (void) sendEmail:(NSString *)to cc:(NSString*)cc subject:(NSString*)subject body:(NSString*)body;
+
 //file
 +(unsigned long long)getFileSize:(NSString*)filePath;
 +(unsigned long long)getFolderSize:(NSString*)folderPath;

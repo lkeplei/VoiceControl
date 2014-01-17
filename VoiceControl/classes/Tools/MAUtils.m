@@ -9,6 +9,7 @@
 #import "MAUtils.h"
 #import "MAConfig.h"
 #import "ZipArchive.h"
+#import "DeviceDetection/DeviceDetection.h"
 
 #include <sys/socket.h> // Per msqr
 #include <sys/sysctl.h>
@@ -445,4 +446,71 @@ static MAUtils* _shareUtils = nil;
 +(void)setVoice:(float)value{
     [[NSUserDefaults standardUserDefaults] setFloat:value forKey:@"PlayerVolume"];
 }
+
+
+
++ (void)alert:(NSString *)msg
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:msg message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
+}
+
++ (NSString*) cleanPhoneNumber:(NSString*)phoneNumber
+{
+    NSString* number = [NSString stringWithString:phoneNumber];
+    NSString* number1 = [[[number stringByReplacingOccurrencesOfString:@" " withString:@""]
+                          //                        stringByReplacingOccurrencesOfString:@"-" withString:@""]
+                          stringByReplacingOccurrencesOfString:@"(" withString:@""]
+                         stringByReplacingOccurrencesOfString:@")" withString:@""];
+    
+    return number1;
+}
+
++ (void) makeCall:(NSString *)phoneNumber msg:(NSString *)msg
+{
+    if ([DeviceDetection isIPodTouch]){
+        [MAUtils alert:msg];
+        return;
+    }
+    
+    NSString* numberAfterClear = [MAUtils cleanPhoneNumber:phoneNumber];
+    
+    NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", numberAfterClear]];
+    NSLog(@"make call, URL=%@", phoneNumberURL);
+    
+    [[UIApplication sharedApplication] openURL:phoneNumberURL];
+}
+
++ (void) sendSms:(NSString *)phoneNumber msg:(NSString *)msg
+{
+    if ([DeviceDetection isIPodTouch]){
+        [MAUtils alert:msg];
+        return;
+    }
+    
+    NSString* numberAfterClear = [MAUtils cleanPhoneNumber:phoneNumber];
+    
+    NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", numberAfterClear]];
+    NSLog(@"send sms, URL=%@", phoneNumberURL);
+    [[UIApplication sharedApplication] openURL:phoneNumberURL];
+}
+
++ (void) sendEmail:(NSString *)phoneNumber
+{
+    NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"mailto:%@", phoneNumber]];
+    NSLog(@"send sms, URL=%@", phoneNumberURL);
+    [[UIApplication sharedApplication] openURL:phoneNumberURL];
+}
+
++ (void) sendEmail:(NSString *)to cc:(NSString*)cc subject:(NSString*)subject body:(NSString*)body
+{
+    NSString* str = [NSString stringWithFormat:@"mailto:%@?cc=%@&subject=%@&body=%@",
+                     to, cc, subject, body];
+    
+    str = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    
+}
+
 @end
