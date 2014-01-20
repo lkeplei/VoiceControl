@@ -9,7 +9,6 @@
 #import "MAUtils.h"
 #import "MAConfig.h"
 #import "ZipArchive.h"
-#import "DeviceDetection/DeviceDetection.h"
 
 #include <sys/socket.h> // Per msqr
 #include <sys/sysctl.h>
@@ -468,11 +467,6 @@ static MAUtils* _shareUtils = nil;
 
 + (void) makeCall:(NSString *)phoneNumber msg:(NSString *)msg
 {
-    if ([DeviceDetection isIPodTouch]){
-        [MAUtils alert:msg];
-        return;
-    }
-    
     NSString* numberAfterClear = [MAUtils cleanPhoneNumber:phoneNumber];
     
     NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", numberAfterClear]];
@@ -483,11 +477,6 @@ static MAUtils* _shareUtils = nil;
 
 + (void) sendSms:(NSString *)phoneNumber msg:(NSString *)msg
 {
-    if ([DeviceDetection isIPodTouch]){
-        [MAUtils alert:msg];
-        return;
-    }
-    
     NSString* numberAfterClear = [MAUtils cleanPhoneNumber:phoneNumber];
     
     NSURL *phoneNumberURL = [NSURL URLWithString:[NSString stringWithFormat:@"sms:%@", numberAfterClear]];
