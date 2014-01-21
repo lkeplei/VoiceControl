@@ -18,6 +18,8 @@
 "view_title_select_menu" = "菜单";
 "view_title_file_manager" = "文件管理";
 "view_title_about_us" = "关于我们";
+"view_title_plan_customize" = "私人定制";
+"view_title_add_plan" = "计划";
 "view_title_set_file" = "文件设置";
 "view_title_setting" = "设置";
 
@@ -117,3 +119,15 @@
 //文件管理设置
 "file_set_reset_email" = "邮件";
 "file_set_reset_sms" = "短信";
+
+//主页
+"home_top_left" = "菜单";
+"home_top_right" = "主页";
+
+//私人订制
+"plan_top_left" = "编辑";
+"plan_top_right" = "添加";
+
+"plan_add_top_left" = "取消";
+"plan_add_top_right" = "存储";
+

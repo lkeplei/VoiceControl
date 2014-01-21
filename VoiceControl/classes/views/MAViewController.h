@@ -17,6 +17,8 @@ typedef enum {
     MAViewTypeFileManager,
     MAViewTypeSetting,
     MAViewTypeSettingFile,
+    MAViewTypePlanCustomize,
+    MAViewTypeAddPlan,
     MAViewTypeAboutUs,
     MAViewTypeSelectMenu
 } MAViewType;
@@ -25,6 +27,8 @@ typedef enum {
 
 -(void)changeToViewByType:(MAViewType)type;
 -(void)setGestureEnabled:(BOOL)enabled;
+
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn;
 
 //about view
 -(MAViewBase*)getView:(MAViewType)type;

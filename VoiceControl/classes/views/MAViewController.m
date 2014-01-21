@@ -17,8 +17,11 @@
 #import "MAViewAboutUs.h"
 #import "MAViewSetting.h"
 #import "MAViewSettingFile.h"
+#import "MAViewPlanCustomize.h"
+#import "MAViewAddPlan.h"
 
 #define KTopViewHeight      (44)
+#define KTopButtonWidth     (50)
 
 @interface MAViewController (){
     float   preTransX;
@@ -35,6 +38,8 @@
 @property (nonatomic, strong) MAViewSelectMenu* selectMenu;
 @property (nonatomic, strong) MAViewHome* homeView;
 @property (nonatomic, strong) MAViewFileManager* fileManagerView;
+@property (nonatomic, strong) MAViewPlanCustomize* planCustomizeView;
+@property (nonatomic, strong) MAViewAddPlan* addPlanView;
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewSetting* settingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
@@ -77,44 +82,55 @@
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
     [_topView addSubview:_titleLabel];
     
-    _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                 image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+    _homeBtn = [MAUtils buttonWithImg:MyLocal(@"home_top_right") off:0 zoomIn:NO
+                                 image:nil
+                              imagesec:nil
                                target:self
                                 action:@selector(homeBtnClicked:)];
+    _homeBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize22];
+    
     float off = (_topView.frame.size.height - _homeBtn.frame.size.height) / 2;
-    _homeBtn.frame = CGRectMake(_topView.frame.size.width - _homeBtn.frame.size.width - off, off,
-                                _homeBtn.frame.size.width, _homeBtn.frame.size.height);
+    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth - off, off,
+                                KTopButtonWidth, KTopViewHeight);
     [_topView addSubview:_homeBtn];
     
-    _menuBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                 image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+    _menuBtn = [MAUtils buttonWithImg:MyLocal(@"home_top_left") off:0 zoomIn:NO
+                                 image:nil
+                              imagesec:nil
                                 target:self
                                 action:@selector(menuBtnClicked:)];
-    _menuBtn.frame = CGRectMake(off, 0, KTopViewHeight, KTopViewHeight);
+    _menuBtn.frame = CGRectMake(off, off, KTopButtonWidth, KTopViewHeight);
+    _menuBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize22];
     [_topView addSubview:_menuBtn];
 }
 
 #pragma mark - btn clicked
 -(void)menuBtnClicked:(id)sender{
-    isMenuOpening = !isMenuOpening;
-    if (isMenuOpening) {
-        [self showMenu];
+    if ([_currentShowView subEvent]) {
+        [_currentShowView eventTopBtnClicked:YES];
     } else {
-        [self hideMenu];
+        isMenuOpening = !isMenuOpening;
+        if (isMenuOpening) {
+            [self showMenu];
+        } else {
+            [self hideMenu];
+        }
     }
 }
 
 -(void)homeBtnClicked:(id)sender{
-    [self changeToViewByType:MAViewTypeHome];
+    if ([_currentShowView subEvent]) {
+        [_currentShowView eventTopBtnClicked:NO];
+    } else {
+        [self changeToViewByType:MAViewTypeHome];
+    }
 }
 #pragma mark - about panel
 -(void)hideMenu {
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _currentShowView.frame = CGRectMake(0, _currentShowView.frame.origin.y, _currentShowView.frame.size.width,
                                             _currentShowView.frame.size.height);
-        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, -M_PI_2);
+//        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, -M_PI_2);
     }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -127,7 +143,7 @@
     [UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _currentShowView.frame = CGRectMake(KViewMenuWidth, _currentShowView.frame.origin.y,
                                             _currentShowView.frame.size.width, _currentShowView.frame.size.height);
-        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, M_PI_2);
+//        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, M_PI_2);
     }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -186,15 +202,27 @@
     [_panGestureRecongnize setEnabled:enabled];
 }
 
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
+    [_homeBtn.titleLabel setText:rightBtn];
+    [_menuBtn.titleLabel setText:leftBtn];
+}
+
 -(void)changeToViewByType:(MAViewType)type{
+    //旧页面将切换
+    [_currentShowView viewWillDisappear:YES];
+    
     if (_preShowView) {
         [self removeView:_preShowView.viewType];
     }
     [self removeView:_currentShowView.viewType];
-
+    
     MAViewType currentType = _currentShowView.viewType;
     _currentShowView = [self getView:type];
     _preShowView = [self getView:currentType];
+    
+    //新页面将显示
+    [_preShowView viewWillAppear:YES];
+    
     [[MAModel shareModel] changeView:_preShowView
                                   to:_currentShowView
                                 type:MATypeChangeViewFlipFromLeft
@@ -204,6 +232,7 @@
     [_currentShowView showView];
     
     [_titleLabel setText:_currentShowView.viewTitle];
+    
     //添加百度页面统计
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobPageStart eventName:_currentShowView.viewTitle label:nil];
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobPageEnd eventName:_preShowView.viewTitle label:nil];
@@ -212,6 +241,10 @@
     if (isMenuOpening) {
         [self menuBtnClicked:nil];   
     }
+    
+    //页面已切换
+    [_currentShowView viewDidAppear:YES];
+    [_preShowView viewDidDisappear:YES];
 }
 
 -(void)animationFinished:(id)sender{
@@ -268,6 +301,28 @@
             view = _settingFileView;
         }
             break;
+        case MAViewTypePlanCustomize:
+        {
+            if (_planCustomizeView == nil) {
+                _planCustomizeView = [[MAViewPlanCustomize alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
+                                                                               self.view.frame.size.width,
+                                                                               self.view.frame.size.height - KTopViewHeight)];
+                [self.view addSubview:_planCustomizeView];
+            }
+            view = _planCustomizeView;
+        }
+            break;
+        case MAViewTypeAddPlan:
+        {
+            if (_addPlanView == nil) {
+                _addPlanView = [[MAViewAddPlan alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
+                                                                                           self.view.frame.size.width,
+                                                                                           self.view.frame.size.height - KTopViewHeight)];
+                [self.view addSubview:_addPlanView];
+            }
+            view = _addPlanView;
+        }
+            break;
         case MAViewTypeAboutUs:
         {
             if (_aboutUsView == nil) {
@@ -318,6 +373,22 @@
             if (_settingFileView) {
                 [_settingFileView removeFromSuperview];
                 _settingFileView = nil;
+            }
+        }
+            break;
+        case MAViewTypePlanCustomize:
+        {
+            if (_planCustomizeView) {
+                [_planCustomizeView removeFromSuperview];
+                _planCustomizeView = nil;
+            }
+        }
+            break;
+        case MAViewTypeAddPlan:
+        {
+            if (_addPlanView) {
+                [_addPlanView removeFromSuperview];
+                _addPlanView = nil;
             }
         }
             break;

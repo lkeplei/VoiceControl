@@ -58,6 +58,8 @@
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
 		04E6567A178C5150003A6ACA /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65678178C5150003A6ACA /* MAViewController.m */; };
 		04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6567C178C5188003A6ACA /* MAAppDelegate.m */; };
+		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
+		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
 		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; };
@@ -168,6 +170,10 @@
 		04E65678178C5150003A6ACA /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
 		04E6567B178C5188003A6ACA /* MAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppDelegate.h; sourceTree = "<group>"; };
 		04E6567C178C5188003A6ACA /* MAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppDelegate.m; sourceTree = "<group>"; };
+		185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
+		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
+		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
+		185F2909188E4325005D163B /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
 		187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
 		187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
 		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
@@ -423,28 +429,32 @@
 		04E65676178C5150003A6ACA /* views */ = {
 			isa = PBXGroup;
 			children = (
+				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
+				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
+				BE207D7A17A2249800E0A12A /* MAViewAudioPlayControl.h */,
+				BE207D7B17A2249800E0A12A /* MAViewAudioPlayControl.m */,
+				04D444B217B13FED00F04486 /* MAViewBase.h */,
+				04D444B317B13FED00F04486 /* MAViewBase.m */,
+				04E65677178C5150003A6ACA /* MAViewController.h */,
+				04E65678178C5150003A6ACA /* MAViewController.m */,
+				0407465017ABFA7F00B70537 /* MAViewFileManager.h */,
+				0407465117ABFA7F00B70537 /* MAViewFileManager.m */,
 				187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */,
 				187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */,
 				0407464D17ABEFF100B70537 /* MAViewHome.h */,
 				0407464E17ABEFF100B70537 /* MAViewHome.m */,
-				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
-				04E65677178C5150003A6ACA /* MAViewController.h */,
-				04E65678178C5150003A6ACA /* MAViewController.m */,
-				BE207D7A17A2249800E0A12A /* MAViewAudioPlayControl.h */,
-				BE207D7B17A2249800E0A12A /* MAViewAudioPlayControl.m */,
 				04D7DE7017A503F200AF0450 /* MAViewSelectMenu.h */,
 				04D7DE7117A503F200AF0450 /* MAViewSelectMenu.m */,
-				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
-				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
-				0407465017ABFA7F00B70537 /* MAViewFileManager.h */,
-				0407465117ABFA7F00B70537 /* MAViewFileManager.m */,
-				04D444B217B13FED00F04486 /* MAViewBase.h */,
-				04D444B317B13FED00F04486 /* MAViewBase.m */,
 				04C238D517B6330E00B8B388 /* MAViewSetting.h */,
 				04C238D617B6330E00B8B388 /* MAViewSetting.m */,
-				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
 				BEBB070517E06916004F1C01 /* MAViewSettingFile.h */,
 				BEBB070617E06916004F1C01 /* MAViewSettingFile.m */,
+				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
+				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
+				185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */,
+				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
+				185F2908188E4325005D163B /* MAViewAddPlan.h */,
+				185F2909188E4325005D163B /* MAViewAddPlan.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -626,6 +636,7 @@
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
 				046B183D187C253700387497 /* CJSONScanner.m in Sources */,
 				04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */,
+				185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */,
 				04C6DE40179270BC00ED2EB5 /* SQLiteWrapper.cpp in Sources */,
 				046B183E187C253700387497 /* CJSONSerializer.m in Sources */,
 				046B1838187C253700387497 /* CJSONSerialization.m in Sources */,
@@ -635,6 +646,7 @@
 				046B1837187C253700387497 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				046B1835187C253700387497 /* CDataScanner.m in Sources */,
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
+				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				046B183C187C253700387497 /* CJSONDeserializer.m in Sources */,

@@ -11,6 +11,7 @@
 @implementation MAViewBase
 
 @synthesize viewTitle = _viewTitle;
+@synthesize subEvent = _subEvent;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -22,7 +23,33 @@
     return self;
 }
 
+#pragma mark - view appear methods
+-(void)viewDidAppear:(BOOL)animated{
+    
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+}
+
 #pragma mark - other
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
+    [self setSubEvent:YES];
+    [SysDelegate.viewController setTopBtn:leftBtn rightBtn:rightBtn];
+}
+
 -(void)showView{
+}
+
+-(void)eventTopBtnClicked:(BOOL)left{
+    
 }
 @end

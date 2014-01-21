@@ -36,6 +36,8 @@
     }else if(indexPath.section == 1 && indexPath.row == 1){
         [SysDelegate.viewController changeToViewByType:MAViewTypeSettingFile];
     }else if(indexPath.section == 2 && indexPath.row == 0){
+        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
+    }else if(indexPath.section == 3 && indexPath.row == 0){
         [SysDelegate.viewController changeToViewByType:MAViewTypeAboutUs];
     }
 }

@@ -61,6 +61,8 @@
 //数据库部分
 #define KSqliteDBName           @"SQLiteVoiceControl.db"
 #define KTableVoiceFiles        @"tableVoiceFiles"
+#define KTablePlan              @"tablePlan"
+
 //数据库 字段定义
 //tableVoiceFiles
 #define KDataBaseId                 @"id"

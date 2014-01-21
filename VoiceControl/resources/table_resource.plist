@@ -59,6 +59,22 @@
 					<key>enabled</key>
 					<false/>
 					<key>title</key>
+					<string>私人订制</string>
+				</dict>
+				<key>cell_array</key>
+				<array>
+					<dict>
+						<key>content</key>
+						<string>私人订制</string>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>section_property</key>
+				<dict>
+					<key>enabled</key>
+					<false/>
+					<key>title</key>
 					<string>关于我们</string>
 				</dict>
 				<key>cell_array</key>
