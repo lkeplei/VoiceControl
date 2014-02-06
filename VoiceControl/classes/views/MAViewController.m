@@ -209,7 +209,7 @@
 
 -(void)changeToViewByType:(MAViewType)type{
     //旧页面将切换
-    [_currentShowView viewWillDisappear:YES];
+    [_preShowView viewWillDisappear:YES];
     
     if (_preShowView) {
         [self removeView:_preShowView.viewType];
@@ -221,7 +221,7 @@
     _preShowView = [self getView:currentType];
     
     //新页面将显示
-    [_preShowView viewWillAppear:YES];
+    [_currentShowView viewWillAppear:YES];
     
     [[MAModel shareModel] changeView:_preShowView
                                   to:_currentShowView

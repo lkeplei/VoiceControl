@@ -76,7 +76,7 @@
 #pragma mark - init area
 -(void)initHud{
     _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
-    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), self.center.y - (KHudSizeWidth / 2), KHudSizeWidth, KHudSizeHeight);
+    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), self.center.y - (KHudSizeHeight / 2), KHudSizeWidth, KHudSizeHeight);
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;
     }
