@@ -15,3 +15,35 @@
     #import "MAAppDelegate.h"
     #define SysDelegate ((MAAppDelegate *)[[UIApplication sharedApplication] delegate])
 #endif
+
+
+//去除对齐警告
+#ifndef __MY_MACROS_H___
+#define __MY_MACROS_H___
+#ifdef __IPHONE_6_0
+#   define KTextAlignmentLeft NSTextAlignmentLeft
+#   define KTextAlignmentCenter NSTextAlignmentCenter
+#   define KTextAlignmentRight NSTextAlignmentRight
+#   define KLineBreakModeCharaterWrap NSLineBreakByCharWrapping
+#   define KLineBreakModeWordWrap NSLineBreakByWordWrapping
+#   define KLineBreakModeClip NSLineBreakByClipping
+#   define KLineBreakModeTruncatingHead NSLineBreakByTruncatingHead
+#   define KLineBreakModeTruncatingMiddle NSLineBreakByTruncatingMiddle
+#   define KLineBreakModeTruncatingTail NSLineBreakByTruncatingTail
+#else
+#   define KTextAlignmentLeft UITextAlignmentLeft
+#   define KTextAlignmentCenter UITextAlignmentCenter
+#   define KTextAlignmentRight UITextAlignmentRight
+#   define KLineBreakModeCharaterWrap UILineBreakModeCharacterWrap
+#   define KLineBreakModeWordWrap UILineBreakModeWordWrap
+#   define KLineBreakModeClip UILineBreakModeClip
+#   define KLineBreakModeTruncatingHead UILineBreakModeHeadTruncation
+#   define KLineBreakModeTruncatingMiddle UILineBreakModeMiddleTruncation
+#   define KLineBreakModeTruncatingTail UILineBreakModeTailTruncation
+#endif
+
+#define KMainScreenFrame [[UIScreen mainScreen] bounds]
+#define KMainScreenWidth kMainScreenFrame.size.width
+#define KMainScreenHeight kMainScreenFrame.size.height-20
+#define KApplicationFrame [[UIScreen mainScreen] applicationFrame]
+#endif

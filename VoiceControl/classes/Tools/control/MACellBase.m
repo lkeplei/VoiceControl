@@ -134,7 +134,7 @@
                                            font:[UIFont fontWithName:KLabelFontArial
                                                                 size:KLabelFontSize18]
                                           color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
-        label.textAlignment = UITextAlignmentLeft;
+        label.textAlignment = KTextAlignmentLeft;
         label.tag = KLabelTag;
     }
     [self.contentView addSubview:label];

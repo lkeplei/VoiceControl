@@ -73,6 +73,11 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self setTopBtn:MyLocal(@"home_top_left") rightBtn:MyLocal(@"home_top_right")];
+    [self setSubEvent:NO];
+}
+
 #pragma mark - init area
 -(void)initHud{
     _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
@@ -80,7 +85,6 @@
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;
     }
-
 }
 
 -(void)initBtns{
@@ -106,7 +110,7 @@
                                    frame:CGRectMake(210, 50, 100, 80)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
-    _labelVoice.textAlignment = UITextAlignmentLeft;
+    _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
 }

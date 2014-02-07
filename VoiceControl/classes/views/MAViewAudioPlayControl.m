@@ -64,7 +64,7 @@
                                                     self.frame.size.height - KTimeLabelHeight, KTimeLabelWidth, KTimeLabelHeight)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-    _timeLabel.textAlignment = UITextAlignmentRight;
+    _timeLabel.textAlignment = KTextAlignmentRight;
     [self addSubview:_timeLabel];
     
     //add progress

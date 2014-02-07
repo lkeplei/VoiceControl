@@ -49,6 +49,7 @@
 #define KLabelFontSize16        (16)
 #define KLabelFontSize18        (18)
 #define KLabelFontSize22        (22)
+#define KLabelFontSize30        (30)
 
 //NSUserDefaults key
 #define KUserDefaultFileTimeMax            @"file_time_max"
@@ -71,6 +72,9 @@
 #define KDataBasePath               @"path"
 #define KDataBaseDuration           @"duration"
 #define KDataBaseDataEver           @"ever"
+#define KDataBaseTitle              @"title"
+#define KDataBasePlanTime           @"plantime"
+#define KDataBaseStatus             @"status"
 
 #define KNameFormat                 @"MMMdHHmmss"
 #define KTimeFormat                 @"MM-dd HH:mm:ss"
@@ -123,6 +127,7 @@
 #define KWidth                  @"width"
 #define KEnabled                @"enabled"
 
+#define KPlanTime               @"plan_time"
 #define KCanJump                @"can_jump"
 #define KSwitchOn               @"switch_on"
 #define KRightView              @"right_view"

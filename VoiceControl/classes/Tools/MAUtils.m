@@ -173,8 +173,8 @@ static MAUtils* _shareUtils = nil;
         [button setTitle:text forState:UIControlStateNormal];
         
         if (image == nil && imagesec == nil) {
-            float width = [buttonText sizeWithFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]].width;
-            float height = [buttonText sizeWithFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]].height;
+            float width = [self getFontSize:buttonText font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]].width;
+            float height = [self getFontSize:buttonText font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]].height;
             
             button.frame = CGRectMake(0.0, 0.0, width, height);
         }
@@ -206,7 +206,7 @@ static MAUtils* _shareUtils = nil;
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
     label.text = buttonText;
     label.font = font;
-    label.textAlignment = UITextAlignmentCenter;   //first deprecated in IOS 6.0
+    label.textAlignment = KTextAlignmentCenter;   //first deprecated in IOS 6.0
     label.textColor = color;
     label.backgroundColor = [UIColor clearColor];
     
@@ -502,4 +502,11 @@ static MAUtils* _shareUtils = nil;
     
 }
 
++ (CGSize)getFontSize:(NSString*)text font:(UIFont*)font{
+    return [text sizeWithFont:font];
+}
+
++ (NSArray*)getArrayFromStrByCharactersInSet:(NSString*)strResource character:(NSString*)character{
+    return [strResource componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:character]];
+}
 @end

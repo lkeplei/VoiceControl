@@ -51,6 +51,9 @@
 
 +(void)callPhoneNumber:(NSString*)number view:(UIView*)view;
 
++(CGSize)getFontSize:(NSString*)text font:(UIFont*)font;
++(NSArray*)getArrayFromStrByCharactersInSet:(NSString*)strResource character:(NSString*)character;
+
 +(NSString*)getTimeString:(double)time format:(NSString*)format second:(BOOL)second;
 +(NSDate*)getDateFromString:(NSString*)time format:(NSString*)format;
 +(NSString*)getStringFromDate:(NSDate*)date format:(NSString*)format;

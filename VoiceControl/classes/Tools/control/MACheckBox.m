@@ -162,7 +162,7 @@ static NSMutableDictionary* box_observers = nil; //按分组名称存放空间�
                               frame:CGRectMake(kBoxHeight + kBoxOff, 0, kBoxWidth - kBoxHeight - kBoxOff, kBoxHeight)
                                font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize16]
                               color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:YES]];
-    _label.textAlignment = UITextAlignmentLeft;
+    _label.textAlignment = KTextAlignmentLeft;
     [self addSubview:_label];
     
     //将按钮添加的实例数组中

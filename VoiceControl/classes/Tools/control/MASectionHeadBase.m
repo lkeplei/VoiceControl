@@ -41,7 +41,7 @@
                                           frame:CGRectMake(0, 0, 200, 40)
                                            font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                                           color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-        _titleLabel.textAlignment = UITextAlignmentLeft;
+        _titleLabel.textAlignment = KTextAlignmentLeft;
         [self addSubview:_titleLabel];
         
         //添加单击手势

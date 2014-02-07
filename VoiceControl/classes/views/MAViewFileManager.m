@@ -119,7 +119,7 @@
                                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
             name.tag = KCellLabelNameTag;
-            name.textAlignment = UITextAlignmentLeft;
+            name.textAlignment = KTextAlignmentLeft;
             [cell.contentView addSubview:name];
         } else {
             name.text = str;

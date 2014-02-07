@@ -84,7 +84,13 @@ static MADataManager* _shareDataManager = nil;
                                        , duration varchar(8) \
                                        , path varchar(1024) \
                                        , ever integer);", tableName] UTF8String]);
-    } 
+    } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
+        res = sqlite.DirectStatement([[NSString stringWithFormat:@"create table if not exists %@ (id integer primary key \
+                                       , time varchar(8) \
+                                       , status integer \
+                                       , plantime varchar(64) \
+                                       , title varchar(32);", tableName] UTF8String]);
+    }
     
 	if(res){
 		DebugLog("%@", [NSString stringWithFormat:@"create table %@ successful", tableName]);
@@ -95,6 +101,10 @@ static MADataManager* _shareDataManager = nil;
 
 -(NSArray*)selectValueFromTabel:(NSString*)statement tableName:(NSString*)tableName{
     NSMutableArray* resArr = [[NSMutableArray alloc] init];
+    
+    if (tableName) {
+        [self createTabel:tableName];
+    }
     
     SQLiteStatement* stmt = nil;
     if(statement.length > 0){
@@ -115,10 +125,18 @@ static MADataManager* _shareDataManager = nil;
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(3).c_str()] forKey:KDataBaseDuration];
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(4).c_str()] forKey:KDataBasePath];
                 [resDic setObject:[MAUtils getNumberByInt:stmt->ValueInt(5)] forKey:KDataBaseDataEver];
+            } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
+                [resDic setObject:[MAUtils getNumberByInt:stmt->ValueInt(0)] forKey:KDataBaseId];
+                [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(1).c_str()] forKey:KDataBaseTime];
+                [resDic setObject:[MAUtils getStringByInt:stmt->ValueInt(2)] forKey:KDataBaseStatus];
+                [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(3).c_str()] forKey:KDataBasePlanTime];
+                [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(4).c_str()] forKey:KDataBaseTitle];
             }
             [resArr addObject:resDic];
 		}
 	}
+    
+    KSafeRelease(stmt);
     
     return resArr;
 }
@@ -147,6 +165,8 @@ static MADataManager* _shareDataManager = nil;
         DebugLog(@"error executing statement: %s", sqlite.LastError().c_str());
     }
 
+    KSafeRelease(stmt);
+    
     return resDic;
 }
 
@@ -167,6 +187,7 @@ static MADataManager* _shareDataManager = nil;
                 int arrCount = [valueArr count];
                 int off = count + arrCount - maxCount;
                 if (off > 0){
+                    KSafeRelease(valueCount);
                     valueCount = sqlite.Statement([[NSString stringWithFormat:@"select * from %@ order by id asc limit %d;", tableName, off] UTF8String]);
                     if (valueCount) {
                         valueCount->NextRow();
@@ -178,6 +199,7 @@ static MADataManager* _shareDataManager = nil;
                     }
                 }
             }
+            KSafeRelease(valueCount);
         }
     }
     
@@ -193,10 +215,19 @@ static MADataManager* _shareDataManager = nil;
                 stmt->Bind(3, [[resDic objectForKey:KDataBasePath] UTF8String]);
                 stmt->Bind(4, [[resDic objectForKey:KDataBaseDataEver] intValue]);
             }
+        } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
+            stmt = sqlite.Statement([[NSString stringWithFormat:@"insert into %@ (time, status, plantime, title)values(?, ?, ?, ?);", tableName] UTF8String]);
+            if (stmt){
+                stmt->Bind(0, [[resDic objectForKey:KDataBaseTime] UTF8String]);
+                stmt->Bind(1, [[resDic objectForKey:KDataBaseStatus] intValue]);
+                stmt->Bind(2, [[resDic objectForKey:KDataBasePlanTime] UTF8String]);
+                stmt->Bind(3, [[resDic objectForKey:KDataBaseTitle] UTF8String]);
+            }
         }
         
         if (stmt){
             if(stmt->Execute()){
+                KSafeRelease(stmt);
                 stmt = sqlite.Statement([[NSString stringWithFormat:@"select * from %@ order by id desc limit 1;", tableName] UTF8String]);
                 if (stmt) {
                     stmt->NextRow();
@@ -210,8 +241,7 @@ static MADataManager* _shareDataManager = nil;
                 DebugLog(@"error executing statement: %s", sqlite.LastError().c_str());
             }
             
-            delete stmt;
-            stmt = NULL;
+            KSafeRelease(stmt);
         }
     }
     

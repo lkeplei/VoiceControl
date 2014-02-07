@@ -47,14 +47,14 @@
                                              frame:CGRectMake(20, 100, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
-    labelPassword.textAlignment = UITextAlignmentRight;
+    labelPassword.textAlignment = KTextAlignmentRight;
     [self addSubview:labelPassword];
     
     UILabel* labelconfirmPassword = [MAUtils labelWithTxt:MyLocal(@"file_confirm_password")
                                              frame:CGRectMake(20, 150, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
-    labelPassword.textAlignment = UITextAlignmentRight;
+    labelPassword.textAlignment = KTextAlignmentRight;
     [self addSubview:labelconfirmPassword];
     
     UITextField* Password = [MAUtils textFieldInit:CGRectMake(130, 100, 130, 40)
@@ -99,7 +99,7 @@
                                              frame:CGRectMake(20, 50, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
-    oldLabelPassword.textAlignment = UITextAlignmentRight;
+    oldLabelPassword.textAlignment = KTextAlignmentRight;
     [self addSubview:oldLabelPassword];
     
     UITextField* oldPassword = [MAUtils textFieldInit:CGRectMake(130, 50, 130, 40)
@@ -118,14 +118,14 @@
                                              frame:CGRectMake(20, 100, 110, 40)
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                              color:[UIColor whiteColor] ];
-    labelPassword.textAlignment = UITextAlignmentRight;
+    labelPassword.textAlignment = KTextAlignmentRight;
     [self addSubview:labelPassword];
     
     UILabel* labelconfirmPassword = [MAUtils labelWithTxt:MyLocal(@"file_confirm_password")
                                                     frame:CGRectMake(20, 150, 110, 40)
                                                      font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                     color:[UIColor whiteColor] ];
-    labelPassword.textAlignment = UITextAlignmentRight;
+    labelPassword.textAlignment = KTextAlignmentRight;
     [self addSubview:labelconfirmPassword];
     
     UITextField* Password = [MAUtils textFieldInit:CGRectMake(130, 100, 130, 40)
@@ -170,7 +170,7 @@
                                                 frame:CGRectMake(20, 50, 110, 40)
                                                  font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
                                                 color:[UIColor whiteColor] ];
-    labelGetCaptcha.textAlignment = UITextAlignmentLeft;
+    labelGetCaptcha.textAlignment = KTextAlignmentLeft;
     [self addSubview:labelGetCaptcha];
     
     //添加多选框

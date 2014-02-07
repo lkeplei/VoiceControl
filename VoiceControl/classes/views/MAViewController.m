@@ -19,6 +19,8 @@
 #import "MAViewSettingFile.h"
 #import "MAViewPlanCustomize.h"
 #import "MAViewAddPlan.h"
+#import "MAViewAddPlanRepeat.h"
+#import "MAViewAddPlanLabel.h"
 
 #define KTopViewHeight      (44)
 #define KTopButtonWidth     (50)
@@ -31,6 +33,8 @@
 @property (nonatomic, strong) UIView* topView;
 @property (nonatomic, strong) UIButton* menuBtn;
 @property (nonatomic, strong) UIButton* homeBtn;
+@property (nonatomic, strong) UILabel* menuLabel;
+@property (nonatomic, strong) UILabel* homeLabel;
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic) UIPanGestureRecognizer* panGestureRecongnize;
 @property (nonatomic, strong) MAViewBase* currentShowView;
@@ -40,6 +44,8 @@
 @property (nonatomic, strong) MAViewFileManager* fileManagerView;
 @property (nonatomic, strong) MAViewPlanCustomize* planCustomizeView;
 @property (nonatomic, strong) MAViewAddPlan* addPlanView;
+@property (nonatomic, strong) MAViewAddPlanRepeat* addPlanRepeatView;
+@property (nonatomic, strong) MAViewAddPlanLabel* addPlanLabelView;
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewSetting* settingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
@@ -82,26 +88,31 @@
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
     [_topView addSubview:_titleLabel];
     
-    _homeBtn = [MAUtils buttonWithImg:MyLocal(@"home_top_right") off:0 zoomIn:NO
-                                 image:nil
-                              imagesec:nil
-                               target:self
-                                action:@selector(homeBtnClicked:)];
-    _homeBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize22];
-    
-    float off = (_topView.frame.size.height - _homeBtn.frame.size.height) / 2;
-    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth - off, off,
-                                KTopButtonWidth, KTopViewHeight);
+    //right btn
+    _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                         image:nil imagesec:nil
+                                        target:self action:@selector(homeBtnClicked:)];
+    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, 0, KTopButtonWidth, KTopViewHeight);
     [_topView addSubview:_homeBtn];
     
-    _menuBtn = [MAUtils buttonWithImg:MyLocal(@"home_top_left") off:0 zoomIn:NO
-                                 image:nil
-                              imagesec:nil
-                                target:self
-                                action:@selector(menuBtnClicked:)];
-    _menuBtn.frame = CGRectMake(off, off, KTopButtonWidth, KTopViewHeight);
-    _menuBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize22];
+    _homeLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_right")
+                                 frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
+                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    [_homeBtn addSubview:_homeLabel];
+    
+    //left btn
+    _menuBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                         image:nil imagesec:nil
+                                        target:self action:@selector(menuBtnClicked:)];
+    _menuBtn.frame = CGRectMake(0, 0, KTopButtonWidth, KTopViewHeight);
     [_topView addSubview:_menuBtn];
+    
+    _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
+                                 frame:CGRectMake(0, 0, _menuBtn.frame.size.width, _menuBtn.frame.size.height)
+                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    [_menuBtn addSubview:_menuLabel];
 }
 
 #pragma mark - btn clicked
@@ -203,8 +214,8 @@
 }
 
 -(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
-    [_homeBtn.titleLabel setText:rightBtn];
-    [_menuBtn.titleLabel setText:leftBtn];
+    [_homeLabel setText:rightBtn];
+    [_menuLabel setText:leftBtn];
 }
 
 -(void)changeToViewByType:(MAViewType)type{
@@ -323,6 +334,28 @@
             view = _addPlanView;
         }
             break;
+        case MAViewTypeAddPlanRepeat:
+        {
+            if (_addPlanRepeatView == nil) {
+                _addPlanRepeatView = [[MAViewAddPlanRepeat alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
+                                                                                           self.view.frame.size.width,
+                                                                                           self.view.frame.size.height - KTopViewHeight)];
+                [self.view addSubview:_addPlanRepeatView];
+            }
+            view = _addPlanRepeatView;
+        }
+            break;
+        case MAViewTypeAddPlanLabel:
+        {
+            if (_addPlanLabelView == nil) {
+                _addPlanLabelView = [[MAViewAddPlanLabel alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
+                                                                                         self.view.frame.size.width,
+                                                                                         self.view.frame.size.height - KTopViewHeight)];
+                [self.view addSubview:_addPlanLabelView];
+            }
+            view = _addPlanLabelView;
+        }
+            break;
         case MAViewTypeAboutUs:
         {
             if (_aboutUsView == nil) {
@@ -389,6 +422,22 @@
             if (_addPlanView) {
                 [_addPlanView removeFromSuperview];
                 _addPlanView = nil;
+            }
+        }
+            break;
+        case MAViewTypeAddPlanRepeat:
+        {
+            if (_addPlanRepeatView) {
+                [_addPlanRepeatView removeFromSuperview];
+                _addPlanRepeatView = nil;
+            }
+        }
+            break;
+        case MAViewTypeAddPlanLabel:
+        {
+            if (_addPlanLabelView) {
+                [_addPlanLabelView removeFromSuperview];
+                _addPlanLabelView = nil;
             }
         }
             break;

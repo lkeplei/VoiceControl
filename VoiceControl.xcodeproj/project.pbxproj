@@ -66,6 +66,9 @@
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
+		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
+		18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */; };
+		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
 		BE0443FC179FC50C00537368 /* icon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443F9179FC50C00537368 /* icon-ipad.png */; };
@@ -183,6 +186,12 @@
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
+		18DCB27A18A47F6600C13CDC /* MACellPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellPlan.h; sourceTree = "<group>"; };
+		18DCB27B18A47F6600C13CDC /* MACellPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellPlan.m; sourceTree = "<group>"; };
+		18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
+		18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanRepeat.m; sourceTree = "<group>"; };
+		18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanLabel.h; sourceTree = "<group>"; };
+		18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanLabel.m; sourceTree = "<group>"; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -455,6 +464,10 @@
 				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
 				185F2908188E4325005D163B /* MAViewAddPlan.h */,
 				185F2909188E4325005D163B /* MAViewAddPlan.m */,
+				18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */,
+				18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */,
+				18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */,
+				18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -483,6 +496,8 @@
 				04E39BBB17B72AFA00B0BEEE /* MACellBase.m */,
 				04559A2117CA076300DCEB8A /* MASectionHeadBase.h */,
 				04559A2217CA076300DCEB8A /* MASectionHeadBase.m */,
+				18DCB27A18A47F6600C13CDC /* MACellPlan.h */,
+				18DCB27B18A47F6600C13CDC /* MACellPlan.m */,
 			);
 			path = control;
 			sourceTree = "<group>";
@@ -629,7 +644,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */,
 				04E65652178C4F15003A6ACA /* main.m in Sources */,
+				18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */,
+				18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */,
 				187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
@@ -769,7 +787,7 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
@@ -777,7 +795,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -798,7 +816,7 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
@@ -806,7 +824,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

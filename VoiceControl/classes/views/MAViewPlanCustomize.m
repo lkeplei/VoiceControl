@@ -11,6 +11,9 @@
 #import "MADataManager.h"
 #import "MAConfig.h"
 #import "MAModel.h"
+#import "MACellPlan.h"
+
+#define KCellPlanHeight         (50)
 
 @interface MAViewPlanCustomize ()
 
@@ -64,13 +67,20 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return KCellPlanHeight;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *reuseIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    MACellPlan *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
-                                      reuseIdentifier:reuseIdentifier];
+        cell = [[MACellPlan alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
+    
+    if (_resourceArray && [indexPath row] < [_resourceArray count]) {
+        [cell setCellResource:[_resourceArray objectAtIndex:[indexPath row]]];
     }
     
     return cell;
@@ -84,7 +94,16 @@
 #pragma mark - other
 -(void)showView{
     NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTablePlan];
-    if (array) {
+    if (array && [array count] > 0) {
+        [self initResouce:array];
+    } else {
+        NSMutableDictionary* testDic = [[NSMutableDictionary alloc] init];
+        [testDic setObject:@"09:30" forKey:KTime];
+        [testDic setObject:[NSNumber numberWithBool:YES] forKey:KStatus];
+        [testDic setObject:@"小计" forKey:KTitle];
+        [testDic setObject:@"6,1,2,3,5,7" forKey:KPlanTime];
+        
+        array = [[NSArray alloc] initWithObjects:testDic, nil];
         [self initResouce:array];
     }
     
@@ -101,6 +120,8 @@
         } else {
             [_resourceArray removeAllObjects];
         }
+        
+        [_resourceArray addObjectsFromArray:array];
     }
 }
 

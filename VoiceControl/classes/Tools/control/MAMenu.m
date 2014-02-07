@@ -37,6 +37,7 @@
 */
 
 #import "MAMenu.h"
+#import "MAUtils.h"
 #import <QuartzCore/QuartzCore.h>
 
 const CGFloat kArrowSize = 12.f;
@@ -412,7 +413,7 @@ typedef enum {
     
     for (MAMenuItem *menuItem in _menuItems) {
 
-        const CGSize titleSize = [menuItem.title sizeWithFont:titleFont];
+        const CGSize titleSize = [MAUtils getFontSize:menuItem.title font:titleFont];
         const CGSize imageSize = menuItem.image.size;
 
         const CGFloat itemHeight = MAX(titleSize.height, imageSize.height) + kMarginY * 2;

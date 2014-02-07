@@ -19,9 +19,11 @@
 "view_title_file_manager" = "文件管理";
 "view_title_about_us" = "关于我们";
 "view_title_plan_customize" = "私人定制";
-"view_title_add_plan" = "计划";
+"view_title_add_plan" = "添加定制";
 "view_title_set_file" = "文件设置";
 "view_title_setting" = "设置";
+"view_title_add_plan_repeat" = "重复";
+"view_title_add_plan_label" = "标签";
 
 //time
 "time_second" = "%d秒";
@@ -130,4 +132,19 @@
 
 "plan_add_top_left" = "取消";
 "plan_add_top_right" = "存储";
+"plan_add_top_back" = "返回";
 
+"plan_add_repeat" = "重复";
+"plan_add_label" = "标签";
+
+"plan_add_repeat_default" = "永不";
+"plan_add_label_default" = "计划";
+
+"plan_time_0" = "每天";
+"plan_time_1" = "周一 ";
+"plan_time_2" = "周二 ";
+"plan_time_3" = "周三 ";
+"plan_time_4" = "周四 ";
+"plan_time_5" = "周五 ";
+"plan_time_6" = "周六 ";
+"plan_time_7" = "周日 ";
