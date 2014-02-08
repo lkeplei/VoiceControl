@@ -9,20 +9,10 @@
 #import "MAViewController.h"
 #import "MAUtils.h"
 #import "MAConfig.h"
-#import "MAModel.h"
+#import "MAViewFactory.h"
 
 #import "MAViewSelectMenu.h"
-#import "MAViewHome.h"
-#import "MAViewFileManager.h"
-#import "MAViewAboutUs.h"
-#import "MAViewSetting.h"
-#import "MAViewSettingFile.h"
-#import "MAViewPlanCustomize.h"
-#import "MAViewAddPlan.h"
-#import "MAViewAddPlanRepeat.h"
-#import "MAViewAddPlanLabel.h"
 
-#define KTopViewHeight      (44)
 #define KTopButtonWidth     (50)
 
 @interface MAViewController (){
@@ -39,16 +29,9 @@
 @property (nonatomic) UIPanGestureRecognizer* panGestureRecongnize;
 @property (nonatomic, strong) MAViewBase* currentShowView;
 @property (nonatomic, strong) MAViewBase* preShowView;
+
 @property (nonatomic, strong) MAViewSelectMenu* selectMenu;
-@property (nonatomic, strong) MAViewHome* homeView;
-@property (nonatomic, strong) MAViewFileManager* fileManagerView;
-@property (nonatomic, strong) MAViewPlanCustomize* planCustomizeView;
-@property (nonatomic, strong) MAViewAddPlan* addPlanView;
-@property (nonatomic, strong) MAViewAddPlanRepeat* addPlanRepeatView;
-@property (nonatomic, strong) MAViewAddPlanLabel* addPlanLabelView;
-@property (nonatomic, strong) MAViewAboutUs* aboutUsView;
-@property (nonatomic, strong) MAViewSetting* settingView;
-@property (nonatomic, strong) MAViewSettingFile* settingFileView;
+@property (nonatomic, strong) MAViewFactory* viewFactory;
 
 @end
 
@@ -58,6 +41,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    _viewFactory = [[MAViewFactory alloc] init];
     
     [self initView];
     [self setupGestures];
@@ -69,16 +54,16 @@
 -(void)initView{
     [self initTopView];
 
-    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KTopViewHeight, KViewMenuWidth,
-                                                                     self.view.frame.size.height - KTopViewHeight)];
+    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KNavigationHeight, KViewMenuWidth,
+                                                                     self.view.frame.size.height - KNavigationHeight)];
     [self.view addSubview:_selectMenu];
     
-    _currentShowView = [self getView:MAViewTypeHome];
+    _currentShowView = [self addView:MAViewTypeHome];
     [_titleLabel setText:_currentShowView.viewTitle];
 }
 
 -(void)initTopView{
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KTopViewHeight)];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KNavigationHeight)];
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [self.view addSubview:_topView];
     
@@ -92,7 +77,7 @@
     _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                          image:nil imagesec:nil
                                         target:self action:@selector(homeBtnClicked:)];
-    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, 0, KTopButtonWidth, KTopViewHeight);
+    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, 0, KTopButtonWidth, KNavigationHeight);
     [_topView addSubview:_homeBtn];
     
     _homeLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_right")
@@ -105,7 +90,7 @@
     _menuBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                          image:nil imagesec:nil
                                         target:self action:@selector(menuBtnClicked:)];
-    _menuBtn.frame = CGRectMake(0, 0, KTopButtonWidth, KTopViewHeight);
+    _menuBtn.frame = CGRectMake(0, 0, KTopButtonWidth, KNavigationHeight);
     [_topView addSubview:_menuBtn];
     
     _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
@@ -208,14 +193,54 @@
 	}
 }
 
-#pragma mark - other methods
--(void)setGestureEnabled:(BOOL)enabled{
-    [_panGestureRecongnize setEnabled:enabled];
+#pragma mark - about view control
+-(MAViewBase*)getView:(MAViewType)type{
+    return [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight, self.view.frame.size.width,
+                                                                   self.view.frame.size.height - KNavigationHeight)];
 }
 
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
-    [_homeLabel setText:rightBtn];
-    [_menuLabel setText:leftBtn];
+-(MAViewBase*)addView:(MAViewType)type{
+    MAViewBase* view = [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight, self.view.frame.size.width,
+                                                                   self.view.frame.size.height - KNavigationHeight)];
+    [self.view addSubview:view];
+    return view;
+}
+
+-(void)pushView:(MAViewBase*)subView animatedType:(MAType)type{
+    _preShowView = _currentShowView;
+    _currentShowView = subView;
+    
+    [[MAModel shareModel] changeView:_preShowView
+                                  to:_currentShowView
+                                type:MATypeChangeViewFlipFromLeft
+                            delegate:self
+                            selector:nil];
+    [_currentShowView showView];
+    [_titleLabel setText:_currentShowView.viewTitle];
+    [self.view addSubview:_currentShowView];
+    
+    //页面已切换
+    [_currentShowView viewDidAppear:YES];
+    [_preShowView viewDidDisappear:YES];
+}
+
+-(void)popView:(MAViewBase*)lastView preView:(MAViewBase*)preView animatedType:(MAType)type{
+    _currentShowView = preView;
+    
+    [[MAModel shareModel] changeView:lastView
+                                  to:preView
+                                type:MATypeChangeViewFlipFromLeft
+                            delegate:self
+                            selector:nil];
+    
+    [_titleLabel setText:_currentShowView.viewTitle];
+    
+    //页面已切换
+    [preView viewDidAppear:YES];
+    [lastView viewDidDisappear:YES];
+    
+    [lastView removeFromSuperview];
+    lastView = nil;
 }
 
 -(void)changeToViewByType:(MAViewType)type{
@@ -223,13 +248,13 @@
     [_preShowView viewWillDisappear:YES];
     
     if (_preShowView) {
-        [self removeView:_preShowView.viewType];
+        [_viewFactory removeView:_preShowView.viewType];
     }
-    [self removeView:_currentShowView.viewType];
+    [_viewFactory removeView:_currentShowView.viewType];
     
     MAViewType currentType = _currentShowView.viewType;
-    _currentShowView = [self getView:type];
-    _preShowView = [self getView:currentType];
+    _currentShowView = [self addView:type];
+    _preShowView = [self addView:currentType];
     
     //新页面将显示
     [_currentShowView viewWillAppear:YES];
@@ -258,200 +283,19 @@
     [_preShowView viewDidDisappear:YES];
 }
 
+#pragma mark - other methods
+-(void)setGestureEnabled:(BOOL)enabled{
+    [_panGestureRecongnize setEnabled:enabled];
+}
+
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
+    [_homeLabel setText:rightBtn];
+    [_menuLabel setText:leftBtn];
+}
+
 -(void)animationFinished:(id)sender{
     if (_preShowView && _preShowView.viewType != _currentShowView.viewType) {
-        [self removeView:_preShowView.viewType];
-    }
-}
-
-#pragma mark - about view manager
--(MAViewBase*)getView:(MAViewType)type{
-    MAViewBase* view = nil;
-    switch (type) {
-        case MAViewTypeHome:
-        {
-            if (_homeView == nil) {
-                _homeView = [[MAViewHome alloc] initWithFrame:CGRectMake(0, KTopViewHeight, self.view.frame.size.width,
-                                                                         self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_homeView];
-            }
-            view = _homeView;
-        }
-            break;
-
-        case MAViewTypeFileManager:
-        {
-            if (_fileManagerView == nil) {
-                _fileManagerView = [[MAViewFileManager alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                                       self.view.frame.size.width,
-                                                                                       self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_fileManagerView];
-            }
-            view = _fileManagerView;
-        }
-            break;
-        case MAViewTypeSetting:
-        {
-            if (_settingView == nil) {
-                _settingView = [[MAViewSetting alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                               self.view.frame.size.width,
-                                                                               self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_settingView];
-            }
-            view = _settingView;
-        }
-            break;
-        case MAViewTypeSettingFile:
-        {
-            if (_settingFileView == nil) {
-                _settingFileView = [[MAViewSettingFile alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                               self.view.frame.size.width,
-                                                                               self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_settingFileView];
-            }
-            view = _settingFileView;
-        }
-            break;
-        case MAViewTypePlanCustomize:
-        {
-            if (_planCustomizeView == nil) {
-                _planCustomizeView = [[MAViewPlanCustomize alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                               self.view.frame.size.width,
-                                                                               self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_planCustomizeView];
-            }
-            view = _planCustomizeView;
-        }
-            break;
-        case MAViewTypeAddPlan:
-        {
-            if (_addPlanView == nil) {
-                _addPlanView = [[MAViewAddPlan alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                                           self.view.frame.size.width,
-                                                                                           self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_addPlanView];
-            }
-            view = _addPlanView;
-        }
-            break;
-        case MAViewTypeAddPlanRepeat:
-        {
-            if (_addPlanRepeatView == nil) {
-                _addPlanRepeatView = [[MAViewAddPlanRepeat alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                                           self.view.frame.size.width,
-                                                                                           self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_addPlanRepeatView];
-            }
-            view = _addPlanRepeatView;
-        }
-            break;
-        case MAViewTypeAddPlanLabel:
-        {
-            if (_addPlanLabelView == nil) {
-                _addPlanLabelView = [[MAViewAddPlanLabel alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                                         self.view.frame.size.width,
-                                                                                         self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_addPlanLabelView];
-            }
-            view = _addPlanLabelView;
-        }
-            break;
-        case MAViewTypeAboutUs:
-        {
-            if (_aboutUsView == nil) {
-                _aboutUsView = [[MAViewAboutUs alloc] initWithFrame:CGRectMake(0, KTopViewHeight,
-                                                                               self.view.frame.size.width,
-                                                                               self.view.frame.size.height - KTopViewHeight)];
-                [self.view addSubview:_aboutUsView];
-            }
-            view = _aboutUsView;
-        }
-            break;
-            
-        default:
-            break;
-    }
-    
-    return view;
-}
-
--(void)removeView:(MAViewType)type{
-    switch (type) {
-        case MAViewTypeHome:
-        {
-            if (_homeView) {
-                [_homeView removeFromSuperview];
-                _homeView = nil;
-            }
-        }
-            break;
-        case MAViewTypeFileManager:
-        {
-            if (_fileManagerView) {
-                [_fileManagerView removeFromSuperview];
-                _fileManagerView = nil;
-            }
-        }
-            break;
-        case MAViewTypeSetting:
-        {
-            if (_settingView) {
-                [_settingView removeFromSuperview];
-                _settingView = nil;
-            }
-        }
-            break;
-        case MAViewTypeSettingFile:
-        {
-            if (_settingFileView) {
-                [_settingFileView removeFromSuperview];
-                _settingFileView = nil;
-            }
-        }
-            break;
-        case MAViewTypePlanCustomize:
-        {
-            if (_planCustomizeView) {
-                [_planCustomizeView removeFromSuperview];
-                _planCustomizeView = nil;
-            }
-        }
-            break;
-        case MAViewTypeAddPlan:
-        {
-            if (_addPlanView) {
-                [_addPlanView removeFromSuperview];
-                _addPlanView = nil;
-            }
-        }
-            break;
-        case MAViewTypeAddPlanRepeat:
-        {
-            if (_addPlanRepeatView) {
-                [_addPlanRepeatView removeFromSuperview];
-                _addPlanRepeatView = nil;
-            }
-        }
-            break;
-        case MAViewTypeAddPlanLabel:
-        {
-            if (_addPlanLabelView) {
-                [_addPlanLabelView removeFromSuperview];
-                _addPlanLabelView = nil;
-            }
-        }
-            break;
-        case MAViewTypeAboutUs:
-        {
-            if (_aboutUsView) {
-                [_aboutUsView removeFromSuperview];
-                _aboutUsView = nil;
-            }
-        }
-            break;
-            
-        default:
-            break;
+        [_viewFactory removeView:_preShowView.viewType];
     }
 }
 

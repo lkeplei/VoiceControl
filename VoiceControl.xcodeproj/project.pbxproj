@@ -58,6 +58,8 @@
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
 		04E6567A178C5150003A6ACA /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65678178C5150003A6ACA /* MAViewController.m */; };
 		04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6567C178C5188003A6ACA /* MAAppDelegate.m */; };
+		182AEDA618A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */; };
+		182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */; };
 		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
@@ -173,6 +175,9 @@
 		04E65678178C5150003A6ACA /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
 		04E6567B178C5188003A6ACA /* MAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppDelegate.h; sourceTree = "<group>"; };
 		04E6567C178C5188003A6ACA /* MAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppDelegate.m; sourceTree = "<group>"; };
+		182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_plan_repeat_selected@2x.png"; sourceTree = "<group>"; };
+		182AEDA718A5FFAB00C6EC4E /* MAViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFactory.h; sourceTree = "<group>"; };
+		182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFactory.m; sourceTree = "<group>"; };
 		185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
 		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
@@ -505,6 +510,7 @@
 		BE073A75179E9F3400340A47 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */,
 				187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */,
 				187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */,
 				0422DDF817EC01660004C289 /* microphone.png */,
@@ -526,6 +532,8 @@
 				BE044400179FE97300537368 /* MAModel.m */,
 				18EC3DE7186D4A0700B3BC81 /* MASkinData.h */,
 				18EC3DE8186D4A0700B3BC81 /* MASkinData.m */,
+				182AEDA718A5FFAB00C6EC4E /* MAViewFactory.h */,
+				182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -631,6 +639,7 @@
 				04D7DE6B17A4BB7900AF0450 /* play_control_pre@2x.png in Resources */,
 				04D7DE6F17A4D90900AF0450 /* play_control_play@2x.png in Resources */,
 				045DFA9417A9430300F517AA /* table_resource.plist in Resources */,
+				182AEDA618A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png in Resources */,
 				04DD53AD17C7FDDA003FF77C /* home_menu@2x.png in Resources */,
 				187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */,
 				0422DDF917EC01660004C289 /* microphone.png in Resources */,
@@ -665,6 +674,7 @@
 				046B1835187C253700387497 /* CDataScanner.m in Sources */,
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
 				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
+				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				046B183C187C253700387497 /* CJSONDeserializer.m in Sources */,

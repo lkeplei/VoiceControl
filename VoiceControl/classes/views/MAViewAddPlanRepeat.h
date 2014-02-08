@@ -8,6 +8,6 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewAddPlanRepeat : MAViewBase
+@interface MAViewAddPlanRepeat : MAViewBase<UITableViewDataSource, UITableViewDelegate>
 
 @end

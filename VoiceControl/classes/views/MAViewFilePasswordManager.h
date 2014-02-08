@@ -23,6 +23,6 @@ typedef enum {
 
 @interface MAViewFilePasswordManager : MAViewBase<UITextFieldDelegate>
 
-@property (nonatomic, strong) id <MAClickPasswordBtn> delegate;
+@property (nonatomic, assign) id <MAClickPasswordBtn> delegate;
 
 @end

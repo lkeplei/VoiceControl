@@ -127,6 +127,9 @@
         case MATypeImgBtn:
             return KSkinSetImgBtn;
             break;
+        case MATypeImgAddPlanReSec:
+            return KSkinSetImgAddPlanReSec;
+            break;
         default:
             return nil;
             break;

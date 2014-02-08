@@ -138,13 +138,20 @@
 "plan_add_label" = "标签";
 
 "plan_add_repeat_default" = "永不";
+"plan_add_repeat_0" = "每周日";
+"plan_add_repeat_1" = "每周一";
+"plan_add_repeat_2" = "每周二";
+"plan_add_repeat_3" = "每周三";
+"plan_add_repeat_4" = "每周四";
+"plan_add_repeat_5" = "每周五";
+"plan_add_repeat_6" = "每周六";
 "plan_add_label_default" = "计划";
 
-"plan_time_0" = "每天";
+"plan_time_0" = "周日 ";
 "plan_time_1" = "周一 ";
 "plan_time_2" = "周二 ";
 "plan_time_3" = "周三 ";
 "plan_time_4" = "周四 ";
 "plan_time_5" = "周五 ";
 "plan_time_6" = "周六 ";
-"plan_time_7" = "周日 ";
+"plan_time_7" = "每天";

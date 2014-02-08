@@ -89,7 +89,7 @@ static MADataManager* _shareDataManager = nil;
                                        , time varchar(8) \
                                        , status integer \
                                        , plantime varchar(64) \
-                                       , title varchar(32);", tableName] UTF8String]);
+                                       , title varchar(32));", tableName] UTF8String]);
     }
     
 	if(res){
@@ -173,6 +173,10 @@ static MADataManager* _shareDataManager = nil;
 -(NSArray*)insertValueToTabel:(NSArray*)valueArr tableName:(NSString*)tableName maxCount:(uint32_t)maxCount{
     if (valueArr == nil) {
         return nil;
+    }
+    
+    if (tableName) {
+        [self createTabel:tableName];
     }
     
 //    int count = sqlite.lastInsertRowid();

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>  
+#import "MAModel.h"
 
 @class MAViewBase;
 
@@ -34,7 +35,23 @@ typedef enum {
 
 //about view
 -(MAViewBase*)getView:(MAViewType)type;
--(void)removeView:(MAViewType)type;
+
+/**
+ *  视图进栈
+ *
+ *  @param subView 要进来的视图
+ *  @param type 进栈动画
+ */
+-(void)pushView:(MAViewBase*)subView animatedType:(MAType)type;
+
+/**
+ *  视图出栈
+ *
+ *  @param lastView 要出的视图
+ *  @param preView  前一个视图
+ *  @param type 出栈动画
+ */
+-(void)popView:(MAViewBase*)lastView preView:(MAViewBase*)preView animatedType:(MAType)type;
 
 //email
 -(void)sendEMail:(NSArray*)fileArray;

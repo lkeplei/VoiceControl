@@ -9,6 +9,7 @@
 #import "MAViewAddPlan.h"
 #import "MAModel.h"
 #import "MAConfig.h"
+#import "MADataManager.h"
 
 #define KCellPlanTimeTag        (1000)
 #define KCellTitleTag           (1001)
@@ -148,12 +149,31 @@
     return cell;
 }
 
+#pragma mark - MAViewBackDelegate
+-(void)MAViewBack:(NSDictionary*)resource viewType:(MAViewType)type{
+    if (type == MAViewTypeAddPlanRepeat) {
+        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        if (cell) {
+            [cell.detailTextLabel setText:[resource objectForKey:KText]];
+        }
+    } else if(type == MAViewTypeAddPlanLabel){
+        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        if (cell) {
+            [cell.detailTextLabel setText:[resource objectForKey:KText]];
+        }
+    }
+}
+
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlanRepeat];
+        MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanRepeat];
+        view.delegate = self;
+        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     }else if(indexPath.section == 0 && indexPath.row == 1){
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlanLabel];
+        MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
+        view.delegate = self;
+        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     }
 }
 
@@ -164,10 +184,24 @@
 }
 
 -(void)eventTopBtnClicked:(BOOL)left{
-    if (left) {
-        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
-    } else {
+    if (!left)  {
+        NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:@"10:30" forKey:KDataBaseTime];
+        [dic setObject:[NSNumber numberWithBool:YES] forKey:KDataBaseStatus];
         
+        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        if (cell) {
+            [dic setObject:[cell.detailTextLabel text] forKey:KDataBasePlanTime];
+        }
+        
+        cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        if (cell) {
+            [dic setObject:[cell.detailTextLabel text] forKey:KDataBaseTitle];
+        }
+
+        [[MADataManager shareDataManager] insertValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan maxCount:0];
     }
+    
+    [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
 }
 @end

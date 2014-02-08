@@ -19,7 +19,8 @@ typedef enum {
     MATypeFileForEver,
     MATypeFilePwd,
     
-    MATypeChangeViewCurlDown = 100,
+    MATypeChangeViewNull = 100,
+    MATypeChangeViewCurlDown,
     MATypeChangeViewCurlUp,
     MATypeChangeViewFlipFromLeft,
     MATypeChangeViewFlipFromRight,
@@ -40,6 +41,7 @@ typedef enum {
     MATypeImgPlayPre,
     MATypeImgBtnsec,
     MATypeImgBtn,
+    MATypeImgAddPlanReSec,
     
     MATypeBaiduMobLogEvent = 400,
     MATypeBaiduMobEventStart,

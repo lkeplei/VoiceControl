@@ -8,6 +8,6 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewAddPlan : MAViewBase<UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate>
+@interface MAViewAddPlan : MAViewBase<UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, MAViewBaseDelegate>
 
 @end

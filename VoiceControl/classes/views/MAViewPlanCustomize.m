@@ -96,15 +96,6 @@
     NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTablePlan];
     if (array && [array count] > 0) {
         [self initResouce:array];
-    } else {
-        NSMutableDictionary* testDic = [[NSMutableDictionary alloc] init];
-        [testDic setObject:@"09:30" forKey:KTime];
-        [testDic setObject:[NSNumber numberWithBool:YES] forKey:KStatus];
-        [testDic setObject:@"小计" forKey:KTitle];
-        [testDic setObject:@"6,1,2,3,5,7" forKey:KPlanTime];
-        
-        array = [[NSArray alloc] initWithObjects:testDic, nil];
-        [self initResouce:array];
     }
     
     if (_tableView == nil) {

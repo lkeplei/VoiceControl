@@ -62,6 +62,13 @@
 				<key>image</key>
 				<string>button.png</string>
 			</dict>
+			<key>skin_image_addplan_repeat_sec</key>
+			<dict>
+				<key>describe</key>
+				<string>重复界面列表选中状态标识</string>
+				<key>image</key>
+				<string>add_plan_repeat_selected.png</string>
+			</dict>
 		</dict>
 		<key>skin_set_color</key>
 		<dict>
