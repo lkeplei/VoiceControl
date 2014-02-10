@@ -10,6 +10,7 @@
 #import "MAModel.h"
 #import "MAConfig.h"
 #import "MADataManager.h"
+#import "MAViewAddPlanLabel.h"
 
 #define KCellPlanTimeTag        (1000)
 #define KCellTitleTag           (1001)
@@ -174,6 +175,11 @@
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
         view.delegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
+        
+        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        if (cell) {
+            [(MAViewAddPlanLabel*)view setText:[cell.detailTextLabel text]];
+        }
     }
 }
 
@@ -186,7 +192,10 @@
 -(void)eventTopBtnClicked:(BOOL)left{
     if (!left)  {
         NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:@"10:30" forKey:KDataBaseTime];
+        NSString* time = [NSString stringWithFormat:@"%@:%@", [_hourArray objectAtIndex:[_timePicker selectedRowInComponent:0]],
+                         [_secondArray objectAtIndex:[_timePicker selectedRowInComponent:1]]];
+        [dic setObject:time forKey:KDataBaseTime];
+        
         [dic setObject:[NSNumber numberWithBool:YES] forKey:KDataBaseStatus];
         
         UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];

@@ -239,8 +239,7 @@
     [preView viewDidAppear:YES];
     [lastView viewDidDisappear:YES];
     
-    [lastView removeFromSuperview];
-    lastView = nil;
+    [_viewFactory removeView:lastView.viewType];
 }
 
 -(void)changeToViewByType:(MAViewType)type{

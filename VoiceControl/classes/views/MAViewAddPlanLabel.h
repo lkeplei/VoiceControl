@@ -8,6 +8,8 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewAddPlanLabel : MAViewBase
+@interface MAViewAddPlanLabel : MAViewBase<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
+
+-(void)setText:(NSString*)text;
 
 @end
