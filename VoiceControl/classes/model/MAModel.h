@@ -42,6 +42,7 @@ typedef enum {
     MATypeImgBtnsec,
     MATypeImgBtn,
     MATypeImgAddPlanReSec,
+    MATypeImgCellIndicator,
     
     MATypeBaiduMobLogEvent = 400,
     MATypeBaiduMobEventStart,

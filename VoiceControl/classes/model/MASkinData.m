@@ -130,6 +130,9 @@
         case MATypeImgAddPlanReSec:
             return KSkinSetImgAddPlanReSec;
             break;
+        case MATypeImgCellIndicator:
+            return KSkinSetImgCellIndicator;
+            break;
         default:
             return nil;
             break;

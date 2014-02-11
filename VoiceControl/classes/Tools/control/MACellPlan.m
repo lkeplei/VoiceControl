@@ -10,14 +10,22 @@
 #import "MAUtils.h"
 #import "MAConfig.h"
 #import "MAModel.h"
+#import "MADataManager.h"
 
 #define KTimeLabelTag       (1000)
 #define KTitleLableTag      (1001)
 #define KPlanLabelTag       (1002)
 #define KSwitchTag          (1003)
+#define KIndicatorTag       (1004)
 
 #define KSwitchWidth        (60)
 #define KSwitchHeight       (16)
+
+@interface MACellPlan ()
+
+@property (nonatomic, strong) NSDictionary* resourceDic;
+
+@end
 
 @implementation MACellPlan
 
@@ -34,7 +42,9 @@
 
 }
 
--(void)setCellResource:(NSDictionary*)resDic{
+-(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing{
+    _resourceDic = resDic;
+    
     int offset = 10;
     float heightRate = 0.75;
     //time
@@ -100,6 +110,30 @@
         [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
         [self.contentView addSubview:switcher];
     }
+    
+    //imgView
+    UIImageView* imgView = (UIImageView*)[self.contentView viewWithTag:KIndicatorTag];
+    if (!imgView) {
+        imgView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCellIndicator default:NO]];
+        imgView.center = CGPointMake(switcher.center.x - offset * 1.5, self.contentView.center.y);
+        imgView.tag = KIndicatorTag;
+        [self.contentView addSubview:imgView];
+    }
+
+    //other
+    if ([[resDic objectForKey:KDataBaseStatus] boolValue]) {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    } else {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    }
+    
+    if (editing) {
+        [switcher setHidden:YES];
+        [imgView setHidden:NO];
+    } else {
+        [switcher setHidden:NO];
+        [imgView setHidden:YES];
+    }
 }
 
 -(NSString*)getPlanTimeString:(NSString*)str{
@@ -116,6 +150,15 @@
 
 #pragma mark - switch
 -(void)switchAction:(id)sender{
-    DebugLog(@"kajsdlfjaskfdjaskjflasdfads");
+    if ([(UISwitch*)sender isOn]) {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    } else {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    }
+    
+    if (_resourceDic) {
+        [_resourceDic setValue:[NSNumber numberWithBool:[(UISwitch*)sender isOn]] forKey:KDataBaseStatus];
+        [[MADataManager shareDataManager] replaceValueToTabel:[NSArray arrayWithObjects:_resourceDic, nil] tableName:KTablePlan];
+    }
 }
 @end

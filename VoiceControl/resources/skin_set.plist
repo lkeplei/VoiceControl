@@ -65,9 +65,16 @@
 			<key>skin_image_addplan_repeat_sec</key>
 			<dict>
 				<key>describe</key>
-				<string>重复界面列表选中状态标识</string>
+				<string>重复界面列表选中状态标识skin_image_cell_indicator</string>
 				<key>image</key>
 				<string>add_plan_repeat_selected.png</string>
+			</dict>
+			<key>skin_image_cell_indicator</key>
+			<dict>
+				<key>describe</key>
+				<string>列表cell的向右的小箭头（表示有点击功能项）</string>
+				<key>image</key>
+				<string>cell_accessory_indicator.png</string>
 			</dict>
 		</dict>
 		<key>skin_set_color</key>

@@ -209,6 +209,9 @@ static MADataManager* _shareDataManager = nil;
     
     NSMutableArray* idArr = [[NSMutableArray alloc] init];
     for (NSDictionary* resDic in valueArr) {
+        if (resDic == nil) {
+            continue;
+        }
         SQLiteStatement* stmt = nil;
         if ([tableName compare:KTableVoiceFiles] == NSOrderedSame) {
             stmt = sqlite.Statement([[NSString stringWithFormat:@"insert into %@ (time, name, duration, path, ever)values(?, ?, ?, ?, ?);", tableName] UTF8String]);
@@ -250,5 +253,54 @@ static MADataManager* _shareDataManager = nil;
     }
     
     return idArr;
+}
+
+-(BOOL)replaceValueToTabel:(NSArray*)valueArr tableName:(NSString*)tableName{
+    if (valueArr == nil) {
+        return NO;
+    }
+    
+    if (tableName) {
+        [self createTabel:tableName];
+    }
+    
+    for (NSDictionary* resDic in valueArr) {
+        if (resDic == nil) {
+            continue;
+        }
+        SQLiteStatement* stmt = nil;
+        if ([tableName compare:KTableVoiceFiles] == NSOrderedSame) {
+            stmt = sqlite.Statement([[NSString stringWithFormat:@"replace into %@ (id, time, name, duration, path, ever)values(?, ?, ?, ?, ?, ?);", tableName] UTF8String]);
+            if (stmt){
+                stmt->Bind(0, [[resDic objectForKey:KDataBaseId] intValue]);
+                stmt->Bind(1, [[resDic objectForKey:KDataBaseTime] UTF8String]);
+                stmt->Bind(2, [[resDic objectForKey:KDataBaseFileName] UTF8String]);
+                stmt->Bind(3, [[resDic objectForKey:KDataBaseDuration] UTF8String]);
+                stmt->Bind(4, [[resDic objectForKey:KDataBasePath] UTF8String]);
+                stmt->Bind(5, [[resDic objectForKey:KDataBaseDataEver] intValue]);
+            }
+        } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
+            stmt = sqlite.Statement([[NSString stringWithFormat:@"replace into %@ (id, time, status, plantime, title)values(?, ?, ?, ?, ?);", tableName] UTF8String]);
+            if (stmt){
+                stmt->Bind(0, [[resDic objectForKey:KDataBaseId] intValue]);
+                stmt->Bind(1, [[resDic objectForKey:KDataBaseTime] UTF8String]);
+                stmt->Bind(2, [[resDic objectForKey:KDataBaseStatus] intValue]);
+                stmt->Bind(3, [[resDic objectForKey:KDataBasePlanTime] UTF8String]);
+                stmt->Bind(4, [[resDic objectForKey:KDataBaseTitle] UTF8String]);
+            }
+        }
+        
+        if (stmt){
+            if(stmt->Execute()){
+                DebugLog(@"statement executed");
+            } else {
+                DebugLog(@"error executing statement: %s", sqlite.LastError().c_str());
+            }
+            
+            KSafeRelease(stmt);
+        }
+    }
+    
+    return YES;
 }
 @end

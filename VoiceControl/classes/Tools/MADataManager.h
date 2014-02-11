@@ -22,5 +22,6 @@
 -(NSArray*)selectValueFromTabel:(NSString*)statement tableName:(NSString*)tableName;
 -(NSDictionary*)deleteValueFromTabel:(NSString*)statement tableName:(NSString*)tableName ID:(uint32_t)ID;
 -(NSArray*)insertValueToTabel:(NSArray*)valueArr tableName:(NSString*)tableName maxCount:(uint32_t)maxCount;
+-(BOOL)replaceValueToTabel:(NSArray*)valueArr tableName:(NSString*)tableName;
 
 @end

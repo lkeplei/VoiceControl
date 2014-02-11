@@ -9,14 +9,17 @@
 #import "MAViewAddPlan.h"
 #import "MAModel.h"
 #import "MAConfig.h"
+#import "MAUtils.h"
 #import "MADataManager.h"
 #import "MAViewAddPlanLabel.h"
 
 #define KCellPlanTimeTag        (1000)
 #define KCellTitleTag           (1001)
+#define KCellDeleteTag          (1002)
 
 @interface MAViewAddPlan ()
 
+@property (nonatomic, strong) NSDictionary* resourceDic;
 @property (nonatomic, strong) UIPickerView* timePicker;
 @property (nonatomic, strong) NSArray* hourArray;
 @property (nonatomic, strong) NSArray* secondArray;
@@ -89,7 +92,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _timePicker.frame.origin.y + _timePicker.frame.size.height,
                                                                self.frame.size.width,
                                                                self.frame.size.height - _timePicker.frame.size.height)
-                                              style:UITableViewStylePlain];
+                                              style:UITableViewStyleGrouped];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
@@ -123,7 +126,21 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 2;
+    } else if (section == 1) {
+        return 1;
+    }
+    
     return 2;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (_resourceDic) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -133,18 +150,35 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 //        cell.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO];
+        
+        if ([indexPath section] == 1) {
+            UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_add_delete") frame:cell.frame
+                                              font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize18]
+                                             color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+            [cell.contentView addSubview:label];
+        }
     }
 
-    if (indexPath.row == 0) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        [[cell textLabel] setText:MyLocal(@"plan_add_repeat")];
-        [cell.detailTextLabel setText:MyLocal(@"plan_add_repeat_default")];
-    } else if (indexPath.row == 1){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        [[cell textLabel] setText:MyLocal(@"plan_add_label")];
-        [cell.detailTextLabel setText:MyLocal(@"plan_add_label_default")];
+    if ([indexPath section] == 0) {
+        if (indexPath.row == 0) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            [[cell textLabel] setText:MyLocal(@"plan_add_repeat")];
+            if (_resourceDic && [[_resourceDic objectForKey:KDataBasePlanTime] length] > 0) {
+                [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBasePlanTime]];
+            } else {
+                [cell.detailTextLabel setText:MyLocal(@"plan_add_repeat_default")];
+            }
+        } else if (indexPath.row == 1){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            [[cell textLabel] setText:MyLocal(@"plan_add_label")];
+            if (_resourceDic) {
+                [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBaseTitle]];
+            } else {
+                [cell.detailTextLabel setText:MyLocal(@"plan_add_label_default")];
+            }
+        }
     }
     
     return cell;
@@ -171,7 +205,7 @@
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanRepeat];
         view.delegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
-    }else if(indexPath.section == 0 && indexPath.row == 1){
+    } else if(indexPath.section == 0 && indexPath.row == 1){
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
         view.delegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
@@ -180,6 +214,10 @@
         if (cell) {
             [(MAViewAddPlanLabel*)view setText:[cell.detailTextLabel text]];
         }
+    } else if(indexPath.section == 1 && indexPath.row == 0){
+        [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan ID:[[_resourceDic objectForKey:KDataBaseId] intValue]];
+        
+        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
     }
 }
 
@@ -193,7 +231,7 @@
     if (!left)  {
         NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
         NSString* time = [NSString stringWithFormat:@"%@:%@", [_hourArray objectAtIndex:[_timePicker selectedRowInComponent:0]],
-                         [_secondArray objectAtIndex:[_timePicker selectedRowInComponent:1]]];
+                          [_secondArray objectAtIndex:[_timePicker selectedRowInComponent:1]]];
         [dic setObject:time forKey:KDataBaseTime];
         
         [dic setObject:[NSNumber numberWithBool:YES] forKey:KDataBaseStatus];
@@ -207,10 +245,26 @@
         if (cell) {
             [dic setObject:[cell.detailTextLabel text] forKey:KDataBaseTitle];
         }
-
-        [[MADataManager shareDataManager] insertValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan maxCount:0];
+        
+        if (_resourceDic) {
+            [dic setObject:[_resourceDic objectForKey:KDataBaseId] forKey:KDataBaseId];
+            [[MADataManager shareDataManager] replaceValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan];
+        } else {
+            [[MADataManager shareDataManager] insertValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan maxCount:0];
+        }
     }
     
     [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
+}
+
+-(void)setResource:(NSDictionary*)resDic{
+    _resourceDic = [[NSDictionary alloc] initWithDictionary:resDic];
+    [_tableView reloadData];
+    
+    NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[_resourceDic objectForKey:KDataBaseTime] character:@":"];
+    if ([array count] == 2) {
+        [_timePicker selectRow:[[array objectAtIndex:0] intValue] inComponent:0 animated:YES];
+        [_timePicker selectRow:[[array objectAtIndex:1] intValue] inComponent:1 animated:YES];
+    }
 }
 @end

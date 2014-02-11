@@ -106,6 +106,7 @@
 #define KSkinSetImgBtnSec           @"skin_image_btn_sec"
 #define KSkinSetImgBtn              @"skin_image_play_btn"
 #define KSkinSetImgAddPlanReSec     @"skin_image_addplan_repeat_sec"
+#define KSkinSetImgCellIndicator    @"skin_image_cell_indicator"
 
 //资源Key值宏定义
 #define KID                     @"id"

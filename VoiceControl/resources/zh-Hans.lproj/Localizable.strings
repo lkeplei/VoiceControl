@@ -129,10 +129,12 @@
 //私人订制
 "plan_top_left" = "编辑";
 "plan_top_right" = "添加";
+"plan_top_ok" = "完成";
 
 "plan_add_top_left" = "取消";
 "plan_add_top_right" = "存储";
 "plan_add_top_back" = "返回";
+"plan_add_delete" = "删除定制";
 
 "plan_add_repeat" = "重复";
 "plan_add_label" = "标签";

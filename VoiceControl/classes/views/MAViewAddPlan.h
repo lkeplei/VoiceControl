@@ -10,4 +10,6 @@
 
 @interface MAViewAddPlan : MAViewBase<UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, MAViewBaseDelegate>
 
+-(void)setResource:(NSDictionary*)resDic;
+
 @end

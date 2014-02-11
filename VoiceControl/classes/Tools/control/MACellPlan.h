@@ -10,6 +10,6 @@
 
 @interface MACellPlan : UITableViewCell
 
--(void)setCellResource:(NSDictionary*)resDic;
+-(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing;
 
 @end

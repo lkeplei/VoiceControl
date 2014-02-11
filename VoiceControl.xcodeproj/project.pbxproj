@@ -68,6 +68,7 @@
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
+		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
 		18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */; };
 		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
@@ -191,6 +192,7 @@
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
+		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
 		18DCB27A18A47F6600C13CDC /* MACellPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellPlan.h; sourceTree = "<group>"; };
 		18DCB27B18A47F6600C13CDC /* MACellPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellPlan.m; sourceTree = "<group>"; };
 		18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 		BE073A75179E9F3400340A47 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */,
 				182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */,
 				187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */,
 				187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */,
@@ -633,6 +636,7 @@
 				BE0443FD179FC50C00537368 /* icon-iphone.png in Resources */,
 				BE0443FE179FC50C00537368 /* icon-iphone@2x.png in Resources */,
 				04D7DE6817A4BB7900AF0450 /* play_control_next@2x.png in Resources */,
+				18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */,
 				187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */,
 				04D7DE6917A4BB7900AF0450 /* play_control_pause@2x.png in Resources */,
 				18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */,
