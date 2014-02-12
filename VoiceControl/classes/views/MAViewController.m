@@ -43,7 +43,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     _viewFactory = [[MAViewFactory alloc] init];
-    
     [self initView];
     [self setupGestures];
     
@@ -54,8 +53,8 @@
 -(void)initView{
     [self initTopView];
 
-    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KNavigationHeight, KViewMenuWidth,
-                                                                     self.view.frame.size.height - KNavigationHeight)];
+    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, KViewMenuWidth,
+                                                                     self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
     [self.view addSubview:_selectMenu];
     
     _currentShowView = [self addView:MAViewTypeHome];
@@ -63,12 +62,12 @@
 }
 
 -(void)initTopView{
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KNavigationHeight)];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KStatusBarHeight, self.view.frame.size.width, KNavigationHeight)];
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [self.view addSubview:_topView];
     
     _titleLabel = [MAUtils labelWithTxt:nil
-                                  frame:_topView.frame
+                                  frame:CGRectMake(0, 0, _topView.frame.size.width, _topView.frame.size.height)
                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
     [_topView addSubview:_titleLabel];
@@ -195,12 +194,12 @@
 
 #pragma mark - about view control
 -(MAViewBase*)getView:(MAViewType)type{
-    return [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight, self.view.frame.size.width,
+    return [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
                                                                    self.view.frame.size.height - KNavigationHeight)];
 }
 
 -(MAViewBase*)addView:(MAViewType)type{
-    MAViewBase* view = [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight, self.view.frame.size.width,
+    MAViewBase* view = [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
                                                                    self.view.frame.size.height - KNavigationHeight)];
     [self.view addSubview:view];
     return view;

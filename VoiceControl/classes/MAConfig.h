@@ -82,6 +82,7 @@
 //其它
 #define KCAPWidth               (5.0)
 #define KNavigationHeight       (44)
+#define KStatusBarHeight        (20)
 #define KZipMinSize             (32)       //kb
 #define KAnimationTime          (0.5)  
 
