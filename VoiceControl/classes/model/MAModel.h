@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class AVAudioRecorder;
+
 typedef enum {
     MATypeTimeCh = 0,
     MATypeTimeNum,
@@ -73,6 +75,16 @@ typedef enum {
 //获取录音分贝开始点
 -(int)getVoiceStatPos;
 
+//录音相关
+-(void)startRecord;
+-(void)stopRecord;
+-(NSString*)getCurrentFileName;
+-(NSString*)getcurrentFilePath;
+-(AVAudioRecorder*)getRecorder;
+
 //百度统计统一入口
 -(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label;
+
+
+@property (nonatomic, assign) BOOL recordAutoStatus;
 @end

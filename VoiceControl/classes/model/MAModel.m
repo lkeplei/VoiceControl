@@ -6,18 +6,23 @@
 //  Copyright (c) 2013年 ken. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "MAModel.h"
 #import "MAConfig.h"
 #import "MADataManager.h"
 #import "MASkinData.h"
 #import "BaiduMobStat.h"
-#import <AVFoundation/AVFoundation.h>
+#import "MARecordController.h"
 
 @interface MAModel ()
 @property (nonatomic, strong) MASkinData* skinData;
+@property (nonatomic, strong) MARecordController* recordController;
 @end
 
 @implementation MAModel
+
+@synthesize recordAutoStatus = _recordAutoStatus;
 
 static MAModel* _sharedModel = nil;
 
@@ -32,6 +37,10 @@ static MAModel* _sharedModel = nil;
 -(void)initAppSource{
     //初始皮肤
     _skinData = [[MASkinData alloc] init];
+    
+    //初始录音控制器
+    _recordController = [[MARecordController alloc] init];
+    [self setRecordAutoStatus:YES];
     
     //初始数据
     [[MADataManager shareDataManager] createTabel:KTableVoiceFiles];
@@ -250,5 +259,31 @@ static MAModel* _sharedModel = nil;
     }
     
     return res;
+}
+
+#pragma mark - about record
+-(void)startRecord{
+    [_recordController startRecord];
+}
+
+-(void)stopRecord{
+    [_recordController stopRecord];
+}
+
+-(NSString*)getCurrentFileName{
+    return [_recordController fileName];
+}
+
+-(NSString*)getcurrentFilePath{
+    return [_recordController filePath];
+}
+
+-(AVAudioRecorder*)getRecorder{
+    return [_recordController recorder];
+}
+
+-(void)setRecordAutoStatus:(BOOL)recordAutoStatus{
+    _recordAutoStatus = recordAutoStatus;
+    [_recordController setRecordAutoStatus:recordAutoStatus];
 }
 @end

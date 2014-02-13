@@ -62,6 +62,7 @@
 		182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */; };
 		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
+		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
 		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
 		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; };
@@ -183,6 +184,8 @@
 		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
 		185F2909188E4325005D163B /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
+		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
+		186E4A8F18AC6F6800945619 /* MARecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARecordController.m; sourceTree = "<group>"; };
 		187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
 		187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
 		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
@@ -537,6 +540,8 @@
 				18EC3DE8186D4A0700B3BC81 /* MASkinData.m */,
 				182AEDA718A5FFAB00C6EC4E /* MAViewFactory.h */,
 				182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */,
+				186E4A8E18AC6F6800945619 /* MARecordController.h */,
+				186E4A8F18AC6F6800945619 /* MARecordController.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -692,6 +697,7 @@
 				BE4C565D17B22BC300E675CA /* ioapi.c in Sources */,
 				046B1839187C253700387497 /* CJSONSerializedData.m in Sources */,
 				BE4C565E17B22BC300E675CA /* mztools.c in Sources */,
+				186E4A9018AC6F6800945619 /* MARecordController.m in Sources */,
 				BE4C565F17B22BC300E675CA /* unzip.c in Sources */,
 				BE4C566017B22BC300E675CA /* zip.c in Sources */,
 				BE4C566117B22BC300E675CA /* ZipArchive.mm in Sources */,

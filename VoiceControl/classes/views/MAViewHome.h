@@ -10,8 +10,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 
-
-
 @interface MAViewHome : MAViewBase<AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @end
