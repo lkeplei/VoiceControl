@@ -21,6 +21,7 @@ typedef enum {
     MAViewTypePlanCustomize,
     MAViewTypeAddPlan,
     MAViewTypeAddPlanRepeat,
+    MAViewTypeAddPlanDuration,
     MAViewTypeAddPlanLabel,
     MAViewTypeAboutUs,
     MAViewTypeSelectMenu

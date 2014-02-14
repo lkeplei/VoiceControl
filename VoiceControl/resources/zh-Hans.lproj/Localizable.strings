@@ -24,6 +24,7 @@
 "view_title_setting" = "设置";
 "view_title_add_plan_repeat" = "重复";
 "view_title_add_plan_label" = "标签";
+"view_title_add_plan_duration" = "时长";
 
 //time
 "time_second" = "%d秒";
@@ -138,6 +139,7 @@
 
 "plan_add_repeat" = "重复";
 "plan_add_label" = "标签";
+"plan_add_duration" = "时长";
 
 "plan_add_repeat_default" = "永不";
 "plan_add_repeat_0" = "每周日";
@@ -148,6 +150,7 @@
 "plan_add_repeat_5" = "每周五";
 "plan_add_repeat_6" = "每周六";
 "plan_add_label_default" = "计划";
+"plan_add_duration_default" = "1小时";
 
 "plan_time_0" = "周日 ";
 "plan_time_1" = "周一 ";

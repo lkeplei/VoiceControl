@@ -12,6 +12,7 @@
 #import "MAUtils.h"
 #import "MADataManager.h"
 #import "MAViewAddPlanLabel.h"
+#import "MAViewAddPlanDuration.h"
 
 #define KCellPlanTimeTag        (1000)
 #define KCellTitleTag           (1001)
@@ -127,12 +128,12 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 2;
+        return 3;
     } else if (section == 1) {
         return 1;
     }
     
-    return 2;
+    return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -148,7 +149,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //        cell.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO];
         
         if ([indexPath section] == 1) {
@@ -177,6 +178,15 @@
                 [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBaseTitle]];
             } else {
                 [cell.detailTextLabel setText:MyLocal(@"plan_add_label_default")];
+            }
+        } else if (indexPath.row == 2){
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            [[cell textLabel] setText:MyLocal(@"plan_add_duration")];
+            if (_resourceDic) {
+                [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBaseDuration]];
+            } else {
+                [cell.detailTextLabel setText:MyLocal(@"plan_add_duration_default")];
             }
         }
     }
@@ -214,6 +224,14 @@
         if (cell) {
             [(MAViewAddPlanLabel*)view setText:[cell.detailTextLabel text]];
         }
+    } else if(indexPath.section == 0 && indexPath.row == 2){
+        MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanDuration];
+        
+        ((MAViewAddPlanDuration*)view).durationCallBack = ^(NSDictionary* resDic, MAViewType type){
+            DebugLog(@"testsssssss");
+        };
+        
+        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     } else if(indexPath.section == 1 && indexPath.row == 0){
         [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan ID:[[_resourceDic objectForKey:KDataBaseId] intValue]];
         

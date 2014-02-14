@@ -75,6 +75,7 @@
 		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
+		18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */; };
 		BE0443FC179FC50C00537368 /* icon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443F9179FC50C00537368 /* icon-ipad.png */; };
 		BE0443FD179FC50C00537368 /* icon-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443FA179FC50C00537368 /* icon-iphone.png */; };
 		BE0443FE179FC50C00537368 /* icon-iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443FB179FC50C00537368 /* icon-iphone@2x.png */; };
@@ -205,6 +206,8 @@
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
+		18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanDuration.h; sourceTree = "<group>"; };
+		18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanDuration.m; sourceTree = "<group>"; };
 		BE0443F9179FC50C00537368 /* icon-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-ipad.png"; sourceTree = "<group>"; };
 		BE0443FA179FC50C00537368 /* icon-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iphone.png"; sourceTree = "<group>"; };
 		BE0443FB179FC50C00537368 /* icon-iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iphone@2x.png"; sourceTree = "<group>"; };
@@ -478,6 +481,8 @@
 				18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */,
 				18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */,
 				18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */,
+				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
+				18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -667,6 +672,7 @@
 				18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */,
 				18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */,
 				187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */,
+				18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,

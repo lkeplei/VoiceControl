@@ -19,6 +19,7 @@
 #import "MAViewAddPlan.h"
 #import "MAViewAddPlanRepeat.h"
 #import "MAViewAddPlanLabel.h"
+#import "MAViewAddPlanDuration.h"
 
 @interface MAViewFactory ()
 
@@ -29,6 +30,7 @@
 @property (nonatomic, strong) MAViewAddPlan* addPlanView;
 @property (nonatomic, strong) MAViewAddPlanRepeat* addPlanRepeatView;
 @property (nonatomic, strong) MAViewAddPlanLabel* addPlanLabelView;
+@property (nonatomic, strong) MAViewAddPlanDuration* addPlanDurationView;
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewSetting* settingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
@@ -96,6 +98,14 @@
                 _addPlanRepeatView = [[MAViewAddPlanRepeat alloc] initWithFrame:frame];
             }
             view = _addPlanRepeatView;
+        }
+            break;
+        case MAViewTypeAddPlanDuration:
+        {
+            if (_addPlanDurationView == nil) {
+                _addPlanDurationView = [[MAViewAddPlanDuration alloc] initWithFrame:frame];
+            }
+            view = _addPlanDurationView;
         }
             break;
         case MAViewTypeAddPlanLabel:
@@ -177,6 +187,14 @@
             if (_addPlanRepeatView) {
                 [_addPlanRepeatView removeFromSuperview];
                 _addPlanRepeatView = nil;
+            }
+        }
+            break;
+        case MAViewTypeAddPlanDuration:
+        {
+            if (_addPlanDurationView) {
+                [_addPlanDurationView removeFromSuperview];
+                _addPlanDurationView = nil;
             }
         }
             break;
