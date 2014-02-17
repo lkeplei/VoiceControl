@@ -89,7 +89,8 @@ static MADataManager* _shareDataManager = nil;
                                        , time varchar(8) \
                                        , status integer \
                                        , plantime varchar(64) \
-                                       , title varchar(32));", tableName] UTF8String]);
+                                       , title varchar(32) \
+                                       , duration integer);", tableName] UTF8String]);
     }
     
 	if(res){
@@ -131,6 +132,7 @@ static MADataManager* _shareDataManager = nil;
                 [resDic setObject:[MAUtils getStringByInt:stmt->ValueInt(2)] forKey:KDataBaseStatus];
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(3).c_str()] forKey:KDataBasePlanTime];
                 [resDic setObject:[MAUtils getStringByStdString:stmt->ValueString(4).c_str()] forKey:KDataBaseTitle];
+                [resDic setObject:[MAUtils getStringByInt:stmt->ValueInt(5)] forKey:KDataBaseDuration];
             }
             [resArr addObject:resDic];
 		}
@@ -223,12 +225,13 @@ static MADataManager* _shareDataManager = nil;
                 stmt->Bind(4, [[resDic objectForKey:KDataBaseDataEver] intValue]);
             }
         } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
-            stmt = sqlite.Statement([[NSString stringWithFormat:@"insert into %@ (time, status, plantime, title)values(?, ?, ?, ?);", tableName] UTF8String]);
+            stmt = sqlite.Statement([[NSString stringWithFormat:@"insert into %@ (time, status, plantime, title, duration)values(?, ?, ?, ?, ?);", tableName] UTF8String]);
             if (stmt){
                 stmt->Bind(0, [[resDic objectForKey:KDataBaseTime] UTF8String]);
                 stmt->Bind(1, [[resDic objectForKey:KDataBaseStatus] intValue]);
                 stmt->Bind(2, [[resDic objectForKey:KDataBasePlanTime] UTF8String]);
                 stmt->Bind(3, [[resDic objectForKey:KDataBaseTitle] UTF8String]);
+                stmt->Bind(4, [[resDic objectForKey:KDataBaseDuration] intValue]);
             }
         }
         
@@ -280,13 +283,14 @@ static MADataManager* _shareDataManager = nil;
                 stmt->Bind(5, [[resDic objectForKey:KDataBaseDataEver] intValue]);
             }
         } else if ([tableName compare:KTablePlan] == NSOrderedSame) {
-            stmt = sqlite.Statement([[NSString stringWithFormat:@"replace into %@ (id, time, status, plantime, title)values(?, ?, ?, ?, ?);", tableName] UTF8String]);
+            stmt = sqlite.Statement([[NSString stringWithFormat:@"replace into %@ (id, time, status, plantime, title, duration)values(?, ?, ?, ?, ?, ?);", tableName] UTF8String]);
             if (stmt){
                 stmt->Bind(0, [[resDic objectForKey:KDataBaseId] intValue]);
                 stmt->Bind(1, [[resDic objectForKey:KDataBaseTime] UTF8String]);
                 stmt->Bind(2, [[resDic objectForKey:KDataBaseStatus] intValue]);
                 stmt->Bind(3, [[resDic objectForKey:KDataBasePlanTime] UTF8String]);
                 stmt->Bind(4, [[resDic objectForKey:KDataBaseTitle] UTF8String]);
+                stmt->Bind(5, [[resDic objectForKey:KDataBaseDuration] intValue]);
             }
         }
         

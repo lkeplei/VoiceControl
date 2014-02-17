@@ -18,9 +18,11 @@
 #define KCellTitleTag           (1001)
 #define KCellDeleteTag          (1002)
 
-@interface MAViewAddPlan ()
+@interface MAViewAddPlan (){
+    int     duration;
+}
 
-@property (nonatomic, strong) NSDictionary* resourceDic;
+@property (nonatomic, strong) NSMutableDictionary* resourceDic;
 @property (nonatomic, strong) UIPickerView* timePicker;
 @property (nonatomic, strong) NSArray* hourArray;
 @property (nonatomic, strong) NSArray* secondArray;
@@ -38,6 +40,7 @@
         self.viewType = MAViewTypeAddPlan;
         self.viewTitle = MyLocal(@"view_title_add_plan");
 
+        duration = 60;
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
@@ -184,7 +187,8 @@
             
             [[cell textLabel] setText:MyLocal(@"plan_add_duration")];
             if (_resourceDic) {
-                [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBaseDuration]];
+                duration = [[_resourceDic objectForKey:KDataBaseDuration] intValue];
+                [cell.detailTextLabel setText:[self getDateString:duration]];
             } else {
                 [cell.detailTextLabel setText:MyLocal(@"plan_add_duration_default")];
             }
@@ -228,7 +232,13 @@
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanDuration];
         
         ((MAViewAddPlanDuration*)view).durationCallBack = ^(NSDictionary* resDic, MAViewType type){
-            DebugLog(@"testsssssss");
+            if (type == MAViewTypeAddPlanDuration) {
+                UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+                if (cell) {
+                    duration = [[resDic objectForKey:KText] intValue];
+                    [cell.detailTextLabel setText:[self getDateString:duration]];
+                }
+            }
         };
         
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
@@ -264,6 +274,8 @@
             [dic setObject:[cell.detailTextLabel text] forKey:KDataBaseTitle];
         }
         
+        [dic setObject:[MAUtils getStringByInt:duration] forKey:KDataBaseDuration];
+        
         if (_resourceDic) {
             [dic setObject:[_resourceDic objectForKey:KDataBaseId] forKey:KDataBaseId];
             [[MADataManager shareDataManager] replaceValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan];
@@ -276,13 +288,21 @@
 }
 
 -(void)setResource:(NSDictionary*)resDic{
-    _resourceDic = [[NSDictionary alloc] initWithDictionary:resDic];
+    _resourceDic = [[NSMutableDictionary alloc] initWithDictionary:resDic];
     [_tableView reloadData];
     
     NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[_resourceDic objectForKey:KDataBaseTime] character:@":"];
     if ([array count] == 2) {
         [_timePicker selectRow:[[array objectAtIndex:0] intValue] inComponent:0 animated:YES];
         [_timePicker selectRow:[[array objectAtIndex:1] intValue] inComponent:1 animated:YES];
+    }
+}
+
+-(NSString*)getDateString:(int)date{
+    if (date < 60) {
+        return [NSString stringWithFormat:MyLocal(@"time_minute"), date];
+    } else {
+        return [NSString stringWithFormat:MyLocal(@"time_hour"), date / 60];
     }
 }
 @end

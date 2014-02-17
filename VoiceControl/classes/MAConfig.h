@@ -75,9 +75,11 @@
 #define KDataBaseTitle              @"title"
 #define KDataBasePlanTime           @"plantime"
 #define KDataBaseStatus             @"status"
+#define KDataBaseDate               @"date"
 
 #define KNameFormat                 @"MMMdHHmmss"
 #define KTimeFormat                 @"MM-dd HH:mm:ss"
+#define KDateFormat                 @"YYYY-MM-dd"
 
 //其它
 #define KCAPWidth               (5.0)
