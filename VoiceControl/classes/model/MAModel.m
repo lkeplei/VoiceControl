@@ -13,6 +13,7 @@
 #import "MADataManager.h"
 #import "MASkinData.h"
 #import "BaiduMobStat.h"
+#import "MAUtils.h"
 #import "MARecordController.h"
 
 @interface MAModel ()
@@ -261,6 +262,33 @@ static MAModel* _sharedModel = nil;
     return res;
 }
 
+-(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add{
+    NSString* string = @"";
+    NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:resource character:@","];
+    if (array && [array count] > 0) {
+        if ([[array objectAtIndex:0] intValue] == 99) {
+            if (add) {
+                string = @"plan_add_repeat_default";
+            } else {
+                return string;
+            }
+        } else {
+            if ([array count] == 1) {
+                string = [@"plan_add_repeat_" stringByAppendingFormat:@"%d", [[array objectAtIndex:0] intValue]];
+            } else if ([array count] >= 7){
+                string = @"plan_time_7";
+            }else {
+                for (NSString* index in array) {
+                    NSString* str = [@"plan_time_" stringByAppendingFormat:@"%@", index];
+                    string = [string stringByAppendingString:MyLocal(str)];
+                }
+                return string;
+            }
+        }
+    }
+    return MyLocal(string);
+}
+
 #pragma mark - about record
 -(void)startRecord{
     [_recordController startRecord];
@@ -268,6 +296,10 @@ static MAModel* _sharedModel = nil;
 
 -(void)stopRecord{
     [_recordController stopRecord];
+}
+
+-(void)resetPlan{
+    [_recordController resetPlan];
 }
 
 -(NSString*)getCurrentFileName{

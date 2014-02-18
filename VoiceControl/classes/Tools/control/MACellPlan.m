@@ -137,12 +137,10 @@
 }
 
 -(NSString*)getPlanTimeString:(NSString*)str{
-    NSString* string = nil;
-    
-    if (str && [str length] > 0) {
-        if ([str compare:MyLocal(@"plan_add_repeat_default")] != NSOrderedSame) {
-            string = [@", " stringByAppendingString:str];
-        }
+    NSString* string = [[MAModel shareModel] getRepeatTest:str add:NO];
+
+    if (string && [string length] > 0) {
+        string = [@", " stringByAppendingString:string];
     }
     
     return string;

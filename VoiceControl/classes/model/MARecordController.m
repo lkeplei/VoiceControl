@@ -16,7 +16,7 @@
     NSTimer*    autoTimer;
     NSURL*      urlPlay;
 }
-
+@property (assign) BOOL isRecording;
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSString* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
@@ -40,6 +40,8 @@
 
 #pragma mark -
 - (void)initAudio{
+    _isRecording = NO;
+    
     //录音设置
     _recordSetting = [[NSMutableDictionary alloc]init];
     //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
@@ -140,7 +142,25 @@
 }
 
 -(void)autoTimerOut{
-    DebugLog(@"autoTimerOut =======");
+    if (_isRecording) {
+        
+    } else {
+        for (NSDictionary* plan in _planArray) {
+            NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
+            if (array && [array count] > 0) {
+                if ([[array objectAtIndex:0] intValue] == 99) {
+                    NSString* currentTime = [MAUtils getStringFromDate:[NSDate date] format:KDateFormat];
+                    NSString* planTime = [array objectAtIndex:1];
+                    if ([planTime compare:currentTime] == NSOrderedSame) {
+                        
+                    }
+                } else {
+                    
+                }
+            }
+
+        }
+    }
 }
 
 #pragma mark - other

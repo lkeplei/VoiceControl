@@ -96,6 +96,12 @@
                                 action:@selector(playRecordSound:)];
     _playBtn.frame = CGRectOffset(_playBtn.frame, 30, 100);
     [self addSubview:_playBtn];
+    
+    //on/off
+    UISwitch* switcher = [[UISwitch alloc] initWithFrame:CGRectMake(30, 150, 100, 30)];
+    [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
+    [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [self addSubview:switcher];
 }
 
 -(void)initLabels{
@@ -113,6 +119,13 @@
     
     [self initBtns];
     [self initLabels];
+}
+
+#pragma mark - switcher
+-(void)switchAction:(id)sender{
+    if ([(UISwitch*)sender isOn]) {
+    } else {
+    }
 }
 
 #pragma mark - btn clicked

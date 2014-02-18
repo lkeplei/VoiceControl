@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSArray* hourArray;
 @property (nonatomic, strong) NSArray* secondArray;
 @property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, strong) NSString* planTimeString;
 
 @end
 
@@ -41,6 +42,7 @@
         self.viewTitle = MyLocal(@"view_title_add_plan");
 
         duration = 60;
+        _planTimeString = [NSString stringWithFormat:@"99,%@", [MAUtils getStringFromDate:[NSDate date] format:KDateFormat]];
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
@@ -169,7 +171,8 @@
             
             [[cell textLabel] setText:MyLocal(@"plan_add_repeat")];
             if (_resourceDic && [[_resourceDic objectForKey:KDataBasePlanTime] length] > 0) {
-                [cell.detailTextLabel setText:[_resourceDic objectForKey:KDataBasePlanTime]];
+                _planTimeString = [_resourceDic objectForKey:KDataBasePlanTime];
+                [cell.detailTextLabel setText:[[MAModel shareModel] getRepeatTest:_planTimeString add:YES]];
             } else {
                 [cell.detailTextLabel setText:MyLocal(@"plan_add_repeat_default")];
             }
@@ -203,7 +206,8 @@
     if (type == MAViewTypeAddPlanRepeat) {
         UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         if (cell) {
-            [cell.detailTextLabel setText:[resource objectForKey:KText]];
+            _planTimeString = [resource objectForKey:KText];
+            [cell.detailTextLabel setText:[[MAModel shareModel] getRepeatTest:[resource objectForKey:KText] add:YES]];
         }
     } else if(type == MAViewTypeAddPlanLabel){
         UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
@@ -263,13 +267,9 @@
         [dic setObject:time forKey:KDataBaseTime];
         
         [dic setObject:[NSNumber numberWithBool:YES] forKey:KDataBaseStatus];
+        [dic setObject:_planTimeString forKey:KDataBasePlanTime];
         
-        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        if (cell) {
-            [dic setObject:[cell.detailTextLabel text] forKey:KDataBasePlanTime];
-        }
-        
-        cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
         if (cell) {
             [dic setObject:[cell.detailTextLabel text] forKey:KDataBaseTitle];
         }
@@ -282,6 +282,9 @@
         } else {
             [[MADataManager shareDataManager] insertValueToTabel:[NSArray arrayWithObjects:dic, nil] tableName:KTablePlan maxCount:0];
         }
+        
+        //添加或者修改计划之后重置
+        [[MAModel shareModel] resetPlan];
     }
     
     [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];

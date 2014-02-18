@@ -9,6 +9,7 @@
 #import "MAViewAddPlanRepeat.h"
 #import "MAConfig.h"
 #import "MAModel.h"
+#import "MAUtils.h"
 
 #define KTableCellAddPlanReTag(a)           (1000 + a)
 
@@ -45,8 +46,9 @@
     _weekArray = [[NSMutableArray alloc] initWithCapacity:7];
     for (int i = 0; i < 7; i++) {
         NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-        NSString* str = [@"plan_add_repeat_" stringByAppendingFormat:@"%d", i];
-        [dic setObject:MyLocal(str) forKey:KText];
+//        NSString* str = [@"plan_add_repeat_" stringByAppendingFormat:@"%d", i];
+//        [dic setObject:MyLocal(str) forKey:KText];
+        [dic setObject:[MAUtils getStringByInt:i] forKey:KText];
         [dic setObject:[NSNumber numberWithBool:NO] forKey:KStatus];
         [_weekArray addObject:dic];
     }
@@ -83,7 +85,8 @@
         [cell.contentView addSubview:imgView];
     }
     
-    [[cell textLabel] setText:[[_weekArray objectAtIndex:indexPath.row] objectForKey:KText]];
+    NSString* str = [@"plan_add_repeat_" stringByAppendingFormat:@"%@", [[_weekArray objectAtIndex:indexPath.row] objectForKey:KText]];
+    [[cell textLabel] setText:MyLocal(str)];
     
     return cell;
 }
@@ -109,33 +112,20 @@
             
             NSString* string = @"";
             int number = 0;
-            int remember = 0;
-            NSString* str;
             for (int i = 0; i < [_weekArray count]; i++) {
                 if ([[[_weekArray objectAtIndex:i] objectForKey:KStatus] boolValue]) {
                     number++;
                     if (number == 1) {
-                        remember = i;
+                        string = [string stringByAppendingString:[[_weekArray objectAtIndex:i] objectForKey:KText]];
                     } else {
-                        if (number == 2) {
-                            str = [@"plan_time_" stringByAppendingFormat:@"%d", remember];
-                            string = [string stringByAppendingString:MyLocal(str)];
-                        }
-                        str = [@"plan_time_" stringByAppendingFormat:@"%d", i];
-                        string = [string stringByAppendingString:MyLocal(str)];
+                        string = [string stringByAppendingFormat:@",%@", [[_weekArray objectAtIndex:i] objectForKey:KText]];
                     }
                 }
             }
             
             if (number == 0) {
-                [resDic setObject:MyLocal(@"plan_add_repeat_default") forKey:KText];
+                [resDic setObject:[NSString stringWithFormat:@"99,%@", [MAUtils getStringFromDate:[NSDate date] format:KDateFormat]] forKey:KText];
             } else {
-                if (number == 1) {
-                    str = [@"plan_add_repeat_" stringByAppendingFormat:@"%d", remember];
-                    string = [string stringByAppendingString:MyLocal(str)];
-                } else if (number == 7){
-                    string = MyLocal(@"plan_time_7");
-                }
                 [resDic setObject:string forKey:KText];
             }
             

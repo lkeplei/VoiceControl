@@ -74,10 +74,13 @@ typedef enum {
 -(int)getFileTimeMax;
 //获取录音分贝开始点
 -(int)getVoiceStatPos;
+//获取repeat时间设置
+-(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add;
 
 //录音相关
 -(void)startRecord;
 -(void)stopRecord;
+-(void)resetPlan;
 -(NSString*)getCurrentFileName;
 -(NSString*)getcurrentFilePath;
 -(AVAudioRecorder*)getRecorder;

@@ -110,6 +110,9 @@
                                                             ID:[[[_resourceArray objectAtIndex:[indexPath row]]objectForKey:KDataBaseId] intValue]];
         [_resourceArray removeObjectAtIndex:[indexPath row]];
         [_tableView reloadData];
+        
+        //删除计划之后重置
+        [[MAModel shareModel] resetPlan];
     }
 }
 
