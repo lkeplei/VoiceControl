@@ -302,6 +302,10 @@ static MAModel* _sharedModel = nil;
     [_recordController resetPlan];
 }
 
+-(BOOL)isRecording{
+    return [_recordController isRecording];
+}
+
 -(NSString*)getCurrentFileName{
     return [_recordController fileName];
 }

@@ -19,7 +19,6 @@
     NSURL*      urlPlay;
 }
 
-@property (assign) BOOL isRecording;
 @property (assign) int recordId;
 @property (assign) float recorderDuration;
 @property (nonatomic, strong) NSMutableArray* planArray;

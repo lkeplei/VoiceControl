@@ -25,7 +25,7 @@
     float   voiceMin;
     float   voiceCurrent;
     float   voiceAverage;
-    BOOL    isRecording;
+//    BOOL    isRecording;
     BOOL    isPlaying;
 
     NSURL *urlPlay;
@@ -55,7 +55,7 @@
         self.viewType = MAViewTypeHome;
         self.viewTitle = MyLocal(@"view_title_home");
         
-        isRecording = NO;
+//        isRecording = NO;
         isPlaying = NO;
         voiceMax = 0;
         voiceMin = 0;
@@ -84,7 +84,11 @@
 }
 
 -(void)initBtns{
-    _startBtn = [MAUtils buttonWithImg:MyLocal(@"start") off:0 zoomIn:NO
+    NSString* startText = MyLocal(@"start");
+    if ([[MAModel shareModel] isRecording]) {
+        startText = MyLocal(@"stop");
+    }
+    _startBtn = [MAUtils buttonWithImg:startText off:0 zoomIn:NO
                                   image:[[MAModel shareModel] getImageByType:MATypeImgBtn default:NO]
                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnsec default:NO]
                                  target:self
@@ -102,14 +106,9 @@
     
     //on/off
     UISwitch* switcher = [[UISwitch alloc] initWithFrame:CGRectMake(30, 150, 100, 30)];
-    BOOL isOn = [[MAModel shareModel] recordAutoStatus];
-    [switcher setOn:isOn];
+    [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
     [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:switcher];
-    if (isOn) {
-        [_startBtn setEnabled:NO];
-        [_playBtn setEnabled:NO];
-    }
 }
 
 -(void)initLabels{
@@ -132,10 +131,7 @@
 #pragma mark - switcher
 -(void)switchAction:(id)sender{
     BOOL isOn = [(UISwitch*)sender isOn];
-    
-    [_startBtn setEnabled:YES];
-    [_playBtn setEnabled:YES];
-    
+
     [[MAModel shareModel] setRecordAutoStatus:isOn];
     
     [MADataManager setDataByKey:[NSNumber numberWithBool:isOn] forkey:KUserDefaultRecorderStatus];
@@ -143,7 +139,7 @@
 
 #pragma mark - btn clicked
 - (void)playRecordSound:(id)sender{
-    if (isRecording) {
+    if ([[MAModel shareModel] isRecording]) {
         [self startBtnClicked:nil];
     }
     
@@ -172,7 +168,7 @@
 }
 
 - (void)startBtnClicked:(id)sender{
-    if (isRecording) {
+    if ([[MAModel shareModel] isRecording]) {
         [[MAModel shareModel] stopRecord];
     } else {
         //先关播放，再开录音
@@ -185,8 +181,8 @@
         [[MAModel shareModel] startRecord];
     }
     
-    isRecording = !isRecording;
-    if (isRecording) {
+//    isRecording = !isRecording;
+    if ([[MAModel shareModel] isRecording]) {
         [_startBtn setTitle:MyLocal(@"stop") forState:UIControlStateNormal];
     } else {
         [_startBtn setTitle:MyLocal(@"start") forState:UIControlStateNormal];
@@ -201,18 +197,21 @@
 
 #pragma mark - other methods
 - (void)detectionVoice{
-    [[[MAModel shareModel] getRecorder] updateMeters];//刷新音量数据
-    //获取音量的平均值  [recorder averagePowerForChannel:0];
-    //音量的最大值  [recorder peakPowerForChannel:0];
-    double lowPassResults = pow(10, (0.05 * [[[MAModel shareModel] getRecorder] peakPowerForChannel:0]));
-    
-    voiceAverage = [[[MAModel shareModel] getRecorder] averagePowerForChannel:0] + 100;
-    voiceCurrent = lowPassResults;
-    voiceMax = [[[MAModel shareModel] getRecorder] peakPowerForChannel:0] + 100;
-    _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
-    
-    
-    [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
+    if ([[MAModel shareModel] isRecording]) {
+        [[[MAModel shareModel] getRecorder] updateMeters];//刷新音量数据
+        //获取音量的平均值  [recorder averagePowerForChannel:0];
+        //音量的最大值  [recorder peakPowerForChannel:0];
+        double lowPassResults = pow(10, (0.05 * [[[MAModel shareModel] getRecorder] peakPowerForChannel:0]));
+        
+        voiceAverage = [[[MAModel shareModel] getRecorder] averagePowerForChannel:0] + 100;
+        voiceCurrent = lowPassResults;
+        voiceMax = [[[MAModel shareModel] getRecorder] peakPowerForChannel:0] + 100;
+        _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
+        
+        [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
+    } else {
+        [self addSoundMeterItem:KMaxLengthOfWave];
+    }
 }
 
 #pragma mark - Sound meter operations

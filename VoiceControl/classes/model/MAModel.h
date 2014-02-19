@@ -81,6 +81,7 @@ typedef enum {
 -(void)startRecord;
 -(void)stopRecord;
 -(void)resetPlan;
+-(BOOL)isRecording;
 -(NSString*)getCurrentFileName;
 -(NSString*)getcurrentFilePath;
 -(AVAudioRecorder*)getRecorder;

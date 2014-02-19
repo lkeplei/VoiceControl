@@ -25,7 +25,7 @@
  */
 -(void)setRecordAutoStatus:(BOOL)isAuto;
 
-
+@property (assign) BOOL isRecording;
 @property (nonatomic, strong) NSString* fileName;
 @property (nonatomic, strong) NSString* filePath;
 @property (nonatomic, strong) AVAudioRecorder* recorder;
