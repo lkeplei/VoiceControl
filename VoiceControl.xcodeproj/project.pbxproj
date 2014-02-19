@@ -453,6 +453,14 @@
 			children = (
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
+				185F2908188E4325005D163B /* MAViewAddPlan.h */,
+				185F2909188E4325005D163B /* MAViewAddPlan.m */,
+				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
+				18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */,
+				18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */,
+				18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */,
+				18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */,
+				18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */,
 				BE207D7A17A2249800E0A12A /* MAViewAudioPlayControl.h */,
 				BE207D7B17A2249800E0A12A /* MAViewAudioPlayControl.m */,
 				04D444B217B13FED00F04486 /* MAViewBase.h */,
@@ -465,6 +473,8 @@
 				187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */,
 				0407464D17ABEFF100B70537 /* MAViewHome.h */,
 				0407464E17ABEFF100B70537 /* MAViewHome.m */,
+				185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */,
+				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
 				04D7DE7017A503F200AF0450 /* MAViewSelectMenu.h */,
 				04D7DE7117A503F200AF0450 /* MAViewSelectMenu.m */,
 				04C238D517B6330E00B8B388 /* MAViewSetting.h */,
@@ -473,16 +483,6 @@
 				BEBB070617E06916004F1C01 /* MAViewSettingFile.m */,
 				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
 				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
-				185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */,
-				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
-				185F2908188E4325005D163B /* MAViewAddPlan.h */,
-				185F2909188E4325005D163B /* MAViewAddPlan.m */,
-				18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */,
-				18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */,
-				18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */,
-				18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */,
-				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
-				18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -754,7 +754,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -769,6 +770,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "86B9AB20-8017-42D1-9730-C2DD65751CC1";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -785,7 +787,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -793,6 +796,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "86B9AB20-8017-42D1-9730-C2DD65751CC1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -803,8 +807,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -819,8 +823,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
+				PROVISIONING_PROFILE = "B687A288-C998-403B-BF41-6CB3DF0AF67B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86B9AB20-8017-42D1-9730-C2DD65751CC1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -832,8 +836,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -848,8 +852,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
+				PROVISIONING_PROFILE = "B687A288-C998-403B-BF41-6CB3DF0AF67B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86B9AB20-8017-42D1-9730-C2DD65751CC1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

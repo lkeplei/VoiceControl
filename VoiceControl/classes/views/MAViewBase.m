@@ -18,7 +18,8 @@
 @implementation MAViewBase
 
 @synthesize viewTitle = _viewTitle;
-@synthesize subEvent = _subEvent;
+@synthesize subEventLeft = _subEventLeft;
+@synthesize subEventRight = _subEventRight;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -26,6 +27,8 @@
     if (self) {
         // Initialization code
         _viewType = MAViewTypeBase;
+        _subEventLeft = NO;
+        _subEventRight = NO;
     }
     return self;
 }
@@ -108,9 +111,25 @@
 }
 
 #pragma mark - other
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
-    [self setSubEvent:YES];
-    [SysDelegate.viewController setTopBtn:leftBtn rightBtn:rightBtn];
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled{
+    if (enabled) {
+        [self setSubEventLeft:YES];
+        [self setSubEventRight:YES];
+    } else {
+        if (leftBtn) {
+            [self setSubEventLeft:YES];
+        } else {
+            [self setSubEventLeft:NO];
+        }
+        
+        if (rightBtn) {
+            [self setSubEventRight:YES];
+        } else {
+            [self setSubEventRight:NO];
+        }
+    }
+    
+    [SysDelegate.viewController setTopBtn:leftBtn rightBtn:rightBtn enabled:enabled];
 }
 
 -(void)showView{

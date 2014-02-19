@@ -130,8 +130,8 @@
             [button removeFromSuperview];
         }
         button = [MAUtils buttonWithImg:nil off:0 zoomIn:YES
-                                   image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                   image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
                                   target:self
                                   action:@selector(fileBtnClicked:)];
         button.tag = KCellButtonTag(indexPath.section, indexPath.row);

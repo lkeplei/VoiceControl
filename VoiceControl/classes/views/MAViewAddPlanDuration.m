@@ -31,7 +31,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self setTopBtn:MyLocal(@"plan_add_top_back") rightBtn:nil];
+    [self setTopBtn:MyLocal(@"plan_add_top_back") rightBtn:nil enabled:YES];
 }
 
 -(void)showView{

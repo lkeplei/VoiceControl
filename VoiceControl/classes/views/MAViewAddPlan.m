@@ -49,7 +49,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self setTopBtn:MyLocal(@"plan_add_top_left") rightBtn:MyLocal(@"plan_add_top_right")];
+    [self setTopBtn:MyLocal(@"plan_add_top_left") rightBtn:MyLocal(@"plan_add_top_right") enabled:YES];
 }
 
 #pragma mark -

@@ -13,8 +13,10 @@
 #import "MAModel.h"
 #import "MACellPlan.h"
 #import "MAViewAddPlan.h"
+#import "MAUtils.h"
 
 #define KCellPlanHeight         (50)
+#define KDelCellTag(a, b)       1000 + (100 * a + b)
 
 @interface MAViewPlanCustomize ()
 
@@ -43,7 +45,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:MyLocal(@"plan_top_right")];
+    [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
 }
 
 #pragma mark - init area
@@ -54,6 +56,7 @@
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
+    _tableView.rowHeight = KCellPlanHeight;
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.allowsSelectionDuringEditing = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -64,15 +67,18 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_resourceArray) {
-        return _resourceArray.count;
-    } else {
+    if (section == 0) {
+        if (_resourceArray) {
+            return [_resourceArray count];
+        }
         return 0;
+    } else {
+        return 1;
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return KCellPlanHeight;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -83,8 +89,19 @@
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
-    if (_resourceArray && [indexPath row] < [_resourceArray count]) {
-        [cell setCellResource:[_resourceArray objectAtIndex:[indexPath row]] editing:_editing];
+    if ([indexPath section] == 0 && _resourceArray && [_resourceArray count] > 0) {
+        if (_resourceArray && [indexPath row] < [_resourceArray count]) {
+            [cell setCellResource:[_resourceArray objectAtIndex:[indexPath row]] editing:_editing];
+        }
+    } else {
+        UILabel* label = (UILabel*)[cell.contentView viewWithTag:KDelCellTag([indexPath section], [indexPath row])];
+        if (!label) {
+            label = [MAUtils labelWithTxt:MyLocal(@"plan_top_right") frame:cell.frame
+                                     font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize18]
+                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+            label.tag = KDelCellTag([indexPath section], [indexPath row]);
+            [cell.contentView addSubview:label];
+        }
     }
     
     return cell;
@@ -92,20 +109,31 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_editing) {
-        NSDictionary* dic = [[NSDictionary alloc] initWithDictionary:[_resourceArray objectAtIndex:[indexPath row]]];
-        
+    if ([indexPath section] == 0) {
+        if (_editing) {
+            NSDictionary* dic = [[NSDictionary alloc] initWithDictionary:[_resourceArray objectAtIndex:[indexPath row]]];
+            
+            [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan];
+            
+            MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlan];
+            [(MAViewAddPlan*)view setResource:dic];
+        }
+    } else if([indexPath section] == 1) {
         [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan];
-        
-        MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlan];
-        [(MAViewAddPlan*)view setResource:dic];
     }
 }
 
 //编辑状态
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([indexPath section] == 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete && [indexPath section] == 0) {
         [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan
                                                             ID:[[[_resourceArray objectAtIndex:[indexPath row]]objectForKey:KDataBaseId] intValue]];
         [_resourceArray removeObjectAtIndex:[indexPath row]];
@@ -155,9 +183,9 @@
     [_tableView setEditing:_editing animated:YES];
     
     if (edit) {
-        [self setTopBtn:MyLocal(@"plan_top_ok") rightBtn:MyLocal(@"plan_top_right")];
+        [self setTopBtn:MyLocal(@"plan_top_ok") rightBtn:nil enabled:NO];
     } else {
-        [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:MyLocal(@"plan_top_right")];
+        [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
     }
     
     [_tableView reloadData];

@@ -16,7 +16,8 @@
 @interface MAViewBase : UIView
 
 -(void)showView;
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn;
+//enabled：yes不管有没有文字都有效、no只有有文字显示才有效
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled;
 -(void)eventTopBtnClicked:(BOOL)left;
 
 -(void)viewDidAppear:(BOOL)animated;
@@ -28,7 +29,8 @@
 -(void)popView:(MAType)type;
 
 @property (assign)MAViewType viewType;
-@property (assign)BOOL subEvent;
+@property (assign)BOOL subEventLeft;
+@property (assign)BOOL subEventRight;
 @property (nonatomic, strong)NSString* viewTitle;
 
 @property (nonatomic, assign) id<MAViewBaseDelegate> delegate;

@@ -101,7 +101,7 @@
 
 #pragma mark - btn clicked
 -(void)menuBtnClicked:(id)sender{
-    if ([_currentShowView subEvent]) {
+    if ([_currentShowView subEventLeft]) {
         [_currentShowView eventTopBtnClicked:YES];
     } else {
         isMenuOpening = !isMenuOpening;
@@ -114,7 +114,7 @@
 }
 
 -(void)homeBtnClicked:(id)sender{
-    if ([_currentShowView subEvent]) {
+    if ([_currentShowView subEventRight]) {
         [_currentShowView eventTopBtnClicked:NO];
     } else {
         [self changeToViewByType:MAViewTypeHome];
@@ -286,9 +286,23 @@
     [_panGestureRecongnize setEnabled:enabled];
 }
 
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn{
-    [_homeLabel setText:rightBtn];
-    [_menuLabel setText:leftBtn];
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled{
+    if (enabled) {
+        [_homeLabel setText:rightBtn];
+        [_menuLabel setText:leftBtn];
+    } else {
+        if (leftBtn) {
+            [_menuLabel setText:leftBtn];
+        } else {
+            [_menuLabel setText:MyLocal(@"home_top_left")];
+        }
+        
+        if (rightBtn) {
+            [_homeLabel setText:rightBtn];
+        } else {
+            [_homeLabel setText:MyLocal(@"home_top_right")];
+        }
+    }
 }
 
 -(void)animationFinished:(id)sender{

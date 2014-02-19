@@ -129,7 +129,7 @@
 
 //私人订制
 "plan_top_left" = "编辑";
-"plan_top_right" = "添加";
+"plan_top_right" = "添加定制";
 "plan_top_ok" = "完成";
 
 "plan_add_top_left" = "取消";

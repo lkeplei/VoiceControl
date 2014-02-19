@@ -69,8 +69,9 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self setTopBtn:MyLocal(@"home_top_left") rightBtn:MyLocal(@"home_top_right")];
-    [self setSubEvent:NO];
+    [self setTopBtn:MyLocal(@"home_top_left") rightBtn:MyLocal(@"home_top_right") enabled:YES];
+    [self setSubEventLeft:NO];
+    [self setSubEventRight:NO];
 }
 
 #pragma mark - init area

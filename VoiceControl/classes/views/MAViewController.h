@@ -32,7 +32,7 @@ typedef enum {
 -(void)changeToViewByType:(MAViewType)type;
 -(void)setGestureEnabled:(BOOL)enabled;
 
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn;
+-(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled;
 
 //about view
 -(MAViewBase*)getView:(MAViewType)type;
