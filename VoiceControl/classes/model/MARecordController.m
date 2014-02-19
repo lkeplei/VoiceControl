@@ -12,11 +12,16 @@
 #import "MAModel.h"
 #import "MAUtils.h"
 
+#define KTimeRecorderDuration       (10)
+
 @interface MARecordController (){
     NSTimer*    autoTimer;
     NSURL*      urlPlay;
 }
+
 @property (assign) BOOL isRecording;
+@property (assign) int recordId;
+@property (assign) float recorderDuration;
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSString* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
@@ -32,6 +37,9 @@
 -(id)init{
     self = [super init];
     if (self) {
+        _recordId = -1;
+        _recorderDuration = 0;
+        
         [self initAudio];
         [self resetPlan];
     }
@@ -58,6 +66,11 @@
 
 #pragma mark - about record
 -(void)startRecord{
+    if (_isRecording) {
+        return;
+    }
+    
+    _isRecording = YES;
     NSArray* array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *strUrl = [array lastObject];
     
@@ -93,6 +106,12 @@
 }
 
 -(void)stopRecord{
+    if (!_isRecording) {
+        return;
+    }
+    
+    _recorderDuration = 0;
+    _isRecording = NO;
     double duration = _recorder.currentTime;
     if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
         //删除记录的文件
@@ -134,33 +153,77 @@
 -(void)setRecordAutoStatus:(BOOL)isAuto{
     if (isAuto) {
         //设置定时检测
-        autoTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
+        autoTimer = [NSTimer scheduledTimerWithTimeInterval:KTimeRecorderDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
     } else {
         [autoTimer invalidate];
         autoTimer = nil;
+        
+        [self stopRecord];
     }
 }
 
 -(void)autoTimerOut{
     if (_isRecording) {
-        
-    } else {
-        for (NSDictionary* plan in _planArray) {
-            NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
-            if (array && [array count] > 0) {
-                if ([[array objectAtIndex:0] intValue] == 99) {
-                    NSString* currentTime = [MAUtils getStringFromDate:[NSDate date] format:KDateFormat];
-                    NSString* planTime = [array objectAtIndex:1];
-                    if ([planTime compare:currentTime] == NSOrderedSame) {
-                        
+        if (_recordId != -1) {
+            _recorderDuration += KTimeRecorderDuration;
+            BOOL stop = YES;
+            
+            for (NSDictionary* plan in _planArray) {
+                if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
+                    if ((_recorderDuration / 60) < [[plan objectForKey:KDataBaseDuration] intValue]) {
+                        stop = NO;
                     }
-                } else {
-                    
+                    break;
                 }
             }
-
+            
+            if (stop) {
+                [self stopRecord];
+            }
+        }
+    } else {
+        for (NSDictionary* plan in _planArray) {
+            if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
+                NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
+                if (array && [array count] > 0) {
+                    if ([[array objectAtIndex:0] intValue] == 99) {
+                        NSString* currentTime = [MAUtils getStringFromDate:[NSDate date] format:KDateFormat];
+                        NSString* planTime = [array objectAtIndex:1];
+                        if ([planTime compare:currentTime] == NSOrderedSame) {
+                            if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
+                                _recordId = [[plan objectForKey:KDataBaseId] intValue];
+                                break;
+                            }
+                        } else if([planTime compare:currentTime] == NSOrderedAscending){
+                            
+                        }
+                    } else {
+                        for (NSString* planTime in array) {
+                            NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
+                            if ([planTime intValue] == ([components weekday] - 1)) {
+                                if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
+                                    _recordId = [[plan objectForKey:KDataBaseId] intValue];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+}
+
+-(BOOL)whetherStart:(NSString*)time{
+    NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
+    NSArray* timeArr = [MAUtils getArrayFromStrByCharactersInSet:time character:@":"];
+    if (timeArr && [timeArr count] >= 2) {
+        if ([[timeArr objectAtIndex:0] intValue] == [components hour] && [[timeArr objectAtIndex:1] intValue] == [components minute]) {
+            [self startRecord];
+            return YES;
+        }
+    }
+    return NO;
 }
 
 #pragma mark - other

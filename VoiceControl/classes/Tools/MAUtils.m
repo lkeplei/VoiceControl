@@ -352,7 +352,7 @@ static MAUtils* _shareUtils = nil;
 
 +(NSDateComponents*)getComponentsFromDate:(NSDate*)date{
     return [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit |
-                                                    NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit
+                                                    NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit
                                            fromDate:date];
 }
 

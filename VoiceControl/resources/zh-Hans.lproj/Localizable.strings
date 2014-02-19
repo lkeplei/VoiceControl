@@ -152,11 +152,11 @@
 "plan_add_label_default" = "计划";
 "plan_add_duration_default" = "1小时";
 
-"plan_time_0" = "周日 ";//0
-"plan_time_1" = "周一 ";//1
-"plan_time_2" = "周二 ";//2
-"plan_time_3" = "周三 ";//3
-"plan_time_4" = "周四 ";//4
-"plan_time_5" = "周五 ";//5
-"plan_time_6" = "周六 ";//6
+"plan_time_0" = "周日 ";//0   NSDateComponents -- week 1
+"plan_time_1" = "周一 ";//1   NSDateComponents -- week 2
+"plan_time_2" = "周二 ";//2   NSDateComponents -- week 3
+"plan_time_3" = "周三 ";//3   NSDateComponents -- week 4
+"plan_time_4" = "周四 ";//4   NSDateComponents -- week 5
+"plan_time_5" = "周五 ";//5   NSDateComponents -- week 6
+"plan_time_6" = "周六 ";//6   NSDateComponents -- week 7
 "plan_time_7" = "每天";//7

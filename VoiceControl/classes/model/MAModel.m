@@ -41,7 +41,7 @@ static MAModel* _sharedModel = nil;
     
     //初始录音控制器
     _recordController = [[MARecordController alloc] init];
-    [self setRecordAutoStatus:YES];
+    [self setRecordAutoStatus:[[MADataManager getDataByKey:KUserDefaultRecorderStatus] boolValue]];
     
     //初始数据
     [[MADataManager shareDataManager] createTabel:KTableVoiceFiles];

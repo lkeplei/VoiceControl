@@ -52,6 +52,7 @@
 #define KLabelFontSize30        (30)
 
 //NSUserDefaults key
+#define KUserDefaultRecorderStatus         @"default_recorder_status"
 #define KUserDefaultFileTimeMax            @"file_time_max"
 #define KUserDefaultFileTimeMin            @"file_time_min"
 #define KUserDefaultVoiceStartPos          @"voice_start_pos"

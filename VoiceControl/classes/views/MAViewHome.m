@@ -27,8 +27,7 @@
     float   voiceAverage;
     BOOL    isRecording;
     BOOL    isPlaying;
-    
-    NSTimer *timer;
+
     NSURL *urlPlay;
     
     CGRect hudRect;
@@ -62,6 +61,9 @@
         voiceMin = 0;
         voiceCurrent = 0;
         voiceAverage = 0;
+        
+        //设置定时检测
+        [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
@@ -99,9 +101,14 @@
     
     //on/off
     UISwitch* switcher = [[UISwitch alloc] initWithFrame:CGRectMake(30, 150, 100, 30)];
-    [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
+    BOOL isOn = [[MAModel shareModel] recordAutoStatus];
+    [switcher setOn:isOn];
     [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:switcher];
+    if (isOn) {
+        [_startBtn setEnabled:NO];
+        [_playBtn setEnabled:NO];
+    }
 }
 
 -(void)initLabels{
@@ -123,9 +130,14 @@
 
 #pragma mark - switcher
 -(void)switchAction:(id)sender{
-    if ([(UISwitch*)sender isOn]) {
-    } else {
-    }
+    BOOL isOn = [(UISwitch*)sender isOn];
+    
+    [_startBtn setEnabled:YES];
+    [_playBtn setEnabled:YES];
+    
+    [[MAModel shareModel] setRecordAutoStatus:isOn];
+    
+    [MADataManager setDataByKey:[NSNumber numberWithBool:isOn] forkey:KUserDefaultRecorderStatus];
 }
 
 #pragma mark - btn clicked
@@ -161,8 +173,6 @@
 - (void)startBtnClicked:(id)sender{
     if (isRecording) {
         [[MAModel shareModel] stopRecord];
-        //停止计时
-        [timer invalidate];
     } else {
         //先关播放，再开录音
         if (isPlaying) {
@@ -172,8 +182,6 @@
         }
         
         [[MAModel shareModel] startRecord];
-        //设置定时检测
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.2f target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     
     isRecording = !isRecording;
