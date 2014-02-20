@@ -88,9 +88,9 @@
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     //可以根据选项改变转盘宽
     if (component == 0) {
-        return 150;
+        return 60;
     }
-    return 150;
+    return 60;
 }
 
 #pragma mark - init area
