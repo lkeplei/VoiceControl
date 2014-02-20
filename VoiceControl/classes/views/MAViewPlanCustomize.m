@@ -83,25 +83,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *reuseIdentifier = @"cell";
-    MACellPlan *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+//    MACellPlan *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    MACellPlan* cell = (MACellPlan*)[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[MACellPlan alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
+DebugLog(@"section = %d, row = %d", [indexPath section], [indexPath row]);
     if ([indexPath section] == 0 && _resourceArray && [_resourceArray count] > 0) {
         if (_resourceArray && [indexPath row] < [_resourceArray count]) {
             [cell setCellResource:[_resourceArray objectAtIndex:[indexPath row]] editing:_editing];
         }
     } else {
-        UILabel* label = (UILabel*)[cell.contentView viewWithTag:KDelCellTag([indexPath section], [indexPath row])];
-        if (!label) {
-            label = [MAUtils labelWithTxt:MyLocal(@"plan_top_right") frame:cell.frame
-                                     font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize18]
-                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-            label.tag = KDelCellTag([indexPath section], [indexPath row]);
-            [cell.contentView addSubview:label];
-        }
+        [cell setCellResource:MyLocal(@"plan_top_right")];
     }
     
     return cell;
@@ -137,6 +132,11 @@
         [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan
                                                             ID:[[[_resourceArray objectAtIndex:[indexPath row]]objectForKey:KDataBaseId] intValue]];
         [_resourceArray removeObjectAtIndex:[indexPath row]];
+        
+        if ([_resourceArray count] <= 0) {
+            [self setViewStatusEdit:NO];
+        }
+        
         [_tableView reloadData];
         
         //删除计划之后重置

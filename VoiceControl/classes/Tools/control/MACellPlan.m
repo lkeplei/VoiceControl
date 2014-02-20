@@ -17,6 +17,7 @@
 #define KPlanLabelTag       (1002)
 #define KSwitchTag          (1003)
 #define KIndicatorTag       (1004)
+#define kDurationTag        (1005)
 
 #define KSwitchWidth        (60)
 #define KSwitchHeight       (16)
@@ -24,6 +25,8 @@
 @interface MACellPlan ()
 
 @property (nonatomic, strong) NSDictionary* resourceDic;
+@property (nonatomic, strong) UIView* bgContentView;
+@property (nonatomic, strong) UIView* bgView;
 
 @end
 
@@ -45,44 +48,62 @@
 -(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing{
     _resourceDic = resDic;
     
+    if (_bgView) {
+        [_bgView removeFromSuperview];
+        _bgView = nil;
+    }
+    if (!_bgContentView) {
+        _bgContentView = [[UIView alloc] initWithFrame:self.contentView.frame];
+        [self.contentView addSubview:_bgContentView];
+    }
+    
     int offset = 10;
     float heightRate = 0.75;
     //time
-    UILabel* label = (UILabel*)[self.contentView viewWithTag:KTimeLabelTag];
+    UILabel* label = (UILabel*)[_bgContentView viewWithTag:KTimeLabelTag];
     if (label) {
         label.text = [resDic objectForKey:KDataBaseTime];
     } else {
         label = [MAUtils labelWithTxt:[resDic objectForKey:KDataBaseTime]
-                                frame:CGRectMake(offset, 0,
-                                                 self.frame.size.width,
-                                                 self.frame.size.height * heightRate)
-                                 font:[UIFont fontWithName:KLabelFontArial
-                                                      size:KLabelFontSize30]
+                                frame:CGRectMake(offset, 0, self.frame.size.width, self.frame.size.height * heightRate)
+                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize30]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         label.textAlignment = KTextAlignmentLeft;
         label.tag = KTimeLabelTag;
-        [self.contentView addSubview:label];
+        [_bgContentView addSubview:label];
+    }
+    
+    //duration
+    UILabel* duration = (UILabel*)[_bgContentView viewWithTag:kDurationTag];
+    if (duration) {
+        duration.text = [self getDateString:[[resDic objectForKey:KDataBaseDuration] intValue]];
+    } else {
+        duration = [MAUtils labelWithTxt:[self getDateString:[[resDic objectForKey:KDataBaseDuration] intValue]]
+                                frame:CGRectMake(90, 15, self.frame.size.width, label.frame.size.height / 2)
+                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
+        duration.textAlignment = KTextAlignmentLeft;
+        duration.tag = kDurationTag;
+        [_bgContentView addSubview:duration];
     }
     
     //title
-    UILabel* title = (UILabel*)[self.contentView viewWithTag:KTitleLableTag];
+    UILabel* title = (UILabel*)[_bgContentView viewWithTag:KTitleLableTag];
     if (title) {
         title.text = [resDic objectForKey:KDataBaseTitle];
     } else {
         title = [MAUtils labelWithTxt:[resDic objectForKey:KDataBaseTitle]
                                 frame:CGRectMake(offset, label.frame.origin.y + label.frame.size.height,
-                                                 self.frame.size.width,
-                                                 self.frame.size.height - label.frame.size.height)
-                                 font:[UIFont fontWithName:KLabelFontArial
-                                                      size:KLabelFontSize12]
+                                                 self.frame.size.width, self.frame.size.height - label.frame.size.height)
+                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         title.textAlignment = KTextAlignmentLeft;
         title.tag = KTitleLableTag;
-        [self.contentView addSubview:title];
+        [_bgContentView addSubview:title];
     }
     
     //plan time
-    UILabel* planTime = (UILabel*)[self.contentView viewWithTag:KPlanLabelTag];
+    UILabel* planTime = (UILabel*)[_bgContentView viewWithTag:KPlanLabelTag];
     if (planTime) {
         planTime.text = [self getPlanTimeString:[resDic objectForKey:KDataBasePlanTime]];
     } else {
@@ -94,11 +115,11 @@
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         planTime.textAlignment = KTextAlignmentLeft;
         planTime.tag = KPlanLabelTag;
-        [self.contentView addSubview:planTime];
+        [_bgContentView addSubview:planTime];
     }
     
     //on/off
-    UISwitch* switcher = (UISwitch*)[self.contentView viewWithTag:KSwitchTag];
+    UISwitch* switcher = (UISwitch*)[_bgContentView viewWithTag:KSwitchTag];
     if (switcher) {
         [switcher setOn:[[resDic objectForKey:KDataBaseStatus] boolValue]];
     } else {
@@ -108,16 +129,16 @@
         switcher.tag = KSwitchTag;
         [switcher setOn:[[resDic objectForKey:KDataBaseStatus] boolValue]];
         [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-        [self.contentView addSubview:switcher];
+        [_bgContentView addSubview:switcher];
     }
     
     //imgView
-    UIImageView* imgView = (UIImageView*)[self.contentView viewWithTag:KIndicatorTag];
+    UIImageView* imgView = (UIImageView*)[_bgContentView viewWithTag:KIndicatorTag];
     if (!imgView) {
         imgView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCellIndicator default:NO]];
         imgView.center = CGPointMake(switcher.center.x - offset * 1.5, self.contentView.center.y);
         imgView.tag = KIndicatorTag;
-        [self.contentView addSubview:imgView];
+        [_bgContentView addSubview:imgView];
     }
 
     //other
@@ -133,6 +154,37 @@
     } else {
         [switcher setHidden:NO];
         [imgView setHidden:YES];
+    }
+}
+
+-(void)setCellResource:(NSString *)resource{
+    if (_bgContentView) {
+        [_bgContentView removeFromSuperview];
+        _bgContentView = nil;
+    }
+    if (!_bgView) {
+        _bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, self.contentView.frame.size.height)];
+        [self.contentView addSubview:_bgView];
+    }
+    
+    UILabel* label = (UILabel*)[_bgView viewWithTag:KTimeLabelTag];
+    if (label) {
+        label.text = resource;
+    } else {
+        label = [MAUtils labelWithTxt:resource
+                                frame:self.frame
+                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
+                                color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+        label.tag = KTimeLabelTag;
+        [_bgView addSubview:label];
+    }
+}
+
+-(NSString*)getDateString:(int)date{
+    if (date < 60) {
+        return [NSString stringWithFormat:MyLocal(@"time_minute"), date];
+    } else {
+        return [NSString stringWithFormat:MyLocal(@"time_hour"), date / 60];
     }
 }
 

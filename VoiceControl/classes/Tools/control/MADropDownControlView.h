@@ -27,6 +27,7 @@
 @interface MADropDownControlView : UIView
 
 @property (nonatomic, strong) id<MADropDownControlViewDelegate> delegate;
+@property (assign) BOOL controlIsActive;
 
 - (void)setSelectionOptions:(NSArray*)selectionOptions;
 - (void)setTitle:(NSString *)title;

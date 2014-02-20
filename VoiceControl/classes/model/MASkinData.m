@@ -102,6 +102,12 @@
         case MATypeColorTableLabel:
             return KSkinSetColorTableLabel;
             break;
+        case MATypeColorDropBG:
+            return KSkinSetColorDropBG;
+            break;
+        case MATypeColorDropCellBG:
+            return KSkinSetColorDropCellBG;
+            break;
             
         case MATypeImgHomePhone:
             return KSkinSetImgHomePhone;

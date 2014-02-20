@@ -37,7 +37,7 @@
 				<key>section_property</key>
 				<dict>
 					<key>enabled</key>
-					<true/>
+					<false/>
 					<key>title</key>
 					<string>设置</string>
 				</dict>
@@ -46,10 +46,6 @@
 					<dict>
 						<key>content</key>
 						<string>系统设置</string>
-					</dict>
-					<dict>
-						<key>content</key>
-						<string>文件管理设置</string>
 					</dict>
 				</array>
 			</dict>
@@ -160,6 +156,30 @@
 				</array>
 			</dict>
 		</array>
+	</dict>
+	<key>暂时不用的结构</key>
+	<dict>
+		<key>之前的设置</key>
+		<dict>
+			<key>section_property</key>
+			<dict>
+				<key>enabled</key>
+				<true/>
+				<key>title</key>
+				<string>设置</string>
+			</dict>
+			<key>cell_array</key>
+			<array>
+				<dict>
+					<key>content</key>
+					<string>系统设置</string>
+				</dict>
+				<dict>
+					<key>content</key>
+					<string>文件管理设置</string>
+				</dict>
+			</array>
+		</dict>
 	</dict>
 </dict>
 </plist>

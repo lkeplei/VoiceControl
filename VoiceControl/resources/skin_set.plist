@@ -121,6 +121,20 @@
 				<key>color</key>
 				<string>58,55,54,1</string>
 			</dict>
+			<key>skin_color_drop_bg</key>
+			<dict>
+				<key>describe</key>
+				<string>下拉控件背景色</string>
+				<key>color</key>
+				<string>65,121,153,1</string>
+			</dict>
+			<key>skin_color_drop_cell_bg</key>
+			<dict>
+				<key>describe</key>
+				<string>下拉控件单元背景色</string>
+				<key>color</key>
+				<string>127,129,131,1</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>

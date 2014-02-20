@@ -9,6 +9,9 @@
 #ifndef SanGameJJH_JJHConfig_h
 #define SanGameJJH_JJHConfig_h
 
+#define KAppTest
+
+
 #define IsPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)    //是否为pad判断
 #define MyLocal(x, ...) NSLocalizedString(x, nil)       //定义国际化使用
 
@@ -99,6 +102,8 @@
 #define KSkinSetColorDefBlue        @"skin_color_def_blue"
 #define KSkinSetColorHomeBg         @"skin_color_home_bg"
 #define KSkinSetColorTableLabel     @"skin_color_table_label"
+#define KSkinSetColorDropBG         @"skin_color_drop_bg"
+#define KSkinSetColorDropCellBG     @"skin_color_drop_cell_bg"
 
 #define KSkinSetDicImage            @"skin_set_image"
 #define KSkinSetImgHomePhone        @"skin_image_home_phone"

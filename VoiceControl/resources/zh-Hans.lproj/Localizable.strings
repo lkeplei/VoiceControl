@@ -84,7 +84,7 @@
 "file_add_pwd" = "加密";
 
 "file_ever" = "永久";
-"file_today" = "今天";
+"file_today" = "24小时以内";
 "file_yestoday" = "昨天";
 "file_week" = "一周内";
 "file_week_ago" = "一周前";

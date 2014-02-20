@@ -12,7 +12,11 @@
 #import "MAModel.h"
 #import "MAUtils.h"
 
-#define KTimeRecorderDuration       (10)
+#ifdef KAppTest
+#import "MAViewController.h"
+#endif
+
+#define KTimeRecorderDuration       (20)
 
 @interface MARecordController (){
     NSTimer*    autoTimer;
@@ -102,6 +106,16 @@
         //开始
         [_recorder record];
     }
+    
+    
+    
+    //    AVAudioSession * session = [AVAudioSession sharedInstance];
+    //    NSError * sessionError;
+    //    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+    //    if(session == nil)
+    //        NSLog(@"Error creating session: %@", [sessionError description]);
+    //    else
+    //        [session setActive:YES error:nil];
 }
 
 -(void)stopRecord{
@@ -152,16 +166,30 @@
 -(void)setRecordAutoStatus:(BOOL)isAuto{
     if (isAuto) {
         //设置定时检测
-        autoTimer = [NSTimer scheduledTimerWithTimeInterval:KTimeRecorderDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
+        if (autoTimer) {
+            //开启定时器
+            [autoTimer setFireDate:[NSDate distantPast]];
+        } else {
+            autoTimer = [NSTimer scheduledTimerWithTimeInterval:KTimeRecorderDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
+        }
     } else {
-        [autoTimer invalidate];
-        autoTimer = nil;
+        if (autoTimer) {
+//            [autoTimer invalidate];
+//            autoTimer = nil;
+            //关闭定时器
+            [autoTimer setFireDate:[NSDate distantFuture]];
+        }
         
         [self stopRecord];
     }
 }
 
 -(void)autoTimerOut{
+#ifdef KAppTest
+    static int startNum = 0;
+    static int timerNum = 0;
+    static int stopNum = 0;
+#endif
     if (_isRecording) {
         if (_recordId != -1) {
             _recorderDuration += KTimeRecorderDuration;
@@ -169,7 +197,8 @@
             
             for (NSDictionary* plan in _planArray) {
                 if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
-                    if ((_recorderDuration / 60) < [[plan objectForKey:KDataBaseDuration] intValue]) {
+                    int durationMin = _recorderDuration / 60;
+                    if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue] && durationMin < [[MAModel shareModel] getFileTimeMax]) {
                         stop = NO;
                     }
                     break;
@@ -177,6 +206,9 @@
             }
             
             if (stop) {
+#ifdef KAppTest
+                stopNum++;
+#endif
                 [self stopRecord];
             }
         }
@@ -191,6 +223,9 @@
                         if ([planTime compare:currentTime] == NSOrderedSame) {
                             if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
                                 _recordId = [[plan objectForKey:KDataBaseId] intValue];
+#ifdef KAppTest
+                startNum++;
+#endif
                                 break;
                             }
                         } else if([planTime compare:currentTime] == NSOrderedAscending){
@@ -202,6 +237,9 @@
                             if ([planTime intValue] == ([components weekday] - 1)) {
                                 if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
                                     _recordId = [[plan objectForKey:KDataBaseId] intValue];
+#ifdef KAppTest
+                startNum++;
+#endif
                                     break;
                                 }
                             }
@@ -211,6 +249,12 @@
             }
         }
     }
+    
+#ifdef KAppTest
+    timerNum++;
+    [SysDelegate.viewController setLabel:[@"" stringByAppendingFormat:@"start = %d, stop = %d, timer = %d", startNum, stopNum, timerNum]
+                                   timer:[MAUtils getStringFromDate:[NSDate date] format:KTimeFormat]];
+#endif
 }
 
 -(BOOL)whetherStart:(NSString*)time{

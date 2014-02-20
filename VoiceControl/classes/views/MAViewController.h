@@ -34,6 +34,10 @@ typedef enum {
 
 -(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled;
 
+#ifdef KAppTest
+-(void)setLabel:(NSString*)recorder timer:(NSString*)timer;
+#endif
+
 //about view
 -(MAViewBase*)getView:(MAViewType)type;
 

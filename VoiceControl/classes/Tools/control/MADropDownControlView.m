@@ -9,6 +9,7 @@
 
 #import "MADropDownControlView.h"
 #import "MAModel.h"
+#import "MAViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kOptionHeight 20
@@ -30,7 +31,6 @@
     NSMutableArray* mSelectionCells;
     
     // Control state
-    BOOL mControlIsActive;
     NSInteger mSelectionIndex;
     NSInteger mPreviousSelectionIndex;
 }
@@ -49,6 +49,7 @@
         mBgImage = [[UIImage imageNamed:@"dropdown_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
         UIImageView *backGroundView = [[UIImageView alloc] initWithImage:mBgImage];
         backGroundView.frame = self.bounds;
+        [backGroundView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDropBG default:NO]];
         [self addSubview:backGroundView];
         
         // Title
@@ -76,7 +77,11 @@
 }
 
 -(void)setSelectedContent:(NSString *)selectedContent{
-    mSelectedLabel.text = selectedContent;
+    if (selectedContent) {
+        mSelectedLabel.text = selectedContent;
+    } else {
+        mSelectedLabel.text = @"-";
+    }
 }
 
 #pragma mark - Configuration
@@ -91,7 +96,7 @@
         return;
     
     UITouch* touch = [touches anyObject];
-    if (mControlIsActive) {
+    if (_controlIsActive) {
         CGPoint location = [touch locationInView:self];
         if ((CGRectContainsPoint(self.bounds, location)) && (location.y > mBaseFrame.size.height)) {
             mSelectionIndex = (location.y - mBaseFrame.size.height - kOptionSpacing) / (kOptionHeight + kOptionSpacing);
@@ -146,7 +151,7 @@
 
     UITouch *touch = [touches anyObject];
     if (CGRectContainsPoint(self.bounds, [touch locationInView:self])) {
-        if (mControlIsActive) {
+        if (_controlIsActive) {
             [self inactivateControl];
             
             if (mSelectionIndex < [mSelectionOptions count]) {
@@ -157,11 +162,13 @@
         } else {
             [self activateControl];
         }
-    }        
+    } else {
+        [self inactivateControl];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (mControlIsActive) {
+    if (_controlIsActive) {
         [self inactivateControl];
     }
 }
@@ -176,7 +183,10 @@
 
 #pragma mark - Control Activation / Deactivation
 - (void)activateControl {
-    mControlIsActive = YES;
+    if (_controlIsActive) {
+        return;
+    }
+    _controlIsActive = YES;
     
     mSelectionIndex = NSNotFound;
     mPreviousSelectionIndex = NSNotFound;
@@ -193,6 +203,7 @@
             newCell.frame = CGRectMake(0, mBaseFrame.size.height + (i * kOptionHeight + kOptionSpacing) + kOptionSpacing, mBaseFrame.size.width, kOptionHeight);
             newCell.layer.anchorPoint = CGPointMake(0.5, 0.0);
             newCell.layer.transform = [self contractedTransorm];
+            [newCell setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDropCellBG default:NO]];
             //newCell.alpha = 0;
             
             UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectInset(newCell.bounds, 10, 0)];
@@ -226,7 +237,10 @@
 }
 
 - (void)inactivateControl {
-    mControlIsActive = NO;
+    if (!_controlIsActive) {
+        return;
+    }
+    _controlIsActive = NO;
     
     if ([self.delegate respondsToSelector:@selector(dropDownControlViewWillBecomeInactive:)]) {
         [self.delegate dropDownControlViewWillBecomeInactive:self];

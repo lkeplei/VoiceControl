@@ -11,5 +11,6 @@
 @interface MACellPlan : UITableViewCell
 
 -(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing;
+-(void)setCellResource:(NSString*)resource;
 
 @end

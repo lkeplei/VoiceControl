@@ -115,14 +115,14 @@
     _labelVoice = [MAUtils labelWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
                                    frame:CGRectMake(210, 50, 100, 80)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
-                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
 }
 
 - (void)initView{
-    [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorHomeBg default:NO]];
+    [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     
     [self initBtns];
     [self initLabels];
@@ -254,7 +254,7 @@
                                 kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
     CGContextRestoreGState(context);
     [strokeColor setStroke];
-    border.lineWidth = 3.0;
+    border.lineWidth = 2.0;
     [border stroke];
     
     //draw phone

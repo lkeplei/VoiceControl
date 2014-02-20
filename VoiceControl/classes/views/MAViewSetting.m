@@ -12,7 +12,7 @@
 #import "MADataManager.h"
 
 #define KDropDownOff        (0.1)
-#define KDropDownHeight     (30)
+#define KDropDownHeight     (40)
 #define KElementHOff        (10)
 
 @interface MAViewSetting ()
@@ -43,8 +43,8 @@
     //单文件最大时长
     float off = self.frame.size.width * KDropDownOff;
     _fileTimeMax = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off, 20,
-                                                                                                 self.frame.size.width - off * 2,
-                                                                                                 KDropDownHeight)];
+                                                                           self.frame.size.width - off * 2,
+                                                                           KDropDownHeight)];
     [_fileTimeMax setTitle:MyLocal(@"setting_file_time_max")];
     _fileTimeMax.delegate = self;
     
@@ -57,9 +57,8 @@
 
     //单文件最小时长
     _fileTimeMin = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
-                                                                                                 KElementHOff + CGRectGetMaxY(_fileTimeMax.frame),
-                                                                                                 self.frame.size.width - off * 2,
-                                                                                                 KDropDownHeight)];
+                                                                           KElementHOff + CGRectGetMaxY(_fileTimeMax.frame),
+                                                                           self.frame.size.width - off * 2, KDropDownHeight)];
     [_fileTimeMin setTitle:MyLocal(@"setting_file_time_min")];
     _fileTimeMin.delegate = self;
     
@@ -73,30 +72,27 @@
     
     //文件管理的密码设置
     
-    //自动录音，最低分贝数
-    _minVoice = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
-                                                                                              KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
-                                                                                              self.frame.size.width - off * 2,
-                                                                                              KDropDownHeight)];
-    [_minVoice setTitle:MyLocal(@"setting_voice_min")];
-    _minVoice.delegate = self;
-
-    // Add a bunch of options
-    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_voice_10"), MyLocal(@"setting_voice_20"),
-               MyLocal(@"setting_voice_30"), MyLocal(@"setting_voice_40"), MyLocal(@"setting_voice_50"), MyLocal(@"setting_voice_60"),
-               MyLocal(@"setting_voice_70"), MyLocal(@"setting_voice_80"), MyLocal(@"setting_voice_90"), nil];
-    [_minVoice setSelectionOptions:options];
-    [_minVoice setSelectedContent:[MADataManager getDataByKey:KUserDefaultVoiceStartPos]];
-    
-    [self addSubview:_minVoice];
+    //自动录音，最低分贝数(暂时不加分贝限制)
+//    _minVoice = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
+//                                                                        KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
+//                                                                        self.frame.size.width - off * 2, KDropDownHeight)];
+//    [_minVoice setTitle:MyLocal(@"setting_voice_min")];
+//    _minVoice.delegate = self;
+//
+//    // Add a bunch of options
+//    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_voice_10"), MyLocal(@"setting_voice_20"),
+//               MyLocal(@"setting_voice_30"), MyLocal(@"setting_voice_40"), MyLocal(@"setting_voice_50"), MyLocal(@"setting_voice_60"),
+//               MyLocal(@"setting_voice_70"), MyLocal(@"setting_voice_80"), MyLocal(@"setting_voice_90"), nil];
+//    [_minVoice setSelectionOptions:options];
+//    [_minVoice setSelectedContent:[MADataManager getDataByKey:KUserDefaultVoiceStartPos]];
+//    
+//    [self addSubview:_minVoice];
     [self addSubview:_fileTimeMin];
     [self addSubview:_fileTimeMax];
 }
 
 #pragma mark - Drop Down Selector Delegate
 - (void)dropDownControlViewWillBecomeActive:(MADropDownControlView *)view  {
-    [SysDelegate.viewController setGestureEnabled:NO];
-    
     if (_fileTimeMax == view) {
         [_fileTimeMin inactivateControl];
         [_minVoice inactivateControl];
@@ -107,10 +103,12 @@
         [_fileTimeMin inactivateControl];
         [_fileTimeMax inactivateControl];
     }
+    
+    [self setGestureEnabled];
 }
 
 - (void)dropDownControlViewWillBecomeInactive:(MADropDownControlView *)view{
-    [SysDelegate.viewController setGestureEnabled:YES];
+    [self setGestureEnabled];
 }
 
 - (void)dropDownControlView:(MADropDownControlView *)view didFinishWithSelection:(id)selection {
@@ -124,6 +122,15 @@
         }
         
         [view setSelectedContent:selection];
+    }
+}
+
+#pragma mark - others
+- (void)setGestureEnabled{
+    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_minVoice controlIsActive]) {
+        [SysDelegate.viewController setGestureEnabled:NO];
+    } else {
+        [SysDelegate.viewController setGestureEnabled:YES];
     }
 }
 @end

@@ -180,7 +180,7 @@ static MAModel* _sharedModel = nil;
 
 -(int)getFileTimeMin{
     //以秒为单位
-    int res = 0;
+    int res = 5;
     NSString* str = [MADataManager getDataByKey:KUserDefaultFileTimeMin];
     if (str) {
         if ([str compare:MyLocal(@"setting_time_3second")] == NSOrderedSame) {
@@ -198,7 +198,7 @@ static MAModel* _sharedModel = nil;
         } else if ([str compare:MyLocal(@"setting_time_60second")] == NSOrderedSame) {
             res = 60;
         } else {
-            res = 3;
+            res = 5;
         } 
     }
     
@@ -207,7 +207,7 @@ static MAModel* _sharedModel = nil;
 
 -(int)getFileTimeMax{
     //以秒为单位
-    int res = 0;
+    int res = 10;
     NSString* str = [MADataManager getDataByKey:KUserDefaultFileTimeMax];
     if (str) {
         if ([str compare:MyLocal(@"setting_time_1minute")] == NSOrderedSame) {
@@ -225,7 +225,7 @@ static MAModel* _sharedModel = nil;
         } else if ([str compare:MyLocal(@"setting_time_120minute")] == NSOrderedSame) {
             res = 120;
         } else {
-            res = 5;
+            res = 10;
         }
     }
     
@@ -233,7 +233,7 @@ static MAModel* _sharedModel = nil;
 }
 
 -(int)getVoiceStatPos{
-    int res = 0;
+    int res = 20;
     NSString* str = [MADataManager getDataByKey:KUserDefaultVoiceStartPos];
     if (str) {
         if ([str compare:MyLocal(@"setting_voice_10")] == NSOrderedSame) {
