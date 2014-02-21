@@ -190,6 +190,7 @@
     static int timerNum = 0;
     static int stopNum = 0;
 #endif
+    
     if (_isRecording) {
         if (_recordId != -1) {
             _recorderDuration += KTimeRecorderDuration;
@@ -220,27 +221,20 @@
                 NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
                 if (array && [array count] > 0) {
                     if ([[array objectAtIndex:0] intValue] == 99) {
-                        NSString* currentTime = [MAUtils getStringFromDate:[NSDate date] format:KDateFormat];
-                        NSString* planTime = [array objectAtIndex:1];
-                        if ([planTime compare:currentTime] == NSOrderedSame) {
-                            if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
-                                _recordId = [[plan objectForKey:KDataBaseId] intValue];
+                        NSString* dateTime = [[array objectAtIndex:1] stringByAppendingFormat:@" %@", [plan objectForKey:KDataBaseTime]];
+                        if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
 #ifdef KAppTest
-                startNum++;
+                            startNum++;
 #endif
-                                break;
-                            }
-                        } else if([planTime compare:currentTime] == NSOrderedAscending){
-                            
                         }
                     } else {
                         for (NSString* planTime in array) {
                             NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
                             if ([planTime intValue] == ([components weekday] - 1)) {
-                                if ([self whetherStart:[plan objectForKey:KDataBaseTime]]) {
-                                    _recordId = [[plan objectForKey:KDataBaseId] intValue];
+                                NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", [components year], [components month], [components day], [plan objectForKey:KDataBaseTime]];
+                                if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
 #ifdef KAppTest
-                startNum++;
+                                    startNum++;
 #endif
                                     break;
                                 }
@@ -259,15 +253,18 @@
 #endif
 }
 
--(BOOL)whetherStart:(NSString*)time{
-    NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
-    NSArray* timeArr = [MAUtils getArrayFromStrByCharactersInSet:time character:@":"];
-    if (timeArr && [timeArr count] >= 2) {
-        if ([[timeArr objectAtIndex:0] intValue] == [components hour] && [[timeArr objectAtIndex:1] intValue] == [components minute]) {
+-(BOOL)whetherStart:(NSDate*)planDate plan:(NSDictionary*)plan{
+    NSTimeInterval between = [[NSDate date] timeIntervalSinceDate:planDate];
+    if (between >= 0) {
+        if ((between / 60) < [[plan objectForKey:KDataBaseDuration] intValue]) {
+            _recorderDuration = between;
+            _recordId = [[plan objectForKey:KDataBaseId] intValue];
             [self startRecord];
+
             return YES;
         }
     }
+    
     return NO;
 }
 
