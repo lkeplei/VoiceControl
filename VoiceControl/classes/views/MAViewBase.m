@@ -35,7 +35,7 @@
 
 #pragma mark - view appear methods
 -(void)viewDidAppear:(BOOL)animated{
-    
+    [self setTopBtn:nil rightBtn:nil enabled:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

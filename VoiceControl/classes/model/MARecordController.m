@@ -197,9 +197,11 @@
             
             for (NSDictionary* plan in _planArray) {
                 if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
-                    int durationMin = _recorderDuration / 60;
-                    if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue] && durationMin < [[MAModel shareModel] getFileTimeMax]) {
-                        stop = NO;
+                    if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
+                        int durationMin = _recorderDuration / 60;
+                        if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue] && durationMin < [[MAModel shareModel] getFileTimeMax]) {
+                            stop = NO;
+                        }
                     }
                     break;
                 }
