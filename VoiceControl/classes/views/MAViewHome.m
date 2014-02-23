@@ -13,10 +13,10 @@
 #import "MADataManager.h"
 #import "MAViewAudioPlayControl.h"
 
-#define KHudSizeWidth           (self.frame.size.width * 0.8)
-#define KHudSizeHeight          150
+#define KHudSizeWidth           (self.frame.size.width * 1)
+#define KHudSizeHeight          200
 #define CANCEL_BUTTON_HEIGHT    50
-#define SOUND_METER_COUNT       40
+#define SOUND_METER_COUNT       60
 #define KMaxLengthOfWave        (50)
 #define KMaxValueOfMetaer       (70)
 
@@ -25,13 +25,12 @@
     float   voiceMin;
     float   voiceCurrent;
     float   voiceAverage;
-//    BOOL    isRecording;
     BOOL    isPlaying;
 
     NSURL *urlPlay;
     
     CGRect hudRect;
-    int soundMeters[40];
+    int soundMeters[SOUND_METER_COUNT];
 }
 
 @property (retain, nonatomic) UIImage *imagePhone;
@@ -54,8 +53,7 @@
         
         self.viewType = MAViewTypeHome;
         self.viewTitle = MyLocal(@"view_title_home");
-        
-//        isRecording = NO;
+
         isPlaying = NO;
         voiceMax = 0;
         voiceMin = 0;
@@ -77,35 +75,48 @@
 #pragma mark - init area
 -(void)initHud{
     _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
-    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), self.center.y - (KHudSizeHeight / 2), KHudSizeWidth, KHudSizeHeight);
+    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), 0, KHudSizeWidth, KHudSizeHeight);
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;
     }
 }
 
 -(void)initBtns{
-    NSString* startText = MyLocal(@"start");
+    NSString* startText = MyLocal(@"start_record");
     if ([[MAModel shareModel] isRecording]) {
-        startText = MyLocal(@"stop");
+        startText = MyLocal(@"filish_record");
     }
     _startBtn = [MAUtils buttonWithImg:startText off:0 zoomIn:NO
-                                  image:[[MAModel shareModel] getImageByType:MATypeImgBtn default:NO]
-                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnsec default:NO]
+                                  image:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircle default:NO]
+                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                  target:self
                                  action:@selector(startBtnClicked:)];
-    _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 50);
+    _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 250);
+    [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
+                    forState:UIControlStateNormal];
+    [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
+                    forState:UIControlStateHighlighted];
+    [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
+                    forState:UIControlStateSelected];
     [self addSubview:_startBtn];
     
     _playBtn = [MAUtils buttonWithImg:MyLocal(@"play") off:0 zoomIn:NO
-                                 image:[[MAModel shareModel] getImageByType:MATypeImgBtn default:NO]
-                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnsec default:NO]
+                                 image:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircle default:NO]
+                              imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                target:self
                                 action:@selector(playRecordSound:)];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, 30, 100);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, 215, 250);
+    [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
+                   forState:UIControlStateNormal];
+    [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
+                   forState:UIControlStateHighlighted];
+    [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
+                   forState:UIControlStateSelected];
     [self addSubview:_playBtn];
     
     //on/off
-    UISwitch* switcher = [[UISwitch alloc] initWithFrame:CGRectMake(30, 150, 100, 30)];
+    UISwitch* switcher = [[UISwitch alloc] init];
+    switcher.center = CGPointMake(self.center.x, 320);
     [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
     [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:switcher];
@@ -113,10 +124,10 @@
 
 -(void)initLabels{
     _labelVoice = [MAUtils labelWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
-                                   frame:CGRectMake(210, 50, 100, 80)
-                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
+                                   frame:CGRectMake(10, 400, 300, 30)
+                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-    _labelVoice.textAlignment = KTextAlignmentLeft;
+//    _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
 }
@@ -183,9 +194,9 @@
     
 //    isRecording = !isRecording;
     if ([[MAModel shareModel] isRecording]) {
-        [_startBtn setTitle:MyLocal(@"stop") forState:UIControlStateNormal];
+        [_startBtn setTitle:MyLocal(@"filish_record") forState:UIControlStateNormal];
     } else {
-        [_startBtn setTitle:MyLocal(@"start") forState:UIControlStateNormal];
+        [_startBtn setTitle:MyLocal(@"start_record") forState:UIControlStateNormal];
     }
 }
 
@@ -234,10 +245,12 @@
 - (void)drawRect:(CGRect)rect {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
     UIColor *strokeColor = [UIColor colorWithRed:0.886 green:0.0 blue:0.0 alpha:0.8];
-    UIColor *fillColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
-    UIColor *gradientColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+//    UIColor *fillColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
+//    UIColor *gradientColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+    UIColor *gradientColor = [UIColor colorWithRed:0.72 green:0.76 blue:0.8 alpha:0.7];
     
     NSArray *gradientColors = [NSArray arrayWithObjects:
                                (id)fillColor.CGColor,
@@ -245,7 +258,7 @@
     CGFloat gradientLocations[] = {0, 1};
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
     
-    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:10.0];
+    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:1.0];
     CGContextSaveGState(context);
     [border addClip];
     CGContextDrawRadialGradient(context, gradient,
@@ -254,15 +267,15 @@
                                 kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
     CGContextRestoreGState(context);
     [strokeColor setStroke];
-    border.lineWidth = 2.0;
+    border.lineWidth = 0;       //设置边框宽度
     [border stroke];
     
     //draw phone
-    [_imagePhone drawAtPoint:CGPointMake(hudRect.origin.x + (hudRect.size.width - _imagePhone.size.width) / 2,
-                                         hudRect.origin.y + (hudRect.size.height - _imagePhone.size.height) / 2)];
+//    [_imagePhone drawAtPoint:CGPointMake(hudRect.origin.x + (hudRect.size.width - _imagePhone.size.width) / 2,
+//                                         hudRect.origin.y + (hudRect.size.height - _imagePhone.size.height) / 2)];
     
     // Draw sound meter wave
-    [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.4] set];
+    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4] set];
     
     CGContextSetLineWidth(context, 1.0);
     CGContextSetLineJoin(context, kCGLineJoinRound);
@@ -275,11 +288,11 @@
         CGFloat y = baseLine + ((KMaxValueOfMetaer * (KMaxLengthOfWave - abs(soundMeters[(int)x]))) / KMaxLengthOfWave) * multiplier;
         
         if(x == SOUND_METER_COUNT - 1) {
-            CGContextMoveToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 5, y);
+            CGContextMoveToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
             CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
         }
         else {
-            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 5, y);
+            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
             CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
         }
     }

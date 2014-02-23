@@ -108,6 +108,21 @@
         case MATypeColorDropCellBG:
             return KSkinSetColorDropCellBG;
             break;
+        case MATypeColorBtnGreen:
+            return KSkinSetColorBtnGreen;
+            break;
+        case MATypeColorBtnDarkGreen:
+            return KSkinSetColorBtnDarkGreen;
+            break;
+        case MATypeColorBtnRed:
+            return KSkinSetColorBtnRed;
+            break;
+        case MATypeColorBtnDarkRed:
+            return KSkinSetColorBtnDarkRed;
+            break;
+        case MATypeColorBtnGray:
+            return KSkinSetColorBtnGray;
+            break;
             
         case MATypeImgHomePhone:
             return KSkinSetImgHomePhone;
@@ -127,11 +142,20 @@
         case MATypeImgPlayPre:
             return KSkinSetImgPlayPre;
             break;
-        case MATypeImgBtnsec:
-            return KSkinSetImgBtnSec;
+        case MATypeImgBtnGreenCircleSec:
+            return KSkinSetImgBtnGreenCircleSec;
             break;
-        case MATypeImgBtn:
-            return KSkinSetImgBtn;
+        case MATypeImgBtnGreenCircle:
+            return KSkinSetImgBtnGreenCircle;
+            break;
+        case MATypeImgBtnRedCircleSec:
+            return KSkinSetImgBtnRedCircleSec;
+            break;
+        case MATypeImgBtnRedCircle:
+            return KSkinSetImgBtnRedCircle;
+            break;
+        case MATypeImgBtnGrayCircle:
+            return KSkinSetImgBtnGrayCircle;
             break;
         case MATypeImgAddPlanReSec:
             return KSkinSetImgAddPlanReSec;

@@ -6,10 +6,11 @@
   Copyright (c) 2013年 ken. All rights reserved.
 */
 
-"start" = "开始";
-"stop" = "结束";
+"start_record" = "开始录音";
+"filish_record" = "结束录音";
 "history" = "历史";
 "play" = "播放";
+"stop" = "暂停";
 "prompting" = "提示";
 "delete" = "删除";
 
@@ -41,10 +42,7 @@
 "voice_min" = "最小: %.1f";
 "voice_current" = "当前: %.1f";
 "voice_average" = "平均: %.1f";
-"voice_message" = "最大: %.1f\
-最小: %.1f\
-当前: %.1f\
-平均: %.1f";
+"voice_message" = "最大: %.1f 最小: %.1f 当前: %.1f 平均: %.1f";
 
 //setting
 "setting_file_time_max" = "单文件最大时长:  ";
