@@ -58,6 +58,7 @@
 #define KUserDefaultRecorderStatus         @"default_recorder_status"
 #define KUserDefaultFileTimeMax            @"file_time_max"
 #define KUserDefaultFileTimeMin            @"file_time_min"
+#define KUserDefaultClearRubbish           @"clear_rubbish"
 #define KUserDefaultVoiceStartPos          @"voice_start_pos"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserPassword                      @"user_password"
@@ -90,7 +91,7 @@
 #define KCAPWidth               (5.0)
 #define KNavigationHeight       (44)
 #define KStatusBarHeight        (20)
-#define KZipMinSize             (32)       //kb
+#define KZipMinSize             (32 * 1024)       //kb
 #define KAnimationTime          (0.5)  
 
 //set color and image
@@ -123,8 +124,12 @@
 #define KSkinSetImgBtnRedCircleSec      @"skin_image_btn_red_circle_sec"
 #define KSkinSetImgBtnRedCircle         @"skin_image_btn_red_circle_btn"
 #define KSkinSetImgBtnGrayCircle        @"skin_image_btn_gray_circle"
-#define KSkinSetImgAddPlanReSec     @"skin_image_addplan_repeat_sec"
-#define KSkinSetImgCellIndicator    @"skin_image_cell_indicator"
+#define KSkinSetImgAddPlanReSec         @"skin_image_addplan_repeat_sec"
+#define KSkinSetImgCellIndicator        @"skin_image_cell_indicator"
+#define KSkinSetImgScrubberKnob         @"skin_image_scrubber_knob"
+#define KSkinSetImgScrubberLeft         @"skin_image_scrubber_left"
+#define KSkinSetImgScrubberKnobRight    @"skin_image_scrubber_right"
+
 
 //资源Key值宏定义
 #define KID                     @"id"

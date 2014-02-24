@@ -27,6 +27,8 @@
 
 @interface MAViewFileManager (){
     BOOL    showAudioPlay;
+    int     currentRow;
+    int     currentSection;
 }
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* resourceArray;
@@ -49,6 +51,8 @@
         self.viewTitle = MyLocal(@"view_title_file_manager");
         
         showAudioPlay = NO;
+        currentRow = 0;
+        currentSection = 0;
     }
     return self;
 }
@@ -57,7 +61,7 @@
 - (void) initTable{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
                                                                self.frame.size.width,
-                                                               self.frame.size.height)
+                                                               self.frame.size.height - 20)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -115,7 +119,7 @@
                          [[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeCh]];
         if (name == nil) {
             name = [MAUtils labelWithTxt:str
-                                    frame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)
+                                    frame:CGRectMake(5, 0, cell.frame.size.width, cell.frame.size.height)
                                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
             name.tag = KCellLabelNameTag;
@@ -154,10 +158,14 @@
     NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
     
     if ([MAUtils unzipFiles:file unZipFielPath:nil]) {
-        [_audioPlayControl playWithPath:[resDic objectForKey:KDataBasePath] array:_resourceArray];
+        [_audioPlayControl playWithPath:resDic array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
     } else {
         [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
     }
+    
+    currentSection = [indexPath section];
+    currentRow = [indexPath row];
+    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 #pragma mark - for play control view
@@ -168,14 +176,28 @@
         _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height,
                                                                                      self.frame.size.width, KAudioPlayViewHeight)];
         [self addSubview:_audioPlayControl];
+
+        _audioPlayControl.audioPlayCallBack = ^(MAAudioPlayType type){
+            BOOL res = YES;
+            if (type == MaAudioPlayNext) {
+                res = [self playNext];
+            } else if (type == MaAudioPlayPre) {
+                res = [self playPre];
+            } else if (type == MaAudioPlayHide) {
+                [self hideAudioPlay];
+            }
+            return res;
+        };
+
     }
     
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _audioPlayControl.frame = CGRectOffset(_audioPlayControl.frame, 0, -KAudioPlayViewHeight);
+        _tableView.frame = CGRectMake(0, 0, self.frame.size.width, _tableView.frame.size.height - KAudioPlayViewHeight + 20);
     }
                      completion:^(BOOL finished) {
                          if (finished) {
-                             //                             [self hideAudioPlay];
+                             [_tableView reloadData];
                          }
                      }];
 }
@@ -183,12 +205,70 @@
 -(void)hideAudioPlay {
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _audioPlayControl.frame = CGRectOffset(_audioPlayControl.frame, 0, KAudioPlayViewHeight);
+        _tableView.frame = CGRectMake(0, 0, self.frame.size.width, _tableView.frame.size.height + KAudioPlayViewHeight - 20);
     }
                      completion:^(BOOL finished) {
                          if (finished) {
                              showAudioPlay = NO;
+                             [_tableView reloadData];
                          }
                      }];
+}
+
+-(BOOL)playNext{
+    BOOL res = NO;
+    
+    NSArray* resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
+    if (resArray && [resArray count] > 0) {
+        currentRow++;
+        if (currentRow < [resArray count]) {
+            res = YES;
+        } else {
+            currentSection++;
+            if (currentSection < [_resourceArray count]) {
+                resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
+                if (resArray && [resArray count] > 0) {
+                    currentRow = 0;
+                    res = YES;
+                }
+            }
+        }
+    }
+    
+    if (res) {
+        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:nil];
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    
+    return res;
+}
+
+-(BOOL)playPre{
+    BOOL res = NO;
+    
+    NSArray* resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
+    if (resArray && [resArray count] > 0) {
+        currentRow--;
+        if (currentRow >= 0) {
+            res = YES;
+        } else {
+            currentSection--;
+            if (currentSection >= 0) {
+                resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
+                if (resArray && [resArray count] > 0) {
+                    currentRow = [resArray count] - 1;
+                    res = YES;
+                }
+            }
+        }
+    }
+
+    if (res) {
+        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:nil];
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+
+return res;
 }
 
 #pragma mark - other

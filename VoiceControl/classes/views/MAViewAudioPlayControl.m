@@ -13,15 +13,16 @@
 
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
-#define KTimeLabelWidth             (100)
+#define KTimeLabelWidth             (60)
 
 @interface MAViewAudioPlayControl (){
-    int     currentIndex;
+//    int     currentIndex;
 }
 
 @property (nonatomic, strong) UISlider* progressSlider;
 @property (retain, nonatomic) AVAudioPlayer *avPlay;
 @property (nonatomic, strong) UILabel* timeLabel;
+@property (nonatomic, strong) UILabel* fileLabel;
 @property (nonatomic, strong) UIButton* playBtn;
 @property (nonatomic, strong) NSString* filePath;
 @property (nonatomic) NSMutableArray* resouceArr;
@@ -33,7 +34,7 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        currentIndex = 0;
+//        currentIndex = 0;
         
         // Initialization code
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
@@ -53,32 +54,43 @@
         
         //set gestures
         [self setupGestures];
+        
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
 
 #pragma mark - init area
 -(void)initView{
-    _timeLabel = [MAUtils labelWithTxt:@""
-                                   frame:CGRectMake(self.frame.size.width - KSpaceOff - KTimeLabelWidth,
-                                                    self.frame.size.height - KTimeLabelHeight, KTimeLabelWidth, KTimeLabelHeight)
-                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
-                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-    _timeLabel.textAlignment = KTextAlignmentRight;
-    [self addSubview:_timeLabel];
-    
     //add progress
-    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(30, self.frame.size.height * 1 / 7, 260, 10)];
-    [_progressSlider setThumbImage:LOADIMAGE(@"AudioPlayerScrubberKnob", @"png")
+    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 10, self.frame.size.width, 10)];
+    [_progressSlider setThumbImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]
                           forState:UIControlStateNormal];
-    [_progressSlider setMinimumTrackImage:[[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"AudioPlayerScrubberLeft" ofType:@"png"]] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
+    [_progressSlider setMinimumTrackImage:[[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
                                 forState:UIControlStateNormal];
-    [_progressSlider setMaximumTrackImage:[[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"AudioPlayerScrubberRight" ofType:@"png"]] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
+    [_progressSlider setMaximumTrackImage:[[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
                                 forState:UIControlStateNormal];
     [_progressSlider addTarget:self action:@selector(progressSliderMoved:) forControlEvents:UIControlEventValueChanged];
     _progressSlider.maximumValue = 0.0;
     _progressSlider.minimumValue = 0.0;
     [self addSubview:_progressSlider];
+    
+    //add label
+    float hOff = _progressSlider.frame.origin.y + _progressSlider.frame.size.height;
+    _timeLabel = [MAUtils labelWithTxt:@""
+                                 frame:CGRectMake(KSpaceOff, hOff, KTimeLabelWidth, KTimeLabelHeight)
+                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    _timeLabel.textAlignment = KTextAlignmentLeft;
+    [self addSubview:_timeLabel];
+    
+    _fileLabel = [MAUtils labelWithTxt:@""
+                                 frame:CGRectMake(KSpaceOff + _timeLabel.frame.origin.x + _timeLabel.frame.size.width,
+                                                  hOff, self.frame.size.width , KTimeLabelHeight)
+                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    _fileLabel.textAlignment = KTextAlignmentLeft;
+    [self addSubview:_fileLabel];
     
     //add contrl button
     UIButton* preBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -86,7 +98,7 @@
                                       imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPre default:NO]
                                         target:self
                                         action:@selector(preBtnClicked:)];
-    preBtn.frame = CGRectOffset(preBtn.frame, 30, 40);
+    preBtn.frame = CGRectOffset(preBtn.frame, 20, 40);
     [self addSubview:preBtn];
     
     _playBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -94,7 +106,7 @@
                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
                                 target:self
                                 action:@selector(playBtnClicked:)];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, 70, 40);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, 60, 40);
     [self addSubview:_playBtn];
     
     UIButton* nextBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -102,12 +114,12 @@
                                        imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
                                          target:self
                                          action:@selector(nextBtnClicked:)];
-    nextBtn.frame = CGRectOffset(nextBtn.frame, 110, 40);
+    nextBtn.frame = CGRectOffset(nextBtn.frame, 100, 40);
     [self addSubview:nextBtn];
 
 }
 
--(void)playWithPath:(NSString*)path array:(NSArray *)array{
+-(void)playWithPath:(NSDictionary*)resDic array:(NSArray *)array{
     if (_avPlay.playing) {
         [self stopAudio];
     }
@@ -117,8 +129,8 @@
     }
     
     //deal with message
-    if (path) {
-        _filePath = [NSString stringWithString:path];
+    if (resDic) {
+        _filePath = [NSString stringWithString:[resDic objectForKey:KDataBasePath]];
     } else {
         if (_filePath == nil) {
             DebugLog(@"no file path coming");
@@ -134,17 +146,6 @@
         }
         
         [_resouceArr addObjectsFromArray:array];
-        
-        if (path) {
-            for (int i = 0; i < [array count]; i++) {
-                NSDictionary* resDic = [array objectAtIndex:i];
-                NSString* file = [resDic objectForKey:KDataBasePath];
-                if ([file compare:path] == NSOrderedSame) {
-                    currentIndex = i;
-                    break;
-                }
-            }
-        }
     }
     
     //set btn
@@ -158,15 +159,29 @@
     }
 
     //play
+    BOOL play = YES;
     _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_filePath] error:nil];
     _avPlay.delegate = self;
-    [_avPlay play];
+    if (![_avPlay play]) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = [paths objectAtIndex:0];
+        NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
+        
+        if ([MAUtils unzipFiles:file unZipFielPath:nil]) {
+            play = [_avPlay play];
+        } else {
+            play = NO;
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+        }
+    }
     
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
-    _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.duration type:MATypeTimeNum];
-    
-    //slider
-    _progressSlider.maximumValue = _avPlay.duration;
+    if (play) {
+        _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+        _fileLabel.text = [resDic objectForKey:KDataBaseFileName];
+        
+        //slider
+        _progressSlider.maximumValue = _avPlay.duration;
+    }
 }
 
 - (void)stopAudio{
@@ -186,16 +201,13 @@
     }
 }
 
-- (void)detectionVoice
-{
-    [_avPlay updateMeters];//刷新音量数据
-    //获取音量的平均值  [recorder averagePowerForChannel:0];
-    //音量的最大值  [recorder peakPowerForChannel:0];
-    
-//    double lowPassResults = pow(10, (0.05 * [_avPlay peakPowerForChannel:0]));
-    _timeLabel.text = [[MAModel shareModel] getStringTime:(_avPlay.duration - _avPlay.currentTime) type:MATypeTimeNum];
-
-    _progressSlider.value = _avPlay.currentTime;
+- (void)detectionVoice{
+    if (_avPlay && _avPlay.playing) {
+        [_avPlay updateMeters];//刷新音量数据
+        
+        _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+        _progressSlider.value = _avPlay.currentTime;
+    }
 }
 
 #pragma mark - btn clicked
@@ -229,25 +241,25 @@
 
 - (void)preBtnClicked:(id)sender{
     if (_resouceArr) {
-        int count = _resouceArr.count;
-        
-        currentIndex--;
-        if (currentIndex < 0 || currentIndex >= count) {
-            currentIndex = count - 1;
+        if (self.audioPlayCallBack) {
+            if (self.audioPlayCallBack(MaAudioPlayPre)) {
+                DebugLog(@"2222222222222");
+            } else {
+                DebugLog(@"111111111111")
+            }
         }
-        [self playWithPath:[[_resouceArr objectAtIndex:currentIndex] objectForKey:KDataBasePath] array:nil];
     }
 }
 
 - (void)nextBtnClicked:(id)sender{
     if (_resouceArr) {
-        int count = _resouceArr.count;
-        
-        currentIndex++;
-        if (currentIndex >= count) {
-            currentIndex = 0;
+        if (self.audioPlayCallBack) {
+            if (self.audioPlayCallBack(MaAudioPlayNext)) {
+                DebugLog(@"333333333333");
+            } else {
+                DebugLog(@"4444444444444")
+            }
         }
-        [self playWithPath:[[_resouceArr objectAtIndex:currentIndex] objectForKey:KDataBasePath] array:nil];
     }
 }
 

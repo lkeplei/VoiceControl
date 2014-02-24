@@ -9,10 +9,21 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-#define KAudioPlayViewHeight        (70)
+typedef enum {
+    MaAudioPlayNext = 0,
+    MaAudioPlayPre,
+    MaAudioPlayHide,
+    MaAudioPlayShow
+} MAAudioPlayType;
+
+#define KAudioPlayViewHeight        (100)
+
+typedef BOOL (^audioPlayCallBack)(MAAudioPlayType type);
 
 @interface MAViewAudioPlayControl : UIView<AVAudioPlayerDelegate>
 
--(void)playWithPath:(NSString*)path array:(NSArray*)array;
+-(void)playWithPath:(NSDictionary*)resDic array:(NSArray*)array;
+
+@property(nonatomic, copy)audioPlayCallBack audioPlayCallBack;
 
 @end

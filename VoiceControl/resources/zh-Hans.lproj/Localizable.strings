@@ -63,6 +63,8 @@
 "setting_time_50second" = "50秒";
 "setting_time_60second" = "1分";
 
+"setting_clear_rubbish" = "垃圾文件清理:  ";
+
 "setting_voice_min" = "最低录音分贝:  ";
 "setting_voice_10" = "10";
 "setting_voice_20" = "20";

@@ -97,6 +97,27 @@
 				<key>image</key>
 				<string>button_circle_gray.png</string>
 			</dict>
+			<key>skin_image_scrubber_knob</key>
+			<dict>
+				<key>describe</key>
+				<string>进度条滑动小圆球</string>
+				<key>image</key>
+				<string>slider_scrubber_knob.png</string>
+			</dict>
+			<key>skin_image_scrubber_left</key>
+			<dict>
+				<key>describe</key>
+				<string>进度条正常</string>
+				<key>image</key>
+				<string>slider_scrubber_left.png</string>
+			</dict>
+			<key>skin_image_scrubber_right</key>
+			<dict>
+				<key>describe</key>
+				<string>进度条滑过</string>
+				<key>image</key>
+				<string>slider_scrubber_right.png</string>
+			</dict>
 		</dict>
 		<key>skin_set_color</key>
 		<dict>

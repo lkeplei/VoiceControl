@@ -55,6 +55,9 @@ typedef enum {
     MATypeImgBtnGrayCircle,
     MATypeImgAddPlanReSec,
     MATypeImgCellIndicator,
+    MATypeImgSliderScrubberKnob,
+    MATypeImgSliderScrubberLeft,
+    MATypeImgSliderScrubberRight,
     
     MATypeBaiduMobLogEvent = 400,
     MATypeBaiduMobEventStart,

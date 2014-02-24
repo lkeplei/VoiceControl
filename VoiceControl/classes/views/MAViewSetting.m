@@ -18,7 +18,8 @@
 @interface MAViewSetting ()
 @property (nonatomic, strong) MADropDownControlView* fileTimeMax;
 @property (nonatomic, strong) MADropDownControlView* fileTimeMin;
-@property (nonatomic, strong) MADropDownControlView* minVoice;
+@property (nonatomic, strong) MADropDownControlView* clearRubbish;
+//@property (nonatomic, strong) MADropDownControlView* minVoice;
 @end
 
 @implementation MAViewSetting
@@ -69,6 +70,19 @@
     [_fileTimeMin setSelectionOptions:options];
     [_fileTimeMin setSelectedContent:[MADataManager getDataByKey:KUserDefaultFileTimeMin]];
 
+    //清理垃圾文件设置
+    _clearRubbish = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
+                                                                           KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
+                                                                           self.frame.size.width - off * 2, KDropDownHeight)];
+    [_clearRubbish setTitle:MyLocal(@"setting_clear_rubbish")];
+    _clearRubbish.delegate = self;
+    
+    // Add a bunch of options
+    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_time_3second"), MyLocal(@"setting_time_5second"),
+               MyLocal(@"setting_time_10second"), MyLocal(@"setting_time_20second"), MyLocal(@"setting_time_30second"),
+               MyLocal(@"setting_time_50second"), MyLocal(@"setting_time_60second"), nil];
+    [_clearRubbish setSelectionOptions:options];
+    [_clearRubbish setSelectedContent:[MADataManager getDataByKey:KUserDefaultClearRubbish]];
     
     //文件管理的密码设置
     
@@ -89,17 +103,18 @@
 //    [self addSubview:_minVoice];
     [self addSubview:_fileTimeMin];
     [self addSubview:_fileTimeMax];
+    [self addSubview:_clearRubbish];
 }
 
 #pragma mark - Drop Down Selector Delegate
 - (void)dropDownControlViewWillBecomeActive:(MADropDownControlView *)view  {
     if (_fileTimeMax == view) {
         [_fileTimeMin inactivateControl];
-        [_minVoice inactivateControl];
+        [_clearRubbish inactivateControl];
     } else if (_fileTimeMin == view) {
         [_fileTimeMax inactivateControl];
-        [_minVoice inactivateControl];
-    } else if(_minVoice == view){
+        [_clearRubbish inactivateControl];
+    } else if(_clearRubbish == view){
         [_fileTimeMin inactivateControl];
         [_fileTimeMax inactivateControl];
     }
@@ -117,8 +132,8 @@
             [MADataManager setDataByKey:selection forkey:KUserDefaultFileTimeMax];
         } else if (_fileTimeMin == view) {
             [MADataManager setDataByKey:selection forkey:KUserDefaultFileTimeMin];
-        } else if(_minVoice == view){
-            [MADataManager setDataByKey:selection forkey:KUserDefaultVoiceStartPos];
+        } else if(_fileTimeMax == view){
+            [MADataManager setDataByKey:selection forkey:KUserDefaultClearRubbish];
         }
         
         [view setSelectedContent:selection];
@@ -127,7 +142,7 @@
 
 #pragma mark - others
 - (void)setGestureEnabled{
-    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_minVoice controlIsActive]) {
+    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_fileTimeMax controlIsActive]) {
         [SysDelegate.viewController setGestureEnabled:NO];
     } else {
         [SysDelegate.viewController setGestureEnabled:YES];

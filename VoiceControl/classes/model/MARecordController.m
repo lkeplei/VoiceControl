@@ -141,23 +141,28 @@
         [resArr addObject:res];
         [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
         
-        if ([MAUtils getFileSize:_filePath] > KZipMinSize * 1024) {
-            //zip file
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *docspath = [paths objectAtIndex:0];
+        if ([MAUtils getFileSize:_filePath] > KZipMinSize) {
+            // create dispatch queue
+            dispatch_queue_t queue = dispatch_queue_create("zipBlock", NULL);
             
-            NSMutableArray* array = [[NSMutableArray alloc] init];
-            
-            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-            [dic setObject:[@"" stringByAppendingFormat:@"%@.aac", _fileName] forKey:KName];
-            [dic setObject:_filePath forKey:KPath];
-            [array addObject:dic];
-            
-            BOOL result = [MAUtils zipFiles:[docspath stringByAppendingFormat:@"/%@.zip", _fileName] resourceArr:array];
-            if (result) {
-                //delete file
-                [MAUtils deleteFileWithPath:_filePath];
-            }
+            dispatch_async(queue, ^(void) {
+                //zip file
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *docspath = [paths objectAtIndex:0];
+                
+                NSMutableArray* array = [[NSMutableArray alloc] init];
+                
+                NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
+                [dic setObject:[@"" stringByAppendingFormat:@"%@.aac", _fileName] forKey:KName];
+                [dic setObject:_filePath forKey:KPath];
+                [array addObject:dic];
+                
+                BOOL result = [MAUtils zipFiles:[docspath stringByAppendingFormat:@"/%@.zip", _fileName] resourceArr:array];
+                if (result) {
+                    //delete file
+                    [MAUtils deleteFileWithPath:_filePath];
+                }
+            });
         }
     }
     [_recorder stop];

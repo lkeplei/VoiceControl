@@ -163,6 +163,15 @@
         case MATypeImgCellIndicator:
             return KSkinSetImgCellIndicator;
             break;
+        case MATypeImgSliderScrubberKnob:
+            return KSkinSetImgScrubberKnob;
+            break;
+        case MATypeImgSliderScrubberLeft:
+            return KSkinSetImgScrubberLeft;
+            break;
+        case MATypeImgSliderScrubberRight:
+            return KSkinSetImgScrubberKnobRight;
+            break;
         default:
             return nil;
             break;
