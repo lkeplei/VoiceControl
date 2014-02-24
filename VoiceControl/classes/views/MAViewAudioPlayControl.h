@@ -10,10 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 typedef enum {
-    MaAudioPlayNext = 0,
-    MaAudioPlayPre,
-    MaAudioPlayHide,
-    MaAudioPlayShow
+    MAAudioPlayNext = 0,
+    MAAudioPlayPre,
+    MAAudioPlayHide,
+    MAAudioPlayShow
 } MAAudioPlayType;
 
 #define KAudioPlayViewHeight        (100)

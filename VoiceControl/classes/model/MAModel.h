@@ -86,7 +86,9 @@ typedef enum {
 //获取单文件最大时长
 -(int)getFileTimeMax;
 //获取录音分贝开始点
--(int)getVoiceStatPos;
+-(int)getVoiceStartPos;
+//删除垃圾文件
+-(void)clearRubbish:(BOOL)now;
 //获取repeat时间设置
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add;
 

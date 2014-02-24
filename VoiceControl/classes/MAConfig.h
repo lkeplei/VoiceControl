@@ -56,13 +56,14 @@
 
 //NSUserDefaults key
 #define KUserDefaultRecorderStatus         @"default_recorder_status"
-#define KUserDefaultFileTimeMax            @"file_time_max"
-#define KUserDefaultFileTimeMin            @"file_time_min"
-#define KUserDefaultClearRubbish           @"clear_rubbish"
-#define KUserDefaultVoiceStartPos          @"voice_start_pos"
+#define KUserDefaultFileTimeMax            @"default_file_time_max"
+#define KUserDefaultFileTimeMin            @"default_file_time_min"
+#define KUserDefaultClearRubbish           @"default_clear_rubbish"
+#define KUserDefaultVoiceStartPos          @"default_voice_start_pos"
 #define KUserDefaultSetSkin                @"default_set_skin"
-#define KUserPassword                      @"user_password"
-#define KUserResetPassword                 @"user_reset_password"
+#define KUserDefaultPassword               @"default_user_password"
+#define KUserDefaultResetPassword          @"default_user_reset_password"
+#define KUserDefaultPreClearTime           @"default_pre_clear_time"
 
 //数据库部分
 #define KSqliteDBName           @"SQLiteVoiceControl.db"

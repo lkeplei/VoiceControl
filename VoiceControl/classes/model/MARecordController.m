@@ -91,11 +91,11 @@
     
     NSError *error;
     //初始化
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-        [audioSession setActive:YES error:nil];
-    }
+//    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+//        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+//        [audioSession setActive:YES error:nil];
+//    }
     _recorder = [[AVAudioRecorder alloc]initWithURL:url settings:_recordSetting error:&error];
     //开启音量检测
     _recorder.meteringEnabled = YES;
@@ -106,16 +106,6 @@
         //开始
         [_recorder record];
     }
-    
-    
-    
-    //    AVAudioSession * session = [AVAudioSession sharedInstance];
-    //    NSError * sessionError;
-    //    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
-    //    if(session == nil)
-    //        NSLog(@"Error creating session: %@", [sessionError description]);
-    //    else
-    //        [session setActive:YES error:nil];
 }
 
 -(void)stopRecord{
@@ -179,8 +169,6 @@
         }
     } else {
         if (autoTimer) {
-//            [autoTimer invalidate];
-//            autoTimer = nil;
             //关闭定时器
             [autoTimer setFireDate:[NSDate distantFuture]];
         }
@@ -251,6 +239,8 @@
         }
     }
     
+    //清理垃圾文件
+    [[MAModel shareModel] clearRubbish:NO];
 #ifdef KAppTest
     timerNum++;
     [SysDelegate.viewController setLabel:[@"" stringByAppendingFormat:@"start = %d, stop = %d, timer = %d", startNum, stopNum, timerNum]

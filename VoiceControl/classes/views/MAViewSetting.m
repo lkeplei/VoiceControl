@@ -19,7 +19,6 @@
 @property (nonatomic, strong) MADropDownControlView* fileTimeMax;
 @property (nonatomic, strong) MADropDownControlView* fileTimeMin;
 @property (nonatomic, strong) MADropDownControlView* clearRubbish;
-//@property (nonatomic, strong) MADropDownControlView* minVoice;
 @end
 
 @implementation MAViewSetting
@@ -54,7 +53,8 @@
                         MyLocal(@"setting_time_5minute"), MyLocal(@"setting_time_10minute"), MyLocal(@"setting_time_30minute"),
                         MyLocal(@"setting_time_60minute"), MyLocal(@"setting_time_120minute"), nil];
     [_fileTimeMax setSelectionOptions:options];
-    [_fileTimeMax setSelectedContent:[MADataManager getDataByKey:KUserDefaultFileTimeMax]];
+    [_fileTimeMax setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
+                                                              KUserDefaultFileTimeMax] intValue] - MASettingMaxTime1]];
 
     //单文件最小时长
     _fileTimeMin = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
@@ -68,7 +68,8 @@
                         MyLocal(@"setting_time_10second"), MyLocal(@"setting_time_20second"), MyLocal(@"setting_time_30second"),
                         MyLocal(@"setting_time_50second"), MyLocal(@"setting_time_60second"), nil];
     [_fileTimeMin setSelectionOptions:options];
-    [_fileTimeMin setSelectedContent:[MADataManager getDataByKey:KUserDefaultFileTimeMin]];
+    [_fileTimeMin setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
+                                                              KUserDefaultFileTimeMin] intValue] - MASettingMinTime3]];
 
     //清理垃圾文件设置
     _clearRubbish = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
@@ -78,32 +79,20 @@
     _clearRubbish.delegate = self;
     
     // Add a bunch of options
-    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_time_3second"), MyLocal(@"setting_time_5second"),
-               MyLocal(@"setting_time_10second"), MyLocal(@"setting_time_20second"), MyLocal(@"setting_time_30second"),
-               MyLocal(@"setting_time_50second"), MyLocal(@"setting_time_60second"), nil];
+    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_clear_right_now"), MyLocal(@"setting_clear_two_hour"),
+               MyLocal(@"setting_clear_five_hour"), MyLocal(@"setting_clear_ten_hour"), MyLocal(@"setting_clear_every_day"),
+               MyLocal(@"setting_clear_every_week"), MyLocal(@"setting_clear_every_month"), nil];
     [_clearRubbish setSelectionOptions:options];
-    [_clearRubbish setSelectedContent:[MADataManager getDataByKey:KUserDefaultClearRubbish]];
+    [_clearRubbish setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
+                                                               KUserDefaultClearRubbish] intValue] - MASettingClearRightNow]];
     
     //文件管理的密码设置
     
     //自动录音，最低分贝数(暂时不加分贝限制)
-//    _minVoice = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
-//                                                                        KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
-//                                                                        self.frame.size.width - off * 2, KDropDownHeight)];
-//    [_minVoice setTitle:MyLocal(@"setting_voice_min")];
-//    _minVoice.delegate = self;
-//
-//    // Add a bunch of options
-//    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_voice_10"), MyLocal(@"setting_voice_20"),
-//               MyLocal(@"setting_voice_30"), MyLocal(@"setting_voice_40"), MyLocal(@"setting_voice_50"), MyLocal(@"setting_voice_60"),
-//               MyLocal(@"setting_voice_70"), MyLocal(@"setting_voice_80"), MyLocal(@"setting_voice_90"), nil];
-//    [_minVoice setSelectionOptions:options];
-//    [_minVoice setSelectedContent:[MADataManager getDataByKey:KUserDefaultVoiceStartPos]];
-//    
-//    [self addSubview:_minVoice];
+
+    [self addSubview:_clearRubbish];
     [self addSubview:_fileTimeMin];
     [self addSubview:_fileTimeMax];
-    [self addSubview:_clearRubbish];
 }
 
 #pragma mark - Drop Down Selector Delegate
@@ -129,20 +118,26 @@
 - (void)dropDownControlView:(MADropDownControlView *)view didFinishWithSelection:(id)selection {
     if (selection) {
         if (_fileTimeMax == view) {
-            [MADataManager setDataByKey:selection forkey:KUserDefaultFileTimeMax];
+            [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMaxTime1 + [selection intValue]]
+                                 forkey:KUserDefaultFileTimeMax];
         } else if (_fileTimeMin == view) {
-            [MADataManager setDataByKey:selection forkey:KUserDefaultFileTimeMin];
-        } else if(_fileTimeMax == view){
-            [MADataManager setDataByKey:selection forkey:KUserDefaultClearRubbish];
+            [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinTime3 + [selection intValue]]
+                                 forkey:KUserDefaultFileTimeMin];
+        } else if(_clearRubbish == view){
+            [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearRightNow + [selection intValue]]
+                                 forkey:KUserDefaultClearRubbish];
+            if ([selection intValue] == 0) {
+                [[MAModel shareModel] clearRubbish:YES];
+            }
         }
         
-        [view setSelectedContent:selection];
+        [view setSelectedContent:[view selectedContent]];
     }
 }
 
 #pragma mark - others
 - (void)setGestureEnabled{
-    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_fileTimeMax controlIsActive]) {
+    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_clearRubbish controlIsActive]) {
         [SysDelegate.viewController setGestureEnabled:NO];
     } else {
         [SysDelegate.viewController setGestureEnabled:YES];

@@ -179,11 +179,11 @@
 
         _audioPlayControl.audioPlayCallBack = ^(MAAudioPlayType type){
             BOOL res = YES;
-            if (type == MaAudioPlayNext) {
+            if (type == MAAudioPlayNext) {
                 res = [self playNext];
-            } else if (type == MaAudioPlayPre) {
+            } else if (type == MAAudioPlayPre) {
                 res = [self playPre];
-            } else if (type == MaAudioPlayHide) {
+            } else if (type == MAAudioPlayHide) {
                 [self hideAudioPlay];
             }
             return res;

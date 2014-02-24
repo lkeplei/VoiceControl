@@ -84,10 +84,20 @@
     }
 }
 
+-(id)selectedContent{
+    if (mSelectionOptions && mSelectionIndex >= 0 && [mSelectionOptions count] > mSelectionIndex) {
+        return [mSelectionOptions objectAtIndex:mSelectionIndex];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - Configuration
 - (void)setSelectionOptions:(NSArray *)selectionOptions {
-    mSelectionOptions = selectionOptions;
-    mSelectionCells = nil;
+    if (selectionOptions) {
+        mSelectionOptions = selectionOptions;
+        mSelectionCells = nil;
+    }
 }
 
 #pragma mark - Touch Handling
@@ -155,7 +165,7 @@
             [self inactivateControl];
             
             if (mSelectionIndex < [mSelectionOptions count]) {
-                [self.delegate dropDownControlView:self didFinishWithSelection:[mSelectionOptions objectAtIndex:mSelectionIndex]];
+                [self.delegate dropDownControlView:self didFinishWithSelection:[NSNumber numberWithInt:mSelectionIndex]];
             } else {
                 [self.delegate dropDownControlView:self didFinishWithSelection:nil];
             }

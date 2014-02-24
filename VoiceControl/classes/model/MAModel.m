@@ -15,6 +15,7 @@
 #import "BaiduMobStat.h"
 #import "MAUtils.h"
 #import "MARecordController.h"
+#import "MAViewSetting.h"
 
 @interface MAModel ()
 @property (nonatomic, strong) MASkinData* skinData;
@@ -50,8 +51,21 @@ static MAModel* _sharedModel = nil;
         [MADataManager setDataByKey:KSkinSetDefault forkey:KUserDefaultSetSkin];
     }
     
-    //初始服务
+    if ([MADataManager getDataByKey:KUserDefaultFileTimeMax] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMaxTime10] forkey:KUserDefaultFileTimeMax];
+    }
+    
+    if ([MADataManager getDataByKey:KUserDefaultFileTimeMin] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinTime5] forkey:KUserDefaultFileTimeMin];
+    }
+    
+    if ([MADataManager getDataByKey:KUserDefaultClearRubbish] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearEveryDay] forkey:KUserDefaultClearRubbish];
+    }
+    
+    //初始声音服务
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 -(UIColor*)getColorByType:(MAType)type default:(BOOL)defult{
@@ -181,85 +195,143 @@ static MAModel* _sharedModel = nil;
 -(int)getFileTimeMin{
     //以秒为单位
     int res = 5;
-    NSString* str = [MADataManager getDataByKey:KUserDefaultFileTimeMin];
-    if (str) {
-        if ([str compare:MyLocal(@"setting_time_3second")] == NSOrderedSame) {
+    int type = [[MADataManager getDataByKey:KUserDefaultFileTimeMin] intValue];
+    switch (type) {
+        case MASettingMinTime3:
             res = 3;
-        } else if ([str compare:MyLocal(@"setting_time_5second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime5:
             res = 5;
-        } else if ([str compare:MyLocal(@"setting_time_10second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime10:
             res = 10;
-        } else if ([str compare:MyLocal(@"setting_time_20second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime20:
             res = 20;
-        } else if ([str compare:MyLocal(@"setting_time_30second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime30:
             res = 30;
-        } else if ([str compare:MyLocal(@"setting_time_50second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime50:
             res = 50;
-        } else if ([str compare:MyLocal(@"setting_time_60second")] == NSOrderedSame) {
+            break;
+        case MASettingMinTime60:
             res = 60;
-        } else {
-            res = 5;
-        } 
+            break;
+        default:
+            break;
     }
-    
     return res;
 }
 
 -(int)getFileTimeMax{
     //以秒为单位
     int res = 10;
-    NSString* str = [MADataManager getDataByKey:KUserDefaultFileTimeMax];
-    if (str) {
-        if ([str compare:MyLocal(@"setting_time_1minute")] == NSOrderedSame) {
+    int type = [[MADataManager getDataByKey:KUserDefaultFileTimeMax] intValue];
+    switch (type) {
+        case MASettingMaxTime1:
             res = 1;
-        } else if ([str compare:MyLocal(@"setting_time_2minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime2:
             res = 2;
-        } else if ([str compare:MyLocal(@"setting_time_5minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime5:
             res = 5;
-        } else if ([str compare:MyLocal(@"setting_time_10minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime10:
             res = 10;
-        } else if ([str compare:MyLocal(@"setting_time_30minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime30:
             res = 30;
-        } else if ([str compare:MyLocal(@"setting_time_60minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime60:
             res = 60;
-        } else if ([str compare:MyLocal(@"setting_time_120minute")] == NSOrderedSame) {
+            break;
+        case MASettingMaxTime120:
             res = 120;
-        } else {
-            res = 10;
-        }
+            break;
+        default:
+            break;
     }
-    
     return res * 60;
 }
 
--(int)getVoiceStatPos{
+-(int)getVoiceStartPos{
     int res = 20;
-    NSString* str = [MADataManager getDataByKey:KUserDefaultVoiceStartPos];
-    if (str) {
-        if ([str compare:MyLocal(@"setting_voice_10")] == NSOrderedSame) {
+    int type = [[MADataManager getDataByKey:KUserDefaultVoiceStartPos] intValue];
+    switch (type) {
+        case MASettingMinVoice10:
             res = 10;
-        } else if ([str compare:MyLocal(@"setting_voice_20")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice20:
             res = 20;
-        } else if ([str compare:MyLocal(@"setting_voice_30")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice30:
             res = 30;
-        } else if ([str compare:MyLocal(@"setting_voice_40")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice40:
             res = 40;
-        } else if ([str compare:MyLocal(@"setting_voice_50")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice50:
             res = 50;
-        } else if ([str compare:MyLocal(@"setting_voice_60")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice60:
             res = 60;
-        } else if ([str compare:MyLocal(@"setting_voice_70")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice70:
             res = 70;
-        } else if ([str compare:MyLocal(@"setting_voice_80")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice80:
             res = 80;
-        } else if ([str compare:MyLocal(@"setting_voice_90")] == NSOrderedSame) {
+            break;
+        case MASettingMinVoice90:
             res = 90;
-        } else {
-            res = 20;
-        }
+            break;
+        default:
+            break;
     }
     
     return res;
+}
+
+-(void)clearRubbish:(BOOL)now{
+    if (now) {
+        NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
+        for (NSDictionary* dic in array) {
+            NSString* file = [dic objectForKey:KDataBasePath];
+            if ([MAUtils getFileSize:file] > KZipMinSize) {
+                [MAUtils deleteFileWithPath:file];
+            }
+        }
+    } else {
+        dispatch_queue_t queue = dispatch_queue_create("clearBlock", NULL);
+        
+        dispatch_async(queue, ^(void) {
+            NSString* preDateStr = [MADataManager getDataByKey:KUserDefaultPreClearTime];
+            NSDate* date = [NSDate date];
+            if (preDateStr) {
+                date = [MAUtils getDateFromString:preDateStr format:KDateTimeFormat];
+            }
+            
+            MASettingType type = [[MADataManager getDataByKey:KUserDefaultClearRubbish] intValue];
+            switch (type) {
+                case MASettingClearRightNow:
+                case MASettingClearTwoHour:
+                case MASettingClearFiveHour:
+                case MASettingClearTenHour:
+                case MASettingClearEveryDay:
+                case MASettingClearEveryWeek:
+                case MASettingClearEveryMonth:
+                    break;
+                default:
+                    break;
+            }
+            
+//            if (<#condition#>) {
+//                <#statements#>
+//            }
+        });
+    }
 }
 
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add{

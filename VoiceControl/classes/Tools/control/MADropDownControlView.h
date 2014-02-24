@@ -33,5 +33,6 @@
 - (void)setTitle:(NSString *)title;
 - (void)setSelectedContent:(NSString *)selectedContent;
 - (void)inactivateControl;
+- (id)selectedContent;
 
 @end

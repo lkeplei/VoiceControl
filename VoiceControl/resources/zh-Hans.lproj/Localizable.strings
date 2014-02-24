@@ -64,6 +64,13 @@
 "setting_time_60second" = "1分";
 
 "setting_clear_rubbish" = "垃圾文件清理:  ";
+"setting_clear_right_now" = "立即";
+"setting_clear_two_hour" = "每2小时";
+"setting_clear_five_hour" = "每5小时";
+"setting_clear_ten_hour" = "每10小时";
+"setting_clear_every_day" = "每天";
+"setting_clear_every_week" = "每周";
+"setting_clear_every_month" = "每月";
 
 "setting_voice_min" = "最低录音分贝:  ";
 "setting_voice_10" = "10";

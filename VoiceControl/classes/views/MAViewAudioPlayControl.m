@@ -242,7 +242,7 @@
 - (void)preBtnClicked:(id)sender{
     if (_resouceArr) {
         if (self.audioPlayCallBack) {
-            if (self.audioPlayCallBack(MaAudioPlayPre)) {
+            if (self.audioPlayCallBack(MAAudioPlayPre)) {
                 DebugLog(@"2222222222222");
             } else {
                 DebugLog(@"111111111111")
@@ -254,7 +254,7 @@
 - (void)nextBtnClicked:(id)sender{
     if (_resouceArr) {
         if (self.audioPlayCallBack) {
-            if (self.audioPlayCallBack(MaAudioPlayNext)) {
+            if (self.audioPlayCallBack(MAAudioPlayNext)) {
                 DebugLog(@"333333333333");
             } else {
                 DebugLog(@"4444444444444")
