@@ -407,12 +407,12 @@ return res;
         [menuItems addObject:item2];
     }
     
-    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_add_pwd")
-                                       image:nil
-                                    userInfo:[NSNumber numberWithInt:sender.tag]
-                                      target:self
-                                      action:@selector(addPwd:)];
-    [menuItems addObject:item3];
+//    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_add_pwd")
+//                                       image:nil
+//                                    userInfo:[NSNumber numberWithInt:sender.tag]
+//                                      target:self
+//                                      action:@selector(addPwd:)];
+//    [menuItems addObject:item3];
     
     MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil

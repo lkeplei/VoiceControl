@@ -14,7 +14,7 @@
 #import "MAViewAudioPlayControl.h"
 
 #define KHudSizeWidth           (self.frame.size.width * 1)
-#define KHudSizeHeight          200
+#define KHudSizeHeight          220
 #define CANCEL_BUTTON_HEIGHT    50
 #define SOUND_METER_COUNT       60
 #define KMaxLengthOfWave        (50)
@@ -91,7 +91,7 @@
                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                  target:self
                                  action:@selector(startBtnClicked:)];
-    _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 250);
+    _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 300);
     [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                     forState:UIControlStateNormal];
     [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
@@ -105,7 +105,7 @@
                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                target:self
                                 action:@selector(playRecordSound:)];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, 215, 250);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, 215, 300);
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                    forState:UIControlStateNormal];
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
@@ -116,7 +116,7 @@
     
     //on/off
     UISwitch* switcher = [[UISwitch alloc] init];
-    switcher.center = CGPointMake(self.center.x, 320);
+    switcher.center = CGPointMake(self.center.x, 340);
     [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
     [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:switcher];
@@ -124,7 +124,7 @@
 
 -(void)initLabels{
     _labelVoice = [MAUtils labelWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
-                                   frame:CGRectMake(10, 400, 300, 30)
+                                   frame:CGRectMake(10, 230, 300, 30)
                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
 //    _labelVoice.textAlignment = KTextAlignmentLeft;
@@ -215,13 +215,29 @@
         double lowPassResults = pow(10, (0.05 * [[[MAModel shareModel] getRecorder] peakPowerForChannel:0]));
         
         voiceAverage = [[[MAModel shareModel] getRecorder] averagePowerForChannel:0] + 100;
-        voiceCurrent = lowPassResults;
+        voiceCurrent = lowPassResults * 120;
         voiceMax = [[[MAModel shareModel] getRecorder] peakPowerForChannel:0] + 100;
+        
+        float level; // The linear 0.0 .. 1.0 value we need.
+        float minDecibels = -80.0f; // Or use -60dB, which I measured in a silent room.
+        float decibels = [[[MAModel shareModel] getRecorder] averagePowerForChannel:0];
+        
+        float root = 2.0f;
+        float minAmp = powf(10.0f, 0.05f * minDecibels);
+        float inverseAmpRange = 1.0f / (1.0f - minAmp);
+        float amp = powf(10.0f, 0.05f * decibels);
+        float adjAmp = (amp - minAmp) * inverseAmpRange;
+        level = powf(adjAmp, 1.0f / root);
+        
+        voiceMin = level * 120;
+        
+        
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
         
         [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
     } else {
         [self addSoundMeterItem:KMaxLengthOfWave];
+        _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0, 0, 0, 0];
     }
 }
 

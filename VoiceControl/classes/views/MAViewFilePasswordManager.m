@@ -25,10 +25,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSString* strPassword = [MADataManager getDataByKey:KUserPassword];
-        BOOL reset = [[MADataManager getDataByKey:KUserResetPassword] boolValue];
+        NSString* strPassword = [MADataManager getDataByKey:KUserDefaultPassword];
+        BOOL reset = [[MADataManager getDataByKey:KUserDefaultResetPassword] boolValue];
         if (reset) {
-            [MADataManager setDataByKey:[NSNumber numberWithBool:NO] forkey:KUserResetPassword];
+            [MADataManager setDataByKey:[NSNumber numberWithBool:NO] forkey:KUserDefaultResetPassword];
             [self initResetPassword];
         }else{
             if ((strPassword == nil) || ([strPassword compare:@"123456"] == NSOrderedSame) ) {
@@ -107,7 +107,7 @@
                                            bgcolor:[UIColor grayColor]
                                               secu:NO
                                               font:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]
-                                              text:[MADataManager getDataByKey:KUserPassword]];
+                                              text:[MADataManager getDataByKey:KUserDefaultPassword]];
     oldPassword.tag = MAOldPasswordType;
     oldPassword.delegate = self;
     oldPassword.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -258,7 +258,7 @@
     
     //保存密码
     NSString *password = textfielsetPW ? textfielsetPW.text : textfielnewPW.text;
-    [MADataManager setDataByKey:password forkey:KUserPassword];
+    [MADataManager setDataByKey:password forkey:KUserDefaultPassword];
 
     [_delegate Passwordclick:self btnState:YES];
 }

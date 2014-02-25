@@ -64,6 +64,7 @@
 #define KUserDefaultPassword               @"default_user_password"
 #define KUserDefaultResetPassword          @"default_user_reset_password"
 #define KUserDefaultPreClearTime           @"default_pre_clear_time"
+#define KUserDefaultNextClearTime          @"default_next_clear_time"
 
 //数据库部分
 #define KSqliteDBName           @"SQLiteVoiceControl.db"

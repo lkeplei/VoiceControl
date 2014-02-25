@@ -45,7 +45,7 @@
     }
     _menuView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - 40)];
     NSString* str = nil;
-    NSString* strPassword = [MADataManager getDataByKey:KUserPassword];
+    NSString* strPassword = [MADataManager getDataByKey:KUserDefaultPassword];
     if ((strPassword == nil) || ([strPassword compare:@"123456"] == NSOrderedSame) ) {
         str = MyLocal(@"setfile_setpassword");
     } else {
@@ -84,7 +84,7 @@
 }
 
 - (void)resPWBtnClicked:(id)sender{
-    [MADataManager setDataByKey:[NSNumber numberWithBool:YES] forkey:KUserResetPassword];
+    [MADataManager setDataByKey:[NSNumber numberWithBool:YES] forkey:KUserDefaultResetPassword];
     [_menuView setHidden:YES];
     MAViewFilePasswordManager* view = [[MAViewFilePasswordManager alloc] initWithFrame:CGRectMake(0, 0,
                                                                                                   self.frame.size.width,

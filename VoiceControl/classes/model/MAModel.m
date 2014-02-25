@@ -253,7 +253,7 @@ static MAModel* _sharedModel = nil;
         default:
             break;
     }
-    return res * 60;
+    return res;
 }
 
 -(int)getVoiceStartPos{
@@ -296,41 +296,91 @@ static MAModel* _sharedModel = nil;
 
 -(void)clearRubbish:(BOOL)now{
     if (now) {
-        NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
-        for (NSDictionary* dic in array) {
-            NSString* file = [dic objectForKey:KDataBasePath];
-            if ([MAUtils getFileSize:file] > KZipMinSize) {
-                [MAUtils deleteFileWithPath:file];
-            }
-        }
+        [self clearRubbish];
     } else {
         dispatch_queue_t queue = dispatch_queue_create("clearBlock", NULL);
         
         dispatch_async(queue, ^(void) {
-            NSString* preDateStr = [MADataManager getDataByKey:KUserDefaultPreClearTime];
+            NSString* nextDate = [MADataManager getDataByKey:KUserDefaultNextClearTime];
             NSDate* date = [NSDate date];
-            if (preDateStr) {
-                date = [MAUtils getDateFromString:preDateStr format:KDateTimeFormat];
+            if (nextDate) {
+                date = [MAUtils getDateFromString:nextDate format:KDateTimeFormat];
+            } else {
+                [self getNextClearDate:date];
+                [MADataManager setDataByKey:[MAUtils getStringFromDate:date format:KDateTimeFormat] forkey:KUserDefaultNextClearTime];
             }
             
-            MASettingType type = [[MADataManager getDataByKey:KUserDefaultClearRubbish] intValue];
-            switch (type) {
-                case MASettingClearRightNow:
-                case MASettingClearTwoHour:
-                case MASettingClearFiveHour:
-                case MASettingClearTenHour:
-                case MASettingClearEveryDay:
-                case MASettingClearEveryWeek:
-                case MASettingClearEveryMonth:
-                    break;
-                default:
-                    break;
-            }
+            DebugLog(@"preDateStr = %@", [MAUtils getStringFromDate:date format:KDateTimeFormat]);
             
-//            if (<#condition#>) {
-//                <#statements#>
-//            }
+            if ([[NSDate date] timeIntervalSince1970] >= [date timeIntervalSince1970]) {
+                [self clearRubbish];
+                [MADataManager setDataByKey:[MAUtils getStringFromDate:[date dateByAddingTimeInterval:60] format:KDateTimeFormat] forkey:KUserDefaultPreClearTime];
+                [MADataManager removeDataByKey:KUserDefaultNextClearTime];
+            }
         });
+    }
+}
+
+-(void)clearRubbish{
+    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
+    for (NSDictionary* dic in array) {
+        NSString* file = [dic objectForKey:KDataBasePath];
+        if ([MAUtils getFileSize:file] > KZipMinSize) {
+            [MAUtils deleteFileWithPath:file];
+        }
+    }
+}
+
+-(void)getNextClearDate:(NSDate*)date{
+    NSString* preDateStr = [MADataManager getDataByKey:KUserDefaultPreClearTime];
+    if (preDateStr) {
+        date = [MAUtils getDateFromString:preDateStr format:KDateTimeFormat];
+    } else {
+        [MADataManager setDataByKey:[MAUtils getStringFromDate:date format:KDateTimeFormat] forkey:KUserDefaultPreClearTime];
+    }
+    
+    MASettingType type = [[MADataManager getDataByKey:KUserDefaultClearRubbish] intValue];
+    NSTimeInterval timeInterval = 0;
+    NSDate* newDate = date;
+    switch (type) {
+        case MASettingClearRightNow:
+        case MASettingClearEveryDay:
+        case MASettingClearEveryWeek:
+        case MASettingClearEveryMonth:{
+            NSDateComponents* com = [MAUtils getComponentsFromDate:[NSDate date]];
+            newDate = [MAUtils getDateFromString:[NSString stringWithFormat:@"%d-%d-%d %@:%@", [com year], [com month], [com day], @"02", @"00"]
+                                                  format:KDateTimeFormat];
+            if ([com hour] > 2 || ([com hour] == 2 && [com minute] > 0)) {
+                if (type == MASettingClearRightNow || type == MASettingClearEveryDay) {
+                    timeInterval = 24 * 3600;
+                } else if (type == MASettingClearEveryWeek){
+                    timeInterval = 24 * 3600 * 7;
+                } else if (type == MASettingClearEveryWeek){
+                    timeInterval = 24 * 3600 * 30;
+                }
+            } else {
+                date = newDate;
+            }
+        }
+            break;
+        case MASettingClearTwoHour:{
+            timeInterval = 7200;
+        }
+            break;
+        case MASettingClearFiveHour:{
+            timeInterval = 18000;
+        }
+            break;
+        case MASettingClearTenHour:{
+            timeInterval = 36000;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    if (timeInterval != 0) {
+        date = [newDate dateByAddingTimeInterval:timeInterval];
     }
 }
 
