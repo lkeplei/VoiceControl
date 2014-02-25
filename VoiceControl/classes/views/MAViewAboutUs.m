@@ -43,12 +43,16 @@
 -(void)initTopView{
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KViewHorOffset, self.frame.size.width, KTopViewHeight)];
     
+    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-iphone.png"]];
+    imgView.center = CGPointMake(_topView.center.x, _topView.center.y);
+    [self addSubview:imgView];
+    
     UILabel* label = [MAUtils labelWithTxt:[NSString stringWithFormat:@"V %@", [MAUtils getAppVersion]]
-                                     frame:CGRectMake(0, 0, _topView.frame.size.width, 20)
-                                      font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                     frame:CGRectMake(0, CGRectGetMaxY(imgView.frame), _topView.frame.size.width, 20)
+                                      font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize18]
                                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_topView addSubview:label];
-    
+
     [self addSubview:_topView];
 }
 

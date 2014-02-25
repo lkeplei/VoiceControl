@@ -60,36 +60,42 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     //保证计时器继续运行
-    UIApplication*   app = [UIApplication sharedApplication];
+//    UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
-    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
-            {
-                bgTask = UIBackgroundTaskInvalid;
-            }
-        });
+//    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    }];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    });
+
+
+
+    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+        // Clean up any unfinished task business by marking where you
+        // stopped or ending the task outright.
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
     }];
+    
+    // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
-            {
-                bgTask = UIBackgroundTaskInvalid;
-            }
-        });
+        
+        // Do the work associated with the task, preferably in chunks.
+        
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
     });
-
-
-
-
-
-//    AVAudioSession * session = [AVAudioSession sharedInstance];
-//    NSError * sessionError;
-//    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
-//    if(session == nil)
-//        NSLog(@"Error creating session: %@", [sessionError description]);
-//    else
-//        [session setActive:YES error:nil];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
