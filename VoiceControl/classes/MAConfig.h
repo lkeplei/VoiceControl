@@ -172,4 +172,12 @@
 
 #define KMenuTableView          @"menu_table_view"
 
+//mail
+#define KMailSubject            @"mail_subject"
+#define KMailToRecipients       @"mail_to_recipients"
+#define KMailCcRecipients       @"mail_cc_recipients"
+#define KMailBccRecipients      @"mail_bcc_recipients"
+#define KMailAttachment         @"mail_attachment"
+#define KMailBody               @"mail_body"
+
 #endif

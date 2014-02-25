@@ -59,7 +59,7 @@ typedef enum {
 -(void)popView:(MAViewBase*)lastView preView:(MAViewBase*)preView animatedType:(MAType)type;
 
 //email
--(void)sendEMail:(NSArray*)fileArray;
+-(void)sendEMail:(NSDictionary*)fileArray;
 
 @end
 

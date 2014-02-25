@@ -343,63 +343,60 @@
 
 #pragma mark - email
 //点击按钮后，触发这个方法
--(void)sendEMail:(NSArray*)fileArray{
+-(void)sendEMail:(NSDictionary*)mailDic{
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
     
-    if (mailClass != nil){
+    if (mailClass != nil && mailDic){
         if ([mailClass canSendMail]){
-            [self displayComposerSheet:fileArray];
-        }
-        else{
-            [self launchMailAppOnDevice];
-        }
-    }
-    else{
-        [self launchMailAppOnDevice];
-    }
-}
+            MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
+            
+            mailPicker.mailComposeDelegate = self;
 
-//可以发送邮件的话
--(void)displayComposerSheet:(NSArray*)fileArray{
-    MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
-    
-    mailPicker.mailComposeDelegate = self;
-    
-    //设置主题
-    [mailPicker setSubject:MyLocal(@"mail_body")];
-    
-    // 添加发送者
-    NSArray *toRecipients = [NSArray arrayWithObject: @"first@example.com"];
-    //NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil];
-    //NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com", nil];
-    [mailPicker setToRecipients: toRecipients];
-    //[picker setCcRecipients:ccRecipients];
-    //[picker setBccRecipients:bccRecipients];
-    
-    // 添加附件
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docspath = [paths objectAtIndex:0];
-    for (NSString* file in fileArray) {
-        NSData* data = [NSData dataWithContentsOfFile:[docspath stringByAppendingFormat:@"/%@.zip", file]];
-        // NSData *imageData = UIImageJPEGRepresentation(addPic, 1);    // jpeg
-        [mailPicker addAttachmentData:data mimeType:@"" fileName:file];
+            //设置主题
+            NSString* subject = [mailDic objectForKey:KMailSubject];
+            if (subject) {
+                [mailPicker setSubject:subject];
+            }
+            
+            //添加收件人
+            NSArray* toRecipients = [mailDic objectForKey:KMailToRecipients];
+            if (toRecipients) {
+                [mailPicker setToRecipients:toRecipients];
+            }
+            
+            //添加抄送人
+            NSArray* ccRecipients = [mailDic objectForKey:KMailCcRecipients];
+            if (ccRecipients) {
+                [mailPicker setCcRecipients:ccRecipients];
+            }
+            
+            //添加bcc
+            NSArray* bccRecipients = [mailDic objectForKey:KMailBccRecipients];
+            if (bccRecipients) {
+                [mailPicker setBccRecipients:bccRecipients];
+            }
+            
+            //添加附件
+            NSArray* attachments = [mailDic objectForKey:KMailAttachment];
+            if (attachments) {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *docspath = [paths objectAtIndex:0];
+                for (NSString* file in attachments) {
+                    NSData* data = [NSData dataWithContentsOfFile:[docspath stringByAppendingFormat:@"/%@.zip", file]];
+                    // NSData *imageData = UIImageJPEGRepresentation(addPic, 1);    // jpeg
+                    [mailPicker addAttachmentData:data mimeType:@"" fileName:file];
+                }
+            }
+            
+            //添加消息体
+            NSString* body = [mailDic objectForKey:KMailBody];
+            if (body) {
+                [mailPicker setMessageBody:body isHTML:YES];
+            }
+            
+            [self presentModalViewController: mailPicker animated:YES];
+        }
     }
-    
-    NSString *emailBody = MyLocal(@"mail_body");
-    [mailPicker setMessageBody:emailBody isHTML:YES];
-    
-    [self presentModalViewController: mailPicker animated:YES];
-}
-
--(void)launchMailAppOnDevice{
-    NSString *recipients = @"mailto:first@example.com&subject=my email!";
-    //@"mailto:first@example.com?cc=second@example.com,third@example.com&subject=my email!";
-    NSString *body = @"&body=email body!";
-    
-    NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
-    email = [email stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    
-    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:email]];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller

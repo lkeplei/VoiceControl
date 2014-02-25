@@ -126,6 +126,12 @@
 "mail_send_succeed" = "邮件发送成功";
 "mail_send_failed" = "邮件发送失败";
 
+//关于我们
+"about_cell_qq" = "QQ：252723599";
+"about_cell_email" = "Email：liukun927nh@163.com";
+"about_mail_to" = "liukun927nh@163.com";
+"about_mail_subject" = "意见反馈";
+
 //文件管理设置
 "file_set_reset_email" = "邮件";
 "file_set_reset_sms" = "短信";

@@ -89,8 +89,7 @@
         cell = [[MACellPlan alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
-    
-DebugLog(@"section = %d, row = %d", [indexPath section], [indexPath row]);
+
     if ([indexPath section] == 0 && _resourceArray && [_resourceArray count] > 0) {
         if (_resourceArray && [indexPath row] < [_resourceArray count]) {
             [cell setCellResource:[_resourceArray objectAtIndex:[indexPath row]] editing:_editing];

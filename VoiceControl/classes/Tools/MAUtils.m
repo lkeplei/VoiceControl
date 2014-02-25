@@ -446,8 +446,6 @@ static MAUtils* _shareUtils = nil;
     [[NSUserDefaults standardUserDefaults] setFloat:value forKey:@"PlayerVolume"];
 }
 
-
-
 + (void)alert:(NSString *)msg
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:msg message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -493,6 +491,7 @@ static MAUtils* _shareUtils = nil;
 
 + (void) sendEmail:(NSString *)to cc:(NSString*)cc subject:(NSString*)subject body:(NSString*)body
 {
+    //@"mailto:first@example.com?cc=second@example.com,third@example.com&subject=my email!";
     NSString* str = [NSString stringWithFormat:@"mailto:%@?cc=%@&subject=%@&body=%@",
                      to, cc, subject, body];
     

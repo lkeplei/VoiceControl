@@ -455,7 +455,10 @@ return res;
     
     NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
     NSArray* array = [NSArray arrayWithObjects:[resDic objectForKey:KDataBaseFileName], nil];
-    [SysDelegate.viewController sendEMail:array];
+    
+    NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
+    [mailDic setObject:array forKey:KMailAttachment];
+    [SysDelegate.viewController sendEMail:mailDic];
 }
 
 -(void)changeFileType:(MAType)type sender:(id)sender{
