@@ -121,7 +121,6 @@ static MAModel* _sharedModel = nil;
         } else {
             [timeStr appendFormat:MyLocal(@"time_day"), time / (60 * 60 * 24)];
         }
-        [timeStr appendFormat:MyLocal(@"time_day"), time / (60 * 60 * 24)];
         [timeStr appendString:[self getStringTime:(time % (60 * 60 * 24)) type:type]];
     } else {
         if (time >= 60 * 60) {
@@ -132,7 +131,6 @@ static MAModel* _sharedModel = nil;
             } else {
                 [timeStr appendFormat:MyLocal(@"time_hour"), time / (60 * 60)];
             }
-            [timeStr appendFormat:MyLocal(@"time_hour"), time / (60 * 60)];
             [timeStr appendString:[self getStringTime:(time % (60 * 60)) type:type]];
         } else {
             if (time >= 60) {

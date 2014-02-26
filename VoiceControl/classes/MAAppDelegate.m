@@ -62,40 +62,40 @@
     //保证计时器继续运行
 //    UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
-//    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (bgTask != UIBackgroundTaskInvalid)
-//            {
-//                bgTask = UIBackgroundTaskInvalid;
-//            }
-//        });
-//    }];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            if (bgTask != UIBackgroundTaskInvalid)
-//            {
-//                bgTask = UIBackgroundTaskInvalid;
-//            }
-//        });
-//    });
-
-
-
     bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-        // Clean up any unfinished task business by marking where you
-        // stopped or ending the task outright.
-        [application endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
     }];
-    
-    // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Do the work associated with the task, preferably in chunks.
-        
-        [application endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
     });
+
+
+
+//    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+//        // Clean up any unfinished task business by marking where you
+//        // stopped or ending the task outright.
+//        [application endBackgroundTask:bgTask];
+//        bgTask = UIBackgroundTaskInvalid;
+//    }];
+//    
+//    // Start the long-running task and return immediately.
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        // Do the work associated with the task, preferably in chunks.
+//        
+//        [application endBackgroundTask:bgTask];
+//        bgTask = UIBackgroundTaskInvalid;
+//    });
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -111,6 +111,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[MAModel shareModel] stopRecord];
 }
 
 @end

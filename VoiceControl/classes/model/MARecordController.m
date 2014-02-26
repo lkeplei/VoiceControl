@@ -25,6 +25,7 @@
 
 @property (assign) int recordId;
 @property (assign) float recorderDuration;
+@property (assign) float offsetDuration;
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSString* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
@@ -42,6 +43,7 @@
     if (self) {
         _recordId = -1;
         _recorderDuration = 0;
+        _offsetDuration = KTimeRecorderDuration;
         
         [self initAudio];
         [self resetPlan];
@@ -164,8 +166,15 @@
         if (autoTimer) {
             //开启定时器
             [autoTimer setFireDate:[NSDate distantPast]];
+            
+            if (_offsetDuration != [[MAModel shareModel] getFileTimeMin]) {
+                [autoTimer invalidate];
+                autoTimer = nil;
+                [self setRecordAutoStatus:isAuto];
+            }
         } else {
-            autoTimer = [NSTimer scheduledTimerWithTimeInterval:KTimeRecorderDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
+            _offsetDuration = MIN([[MAModel shareModel] getFileTimeMin], _offsetDuration);
+            autoTimer = [NSTimer scheduledTimerWithTimeInterval:_offsetDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
         }
     } else {
         if (autoTimer) {
@@ -186,13 +195,14 @@
     
     if (_isRecording) {
         if (_recordId != -1) {
-            _recorderDuration += KTimeRecorderDuration;
+            _recorderDuration += _offsetDuration;
             BOOL stop = YES;
             
             for (NSDictionary* plan in _planArray) {
                 if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
                     if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
                         int durationMin = _recorderDuration / 60;
+                        DebugLog(@"durationMin = %d, planDuration = %d, timeMax = %d", durationMin, [[plan objectForKey:KDataBaseDuration] intValue], [[MAModel shareModel] getFileTimeMax]);
                         if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue] && durationMin < [[MAModel shareModel] getFileTimeMax]) {
                             stop = NO;
                         }
