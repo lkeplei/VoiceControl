@@ -35,6 +35,8 @@
 @property (nonatomic, strong) MAViewSetting* settingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
 
+@property (nonatomic, strong) MAViewAudioPlayControl* audioPlayControl;
+
 @end
 
 @implementation MAViewFactory
@@ -217,6 +219,24 @@
             
         default:
             break;
+    }
+}
+
+-(MAViewAudioPlayControl*)getAudioPlayControl:(CGRect)frame{
+    if (_audioPlayControl == nil) {
+        _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:frame];
+    } else {
+        _audioPlayControl.frame = frame;
+    }
+
+    return _audioPlayControl;
+}
+
+-(BOOL)areadyExistAudioPlay{
+    if (_audioPlayControl) {
+        return YES;
+    } else {
+        return NO;
     }
 }
 @end

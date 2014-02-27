@@ -16,6 +16,9 @@
 -(void)startRecord;
 -(void)stopRecord;
 
+-(void)startDefaultRecord;
+-(void)stopDefaultRecord;
+
 -(void)resetPlan;
 -(void)resetTimer;
 

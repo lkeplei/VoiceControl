@@ -171,8 +171,9 @@
             
             [[cell textLabel] setText:MyLocal(@"plan_add_repeat")];
             if (_resourceDic && [[_resourceDic objectForKey:KDataBasePlanTime] length] > 0) {
-                if ([[[_resourceDic objectForKey:KDataBasePlanTime] substringToIndex:2] compare:@"99"] != NSOrderedSame) {
-                    _planTimeString = [_resourceDic objectForKey:KDataBasePlanTime];
+                NSString* planTime = [_resourceDic objectForKey:KDataBasePlanTime];
+                if ([planTime length] >= 2 && [[planTime substringToIndex:2] compare:@"99"] != NSOrderedSame) {
+                    _planTimeString = planTime;
                 }
                 [cell.detailTextLabel setText:[[MAModel shareModel] getRepeatTest:_planTimeString add:YES]];
             } else {

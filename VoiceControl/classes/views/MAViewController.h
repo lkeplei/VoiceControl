@@ -11,6 +11,7 @@
 #import "MAModel.h"
 
 @class MAViewBase;
+@class MAViewFactory;
 
 typedef enum {
     MAViewTypeBase = 0,
@@ -60,6 +61,9 @@ typedef enum {
 
 //email
 -(void)sendEMail:(NSDictionary*)fileArray;
+
+
+@property (nonatomic, strong) MAViewFactory* viewFactory;
 
 @end
 

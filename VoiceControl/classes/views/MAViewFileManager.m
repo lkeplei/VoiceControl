@@ -13,6 +13,7 @@
 #import "MAUtils.h"
 #import "MAViewAudioPlayControl.h"
 #import "MAMenu.h"
+#import "MAViewFactory.h"
 
 #define KCellLabelNameTag          (100)
 #define KCellButtonTag(a,b)        ((1000 * (a + 1)) + b)
@@ -55,6 +56,12 @@
         currentSection = 0;
     }
     return self;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    if ([[SysDelegate.viewController viewFactory] areadyExistAudioPlay]) {
+        [self showAudioPlay];
+    }
 }
 
 #pragma mark - init area
@@ -173,8 +180,10 @@
     showAudioPlay = YES;
     
     if (_audioPlayControl == nil) {
-        _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height,
-                                                                                     self.frame.size.width, KAudioPlayViewHeight)];
+        _audioPlayControl = [[SysDelegate.viewController viewFactory] getAudioPlayControl:CGRectMake(0, self.frame.size.height,
+                                                                                           self.frame.size.width, KAudioPlayViewHeight)];
+//        _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height,
+//                                                                                     self.frame.size.width, KAudioPlayViewHeight)];
         [self addSubview:_audioPlayControl];
 
         _audioPlayControl.audioPlayCallBack = ^(MAAudioPlayType type){
@@ -188,7 +197,6 @@
             }
             return res;
         };
-
     }
     
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{

@@ -33,11 +33,11 @@
     int soundMeters[SOUND_METER_COUNT];
 }
 
-@property (retain, nonatomic) UIImage *imagePhone;
-@property (retain, nonatomic) UIButton *startBtn;
-@property (retain, nonatomic) UIButton *playBtn;
-@property (retain, nonatomic) UILabel* labelVoice;
-@property (retain, nonatomic) AVAudioPlayer *avPlay;
+//@property (strong, nonatomic) UIImage *imagePhone;
+@property (strong, nonatomic) UIButton *startBtn;
+@property (strong, nonatomic) UIButton *playBtn;
+@property (strong, nonatomic) UILabel* labelVoice;
+@property (strong, nonatomic) AVAudioPlayer *avPlay;
 
 @end
 
@@ -72,9 +72,16 @@
     [self setSubEventRight:NO];
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    if (_avPlay && [_avPlay isPlaying]) {
+        [_avPlay stop];
+    }
+    _avPlay = nil;
+}
+
 #pragma mark - init area
 -(void)initHud{
-    _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
+//    _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
     hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), 0, KHudSizeWidth, KHudSizeHeight);
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;

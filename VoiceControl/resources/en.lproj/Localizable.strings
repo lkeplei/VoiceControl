@@ -1,175 +1,175 @@
-/* 
-  Localizable.strings
-  VoiceControl
+/*
+ Localizable.strings
+ VoiceControl
+ 
+ Created by ken on 13-7-23.
+ Copyright (c) 2013年 ken. All rights reserved.
+ */
 
-  Created by ken on 13-7-23.
-  Copyright (c) 2013年 ken. All rights reserved.
-*/
-
-"start_record" = "";        //"开始录音";
-"filish_record" = "";        //"结束录音";
-"history" = "";        //"历史";
-"play" = "";        //"播放";
-"stop" = "";        //"暂停";
-"prompting" = "";        //"提示";
-"delete" = "";        //"删除";
+"start_record" = "Start";        //"开始录音";
+"filish_record" = "End";        //"结束录音";
+"history" = "Record";        //"历史";
+"play" = "Play";        //"播放";
+"stop" = "Pause";        //"暂停";
+"prompting" = "Prompt";        //"提示";
+"delete" = "Delete";        //"删除";
 
 //view title
-"view_title_home" = "";        //"首页";
-"view_title_select_menu" = "";        //"菜单";
-"view_title_file_manager" = "";        //"文件管理";
-"view_title_about_us" = "";        //"关于我们";
-"view_title_plan_customize" = "";        //"私人定制";
-"view_title_add_plan" = "";        //"添加定制";
-"view_title_set_file" = "";        //"文件设置";
-"view_title_setting" = "";        //"设置";
-"view_title_add_plan_repeat" = "";        //"重复";
-"view_title_add_plan_label" = "";        //"标签";
-"view_title_add_plan_duration" = "";        //"时长";
+"view_title_home" = "Home page";        //"首页";
+"view_title_select_menu" = "Menu";        //"菜单";
+"view_title_file_manager" = "File Manager";        //"文件管理";
+"view_title_about_us" = "About us";        //"关于我们";
+"view_title_plan_customize" = "Private custom";        //"私人定制";
+"view_title_add_plan" = "Add custom";        //"添加定制";
+"view_title_set_file" = "File setting";        //"文件设置";
+"view_title_setting" = "Setting";        //"设置";
+"view_title_add_plan_repeat" = "Repeat";        //"重复";
+"view_title_add_plan_label" = "Title";        //"标签";
+"view_title_add_plan_duration" = "Time set";        //"时长";
 
 //time
-"time_second" = "";        //"%d秒";
-"time_minute" = "";        //"%d分";
-"time_hour" = "";        //"%d小时";
-"time_day" = "";        //"%d天";
+"time_second" = "%dS";        //"%d秒";
+"time_minute" = "%dM";        //"%d分";
+"time_hour" = "%dH";        //"%d小时";
+"time_day" = "%dD";        //"%d天";
 "time_num_second" = "%02d";
 "time_num_minute" = "%02d:";
 "time_num_hour" = "%02d:";
 "time_num_day" = "%d:";
 
 //vocice
-"voice_max" = "";        //"最大: %.1f";
-"voice_min" = "";        //"最小: %.1f";
-"voice_current" = "";        //"当前: %.1f";
-"voice_average" = "";        //"平均: %.1f";
-"voice_message" = "";        //"最大: %.1f 最小: %.1f 当前: %.1f 平均: %.1f";
+"voice_max" = "Max:%.1f";        //"最大: %.1f";
+"voice_min" = "Min:%.1f";        //"最小: %.1f";
+"voice_current" = "Current:%.1f";        //"当前: %.1f";
+"voice_average" = "Average:%.1f";        //"平均: %.1f";
+"voice_message" = "Max:%.1f Min:%.1f Current:%.1f Average:%.1f";        //"最大: %.1f 最小: %.1f 当前: %.1f 平均: %.1f";
 
 //setting
-"setting_file_time_max" = "";        //"单文件最大时长:  ";
-"setting_time_1minute" = "";        //"1分";
-"setting_time_2minute" = "";        //"2分";
-"setting_time_5minute" = "";        //"5分";
-"setting_time_10minute" = "";        //"10分";
-"setting_time_30minute" = "";        //"30分";
-"setting_time_60minute" = "";        //"1小时";
-"setting_time_120minute" = "";        //"2小时";
+"setting_file_time_max" = "Max record time automaticly: ";        //"单文件最大时长:  ";
+"setting_time_1minute" = "1m";        //"1分";
+"setting_time_2minute" = "2m";        //"2分";
+"setting_time_5minute" = "5m";        //"5分";
+"setting_time_10minute" = "10m";        //"10分";
+"setting_time_30minute" = "30m";        //"30分";
+"setting_time_60minute" = "1h";        //"1小时";
+"setting_time_120minute" = "2h";        //"2小时";
 
-"setting_file_time_min" = "";        //"单文件最小时长:  ";
-"setting_time_3second" = "";        //"3秒";
-"setting_time_5second" = "";        //"5秒";
-"setting_time_10second" = "";        //"10秒";
-"setting_time_20second" = "";        //"20秒";
-"setting_time_30second" = "";        //"30秒";
-"setting_time_50second" = "";        //"50秒";
-"setting_time_60second" = "";        //"1分";
+"setting_file_time_min" = "Min record time automaticly: ";        //"单文件最小时长:  ";
+"setting_time_3second" = "3s";        //"3秒";
+"setting_time_5second" = "5s";        //"5秒";
+"setting_time_10second" = "10s";        //"10秒";
+"setting_time_20second" = "20s";        //"20秒";
+"setting_time_30second" = "30s";        //"30秒";
+"setting_time_50second" = "50s";        //"50秒";
+"setting_time_60second" = "1m";        //"1分";
 
-"setting_clear_rubbish" = "";        //"垃圾文件清理:  ";
-"setting_clear_right_now" = "";        //"立即";
-"setting_clear_two_hour" = "";        //"每2小时";
-"setting_clear_five_hour" = "";        //"每5小时";
-"setting_clear_ten_hour" = "";        //"每10小时";
-"setting_clear_every_day" = "";        //"每天";
-"setting_clear_every_week" = "";        //"每周";
-"setting_clear_every_month" = "";        //"每月";
+"setting_clear_rubbish" = "Clean up junk file: ";        //"垃圾文件清理:  ";
+"setting_clear_right_now" = "Clean";        //"立即";
+"setting_clear_two_hour" = "Every 2 hour";        //"每2小时";
+"setting_clear_five_hour" = "Every 5 hour";        //"每5小时";
+"setting_clear_ten_hour" = "Every 10 hour";        //"每10小时";
+"setting_clear_every_day" = "Every day";        //"每天";
+"setting_clear_every_week" = "Every week";        //"每周";
+"setting_clear_every_month" = "Every month";        //"每月";
 
-"setting_voice_min" = "";        //"最低录音分贝:  ";
-"setting_voice_10" = "";        //"10";
-"setting_voice_20" = "";        //"20";
-"setting_voice_30" = "";        //"30";
-"setting_voice_40" = "";        //"40";
-"setting_voice_50" = "";        //"50";
-"setting_voice_60" = "";        //"60";
-"setting_voice_70" = "";        //"70";
-"setting_voice_80" = "";        //"80";
-"setting_voice_90" = "";        //"90";
+"setting_voice_min" = "Lowest voice for recording: ";        //"最低录音分贝:  ";
+"setting_voice_10" = "10";        //"10";
+"setting_voice_20" = "20";        //"20";
+"setting_voice_30" = "30";        //"30";
+"setting_voice_40" = "40";        //"40";
+"setting_voice_50" = "50";        //"50";
+"setting_voice_60" = "60";        //"60";
+"setting_voice_70" = "70";        //"70";
+"setting_voice_80" = "80";        //"80";
+"setting_voice_90" = "90";        //"90";
 
 //file
-"file_add_ever" = "";        //"添加永久";
-"file_cancel_ever" = "";        //"取消永久";
-"file_cannot_open" = "";        //"无法打开文件！";
-"file_send_email" = "";        //"发邮件";
-"file_add_pwd" = "";        //"加密";
+"file_add_ever" = " Add forever";        //"添加永久";
+"file_cancel_ever" = "Cancel ever";        //"取消永久";
+"file_cannot_open" = " Cannot open";        //"无法打开文件！";
+"file_send_email" = "Send email";        //"发邮件";
+"file_add_pwd" = "Password";        //"加密";
 
-"file_ever" = "";        //"永久";
-"file_today" = "";        //"24小时以内";
-"file_yestoday" = "";        //"昨天";
-"file_week" = "";        //"一周内";
-"file_week_ago" = "";        //"一周前";
+"file_ever" = "File forever";        //"永久";
+"file_today" = "File within 24h";        //"24小时以内";
+"file_yestoday" = "File yesterday";        //"昨天";
+"file_week" = "File within this week";        //"一周内";
+"file_week_ago" = "File before this week";        //"一周前";
 
 //set file
-"setfile_setpassword" = "";        //"设置密码";
-"setfile_changepassword" = "";        //"修改密码";
-"setfile_resetpassword" = "";        //"重置密码";
-"setfile_encryptfile" = "";        //"文件加密";
+"setfile_setpassword" = "Set Password";        //"设置密码";
+"setfile_changepassword" = "Change password";        //"修改密码";
+"setfile_resetpassword" = "Reset password";        //"重置密码";
+"setfile_encryptfile" = "Password lock";        //"文件加密";
 
 //password manager
-"file_password" = "";        //"输入密码：";
-"file_old_password" = "";        //"旧密码：";
-"file_new_password" = "";        //"新密码：";
-"file_confirm_password" = "";        //"再次输入密码：";
-"file_password_OK" = "";        //"确定";
-"file_password_cancel" = "";        //"取消";
-"file_get_captcha" = "";        //"获取验证码方式:";
-"file_clicke_captcha" = "";        //"点击获取验证码";
+"file_password" = "Input password";        //"输入密码：";
+"file_old_password" = "Old password";        //"旧密码：";
+"file_new_password" = "New password";        //"新密码：";
+"file_confirm_password" = "Input password again";        //"再次输入密码：";
+"file_password_OK" = "Confirm";        //"确定";
+"file_password_cancel" = "Cancell";        //"取消";
+"file_get_captcha" = "To get the verified code";        //"获取验证码方式:";
+"file_clicke_captcha" = "Click";        //"点击获取验证码";
 
-"password_null" = "";        //"请输入密码!";
-"password_error" = "";        //"密码格式不正确!\n应包含“数字”和“字母”;且长度6位以上！";
-"password_confirm_null" = "";        //"请输入重复密码!";
-"password_mismatching" = "";        //"密码不匹配!";
+"password_null" = "Please input code";        //"请输入密码!";
+"password_error" = "The password is not in the correct format!\and should contain the “digital”and “letters”and the length should be  more than 6!";        //"密码格式不正确!\n应包含“数字”和“字母”;且长度6位以上！";
+"password_confirm_null" = "Confirm password";        //"请输入重复密码!";
+"password_mismatching" = "Password mismatch";        //"密码不匹配!";
 
 //email
-"mail_subject" = "";        //"vc 录音";
+"mail_subject" = "Micro Recorder";        //"vc 录音";
 "mail_body" = "hello, everyone:";
 
-"mail_cancel" = "";        //"邮件发送取消";
-"mail_save_succeed" = "";        //"邮件保存成功";
-"mail_send_succeed" = "";        //"邮件发送成功";
-"mail_send_failed" = "";        //"邮件发送失败";
+"mail_cancel" = "Cancel sending";        //"邮件发送取消";
+"mail_save_succeed" = "Mail saved";        //"邮件保存成功";
+"mail_send_succeed" = "Mail sent";        //"邮件发送成功";
+"mail_send_failed" = "Mail undelivered";        //"邮件发送失败";
 
 //关于我们
 "about_cell_qq" = "QQ：252723599";
 "about_cell_email" = "Email：liukun927nh@163.com";
 "about_mail_to" = "liukun927nh@163.com";
-"about_mail_subject" = "";        //"意见反馈";
+"about_mail_subject" = "Feedback";        //"意见反馈";
 
 //文件管理设置
-"file_set_reset_email" = "";        //"邮件";
-"file_set_reset_sms" = "";        //"短信";
+"file_set_reset_email" = "Email us";        //"邮件";
+"file_set_reset_sms" = "Send Message";        //"短信";
 
 //主页
-"home_top_left" = "";        //"菜单";
-"home_top_right" = "";        //"主页";
+"home_top_left" = "Menu";        //"菜单";
+"home_top_right" = "Home";        //"主页";
 
 //私人订制
-"plan_top_left" = "";        //"编辑";
-"plan_top_right" = "";        //"添加定制";
-"plan_top_ok" = "";        //"完成";
+"plan_top_left" = "Edit";        //"编辑";
+"plan_top_right" = "Add custom";        //"添加定制";
+"plan_top_ok" = "Done";        //"完成";
 
-"plan_add_top_left" = "";        //"取消";
-"plan_add_top_right" = "";        //"存储";
-"plan_add_top_back" = "";        //"返回";
-"plan_add_delete" = "";        //"删除定制";
+"plan_add_top_left" = "Cancel";        //"取消";
+"plan_add_top_right" = "Save";        //"存储";
+"plan_add_top_back" = "Back";        //"返回";
+"plan_add_delete" = "Delete custom ";        //"删除定制";
 
-"plan_add_repeat" = "";        //"重复";
-"plan_add_label" = "";        //"标签";
-"plan_add_duration" = "";        //"时长";
+"plan_add_repeat" = "Repeat";        //"重复";
+"plan_add_label" = "Title";        //"标签";
+"plan_add_duration" = "Duration";        //"时长";
 
-"plan_add_repeat_default" = "";        //"永不";//99,yyyy-mm-dd
-"plan_add_repeat_0" = "";        //"每周日";
-"plan_add_repeat_1" = "";        //"每周一";
-"plan_add_repeat_2" = "";        //"每周二";
-"plan_add_repeat_3" = "";        //"每周三";
-"plan_add_repeat_4" = "";        //"每周四";
-"plan_add_repeat_5" = "";        //"每周五";
-"plan_add_repeat_6" = "";        //"每周六";
-"plan_add_label_default" = "";        //"计划";
-"plan_add_duration_default" = "";        //"1小时";
+"plan_add_repeat_default" = "Never";        //"永不";//99,yyyy-mm-dd
+"plan_add_repeat_0" = "Every Sunday";        //"每周日";
+"plan_add_repeat_1" = "Every Monday";        //"每周一";
+"plan_add_repeat_2" = "Every Tuesday";        //"每周二";
+"plan_add_repeat_3" = "Every Wednesday";        //"每周三";
+"plan_add_repeat_4" = "Every Thursday";        //"每周四";
+"plan_add_repeat_5" = "Every Friday";        //"每周五";
+"plan_add_repeat_6" = "Every Satuday";        //"每周六";
+"plan_add_label_default" = "Plan";        //"计划";
+"plan_add_duration_default" = "1H";        //"1小时";
 
-"plan_time_0" = "";        //"周日 ";//0   NSDateComponents -- week 1
-"plan_time_1" = "";        //"周一 ";//1   NSDateComponents -- week 2
-"plan_time_2" = "";        //"周二 ";//2   NSDateComponents -- week 3
-"plan_time_3" = "";        //"周三 ";//3   NSDateComponents -- week 4
-"plan_time_4" = "";        //"周四 ";//4   NSDateComponents -- week 5
-"plan_time_5" = "";        //"周五 ";//5   NSDateComponents -- week 6
-"plan_time_6" = "";        //"周六 ";//6   NSDateComponents -- week 7
-"plan_time_7" = "";        //"每天";//7
+"plan_time_0" = "Sun ";        //"周日 ";//0   NSDateComponents -- week 1
+"plan_time_1" = "Mon ";        //"周一 ";//1   NSDateComponents -- week 2
+"plan_time_2" = "Tue ";        //"周二 ";//2   NSDateComponents -- week 3
+"plan_time_3" = "Wed ";        //"周三 ";//3   NSDateComponents -- week 4
+"plan_time_4" = "Thu ";        //"周四 ";//4   NSDateComponents -- week 5
+"plan_time_5" = "Fri ";        //"周五 ";//5   NSDateComponents -- week 6
+"plan_time_6" = "Sat ";        //"周六 ";//6   NSDateComponents -- week 7
+"plan_time_7" = "Every day";        //"每天";//7

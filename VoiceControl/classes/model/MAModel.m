@@ -24,6 +24,8 @@
 
 @implementation MAModel
 
+@synthesize appForeground = _appForeground;
+
 static MAModel* _sharedModel = nil;
 
 +(MAModel*)shareModel{
@@ -437,6 +439,10 @@ static MAModel* _sharedModel = nil;
 
 -(void)resetFileMin:(int)time{
     [MADataManager setDataByKey:[NSNumber numberWithInt:time] forkey:KUserDefaultFileTimeMin];
+}
+
+-(void)setAppForeground:(BOOL)appForeground{
+    _appForeground = appForeground;
     
 }
 @end

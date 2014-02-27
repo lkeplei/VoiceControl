@@ -13,7 +13,7 @@
 
 #import "MAViewSelectMenu.h"
 
-#define KTopButtonWidth     (50)
+#define KTopButtonWidth     (80)
 
 @interface MAViewController (){
     float   preTransX;
@@ -31,7 +31,6 @@
 @property (nonatomic, strong) MAViewBase* preShowView;
 
 @property (nonatomic, strong) MAViewSelectMenu* selectMenu;
-@property (nonatomic, strong) MAViewFactory* viewFactory;
 
 #ifdef KAppTest
 @property (nonatomic, strong) UILabel* labelRecorder;
@@ -40,6 +39,8 @@
 @end
 
 @implementation MAViewController
+
+@synthesize viewFactory = _viewFactory;
 
 - (void)viewDidLoad
 {

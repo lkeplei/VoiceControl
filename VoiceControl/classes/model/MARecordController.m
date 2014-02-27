@@ -54,7 +54,7 @@
     return self;
 }
 
-#pragma mark -
+#pragma mark - init
 - (void)initAudio{
     _isRecording = NO;
     
@@ -73,11 +73,43 @@
 }
 
 #pragma mark - about record
+-(void)startDefaultRecord{
+    if (_isRecording) {
+        return;
+    }
+    
+    _recorder = [[AVAudioRecorder alloc]initWithURL:nil settings:_recordSetting error:nil];
+    //开启音量检测
+    _recorder.meteringEnabled = YES;
+    _recorder.delegate = self;
+    
+    //创建录音文件，准备录音
+    if ([_recorder prepareToRecord]) {
+        //开始
+        [_recorder record];
+    }
+}
+
+-(void)stopDefaultRecord{
+    if (_isRecording) {
+        return;
+    }
+    
+    if ([_recorder isRecording]) {
+        [_recorder deleteRecording];
+        [_recorder stop];
+    }
+}
+
 -(void)startRecord{
     if (_isRecording) {
         return;
     }
     
+    //开始正式录音之前先停掉默认录音
+    [self stopDefaultRecord];
+    
+    //录音设置
     _isRecording = YES;
     NSArray* array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *strUrl = [array lastObject];
@@ -162,6 +194,11 @@
         }
     }
     [_recorder stop];
+    
+    //结束之后，如果在后台，开启默认录音
+    if ([[MAModel shareModel] isAppForeground]) {
+        [self startDefaultRecord];
+    }
 }
 
 -(void)autoTimerOut{
@@ -251,6 +288,38 @@
     }
     
     return NO;
+}
+
+
+#pragma mark - audio delegate
+/* audioRecorderDidFinishRecording:successfully: is called when a recording has been finished or stopped. This method is NOT called if the recorder is stopped due to an interruption. */
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+    DebugLog(@"audioRecorderDidFinishRecording flag = %d", flag);
+}
+
+/* if an error occurs while encoding it will be reported to the delegate. */
+- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error{
+    DebugLog(@"audioRecorderEncodeErrorDidOccur error = %@", error);
+}
+
+/* audioRecorderBeginInterruption: is called when the audio session has been interrupted while the recorder was recording. The recorded file will be closed. */
+- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder{
+    DebugLog(@"audioRecorderBeginInterruption");
+}
+
+/* audioRecorderEndInterruption:withOptions: is called when the audio session interruption has ended and this recorder had been interrupted while recording. */
+/* Currently the only flag is AVAudioSessionInterruptionFlags_ShouldResume. */
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withOptions:(NSUInteger)flags NS_AVAILABLE_IOS(6_0){
+    DebugLog(@"audioRecorderEndInterruption flags = %d", flags);
+}
+
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withFlags:(NSUInteger)flags NS_DEPRECATED_IOS(4_0, 6_0){
+    DebugLog(@"audioRecorderEndInterruption flags = %d", flags);
+}
+
+/* audioRecorderEndInterruption: is called when the preferred method, audioRecorderEndInterruption:withFlags:, is not implemented. */
+- (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder NS_DEPRECATED_IOS(2_2, 6_0){
+    DebugLog(@"audioRecorderEndInterruption");
 }
 
 #pragma mark - other

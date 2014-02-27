@@ -9,7 +9,7 @@
 #ifndef SanGameJJH_JJHConfig_h
 #define SanGameJJH_JJHConfig_h
 
-#define KAppTest
+//#define KAppTest
 
 
 #define IsPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)    //是否为pad判断

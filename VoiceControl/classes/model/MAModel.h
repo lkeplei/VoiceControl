@@ -106,4 +106,6 @@ typedef enum {
 //百度统计统一入口
 -(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label;
 
+@property (nonatomic, getter = isAppForeground) BOOL appForeground;
+
 @end
