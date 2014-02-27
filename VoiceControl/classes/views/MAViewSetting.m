@@ -121,9 +121,7 @@
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMaxTime1 + [selection intValue]]
                                  forkey:KUserDefaultFileTimeMax];
         } else if (_fileTimeMin == view) {
-            [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinTime3 + [selection intValue]]
-                                 forkey:KUserDefaultFileTimeMin];
-            [[MAModel shareModel] setRecordAutoStatus:YES];
+            [[MAModel shareModel] resetFileMin:MASettingMinTime3 + [selection intValue]];
         } else if(_clearRubbish == view){
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearRightNow + [selection intValue]]
                                  forkey:KUserDefaultClearRubbish];

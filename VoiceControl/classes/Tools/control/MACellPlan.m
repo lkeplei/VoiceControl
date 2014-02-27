@@ -163,7 +163,7 @@
         _bgContentView = nil;
     }
     if (!_bgView) {
-        _bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, self.contentView.frame.size.height)];
+        _bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.contentView.frame.size.height)];
         [self.contentView addSubview:_bgView];
     }
     

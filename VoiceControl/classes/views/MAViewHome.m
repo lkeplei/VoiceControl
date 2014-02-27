@@ -86,6 +86,7 @@
     if ([[MAModel shareModel] isRecording]) {
         startText = MyLocal(@"filish_record");
     }
+    //开始按钮
     _startBtn = [MAUtils buttonWithImg:startText off:0 zoomIn:NO
                                   image:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircle default:NO]
                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
@@ -100,11 +101,14 @@
                     forState:UIControlStateSelected];
     [self addSubview:_startBtn];
     
+    //播放按钮
     _playBtn = [MAUtils buttonWithImg:MyLocal(@"play") off:0 zoomIn:NO
                                  image:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircle default:NO]
                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                target:self
                                 action:@selector(playRecordSound:)];
+    [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgBtnGrayCircle default:NO]
+                        forState:UIControlStateDisabled];
     _playBtn.frame = CGRectOffset(_playBtn.frame, 215, 300);
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                    forState:UIControlStateNormal];
@@ -112,14 +116,9 @@
                    forState:UIControlStateHighlighted];
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
                    forState:UIControlStateSelected];
+    [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]
+                   forState:UIControlStateDisabled];
     [self addSubview:_playBtn];
-    
-    //on/off
-    UISwitch* switcher = [[UISwitch alloc] init];
-    switcher.center = CGPointMake(self.center.x, 340);
-    [switcher setOn:[[MAModel shareModel] recordAutoStatus]];
-    [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:switcher];
 }
 
 -(void)initLabels{
@@ -137,15 +136,6 @@
     
     [self initBtns];
     [self initLabels];
-}
-
-#pragma mark - switcher
--(void)switchAction:(id)sender{
-    BOOL isOn = [(UISwitch*)sender isOn];
-
-    [[MAModel shareModel] setRecordAutoStatus:isOn];
-    
-    [MADataManager setDataByKey:[NSNumber numberWithBool:isOn] forkey:KUserDefaultRecorderStatus];
 }
 
 #pragma mark - btn clicked
@@ -192,12 +182,7 @@
         [[MAModel shareModel] startRecord];
     }
     
-//    isRecording = !isRecording;
-    if ([[MAModel shareModel] isRecording]) {
-        [_startBtn setTitle:MyLocal(@"filish_record") forState:UIControlStateNormal];
-    } else {
-        [_startBtn setTitle:MyLocal(@"start_record") forState:UIControlStateNormal];
-    }
+    [self setStartBtnStatus:[[MAModel shareModel] isRecording]];
 }
 
 #pragma mark - audio play
@@ -207,8 +192,22 @@
 }
 
 #pragma mark - other methods
-- (void)detectionVoice{
+-(void)setStartBtnStatus:(BOOL)start{
+    if (start) {
+        [_startBtn setTitle:MyLocal(@"filish_record") forState:UIControlStateNormal];
+        [_playBtn setEnabled:NO];
+    } else {
+        [_startBtn setTitle:MyLocal(@"start_record") forState:UIControlStateNormal];
+        [_playBtn setEnabled:YES];
+    }
+}
+
+-(void)detectionVoice{
     if ([[MAModel shareModel] isRecording]) {
+        if (soundMeters[SOUND_METER_COUNT - 1] == KMaxLengthOfWave) {
+            [self setStartBtnStatus:YES];
+        }
+        
         [[[MAModel shareModel] getRecorder] updateMeters];//刷新音量数据
         //获取音量的平均值  [recorder averagePowerForChannel:0];
         //音量的最大值  [recorder peakPowerForChannel:0];
@@ -231,11 +230,14 @@
         
         voiceMin = level * 120;
         
-        
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
         
         [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
     } else {
+        if (soundMeters[SOUND_METER_COUNT - 1] != KMaxLengthOfWave) {
+            [self setStartBtnStatus:NO];
+        }
+        
         [self addSoundMeterItem:KMaxLengthOfWave];
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0, 0, 0, 0];
     }

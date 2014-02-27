@@ -89,6 +89,8 @@ typedef enum {
 -(int)getVoiceStartPos;
 //删除垃圾文件
 -(void)clearRubbish:(BOOL)now;
+//重设最小时长
+-(void)resetFileMin:(int)time;
 //获取repeat时间设置
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add;
 
@@ -104,6 +106,4 @@ typedef enum {
 //百度统计统一入口
 -(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label;
 
-
-@property (nonatomic, assign) BOOL recordAutoStatus;
 @end

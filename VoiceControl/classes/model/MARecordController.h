@@ -17,13 +17,7 @@
 -(void)stopRecord;
 
 -(void)resetPlan;
-
-/**
- *  设置录音状态
- *
- *  @param status yes:开启自动  no:关闭自动录音
- */
--(void)setRecordAutoStatus:(BOOL)isAuto;
+-(void)resetTimer;
 
 @property (assign) BOOL isRecording;
 @property (nonatomic, strong) NSString* fileName;

@@ -25,6 +25,7 @@
 
 @property (assign) int recordId;
 @property (assign) float recorderDuration;
+@property (assign) float durationStart;
 @property (assign) float offsetDuration;
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSString* fileTime;
@@ -43,10 +44,12 @@
     if (self) {
         _recordId = -1;
         _recorderDuration = 0;
+        _durationStart = 0;
         _offsetDuration = KTimeRecorderDuration;
         
         [self initAudio];
         [self resetPlan];
+        [self resetTimer];
     }
     return self;
 }
@@ -116,6 +119,7 @@
     }
     
     _recorderDuration = 0;
+    _durationStart = 0;
     _isRecording = NO;
     double duration = _recorder.currentTime;
     if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
@@ -160,32 +164,6 @@
     [_recorder stop];
 }
 
--(void)setRecordAutoStatus:(BOOL)isAuto{
-    if (isAuto) {
-        //设置定时检测
-        if (autoTimer) {
-            //开启定时器
-            [autoTimer setFireDate:[NSDate distantPast]];
-            
-            if (_offsetDuration != [[MAModel shareModel] getFileTimeMin]) {
-                [autoTimer invalidate];
-                autoTimer = nil;
-                [self setRecordAutoStatus:isAuto];
-            }
-        } else {
-            _offsetDuration = MIN([[MAModel shareModel] getFileTimeMin], _offsetDuration);
-            autoTimer = [NSTimer scheduledTimerWithTimeInterval:_offsetDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
-        }
-    } else {
-        if (autoTimer) {
-            //关闭定时器
-            [autoTimer setFireDate:[NSDate distantFuture]];
-        }
-        
-        [self stopRecord];
-    }
-}
-
 -(void)autoTimerOut{
 #ifdef KAppTest
     static int startNum = 0;
@@ -203,7 +181,8 @@
                     if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
                         int durationMin = _recorderDuration / 60;
                         DebugLog(@"durationMin = %d, planDuration = %d, timeMax = %d", durationMin, [[plan objectForKey:KDataBaseDuration] intValue], [[MAModel shareModel] getFileTimeMax]);
-                        if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue] && durationMin < [[MAModel shareModel] getFileTimeMax]) {
+                        if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue]
+                            && ((_recorderDuration - _durationStart) / 60) < [[MAModel shareModel] getFileTimeMax]) {
                             stop = NO;
                         }
                     }
@@ -263,6 +242,7 @@
     if (between >= 0) {
         if ((between / 60) < [[plan objectForKey:KDataBaseDuration] intValue]) {
             _recorderDuration = between;
+            _durationStart = between;
             _recordId = [[plan objectForKey:KDataBaseId] intValue];
             [self startRecord];
 
@@ -285,5 +265,15 @@
     if (array && [array count] > 0) {
         [_planArray addObjectsFromArray:array];
     }
+}
+
+-(void)resetTimer{
+    if (autoTimer) {
+        [autoTimer invalidate];
+        autoTimer = nil;
+    }
+    
+    _offsetDuration = MIN([[MAModel shareModel] getFileTimeMin], _offsetDuration);
+    autoTimer = [NSTimer scheduledTimerWithTimeInterval:_offsetDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
 }
 @end

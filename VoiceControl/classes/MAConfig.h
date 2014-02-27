@@ -55,7 +55,6 @@
 #define KLabelFontSize30        (30)
 
 //NSUserDefaults key
-#define KUserDefaultRecorderStatus         @"default_recorder_status"
 #define KUserDefaultFileTimeMax            @"default_file_time_max"
 #define KUserDefaultFileTimeMin            @"default_file_time_min"
 #define KUserDefaultClearRubbish           @"default_clear_rubbish"

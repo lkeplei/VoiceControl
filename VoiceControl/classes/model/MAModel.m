@@ -24,8 +24,6 @@
 
 @implementation MAModel
 
-@synthesize recordAutoStatus = _recordAutoStatus;
-
 static MAModel* _sharedModel = nil;
 
 +(MAModel*)shareModel{
@@ -42,7 +40,6 @@ static MAModel* _sharedModel = nil;
     
     //初始录音控制器
     _recordController = [[MARecordController alloc] init];
-    [self setRecordAutoStatus:[[MADataManager getDataByKey:KUserDefaultRecorderStatus] boolValue]];
     
     //初始数据
     [[MADataManager shareDataManager] createTabel:KTableVoiceFiles];
@@ -438,8 +435,8 @@ static MAModel* _sharedModel = nil;
     return [_recordController recorder];
 }
 
--(void)setRecordAutoStatus:(BOOL)recordAutoStatus{
-    _recordAutoStatus = recordAutoStatus;
-    [_recordController setRecordAutoStatus:recordAutoStatus];
+-(void)resetFileMin:(int)time{
+    [MADataManager setDataByKey:[NSNumber numberWithInt:time] forkey:KUserDefaultFileTimeMin];
+    
 }
 @end
