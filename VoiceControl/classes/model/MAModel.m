@@ -443,6 +443,10 @@ static MAModel* _sharedModel = nil;
 
 -(void)setAppForeground:(BOOL)appForeground{
     _appForeground = appForeground;
-    
+    if (appForeground) {
+        [_recordController startDefaultRecord];
+    } else {
+        [_recordController stopDefaultRecord];
+    }
 }
 @end

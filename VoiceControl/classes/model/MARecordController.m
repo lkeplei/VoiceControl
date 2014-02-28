@@ -77,8 +77,21 @@
     if (_isRecording) {
         return;
     }
+    NSArray* array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *strUrl = [array lastObject];
     
-    _recorder = [[AVAudioRecorder alloc]initWithURL:nil settings:_recordSetting error:nil];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:KNameFormat];
+    NSString* name = [NSString stringWithFormat:@"%@", [formatter stringFromDate:[NSDate date]]];
+    NSString* path = [NSString stringWithFormat:@"%@/%@.aac", strUrl, name];
+    
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:KTimeFormat];
+    _fileTime = [formatter stringFromDate:[NSDate date]];
+    
+    NSURL* url = [NSURL fileURLWithPath:path];
+    
+    _recorder = [[AVAudioRecorder alloc]initWithURL:url settings:_recordSetting error:nil];
     //开启音量检测
     _recorder.meteringEnabled = YES;
     _recorder.delegate = self;
