@@ -87,7 +87,6 @@
     
     formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:KTimeFormat];
-    _fileTime = [formatter stringFromDate:[NSDate date]];
     
     NSURL* url = [NSURL fileURLWithPath:path];
     
