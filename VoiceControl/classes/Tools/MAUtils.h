@@ -71,7 +71,8 @@
 //file
 +(unsigned long long)getFileSize:(NSString*)filePath;
 +(unsigned long long)getFolderSize:(NSString*)folderPath;
-+(void)deleteFileWithPath:(NSString*)path;
++(BOOL)deleteFileWithPath:(NSString*)path;
++(BOOL)fileExistsAtPath:(NSString*)path;
 
 //zip
 +(BOOL)zipFiles:(NSString*)zipPath resourceArr:(NSArray*)resourceArr;

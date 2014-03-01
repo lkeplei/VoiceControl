@@ -19,7 +19,7 @@
 					<key>enabled</key>
 					<false/>
 					<key>title</key>
-					<string>File man</string>
+					<string>File manager</string>
 				</dict>
 				<key>cell_array</key>
 				<array>
@@ -29,7 +29,7 @@
 						<key>select_bg_color</key>
 						<string>0,255,0,1</string>
 						<key>content</key>
-						<string>File man</string>
+						<string>File manager</string>
 					</dict>
 				</array>
 			</dict>
@@ -78,80 +78,6 @@
 					<dict>
 						<key>content</key>
 						<string>About us</string>
-					</dict>
-				</array>
-			</dict>
-		</array>
-	</dict>
-	<key>test_view</key>
-	<dict>
-		<key>table_property</key>
-		<dict>
-			<key>selection_style</key>
-			<integer>1</integer>
-		</dict>
-		<key>section_array</key>
-		<array>
-			<dict>
-				<key>section_property</key>
-				<dict>
-					<key>title</key>
-					<string>one</string>
-				</dict>
-				<key>cell_array</key>
-				<array>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>关于我们</string>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>section_property</key>
-				<dict/>
-				<key>cell_array</key>
-				<array>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>关于我们</string>
-					</dict>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>设置</string>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>section_property</key>
-				<dict>
-					<key>title</key>
-					<string>three</string>
-				</dict>
-				<key>cell_array</key>
-				<array>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>关于我们</string>
-					</dict>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>设置</string>
-					</dict>
-					<dict>
-						<key>can_jump</key>
-						<true/>
-						<key>content</key>
-						<string>文件管理</string>
 					</dict>
 				</array>
 			</dict>

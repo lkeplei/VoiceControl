@@ -239,13 +239,17 @@
                     currentRow = 0;
                     res = YES;
                 }
+            } else {
+                currentSection = [_resourceArray count] - 1;
             }
         }
     }
     
     if (res) {
-        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:nil];
+        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:resArray];
         [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    } else {
+        currentRow = [resArray count] - 1;
     }
     
     return res;
@@ -267,16 +271,20 @@
                     currentRow = [resArray count] - 1;
                     res = YES;
                 }
+            } else {
+                currentSection = 0;
             }
         }
     }
 
     if (res) {
-        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:nil];
+        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:resArray];
         [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
+    } else {
+        currentRow = 0;
     }
 
-return res;
+    return res;
 }
 
 #pragma mark - other

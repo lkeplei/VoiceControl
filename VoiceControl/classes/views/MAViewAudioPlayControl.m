@@ -160,27 +160,27 @@
 
     //play
     BOOL play = YES;
-    _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_filePath] error:nil];
-    _avPlay.delegate = self;
-    if (![_avPlay play]) {
+    if (![MAUtils fileExistsAtPath:_filePath]) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
         NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
         
-        if ([MAUtils unzipFiles:file unZipFielPath:nil]) {
-            play = [_avPlay play];
-        } else {
+        if (![MAUtils unzipFiles:file unZipFielPath:nil]) {
             play = NO;
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
     }
     
     if (play) {
-        _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
-        _fileLabel.text = [resDic objectForKey:KDataBaseFileName];
-        
-        //slider
-        _progressSlider.maximumValue = _avPlay.duration;
+        _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_filePath] error:nil];
+        _avPlay.delegate = self;
+        if ([_avPlay play]) {
+            _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+            _fileLabel.text = [resDic objectForKey:KDataBaseFileName];
+            
+            //slider
+            _progressSlider.maximumValue = _avPlay.duration;
+        }
     }
 }
 
@@ -243,9 +243,7 @@
     if (_resouceArr) {
         if (self.audioPlayCallBack) {
             if (self.audioPlayCallBack(MAAudioPlayPre)) {
-                DebugLog(@"2222222222222");
-            } else {
-                DebugLog(@"111111111111")
+                
             }
         }
     }
@@ -255,9 +253,7 @@
     if (_resouceArr) {
         if (self.audioPlayCallBack) {
             if (self.audioPlayCallBack(MAAudioPlayNext)) {
-                DebugLog(@"333333333333");
-            } else {
-                DebugLog(@"4444444444444")
+                
             }
         }
     }

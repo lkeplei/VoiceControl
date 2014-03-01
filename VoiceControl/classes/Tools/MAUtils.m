@@ -398,11 +398,22 @@ static MAUtils* _shareUtils = nil;
     return folderSize;
 }
 
-+(void)deleteFileWithPath:(NSString*)path{
++(BOOL)deleteFileWithPath:(NSString*)path{
     if (path) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        [fileManager removeItemAtPath:path error:nil];
+        return [fileManager removeItemAtPath:path error:nil];
     }
+    
+    return NO;
+}
+
++(BOOL)fileExistsAtPath:(NSString*)path{
+    if (path) {
+        NSFileManager* fileManager = [NSFileManager defaultManager];
+        return [fileManager fileExistsAtPath:path];
+    }
+    
+    return NO;
 }
 
 +(BOOL)zipFiles:(NSString*)zipPath resourceArr:(NSArray*)resourceArr{
