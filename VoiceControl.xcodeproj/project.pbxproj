@@ -122,8 +122,8 @@
 		045DFA9117A9422500F517AA /* MAViewTableBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTableBase.m; sourceTree = "<group>"; };
 		0465B28018C0BD83007919AC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/table_resource.plist; sourceTree = "<group>"; };
 		0465B28218C0BF0C007919AC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/table_resource.plist"; sourceTree = "<group>"; };
-		04697AD218C0CEAA0067E757 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
-		04697AD418C0CEBB0067E757 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
+		04697AD218C0CEAA0067E757 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
+		04697AD418C0CEBB0067E757 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
 		046B1819187C253700387497 /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
 		046B181A187C253700387497 /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
 		046B181C187C253700387497 /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
@@ -867,8 +867,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
+				PROVISIONING_PROFILE = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -880,8 +880,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -896,8 +896,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
+				PROVISIONING_PROFILE = "098CC0E3-1B48-4B39-AAE5-B1275B29A7BC";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "098CC0E3-1B48-4B39-AAE5-B1275B29A7BC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

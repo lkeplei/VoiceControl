@@ -12,7 +12,7 @@
 #import "MAUtils.h"
 
 #define KViewHorOffset      (10)
-#define KTopViewHeight      (190)
+#define KTopViewHeight      (150)
 
 @interface MAViewAboutUs ()
 @property (nonatomic, strong) UITableView* tableView;
@@ -43,7 +43,7 @@
 -(void)initTopView{
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KViewHorOffset, self.frame.size.width, KTopViewHeight)];
     
-    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-iphone.png"]];
+    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-ipad.png"]];
     imgView.center = CGPointMake(_topView.center.x, _topView.center.y);
     [self addSubview:imgView];
     
@@ -72,7 +72,7 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -86,6 +86,10 @@
         if ([indexPath row] == 0) {
             [cell.textLabel setText:MyLocal(@"about_cell_qq")];
         } else if ([indexPath row] == 1){
+            [cell.textLabel setText:MyLocal(@"about_cell_wechat")];
+        } else if ([indexPath row] == 2){
+            [cell.textLabel setText:MyLocal(@"about_cell_msn")];
+        } else if ([indexPath row] == 3){
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             [cell.textLabel setText:MyLocal(@"about_cell_email")];
         }
@@ -96,7 +100,7 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([indexPath row] == 1) {
+    if ([indexPath row] == 3) {
         NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
         [mailDic setObject:[NSArray arrayWithObject:MyLocal(@"about_mail_to")] forKey:KMailToRecipients];
         [mailDic setObject:MyLocal(@"about_mail_subject") forKey:KMailSubject];

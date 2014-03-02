@@ -20,6 +20,7 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>icon-ipad</string>
 				<string>icon-iphone.png</string>
 				<string>icon-iphone@2x.png</string>
 				<string>icon-ipad.png</string>
