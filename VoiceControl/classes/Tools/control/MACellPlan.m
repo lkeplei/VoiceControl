@@ -209,6 +209,9 @@
     if (_resourceDic) {
         [_resourceDic setValue:[NSNumber numberWithBool:[(UISwitch*)sender isOn]] forKey:KDataBaseStatus];
         [[MADataManager shareDataManager] replaceValueToTabel:[NSArray arrayWithObjects:_resourceDic, nil] tableName:KTablePlan];
+        
+        //添加或者修改计划之后重置
+        [[MAModel shareModel] resetPlan];
     }
 }
 @end

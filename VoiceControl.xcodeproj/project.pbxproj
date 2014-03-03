@@ -57,7 +57,6 @@
 		04E65650178C4F15003A6ACA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04E6564E178C4F15003A6ACA /* InfoPlist.strings */; };
 		04E65652178C4F15003A6ACA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65651178C4F15003A6ACA /* main.m */; };
 		04E65658178C4F15003A6ACA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E65657178C4F15003A6ACA /* Default.png */; };
-		04E6565A178C4F15003A6ACA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E65659178C4F15003A6ACA /* Default@2x.png */; };
 		04E6566E178C4FF7003A6ACA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E6566D178C4FF7003A6ACA /* AVFoundation.framework */; };
 		04E65670178C5018003A6ACA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E6566F178C5018003A6ACA /* AudioToolbox.framework */; };
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
@@ -68,6 +67,7 @@
 		183DA90418BAF6A5005C6ABA /* slider_scrubber_knob.png in Resources */ = {isa = PBXBuildFile; fileRef = 183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */; };
 		183DA90518BAF6A5005C6ABA /* slider_scrubber_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 183DA90218BAF6A5005C6ABA /* slider_scrubber_left.png */; };
 		183DA90618BAF6A5005C6ABA /* slider_scrubber_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 183DA90318BAF6A5005C6ABA /* slider_scrubber_right.png */; };
+		185D6BF818C4762200D448F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D6BFA18C4762300D448F6 /* Default@2x.png */; };
 		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
@@ -181,7 +181,6 @@
 		04E65651178C4F15003A6ACA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04E65653178C4F15003A6ACA /* VoiceControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VoiceControl-Prefix.pch"; sourceTree = "<group>"; };
 		04E65657178C4F15003A6ACA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		04E65659178C4F15003A6ACA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		04E6566D178C4FF7003A6ACA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04E6566F178C5018003A6ACA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		04E65672178C5150003A6ACA /* MAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAConfig.h; sourceTree = "<group>"; };
@@ -197,6 +196,8 @@
 		183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_knob.png; sourceTree = "<group>"; };
 		183DA90218BAF6A5005C6ABA /* slider_scrubber_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_left.png; sourceTree = "<group>"; };
 		183DA90318BAF6A5005C6ABA /* slider_scrubber_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_right.png; sourceTree = "<group>"; };
+		185D6BF918C4762300D448F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
+		185D6BFB18C4762800D448F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
 		185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
 		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
@@ -416,7 +417,7 @@
 				04E65651178C4F15003A6ACA /* main.m */,
 				04E65653178C4F15003A6ACA /* VoiceControl-Prefix.pch */,
 				04E65657178C4F15003A6ACA /* Default.png */,
-				04E65659178C4F15003A6ACA /* Default@2x.png */,
+				185D6BFA18C4762300D448F6 /* Default@2x.png */,
 				04697AD318C0CEAA0067E757 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
@@ -658,7 +659,7 @@
 				04E65650178C4F15003A6ACA /* InfoPlist.strings in Resources */,
 				04E65658178C4F15003A6ACA /* Default.png in Resources */,
 				044C03D718BA2F4300FD060B /* button_circle_red@2x.png in Resources */,
-				04E6565A178C4F15003A6ACA /* Default@2x.png in Resources */,
+				185D6BF818C4762200D448F6 /* Default@2x.png in Resources */,
 				04697AD118C0CEAA0067E757 /* Default-568h@2x.png in Resources */,
 				BE073A94179E9F6C00340A47 /* Localizable.strings in Resources */,
 				BE0443FC179FC50C00537368 /* icon-ipad.png in Resources */,
@@ -774,6 +775,15 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		185D6BFA18C4762300D448F6 /* Default@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				185D6BF918C4762300D448F6 /* en */,
+				185D6BFB18C4762800D448F6 /* zh-Hans */,
+			);
+			name = "Default@2x.png";
+			sourceTree = "<group>";
+		};
 		BE073A96179E9F6C00340A47 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -867,8 +877,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
+				PROVISIONING_PROFILE = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC6DBBB8-1DFD-409F-90A1-03F71523B547";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
