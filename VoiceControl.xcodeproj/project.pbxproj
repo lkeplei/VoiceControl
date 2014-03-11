@@ -10,6 +10,7 @@
 		0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407464E17ABEFF100B70537 /* MAViewHome.m */; };
 		0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407465117ABFA7F00B70537 /* MAViewFileManager.m */; };
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
+		042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042BDBB318C4BE200041C078 /* icon-120@2x.png */; };
 		044C03D318BA2F4300FD060B /* button_circle_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03CE18BA2F4300FD060B /* button_circle_gray@2x.png */; };
 		044C03D418BA2F4300FD060B /* button_circle_green_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03CF18BA2F4300FD060B /* button_circle_green_sec@2x.png */; };
 		044C03D518BA2F4300FD060B /* button_circle_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03D018BA2F4300FD060B /* button_circle_green@2x.png */; };
@@ -108,6 +109,7 @@
 		0407465017ABFA7F00B70537 /* MAViewFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFileManager.h; sourceTree = "<group>"; };
 		0407465117ABFA7F00B70537 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
 		0422DDF817EC01660004C289 /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
+		042BDBB318C4BE200041C078 /* icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120@2x.png"; sourceTree = "<group>"; };
 		044C03CE18BA2F4300FD060B /* button_circle_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_gray@2x.png"; sourceTree = "<group>"; };
 		044C03CF18BA2F4300FD060B /* button_circle_green_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_green_sec@2x.png"; sourceTree = "<group>"; };
 		044C03D018BA2F4300FD060B /* button_circle_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_green@2x.png"; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 		04E6564C178C4F15003A6ACA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				042BDBB318C4BE200041C078 /* icon-120@2x.png */,
 				BE0443F9179FC50C00537368 /* icon-ipad.png */,
 				BE0443FA179FC50C00537368 /* icon-iphone.png */,
 				BE0443FB179FC50C00537368 /* icon-iphone@2x.png */,
@@ -681,6 +684,7 @@
 				182AEDA618A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png in Resources */,
 				04DD53AD17C7FDDA003FF77C /* home_menu@2x.png in Resources */,
 				183DA90518BAF6A5005C6ABA /* slider_scrubber_left.png in Resources */,
+				042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */,
 				187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */,
 				044C03D618BA2F4300FD060B /* button_circle_red_sec@2x.png in Resources */,
 				0422DDF917EC01660004C289 /* microphone.png in Resources */,
