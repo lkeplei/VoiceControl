@@ -196,8 +196,8 @@
 		183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_knob.png; sourceTree = "<group>"; };
 		183DA90218BAF6A5005C6ABA /* slider_scrubber_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_left.png; sourceTree = "<group>"; };
 		183DA90318BAF6A5005C6ABA /* slider_scrubber_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_right.png; sourceTree = "<group>"; };
-		185D6BF918C4762300D448F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
-		185D6BFB18C4762800D448F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
+		185D6BF918C4762300D448F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
+		185D6BFB18C4762800D448F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
 		185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
 		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
@@ -890,8 +890,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
