@@ -26,14 +26,13 @@
 
 @synthesize appForeground = _appForeground;
 
-static MAModel* _sharedModel = nil;
-
 +(MAModel*)shareModel{
-	if (!_sharedModel) {
-        _sharedModel = [[self alloc]init];
-	}
-    
-	return _sharedModel;
+    static MAModel* sharedModel = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        sharedModel = [[self alloc] init];
+    });
+    return sharedModel;
 };
 
 -(void)initAppSource{

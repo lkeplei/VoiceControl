@@ -54,6 +54,8 @@ typedef enum {
     MATypeImgBtnRedCircle,
     MATypeImgBtnGrayCircle,
     MATypeImgAddPlanReSec,
+    MATypeImgCheckBoxNormal,
+    MATypeImgCheckBoxSec,
     MATypeImgCellIndicator,
     MATypeImgSliderScrubberKnob,
     MATypeImgSliderScrubberLeft,

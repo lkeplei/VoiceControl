@@ -160,6 +160,12 @@
         case MATypeImgAddPlanReSec:
             return KSkinSetImgAddPlanReSec;
             break;
+        case MATypeImgCheckBoxNormal:
+            return KSkinSetImgCheckBoxNormal;
+            break;
+        case MATypeImgCheckBoxSec:
+            return KSkinSetImgCheckBoxSec;
+            break;
         case MATypeImgCellIndicator:
             return KSkinSetImgCellIndicator;
             break;

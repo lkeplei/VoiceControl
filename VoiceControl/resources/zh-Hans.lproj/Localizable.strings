@@ -175,3 +175,8 @@
 "plan_time_5" = "周五 ";//5   NSDateComponents -- week 6
 "plan_time_6" = "周六 ";//6   NSDateComponents -- week 7
 "plan_time_7" = "每天";//7
+
+
+
+////////////////////////////////    1.1
+"file_top_more" = "更多";//7

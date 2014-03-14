@@ -126,6 +126,8 @@
 #define KSkinSetImgBtnRedCircle         @"skin_image_btn_red_circle_btn"
 #define KSkinSetImgBtnGrayCircle        @"skin_image_btn_gray_circle"
 #define KSkinSetImgAddPlanReSec         @"skin_image_addplan_repeat_sec"
+#define KSkinSetImgCheckBoxNormal       @"skin_image_check_box_normal"
+#define KSkinSetImgCheckBoxSec          @"skin_image_check_box_sec"
 #define KSkinSetImgCellIndicator        @"skin_image_cell_indicator"
 #define KSkinSetImgScrubberKnob         @"skin_image_scrubber_knob"
 #define KSkinSetImgScrubberLeft         @"skin_image_scrubber_left"

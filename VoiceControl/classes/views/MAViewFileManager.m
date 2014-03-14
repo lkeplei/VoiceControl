@@ -15,8 +15,12 @@
 #import "MAMenu.h"
 #import "MAViewFactory.h"
 
+#define KCellFileHeight             (40)
+
 #define KCellLabelNameTag          (100)
 #define KCellButtonTag(a,b)        ((1000 * (a + 1)) + b)
+#define KCellImageTag(a,b)         ((101 * (a + 1)) + b)
+#define KCellImageSecTag(a,b)      ((501 * (a + 1)) + b)
 #define KCellButtonRow(a)          (a % 1000)
 #define KCellButtonSec(a)          ((a / 1000) - 1)
 
@@ -31,6 +35,7 @@
     int     currentRow;
     int     currentSection;
 }
+@property (assign) BOOL editing;
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* resourceArray;
 @property (nonatomic, strong) NSMutableDictionary* resourceDic;
@@ -52,6 +57,7 @@
         self.viewTitle = MyLocal(@"view_title_file_manager");
         
         showAudioPlay = NO;
+        _editing = NO;
         currentRow = 0;
         currentSection = 0;
     }
@@ -62,6 +68,8 @@
     if ([[SysDelegate.viewController viewFactory] areadyExistAudioPlay]) {
         [self showAudioPlay];
     }
+    
+    [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
 }
 
 #pragma mark - init area
@@ -73,6 +81,7 @@
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
+    _tableView.rowHeight = KCellFileHeight;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:NO]];
@@ -88,8 +97,7 @@
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (_resourceArray) {
         NSArray* array = [[_resourceArray objectAtIndex:section] objectForKey:KArray];
         if (array) {
@@ -112,7 +120,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *reuseIdentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
                                       reuseIdentifier:reuseIdentifier];
@@ -136,18 +144,40 @@
             name.text = str;
         }
 
-        UIButton* button = (UIButton*)[cell.contentView viewWithTag:KCellButtonTag(indexPath.section, indexPath.row)];
-        if (button) {
-            [button removeFromSuperview];
+        if (_editing) {
+            UIImageView* img = (UIImageView*)[cell viewWithTag:KCellImageTag(indexPath.section, indexPath.row)];
+            if (img) {
+                [img removeFromSuperview];
+            }
+            img = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]];
+            img.tag = KCellImageTag(indexPath.section, indexPath.row);
+            [img setHidden:[[resDic objectForKey:KStatus] boolValue]];
+            img.center = CGPointMake(cell.frame.size.width - img.frame.size.width, cell.center.y);
+            [cell.contentView addSubview:img];
+            
+            UIImageView* imgSec = (UIImageView*)[cell viewWithTag:KCellImageSecTag(indexPath.section, indexPath.row)];
+            if (imgSec) {
+                [imgSec removeFromSuperview];
+            }
+            imgSec = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]];
+            imgSec.tag = KCellImageSecTag(indexPath.section, indexPath.row);
+            [imgSec setHidden:![[resDic objectForKey:KStatus] boolValue]];
+            imgSec.center = CGPointMake(cell.frame.size.width - imgSec.frame.size.width, cell.center.y);
+            [cell.contentView addSubview:imgSec];
+        } else {
+            UIButton* button = (UIButton*)[cell.contentView viewWithTag:KCellButtonTag(indexPath.section, indexPath.row)];
+            if (button) {
+                [button removeFromSuperview];
+            }
+            button = [MAUtils buttonWithImg:nil off:0 zoomIn:YES
+                                      image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+                                   imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
+                                     target:self
+                                     action:@selector(fileBtnClicked:)];
+            button.tag = KCellButtonTag(indexPath.section, indexPath.row);
+            button.frame = CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height);
+            [cell.contentView addSubview:button];
         }
-        button = [MAUtils buttonWithImg:nil off:0 zoomIn:YES
-                                   image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                  target:self
-                                  action:@selector(fileBtnClicked:)];
-        button.tag = KCellButtonTag(indexPath.section, indexPath.row);
-        button.frame = CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height);
-        [cell.contentView addSubview:button];
     }
     
     return cell;
@@ -155,24 +185,39 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!showAudioPlay) {
-        [self showAudioPlay];
-    }
-    
-    NSDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *docspath = [paths objectAtIndex:0];
-    NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
-    
-    if ([MAUtils unzipFiles:file unZipFielPath:nil]) {
-        [_audioPlayControl playWithPath:resDic array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
+    if (_editing) {
+        UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell) {
+            UIImageView* img = (UIImageView*)[cell viewWithTag:KCellImageTag(indexPath.section, indexPath.row)];
+            UIImageView* imgSec = (UIImageView*)[cell viewWithTag:KCellImageSecTag(indexPath.section, indexPath.row)];
+            if (img && imgSec) {
+                NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
+                BOOL status = [[resDic objectForKey:KStatus] boolValue];
+                [img setHidden:!status];
+                [imgSec setHidden:status];
+                [resDic setObject:[NSNumber numberWithBool:!status] forKey:KStatus];
+            }
+        }
     } else {
-        [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+        if (!showAudioPlay) {
+            [self showAudioPlay];
+        }
+        
+        NSDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = [paths objectAtIndex:0];
+        NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
+        
+        if ([MAUtils unzipFiles:file unZipFielPath:nil]) {
+            [_audioPlayControl playWithPath:resDic array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
+        } else {
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+        }
+        
+        currentSection = [indexPath section];
+        currentRow = [indexPath row];
+        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
-    
-    currentSection = [indexPath section];
-    currentRow = [indexPath row];
-    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 #pragma mark - for play control view
@@ -288,6 +333,43 @@
 }
 
 #pragma mark - other
+-(void)eventTopBtnClicked:(BOOL)left{
+    if (left)  {
+        if (_editing) {
+            [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
+        } else {
+            [self setTopBtn:MyLocal(@"plan_top_ok") rightBtn:MyLocal(@"file_top_more") enabled:NO];
+        }
+        [MAMenu dismissMenu];
+        
+        _editing = !_editing;
+        [self reloadData];
+    } else {
+        NSMutableArray* menuItems = [[NSMutableArray alloc] init];
+        MAMenuItem* first = [MAMenuItem menuItem:@"MENU" image:nil userInfo:nil target:nil action:NULL];
+        [menuItems addObject:first];
+
+        MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"delete")
+                                           image:nil
+                                        userInfo:nil
+                                          target:self
+                                          action:@selector(deleteFile:)];
+        [menuItems addObject:item1];
+        
+        MAMenuItem* item2 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+                                           image:nil
+                                        userInfo:nil
+                                          target:self
+                                          action:@selector(sendEmail:)];
+        [menuItems addObject:item2];
+        
+        first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+        first.alignment = NSTextAlignmentCenter;
+
+        [MAMenu showMenuInView:self fromRect:CGRectMake(280, -10, 0, 0) menuItems:menuItems];
+    }
+}
+
 -(void)showView{
     NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
     if (array) {
@@ -307,8 +389,9 @@
         NSMutableArray* yestoday = nil;
         NSMutableArray* week = nil;
         NSMutableArray* weekago = nil;
-        for (NSDictionary* dic in array) {
-            if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileForEver) {
+        for (NSMutableDictionary* dic in array) {
+            [dic setObject:[NSNumber numberWithBool:NO] forKey:KStatus];
+            if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileForEver && !_editing) {
                 if (ever == nil) {
                     ever = [[NSMutableArray alloc] init];
                 }
@@ -448,32 +531,62 @@
 }
 
 -(void)deleteFile:(id)sender{
-    int tag = [(NSNumber*)[sender userInfo] intValue];
-    int row = KCellButtonRow(tag);
-    int section = KCellButtonSec(tag);
-    
-    NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docspath = [paths objectAtIndex:0];
     
-    //删除数据库与文件
-    [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
-    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]]];
-    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", [resDic objectForKey:KDataBaseFileName]]];
-    
-    [self reloadData];
+    if (_editing) {
+        for (int i = 0; i < [_resourceArray count]; i++) {
+            NSArray* array = [[_resourceArray objectAtIndex:i] objectForKey:KArray];
+            for (int j = 0; j < [array count]; j++) {
+                NSDictionary* dic = [array objectAtIndex:j];
+                if ([[dic objectForKey:KStatus] boolValue]) {
+                    //删除数据库与文件
+                    [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[dic objectForKey:KDataBaseId] intValue]];
+                    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", [dic objectForKey:KDataBaseFileName]]];
+                    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", [dic objectForKey:KDataBaseFileName]]];
+                }
+            }
+        }
+        [self reloadData];
+    } else {
+        int tag = [(NSNumber*)[sender userInfo] intValue];
+        int row = KCellButtonRow(tag);
+        int section = KCellButtonSec(tag);
+        
+        NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
+        
+        //删除数据库与文件
+        [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]]];
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", [resDic objectForKey:KDataBaseFileName]]];
+        
+        [self reloadData];
+    }
 }
 
 -(void)sendEmail:(id)sender{
-    int tag = [(NSNumber*)[sender userInfo] intValue];
-    int row = KCellButtonRow(tag);
-    int section = KCellButtonSec(tag);
-    
-    NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-    NSArray* array = [NSArray arrayWithObjects:[resDic objectForKey:KDataBaseFileName], nil];
+    NSMutableArray* attachArray = [[NSMutableArray alloc] init];
+    if (_editing) {
+        for (int i = 0; i < [_resourceArray count]; i++) {
+            NSArray* array = [[_resourceArray objectAtIndex:i] objectForKey:KArray];
+            for (int j = 0; j < [array count]; j++) {
+                NSDictionary* dic = [array objectAtIndex:j];
+                if ([[dic objectForKey:KStatus] boolValue]) {
+                    [attachArray addObject:[dic objectForKey:KDataBaseFileName]];
+                }
+            }
+        }
+    } else {
+        int tag = [(NSNumber*)[sender userInfo] intValue];
+        int row = KCellButtonRow(tag);
+        int section = KCellButtonSec(tag);
+        
+        NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
+        [attachArray addObject:[resDic objectForKey:KDataBaseFileName]];
+    }
     
     NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
-    [mailDic setObject:array forKey:KMailAttachment];
+    [mailDic setObject:attachArray forKey:KMailAttachment];
     [SysDelegate.viewController sendEMail:mailDic];
 }
 
@@ -499,7 +612,11 @@
 }
 
 -(void)addFileToEver:(id)sender{
-    [self changeFileType:MATypeFileForEver sender:sender];
+    if (_editing) {
+        
+    } else {
+        [self changeFileType:MATypeFileForEver sender:sender];
+    }
 }
 
 -(void)cancelFileToEver:(id)sender{

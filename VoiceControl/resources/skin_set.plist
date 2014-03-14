@@ -55,6 +55,20 @@
 				<key>image</key>
 				<string>add_plan_repeat_selected.png</string>
 			</dict>
+			<key>skin_image_check_box_normal</key>
+			<dict>
+				<key>describe</key>
+				<string>多选框正常状态</string>
+				<key>image</key>
+				<string>checkbox_off.png</string>
+			</dict>
+			<key>skin_image_check_box_sec</key>
+			<dict>
+				<key>describe</key>
+				<string>多选框选中状态</string>
+				<key>image</key>
+				<string>checkbox_on.png</string>
+			</dict>
 			<key>skin_image_cell_indicator</key>
 			<dict>
 				<key>describe</key>
