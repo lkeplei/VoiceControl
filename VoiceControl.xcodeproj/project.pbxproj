@@ -79,6 +79,7 @@
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
 		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
+		18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF13F318D70C7E0055B72A /* MACellFile.m */; };
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
 		18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */; };
 		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
@@ -216,6 +217,8 @@
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
 		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
+		18AF13F218D70C7E0055B72A /* MACellFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellFile.h; sourceTree = "<group>"; };
+		18AF13F318D70C7E0055B72A /* MACellFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellFile.m; sourceTree = "<group>"; };
 		18DCB27A18A47F6600C13CDC /* MACellPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellPlan.h; sourceTree = "<group>"; };
 		18DCB27B18A47F6600C13CDC /* MACellPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellPlan.m; sourceTree = "<group>"; };
 		18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
@@ -531,6 +534,8 @@
 				04559A2217CA076300DCEB8A /* MASectionHeadBase.m */,
 				18DCB27A18A47F6600C13CDC /* MACellPlan.h */,
 				18DCB27B18A47F6600C13CDC /* MACellPlan.m */,
+				18AF13F218D70C7E0055B72A /* MACellFile.h */,
+				18AF13F318D70C7E0055B72A /* MACellFile.m */,
 			);
 			path = control;
 			sourceTree = "<group>";
@@ -707,6 +712,7 @@
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
+				18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */,
 				046B183D187C253700387497 /* CJSONScanner.m in Sources */,
 				04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */,
 				185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate>
+#import "MACellFile.h"
+
+@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, MACellFileDelegate>
 
 @end

@@ -15,9 +15,9 @@
 #import "MAMenu.h"
 #import "MAViewFactory.h"
 
-#define KCellFileHeight             (40)
+#define KCellFileHeight             (60)
 
-#define KCellLabelNameTag          (100)
+//#define KCellLabelNameTag          (100)
 #define KCellButtonTag(a,b)        ((1000 * (a + 1)) + b)
 #define KCellImageTag(a,b)         ((101 * (a + 1)) + b)
 #define KCellImageSecTag(a,b)      ((501 * (a + 1)) + b)
@@ -120,65 +120,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *reuseIdentifier = @"cell";
-    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    MACellFile* cell = (MACellFile*)[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
-                                      reuseIdentifier:reuseIdentifier];
+        cell = [[MACellFile alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.delegate = self;
+        cell.tag = KCellButtonTag(indexPath.section, indexPath.row);
     }
     
-    NSDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
-    if (resDic) {
-        UILabel* name = (UILabel*)[cell.contentView viewWithTag:KCellLabelNameTag];
-        NSString* str = [@"" stringByAppendingFormat:@"%@ - (%@)", [resDic objectForKey:KDataBaseFileName],
-                         [[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeCh]];
-        if (name == nil) {
-            name = [MAUtils labelWithTxt:str
-                                    frame:CGRectMake(5, 0, cell.frame.size.width, cell.frame.size.height)
-                                     font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
-                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-            name.tag = KCellLabelNameTag;
-            name.textAlignment = KTextAlignmentLeft;
-            [cell.contentView addSubview:name];
-        } else {
-            name.text = str;
-        }
-
-        if (_editing) {
-            UIImageView* img = (UIImageView*)[cell viewWithTag:KCellImageTag(indexPath.section, indexPath.row)];
-            if (img) {
-                [img removeFromSuperview];
-            }
-            img = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]];
-            img.tag = KCellImageTag(indexPath.section, indexPath.row);
-            [img setHidden:[[resDic objectForKey:KStatus] boolValue]];
-            img.center = CGPointMake(cell.frame.size.width - img.frame.size.width, cell.center.y);
-            [cell.contentView addSubview:img];
-            
-            UIImageView* imgSec = (UIImageView*)[cell viewWithTag:KCellImageSecTag(indexPath.section, indexPath.row)];
-            if (imgSec) {
-                [imgSec removeFromSuperview];
-            }
-            imgSec = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]];
-            imgSec.tag = KCellImageSecTag(indexPath.section, indexPath.row);
-            [imgSec setHidden:![[resDic objectForKey:KStatus] boolValue]];
-            imgSec.center = CGPointMake(cell.frame.size.width - imgSec.frame.size.width, cell.center.y);
-            [cell.contentView addSubview:imgSec];
-        } else {
-            UIButton* button = (UIButton*)[cell.contentView viewWithTag:KCellButtonTag(indexPath.section, indexPath.row)];
-            if (button) {
-                [button removeFromSuperview];
-            }
-            button = [MAUtils buttonWithImg:nil off:0 zoomIn:YES
-                                      image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                   imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                     target:self
-                                     action:@selector(fileBtnClicked:)];
-            button.tag = KCellButtonTag(indexPath.section, indexPath.row);
-            button.frame = CGRectMake(cell.frame.size.width - cell.frame.size.height, 0, cell.frame.size.height, cell.frame.size.height);
-            [cell.contentView addSubview:button];
-        }
-    }
+    [cell setCellResource:[[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row] editing:_editing];
     
     return cell;
 }
@@ -186,17 +136,13 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_editing) {
-        UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+        MACellFile* cell = (MACellFile*)[tableView cellForRowAtIndexPath:indexPath];
         if (cell) {
-            UIImageView* img = (UIImageView*)[cell viewWithTag:KCellImageTag(indexPath.section, indexPath.row)];
-            UIImageView* imgSec = (UIImageView*)[cell viewWithTag:KCellImageSecTag(indexPath.section, indexPath.row)];
-            if (img && imgSec) {
-                NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
-                BOOL status = [[resDic objectForKey:KStatus] boolValue];
-                [img setHidden:!status];
-                [imgSec setHidden:status];
-                [resDic setObject:[NSNumber numberWithBool:!status] forKey:KStatus];
-            }
+            NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
+            BOOL status = [[resDic objectForKey:KStatus] boolValue];
+            [cell setCellEditing:status];           //cell状态设置
+            [resDic setObject:[NSNumber numberWithBool:!status] forKey:KStatus];
+            
         }
     } else {
         if (!showAudioPlay) {
@@ -472,10 +418,9 @@
     }
 }
 
-#pragma mark - pop menu
-- (void)fileBtnClicked:(UIButton *)sender{
-    int row = KCellButtonRow(sender.tag);
-    int section = KCellButtonSec(sender.tag);
+#pragma mark - cell file back
+-(void)MACellFileBack:(MACellFile *)cell btn:(UIButton *)btn{
+    int section = KCellButtonSec(cell.tag);
     
     NSMutableArray* menuItems = [[NSMutableArray alloc] init];
     MAMenuItem* first = [MAMenuItem menuItem:@"MENU" image:nil userInfo:nil target:nil action:NULL];
@@ -486,50 +431,43 @@
     if ([name compare:MyLocal(@"file_ever")] == NSOrderedSame) {
         MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"file_cancel_ever")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:sender.tag]
+                                        userInfo:[NSNumber numberWithInt:cell.tag]
                                           target:self
                                           action:@selector(cancelFileToEver:)];
         [menuItems addObject:item1];
     } else {
         MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"delete")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:sender.tag]
+                                        userInfo:[NSNumber numberWithInt:cell.tag]
                                           target:self
                                           action:@selector(deleteFile:)];
         [menuItems addObject:item1];
         
         MAMenuItem* item2 = [MAMenuItem menuItem:MyLocal(@"file_add_ever")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:sender.tag]
+                                        userInfo:[NSNumber numberWithInt:cell.tag]
                                           target:self
                                           action:@selector(addFileToEver:)];
         [menuItems addObject:item2];
     }
     
-//    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_add_pwd")
-//                                       image:nil
-//                                    userInfo:[NSNumber numberWithInt:sender.tag]
-//                                      target:self
-//                                      action:@selector(addPwd:)];
-//    [menuItems addObject:item3];
-    
-    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil
-                                    userInfo:[NSNumber numberWithInt:sender.tag]
+                                    userInfo:[NSNumber numberWithInt:cell.tag]
                                       target:self
                                       action:@selector(sendEmail:)];
-    [menuItems addObject:item4];
+    [menuItems addObject:item3];
     
     first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
     first.alignment = NSTextAlignmentCenter;
-    
-    UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+
     [MAMenu showMenuInView:self
-                  fromRect:CGRectMake(sender.frame.origin.x, cell.frame.origin.y - _tableView.contentOffset.y,
-                                      sender.frame.size.width, sender.frame.size.height)
+                  fromRect:CGRectMake(btn.frame.origin.x, cell.frame.origin.y - _tableView.contentOffset.y,
+                                      btn.frame.size.width, btn.frame.size.height)
                  menuItems:menuItems];
 }
 
+#pragma mark - pop menu
 -(void)deleteFile:(id)sender{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docspath = [paths objectAtIndex:0];
