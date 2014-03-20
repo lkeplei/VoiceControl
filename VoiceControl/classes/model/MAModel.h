@@ -13,6 +13,7 @@
 typedef enum {
     MATypeTimeCh = 0,
     MATypeTimeNum,
+    MATypeTimeClock,
     
     MATypeSkinDefault = 50,
     MATypeSkinBlack,

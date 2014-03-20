@@ -83,6 +83,9 @@
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
 		18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */; };
 		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
+		18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */; };
+		18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */; };
+		18E08B5B18DAF6AE00866C7B /* MAVoiceFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
 		18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */; };
@@ -225,6 +228,11 @@
 		18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanRepeat.m; sourceTree = "<group>"; };
 		18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanLabel.h; sourceTree = "<group>"; };
 		18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanLabel.m; sourceTree = "<group>"; };
+		18E08B4D18DAE0BE00866C7B /* MACoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACoreDataManager.h; sourceTree = "<group>"; };
+		18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACoreDataManager.m; sourceTree = "<group>"; };
+		18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ma_core_data.xcdatamodel; sourceTree = "<group>"; };
+		18E08B5918DAF6AE00866C7B /* MAVoiceFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVoiceFiles.h; sourceTree = "<group>"; };
+		18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVoiceFiles.m; sourceTree = "<group>"; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -436,6 +444,7 @@
 				18EC3DE5186D311F00B3BC81 /* skin_set.plist */,
 				BE073A75179E9F3400340A47 /* image */,
 				BE073A96179E9F6C00340A47 /* Localizable.strings */,
+				18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -456,6 +465,7 @@
 		04E65673178C5150003A6ACA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				18E08B4C18DAE0BE00866C7B /* coreData */,
 				187F5A90188682BB00D72FA6 /* RegexKitLite */,
 				046B1818187C253700387497 /* baidu */,
 				BE4C565017B22BC300E675CA /* ZipArchive */,
@@ -515,6 +525,17 @@
 				187F5A92188682BB00D72FA6 /* RegexKitLite.m */,
 			);
 			path = RegexKitLite;
+			sourceTree = "<group>";
+		};
+		18E08B4C18DAE0BE00866C7B /* coreData */ = {
+			isa = PBXGroup;
+			children = (
+				18E08B5918DAF6AE00866C7B /* MAVoiceFiles.h */,
+				18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */,
+				18E08B4D18DAE0BE00866C7B /* MACoreDataManager.h */,
+				18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */,
+			);
+			path = coreData;
 			sourceTree = "<group>";
 		};
 		BE073A65179E9A1400340A47 /* control */ = {
@@ -722,6 +743,7 @@
 				BE073A64179E998900340A47 /* MADataManager.mm in Sources */,
 				BE073A68179E9A1400340A47 /* MBProgressHUD.m in Sources */,
 				187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */,
+				18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */,
 				046B1837187C253700387497 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				046B1835187C253700387497 /* CDataScanner.m in Sources */,
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
@@ -731,8 +753,10 @@
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				046B183C187C253700387497 /* CJSONDeserializer.m in Sources */,
 				187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */,
+				18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */,
 				046B183B187C253700387497 /* NSDictionary_JSONExtensions.m in Sources */,
 				045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */,
+				18E08B5B18DAF6AE00866C7B /* MAVoiceFiles.m in Sources */,
 				0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */,
 				0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */,
 				046B183A187C253700387497 /* CDataScanner_Extensions.m in Sources */,
@@ -887,8 +911,8 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -946,6 +970,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */,
+			);
+			currentVersion = 18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */;
+			path = ma_core_data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 04E6563A178C4F15003A6ACA /* Project object */;
 }

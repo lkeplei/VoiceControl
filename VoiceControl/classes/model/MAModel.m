@@ -111,46 +111,56 @@
 
 -(NSString*)getStringTime:(int32_t)time type:(MAType)type{
     NSMutableString* timeStr = [[NSMutableString alloc] init];
-    if (time >= 60 * 60 * 24) {
-        if (type == MATypeTimeCh) {
-            [timeStr appendFormat:MyLocal(@"time_day"), time / (60 * 60 * 24)];
-        } else if (type == MATypeTimeNum) {
-            [timeStr appendFormat:MyLocal(@"time_num_day"), time / (60 * 60 * 24)];
+    
+    if (type == MATypeTimeClock) {
+        if (time >= 60 * 60 * 24) {
+            [timeStr appendFormat:@"%d:", time / (60 * 60 * 24)];
+            time %= 60 * 60 * 24;
+            [timeStr appendFormat:@"%02d:", time / (60 * 60)];
         } else {
-            [timeStr appendFormat:MyLocal(@"time_day"), time / (60 * 60 * 24)];
+            [timeStr appendFormat:@"%d:", time / (60 * 60)];
         }
-        [timeStr appendString:[self getStringTime:(time % (60 * 60 * 24)) type:type]];
+        time %= 60 * 60;
+        
+        [timeStr appendFormat:@"%02d:", time / (60)];
+        time %= 60;
+        
+        [timeStr appendFormat:@"%02d", time];
     } else {
-        if (time >= 60 * 60) {
+        if (time >= 60 * 60 * 24) {
             if (type == MATypeTimeCh) {
-                [timeStr appendFormat:MyLocal(@"time_hour"), time / (60 * 60)];
+                [timeStr appendFormat:MyLocal(@"time_day"), time / (60 * 60 * 24)];
             } else if (type == MATypeTimeNum) {
-                [timeStr appendFormat:MyLocal(@"time_num_hour"), time / (60 * 60)];
-            } else {
-                [timeStr appendFormat:MyLocal(@"time_hour"), time / (60 * 60)];
+                [timeStr appendFormat:MyLocal(@"time_num_day"), time / (60 * 60 * 24)];
             }
-            [timeStr appendString:[self getStringTime:(time % (60 * 60)) type:type]];
+            [timeStr appendString:[self getStringTime:(time % (60 * 60 * 24)) type:type]];
         } else {
-            if (time >= 60) {
+            if (time >= 60 * 60) {
                 if (type == MATypeTimeCh) {
-                    [timeStr appendFormat:MyLocal(@"time_minute"), time / 60];
+                    [timeStr appendFormat:MyLocal(@"time_hour"), time / (60 * 60)];
                 } else if (type == MATypeTimeNum) {
-                    [timeStr appendFormat:MyLocal(@"time_num_minute"), time / 60];
-                } else {
-                    [timeStr appendFormat:MyLocal(@"time_minute"), time / 60];
+                    [timeStr appendFormat:MyLocal(@"time_num_hour"), time / (60 * 60)];
                 }
-                [timeStr appendString:[self getStringTime:time % 60 type:type]];
+                [timeStr appendString:[self getStringTime:(time % (60 * 60)) type:type]];
             } else {
-                if (type == MATypeTimeCh) {
-                    [timeStr appendFormat:MyLocal(@"time_second"), time];
-                } else if (type == MATypeTimeNum) {
-                    [timeStr appendFormat:MyLocal(@"time_num_second"), time];
+                if (time >= 60) {
+                    if (type == MATypeTimeCh) {
+                        [timeStr appendFormat:MyLocal(@"time_minute"), time / 60];
+                    } else if (type == MATypeTimeNum) {
+                        [timeStr appendFormat:MyLocal(@"time_num_minute"), time / 60];
+                    }
+                    [timeStr appendString:[self getStringTime:time % 60 type:type]];
                 } else {
-                    [timeStr appendFormat:MyLocal(@"time_second"), time];
+                    if (type == MATypeTimeCh) {
+                        [timeStr appendFormat:MyLocal(@"time_second"), time];
+                    } else if (type == MATypeTimeNum) {
+                        [timeStr appendFormat:MyLocal(@"time_num_second"), time];
+                    }
                 }
             }
         }
     }
+    
     return timeStr;
 }
 

@@ -84,7 +84,7 @@
 #define KDataBaseDate               @"date"
 
 #define KNameFormat                 @"MMMddHHmmss"
-#define KTimeFormat                 @"MM-dd HH:mm:ss"
+#define KTimeFormat                 @"MMM dd,yyyy,HH:mm:ss"                   //@"MM-dd HH:mm:ss"
 #define KDateFormat                 @"YYYY-MM-dd"
 #define KDateTimeFormat             @"YYYY-MM-dd HH:mm"
 

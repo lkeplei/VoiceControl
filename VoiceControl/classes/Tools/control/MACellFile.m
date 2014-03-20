@@ -11,10 +11,13 @@
 #import "MAUtils.h"
 #import "MAConfig.h"
 
+#define KCellOffset             (5)
 #define KCellLabelNameTag       (1001)
 #define KCellImgTag             (1002)
 #define KCellImgSecTag          (1003)
 #define KCellButtonTag          (1004)
+#define KCellLabelTimeTag       (1005)
+#define KCellLabelDurationTag   (1006)
 
 @implementation MACellFile
 
@@ -32,41 +35,27 @@
 
 -(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing{
     if (resDic) {
-        UILabel* name = (UILabel*)[self.contentView viewWithTag:KCellLabelNameTag];
-        NSString* str = [@"" stringByAppendingFormat:@"%@ - (%@)", [resDic objectForKey:KDataBaseFileName],
-                         [[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeCh]];
-        if (name == nil) {
-            name = [MAUtils labelWithTxt:str
-                                   frame:CGRectMake(5, 0, self.frame.size.width, self.frame.size.height)
-                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
-                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-            name.tag = KCellLabelNameTag;
-            name.textAlignment = KTextAlignmentLeft;
-            [self.contentView addSubview:name];
-        } else {
-            name.text = str;
-        }
+        [self setCellLabel:[resDic objectForKey:KDataBaseFileName] tag:KCellLabelNameTag alignment:KTextAlignmentLeft
+                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
+                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
+                     frame:CGRectMake(KCellOffset, 0, self.frame.size.width, self.frame.size.height * 0.7)];
         
+        [self setCellLabel:[resDic objectForKey:KDataBaseTime] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
+                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                     color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
+                     frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width, self.frame.size.height / 2)];
+        
+        [self setCellLabel:[[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeClock]
+                       tag:KCellLabelDurationTag alignment:KTextAlignmentRight
+                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                     color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
+                     frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width - KCellOffset * 2, self.frame.size.height / 2)];
         if (editing) {
-            UIImageView* img = (UIImageView*)[self viewWithTag:KCellImgTag];
-            if (img) {
-                [img removeFromSuperview];
-            }
-            img = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]];
-            img.tag = KCellImgTag;
-            [img setHidden:[[resDic objectForKey:KStatus] boolValue]];
-            img.center = CGPointMake(self.frame.size.width - img.frame.size.width, self.center.y);
-            [self.contentView addSubview:img];
+            [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]
+                           tag:KCellImgTag hide:[[resDic objectForKey:KStatus] boolValue]];
             
-            UIImageView* imgSec = (UIImageView*)[self viewWithTag:KCellImgSecTag];
-            if (imgSec) {
-                [imgSec removeFromSuperview];
-            }
-            imgSec = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]];
-            imgSec.tag = KCellImgSecTag;
-            [imgSec setHidden:![[resDic objectForKey:KStatus] boolValue]];
-            imgSec.center = CGPointMake(self.frame.size.width - imgSec.frame.size.width, self.center.y);
-            [self.contentView addSubview:imgSec];
+            [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]
+                           tag:KCellImgSecTag hide:![[resDic objectForKey:KStatus] boolValue]];
         } else {
             UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellButtonTag];
             if (button) {
@@ -91,6 +80,31 @@
         [img setHidden:!editing];
         [imgSec setHidden:editing];
     }
+}
+
+-(void)setCellLabel:(NSString*)content tag:(uint32_t)tag alignment:(NSTextAlignment)alignment font:(UIFont*)font color:(UIColor*)color frame:(CGRect)frame{
+    UILabel* label = (UILabel*)[self.contentView viewWithTag:tag];
+    if (label == nil) {
+        frame.origin.y += fabsf((frame.size.height - [MAUtils getFontSize:content font:font].height)) / 2;
+        label = [MAUtils labelWithTxt:content frame:frame font:font color:color];
+        label.tag = tag;
+        label.textAlignment = alignment;
+        [self.contentView addSubview:label];
+    } else {
+        label.text = content;
+    }
+}
+
+-(void)setCellImage:(UIImage*)img tag:(uint32_t)tag hide:(BOOL)hide{
+    UIImageView* imgView = (UIImageView*)[self viewWithTag:tag];
+    if (imgView) {
+        [imgView removeFromSuperview];
+    }
+    imgView = [[UIImageView alloc] initWithImage:img];
+    imgView.tag = tag;
+    [imgView setHidden:hide];
+    imgView.center = CGPointMake(self.frame.size.width - imgView.frame.size.width, (self.frame.size.height - imgView.frame.size.height) / 2 + KCellOffset);
+    [self.contentView addSubview:imgView];
 }
 
 #pragma mark - btn clicked
