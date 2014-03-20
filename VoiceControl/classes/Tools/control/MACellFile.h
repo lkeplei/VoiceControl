@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class MACellFile;
+@class MAVoiceFiles;
 
 @protocol MACellFileDelegate <NSObject>
 -(void)MACellFileBack:(MACellFile*)cell btn:(UIButton*)btn;
@@ -16,7 +17,7 @@
 
 @interface MACellFile : UITableViewCell
 
--(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing;
+-(void)setCellResource:(MAVoiceFiles*)file editing:(BOOL)editing;
 -(void)setCellEditing:(BOOL)editing;
 
 @property (nonatomic, assign) id<MACellFileDelegate> delegate;

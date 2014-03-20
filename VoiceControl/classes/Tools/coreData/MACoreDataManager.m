@@ -143,4 +143,24 @@
     //执行获取数据请求，返回数组
     return [[[self managedObjectContext] executeFetchRequest:request error:&error] mutableCopy];
 }
+
+-(NSManagedObject*)getNewManagedObject:(NSString*)object{
+    return [NSEntityDescription insertNewObjectForEntityForName:object inManagedObjectContext:[self managedObjectContext]];
+}
+
+#pragma mark - special get methods
+-(NSArray*)getMAVoiceFile:(NSString*)name{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:KCoreVoiceFiles inManagedObjectContext:[self managedObjectContext]]];
+    
+    //更新谁的条件在这里配置；
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"name==%@", name]];
+    
+    NSError* error = nil;
+    
+    NSArray* array = nil;
+    array = [[[self managedObjectContext] executeFetchRequest:fetchRequest error:&error] mutableCopy];
+    
+    return array;
+}
 @end

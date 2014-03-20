@@ -32,10 +32,6 @@
 
 @property (nonatomic, strong) MAViewSelectMenu* selectMenu;
 
-#ifdef KAppTest
-@property (nonatomic, strong) UILabel* labelRecorder;
-@property (nonatomic, strong) UILabel* labelTimer;
-#endif
 @end
 
 @implementation MAViewController
@@ -102,33 +98,7 @@
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
     [_menuBtn addSubview:_menuLabel];
-    
-#ifdef KAppTest
-    _labelRecorder = [MAUtils labelWithTxt:nil
-                                 frame:CGRectMake(0, 0, _topView.frame.size.width, _topView.frame.size.height / 2)
-                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize12]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-    [_topView addSubview:_labelRecorder];
-    
-    _labelTimer = [MAUtils labelWithTxt:nil
-                                 frame:CGRectMake(0, 20, _topView.frame.size.width, _topView.frame.size.height / 2)
-                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize12]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-    [_topView addSubview:_labelTimer];
-#endif
 }
-
-#ifdef KAppTest
--(void)setLabel:(NSString*)recorder timer:(NSString*)timer{
-    if (recorder) {
-        [_labelRecorder setText:recorder];
-    }
-    
-    if (timer) {
-        [_labelTimer setText:timer];
-    }
-}
-#endif
 
 #pragma mark - btn clicked
 -(void)menuBtnClicked:(id)sender{

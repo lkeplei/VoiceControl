@@ -12,9 +12,8 @@
 #import "MAModel.h"
 #import "MAUtils.h"
 
-#ifdef KAppTest
-#import "MAViewController.h"
-#endif
+#import "MAVoiceFiles.h"
+#import "MACoreDataManager.h"
 
 #define KTimeRecorderDuration       (20)
 
@@ -28,7 +27,7 @@
 @property (assign) float durationStart;
 @property (assign) float offsetDuration;
 @property (nonatomic, strong) NSMutableArray* planArray;
-@property (nonatomic, strong) NSString* fileTime;
+@property (nonatomic, strong) NSDate* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
 
 @end
@@ -130,21 +129,13 @@
     [formatter setDateFormat:KNameFormat];
     _fileName = [NSString stringWithFormat:@"%@", [formatter stringFromDate:[NSDate date]]];
     _filePath = [NSString stringWithFormat:@"%@/%@.aac", strUrl, _fileName];
-    
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:KTimeFormat];
-    _fileTime = [formatter stringFromDate:[NSDate date]];
+    _fileTime = [NSDate date];
     
     NSURL* url = [NSURL fileURLWithPath:_filePath];
     urlPlay = url;
     
     NSError *error;
     //初始化
-//    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
-//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-//        [audioSession setActive:YES error:nil];
-//    }
     _recorder = [[AVAudioRecorder alloc]initWithURL:url settings:_recordSetting error:&error];
     //开启音量检测
     _recorder.meteringEnabled = YES;
@@ -171,15 +162,7 @@
         [_recorder deleteRecording];
     } else {
         //insert value to table
-        NSMutableArray* resArr = [[NSMutableArray alloc] init];
-        NSMutableDictionary* res = [[NSMutableDictionary alloc] init];
-        [res setObject:_filePath forKey:KDataBasePath];
-        [res setObject:_fileName forKey:KDataBaseFileName];
-        [res setObject:_fileTime forKey:KDataBaseTime];
-        [res setObject:[MAUtils getStringByFloat:duration decimal:0] forKey:KDataBaseDuration];
-        [res setObject:[MAUtils getNumberByInt:MATypeFileNormal] forKey:KDataBaseDataEver];
-        [resArr addObject:res];
-        [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
+        [self saveData];
         
         if ([MAUtils getFileSize:_filePath] > KZipMinSize) {
             // create dispatch queue
@@ -214,12 +197,6 @@
 }
 
 -(void)autoTimerOut{
-#ifdef KAppTest
-    static int startNum = 0;
-    static int timerNum = 0;
-    static int stopNum = 0;
-#endif
-    
     if (_isRecording) {
         if (_recordId != -1) {
             _recorderDuration += _offsetDuration;
@@ -240,9 +217,6 @@
             }
             
             if (stop) {
-#ifdef KAppTest
-                stopNum++;
-#endif
                 [self stopRecord];
             }
         }
@@ -254,9 +228,6 @@
                     if ([[array objectAtIndex:0] intValue] == 99) {
                         NSString* dateTime = [[array objectAtIndex:1] stringByAppendingFormat:@" %@", [plan objectForKey:KDataBaseTime]];
                         if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
-#ifdef KAppTest
-                            startNum++;
-#endif
                         }
                     } else {
                         for (NSString* planTime in array) {
@@ -264,9 +235,6 @@
                             if ([planTime intValue] == ([components weekday] - 1)) {
                                 NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", [components year], [components month], [components day], [plan objectForKey:KDataBaseTime]];
                                 if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
-#ifdef KAppTest
-                                    startNum++;
-#endif
                                     break;
                                 }
                             }
@@ -279,11 +247,6 @@
     
     //清理垃圾文件
     [[MAModel shareModel] clearRubbish:NO];
-#ifdef KAppTest
-    timerNum++;
-    [SysDelegate.viewController setLabel:[@"" stringByAppendingFormat:@"start = %d, stop = %d, timer = %d", startNum, stopNum, timerNum]
-                                   timer:[MAUtils getStringFromDate:[NSDate date] format:KTimeFormat]];
-#endif
 }
 
 -(BOOL)whetherStart:(NSDate*)planDate plan:(NSDictionary*)plan{
@@ -335,6 +298,30 @@
 }
 
 #pragma mark - other
+-(void)saveData{
+    MAVoiceFiles* file = (MAVoiceFiles*)[[MACoreDataManager sharedCoreDataManager] getNewManagedObject:KCoreVoiceFiles];
+    file.name = _fileName;
+    file.path = _filePath;
+    file.custom = MyLocal(@"custom_default");
+    file.level = [MAUtils getNumberByInt:MATypeFileNormal];
+    file.type = [MAUtils getNumberByInt:MATypeFileCustomDefault];
+    file.time = _fileTime;
+    file.duration = [NSNumber numberWithFloat:_recorder.currentTime];
+    file.tag = @"";
+    [[MACoreDataManager sharedCoreDataManager] saveEntry];
+    
+    
+//    NSMutableArray* resArr = [[NSMutableArray alloc] init];
+//    NSMutableDictionary* res = [[NSMutableDictionary alloc] init];
+//    [res setObject:_filePath forKey:KDataBasePath];
+//    [res setObject:_fileName forKey:KDataBaseFileName];
+//    [res setObject:_fileTime forKey:KDataBaseTime];
+//    [res setObject:[MAUtils getStringByFloat:_recorder.currentTime decimal:0] forKey:KDataBaseDuration];
+//    [res setObject:[MAUtils getNumberByInt:MATypeFileNormal] forKey:KDataBaseDataEver];
+//    [resArr addObject:res];
+//    [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
+}
+
 -(void)resetPlan{
     if (_planArray) {
         [_planArray removeAllObjects];

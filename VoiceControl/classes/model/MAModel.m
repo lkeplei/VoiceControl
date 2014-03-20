@@ -17,6 +17,9 @@
 #import "MARecordController.h"
 #import "MAViewSetting.h"
 
+#import "MACoreDataManager.h"
+#import "MAVoiceFiles.h"
+
 @interface MAModel ()
 @property (nonatomic, strong) MASkinData* skinData;
 @property (nonatomic, strong) MARecordController* recordController;
@@ -328,11 +331,19 @@
 }
 
 -(void)clearRubbish{
-    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
-    for (NSDictionary* dic in array) {
-        NSString* file = [dic objectForKey:KDataBasePath];
-        if ([MAUtils getFileSize:file] > KZipMinSize) {
-            [MAUtils deleteFileWithPath:file];
+//    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
+//    for (NSDictionary* dic in array) {
+//        NSString* file = [dic objectForKey:KDataBasePath];
+//        if ([MAUtils getFileSize:file] > KZipMinSize) {
+//            [MAUtils deleteFileWithPath:file];
+//        }
+//    }
+    
+    NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
+    for (int i = 0; i < [array count]; i++) {
+        MAVoiceFiles* file = (MAVoiceFiles*)[array objectAtIndex:i];
+        if ([MAUtils getFileSize:file.path] > KZipMinSize) {
+            [MAUtils deleteFileWithPath:file.path];
         }
     }
 }

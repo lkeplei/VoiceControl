@@ -11,6 +11,8 @@
 #import "MAUtils.h"
 #import "MAConfig.h"
 
+#import "MAVoiceFiles.h"
+
 #define KCellOffset             (5)
 #define KCellLabelNameTag       (1001)
 #define KCellImgTag             (1002)
@@ -33,29 +35,29 @@
     [super setSelected:selected animated:animated];
 }
 
--(void)setCellResource:(NSDictionary*)resDic editing:(BOOL)editing{
-    if (resDic) {
-        [self setCellLabel:[resDic objectForKey:KDataBaseFileName] tag:KCellLabelNameTag alignment:KTextAlignmentLeft
+-(void)setCellResource:(MAVoiceFiles*)file editing:(BOOL)editing{
+    if (file) {
+        [self setCellLabel:file.name tag:KCellLabelNameTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                      frame:CGRectMake(KCellOffset, 0, self.frame.size.width, self.frame.size.height * 0.7)];
         
-        [self setCellLabel:[resDic objectForKey:KDataBaseTime] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
+        [self setCellLabel:[MAUtils getStringFromDate:file.time format:KTimeFormat] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
                      frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width, self.frame.size.height / 2)];
         
-        [self setCellLabel:[[MAModel shareModel] getStringTime:[[resDic objectForKey:KDataBaseDuration] intValue] type:MATypeTimeClock]
+        [self setCellLabel:[[MAModel shareModel] getStringTime:[file.duration intValue] type:MATypeTimeClock]
                        tag:KCellLabelDurationTag alignment:KTextAlignmentRight
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
                      frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width - KCellOffset * 2, self.frame.size.height / 2)];
         if (editing) {
             [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]
-                           tag:KCellImgTag hide:[[resDic objectForKey:KStatus] boolValue]];
+                           tag:KCellImgTag hide:file.status];
             
             [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]
-                           tag:KCellImgSecTag hide:![[resDic objectForKey:KStatus] boolValue]];
+                           tag:KCellImgSecTag hide:!file.status];
         } else {
             UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellButtonTag];
             if (button) {

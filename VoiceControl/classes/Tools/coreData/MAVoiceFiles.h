@@ -21,4 +21,7 @@
 @property (nonatomic, retain) NSNumber * duration;          //文件时长
 @property (nonatomic, retain) NSString * tag;               //标记（1-***;2-***;3***）
 
+
+@property (assign) BOOL status;
+
 @end

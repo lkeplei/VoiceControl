@@ -10,12 +10,7 @@
 //引入CoreData框架
 #import <CoreData/CoreData.h>
 
-typedef enum {
-    MACoreDataUnknow = 0,
-    
-    MACoreDataMTGoodsJSCJ = 10,//模拟交易-即使建仓
-    MACoreDataMTGoodsGDJY,//模拟交易-挂单交易
-} MACoreDataType;
+#define KCoreVoiceFiles         @"MAVoiceFiles"
 
 @interface MACoreDataManager : NSObject
 
@@ -61,4 +56,14 @@ typedef enum {
  */
 -(NSArray*)queryFromDB:(NSString*)object sortKey:(NSString*)sortKey;
 
+/**
+ *  获取一个新的实例
+ *
+ *  @param object  数据表
+ *
+ *  @return 返回一个数据表结构的一个新实例
+ */
+-(NSManagedObject*)getNewManagedObject:(NSString*)object;
+
+-(NSArray*)getMAVoiceFile:(NSString*)name;
 @end

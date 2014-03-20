@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+@class MAVoiceFiles;
+
 typedef enum {
     MAAudioPlayNext = 0,
     MAAudioPlayPre,
@@ -22,7 +24,7 @@ typedef BOOL (^audioPlayCallBack)(MAAudioPlayType type);
 
 @interface MAViewAudioPlayControl : UIView<AVAudioPlayerDelegate>
 
--(void)playWithPath:(NSDictionary*)resDic array:(NSArray*)array;
+-(void)playWithPath:(MAVoiceFiles*)resDic array:(NSArray*)array;
 
 @property(nonatomic, copy)audioPlayCallBack audioPlayCallBack;
 

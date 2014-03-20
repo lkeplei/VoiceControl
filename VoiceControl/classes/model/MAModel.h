@@ -22,6 +22,8 @@ typedef enum {
     MATypeFileForEver,
     MATypeFilePwd,
     
+    MATypeFileCustomDefault = 80,
+    
     MATypeChangeViewNull = 100,
     MATypeChangeViewCurlDown,
     MATypeChangeViewCurlUp,

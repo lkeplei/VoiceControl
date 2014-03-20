@@ -11,6 +11,8 @@
 #import "MAUtils.h"
 #import "MAModel.h"
 
+#import "MAVoiceFiles.h"
+
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
 #define KTimeLabelWidth             (60)
@@ -119,7 +121,7 @@
 
 }
 
--(void)playWithPath:(NSDictionary*)resDic array:(NSArray *)array{
+-(void)playWithPath:(MAVoiceFiles*)file array:(NSArray *)array{
     if (_avPlay.playing) {
         [self stopAudio];
     }
@@ -129,8 +131,8 @@
     }
     
     //deal with message
-    if (resDic) {
-        _filePath = [NSString stringWithString:[resDic objectForKey:KDataBasePath]];
+    if (file) {
+        _filePath = [NSString stringWithString:file.path];
     } else {
         if (_filePath == nil) {
             DebugLog(@"no file path coming");
@@ -163,9 +165,9 @@
     if (![MAUtils fileExistsAtPath:_filePath]) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
-        NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
+        NSString* fileName = [docspath stringByAppendingFormat:@"/%@.zip", file.name];
         
-        if (![MAUtils unzipFiles:file unZipFielPath:nil]) {
+        if (![MAUtils unzipFiles:fileName unZipFielPath:nil]) {
             play = NO;
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
@@ -176,7 +178,7 @@
         _avPlay.delegate = self;
         if ([_avPlay play]) {
             _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
-            _fileLabel.text = [resDic objectForKey:KDataBaseFileName];
+            _fileLabel.text = file.name;
             
             //slider
             _progressSlider.maximumValue = _avPlay.duration;

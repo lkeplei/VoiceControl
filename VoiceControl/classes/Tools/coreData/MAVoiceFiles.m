@@ -20,4 +20,6 @@
 @dynamic duration;
 @dynamic tag;
 
+@synthesize status = _status;
+
 @end

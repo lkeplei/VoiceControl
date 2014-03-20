@@ -86,6 +86,7 @@
 		18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */; };
 		18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */; };
 		18E08B5B18DAF6AE00866C7B /* MAVoiceFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */; };
+		18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E08B5C18DAFB1900866C7B /* CoreData.framework */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
 		18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */; };
@@ -233,6 +234,7 @@
 		18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ma_core_data.xcdatamodel; sourceTree = "<group>"; };
 		18E08B5918DAF6AE00866C7B /* MAVoiceFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVoiceFiles.h; sourceTree = "<group>"; };
 		18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVoiceFiles.m; sourceTree = "<group>"; };
+		18E08B5C18DAFB1900866C7B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */,
 				187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */,
 				046B184A187C283400387497 /* Security.framework in Frameworks */,
 				046B1848187C282C00387497 /* AdSupport.framework in Frameworks */,
@@ -389,6 +392,7 @@
 		04E65644178C4F15003A6ACA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18E08B5C18DAFB1900866C7B /* CoreData.framework */,
 				187F5A94188682FE00D72FA6 /* libicucore.dylib */,
 				046B1849187C283300387497 /* Security.framework */,
 				046B1847187C282C00387497 /* AdSupport.framework */,
