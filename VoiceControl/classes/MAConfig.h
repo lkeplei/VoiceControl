@@ -65,6 +65,7 @@
 #define KUserDefaultPreClearTime           @"default_pre_clear_time"
 #define KUserDefaultNextClearTime          @"default_next_clear_time"
 
+#define KUserDefaultDataVersion            @"default_data_version"
 //数据库部分
 #define KSqliteDBName           @"SQLiteVoiceControl.db"
 #define KTableVoiceFiles        @"tableVoiceFiles"

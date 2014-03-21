@@ -16,6 +16,7 @@
 #import "MAUtils.h"
 #import "MARecordController.h"
 #import "MAViewSetting.h"
+#import "MAServerConfig.h"
 
 #import "MACoreDataManager.h"
 #import "MAVoiceFiles.h"
@@ -46,8 +47,6 @@
     _recordController = [[MARecordController alloc] init];
     
     //初始数据
-    [[MADataManager shareDataManager] createTabel:KTableVoiceFiles];
-    
     if ([MADataManager getDataByKey:KUserDefaultSetSkin] == nil) {
         [MADataManager setDataByKey:KSkinSetDefault forkey:KUserDefaultSetSkin];
     }
@@ -64,9 +63,46 @@
         [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearEveryDay] forkey:KUserDefaultClearRubbish];
     }
     
+    //数据转移
+    [self dataTransfer];
+    
     //初始声音服务
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
+-(void)dataTransfer{
+    NSString* guideV = [MADataManager getDataByKey:KUserDefaultDataVersion];
+    BOOL transfer = NO;
+    if (guideV) {
+        if ([guideV compare:KDataVersion] != NSOrderedSame) {
+            transfer = YES;
+        }
+    } else {
+        transfer = YES;
+    }
+    
+    if (transfer) {
+        [MADataManager setDataByKey:KDataVersion forkey:KUserDefaultDataVersion];
+        
+        NSArray* resource = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
+        if (resource && [resource count] > 0) {
+            for (NSDictionary* dic in resource) {
+                MAVoiceFiles* file = (MAVoiceFiles*)[[MACoreDataManager sharedCoreDataManager] getNewManagedObject:KCoreVoiceFiles];
+                file.name = [dic objectForKey:KDataBaseFileName];
+                file.path = [dic objectForKey:KDataBasePath];
+                file.custom = MyLocal(@"custom_default");
+                file.level = [dic objectForKey:KDataBaseDataEver];
+                file.type = [MAUtils getNumberByInt:MATypeFileCustomDefault];
+                file.time = [MAUtils getDateFromString:[[MAUtils getStringFromDate:[NSDate date] format:@"yyyy-"] stringByAppendingString:[dic objectForKey:KDataBaseTime]]
+                                                format:@"yyyy-MM-dd HH:mm:ss"];
+                file.duration = [NSNumber numberWithFloat:[[dic objectForKey:KDataBaseDuration] floatValue]];
+                file.tag = nil;
+                file.image = nil;
+            }
+            [[MACoreDataManager sharedCoreDataManager] saveEntry];
+        }
+    }
 }
 
 -(UIColor*)getColorByType:(MAType)type default:(BOOL)defult{
@@ -331,14 +367,6 @@
 }
 
 -(void)clearRubbish{
-//    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
-//    for (NSDictionary* dic in array) {
-//        NSString* file = [dic objectForKey:KDataBasePath];
-//        if ([MAUtils getFileSize:file] > KZipMinSize) {
-//            [MAUtils deleteFileWithPath:file];
-//        }
-//    }
-    
     NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
     for (int i = 0; i < [array count]; i++) {
         MAVoiceFiles* file = (MAVoiceFiles*)[array objectAtIndex:i];

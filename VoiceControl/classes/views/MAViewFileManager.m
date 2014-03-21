@@ -140,10 +140,6 @@
     if (_editing) {
         MACellFile* cell = (MACellFile*)[tableView cellForRowAtIndexPath:indexPath];
         if (cell) {
-//            NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
-//            BOOL status = [[resDic objectForKey:KStatus] boolValue];
-//            [cell setCellEditing:status];           //cell状态设置
-//            [resDic setObject:[NSNumber numberWithBool:!status] forKey:KStatus];
             MAVoiceFiles* file = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
             [cell setCellEditing:file.status];
             file.status = !file.status;
@@ -152,11 +148,7 @@
         if (!showAudioPlay) {
             [self showAudioPlay];
         }
-        
-//        NSDictionary* resDic = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString *docspath = [paths objectAtIndex:0];
-//        NSString* file = [docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]];
+
         MAVoiceFiles* file = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
@@ -326,7 +318,6 @@
 }
 
 -(void)showView{
-//    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
     NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
     if (array) {
         [self initResouce:array];
@@ -416,89 +407,10 @@
             [_resourceArray addObject:dic];
         }
     }
-//    if (array) {
-//        NSMutableArray* ever = nil;
-//        NSMutableArray* today = nil;
-//        NSMutableArray* yestoday = nil;
-//        NSMutableArray* week = nil;
-//        NSMutableArray* weekago = nil;
-//        for (NSMutableDictionary* dic in array) {
-//            [dic setObject:[NSNumber numberWithBool:NO] forKey:KStatus];
-//            if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileForEver && !_editing) {
-//                if (ever == nil) {
-//                    ever = [[NSMutableArray alloc] init];
-//                }
-//                [ever addObject:dic];
-//            } else if ([[dic objectForKey:KDataBaseDataEver] intValue] == MATypeFileNormal) {
-//                NSDate* date = [MAUtils getDateFromString:[dic objectForKey:KDataBaseTime] format:KTimeFormat];
-//                NSDateComponents* subcom = [MAUtils getSubFromTwoDate:date to:[NSDate date]];
-//                
-//                if ([subcom day] >= 7) {
-//                    if (weekago == nil) {
-//                        weekago = [[NSMutableArray alloc] init];
-//                    }
-//                    [weekago addObject:dic];
-//                } else if ([subcom day] == 0) {
-//                    if (today == nil) {
-//                        today = [[NSMutableArray alloc] init];
-//                    }
-//                    [today addObject:dic];
-//                } else if ([subcom day] == 1) {
-//                    if (yestoday == nil) {
-//                        yestoday = [[NSMutableArray alloc] init];
-//                    }
-//                    [yestoday addObject:dic];
-//                } else if ([subcom day] < 7) {
-//                    if (week == nil) {
-//                        week = [[NSMutableArray alloc] init];
-//                    }
-//                    [week addObject:dic];
-//                }
-//            }
-//        }
-//        
-//        if (_resourceArray == nil) {
-//            _resourceArray = [[NSMutableArray alloc] init];
-//        } else {
-//            [_resourceArray removeAllObjects];
-//        }
-//        
-//        if (ever) {
-//            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-//            [dic setObject:MyLocal(@"file_ever") forKey:KName];
-//            [dic setObject:ever forKey:KArray];
-//            [_resourceArray addObject:dic];
-//        }
-//        if (today) {
-//            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-//            [dic setObject:MyLocal(@"file_today") forKey:KName];
-//            [dic setObject:today forKey:KArray];
-//            [_resourceArray addObject:dic];
-//        }
-//        if (yestoday) {
-//            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-//            [dic setObject:MyLocal(@"file_yestoday") forKey:KName];
-//            [dic setObject:yestoday forKey:KArray];
-//            [_resourceArray addObject:dic];
-//        }
-//        if (week) {
-//            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-//            [dic setObject:MyLocal(@"file_week") forKey:KName];
-//            [dic setObject:week forKey:KArray];
-//            [_resourceArray addObject:dic];
-//        }
-//        if (weekago) {
-//            NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
-//            [dic setObject:MyLocal(@"file_week_ago") forKey:KName];
-//            [dic setObject:weekago forKey:KArray];
-//            [_resourceArray addObject:dic];
-//        }
-//    }
 }
 
 -(void)reloadData{
     //数据重加载
-//    NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTableVoiceFiles];
     NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
     if (array) {
         [self initResouce:array];
@@ -564,13 +476,6 @@
         for (int i = 0; i < [_resourceArray count]; i++) {
             NSArray* array = [[_resourceArray objectAtIndex:i] objectForKey:KArray];
             for (int j = 0; j < [array count]; j++) {
-//                NSDictionary* dic = [array objectAtIndex:j];
-//                if ([[dic objectForKey:KStatus] boolValue]) {
-//                    //删除数据库与文件
-//                    [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[dic objectForKey:KDataBaseId] intValue]];
-//                    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", [dic objectForKey:KDataBaseFileName]]];
-//                    [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", [dic objectForKey:KDataBaseFileName]]];
-//                }
                 MAVoiceFiles* file = [array objectAtIndex:j];
                 if (file.status) {
                     [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", file.name]];
@@ -584,14 +489,7 @@
         int tag = [(NSNumber*)[sender userInfo] intValue];
         int row = KCellButtonRow(tag);
         int section = KCellButtonSec(tag);
-        
-//        NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-//        
-//        //删除数据库与文件
-//        [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
-//        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", [resDic objectForKey:KDataBaseFileName]]];
-//        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", [resDic objectForKey:KDataBaseFileName]]];
-        
+
         MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
         //删除数据库与文件
         [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", file.name]];
@@ -608,10 +506,6 @@
         for (int i = 0; i < [_resourceArray count]; i++) {
             NSArray* array = [[_resourceArray objectAtIndex:i] objectForKey:KArray];
             for (int j = 0; j < [array count]; j++) {
-//                NSDictionary* dic = [array objectAtIndex:j];
-//                if ([[dic objectForKey:KStatus] boolValue]) {
-//                    [attachArray addObject:[dic objectForKey:KDataBaseFileName]];
-//                }
                 MAVoiceFiles* file = [array objectAtIndex:j];
                 if (file.status) {
                     [attachArray addObject:file.name];
@@ -622,9 +516,7 @@
         int tag = [(NSNumber*)[sender userInfo] intValue];
         int row = KCellButtonRow(tag);
         int section = KCellButtonSec(tag);
-        
-//        NSDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-//        [attachArray addObject:[resDic objectForKey:KDataBaseFileName]];
+
         MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
         [attachArray addObject:file.name];
     }
@@ -649,16 +541,7 @@
         }
         [[MACoreDataManager sharedCoreDataManager] saveEntry];
     }
-    
-//        NSMutableDictionary* resDic = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-//    //删除数据库与文件
-//    [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTableVoiceFiles ID:[[resDic objectForKey:KDataBaseId] intValue]];
-//    //添加数据
-//    NSMutableArray* resArr = [[NSMutableArray alloc] init];
-//    [resDic setObject:[MAUtils getNumberByInt:type] forKey:KDataBaseDataEver];
-//    [resArr addObject:resDic];
-//    [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
-    
+
     [self reloadData];
 }
 

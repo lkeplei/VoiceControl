@@ -310,17 +310,6 @@
     file.tag = nil;
     file.image = nil;
     [[MACoreDataManager sharedCoreDataManager] saveEntry];
-    
-    
-//    NSMutableArray* resArr = [[NSMutableArray alloc] init];
-//    NSMutableDictionary* res = [[NSMutableDictionary alloc] init];
-//    [res setObject:_filePath forKey:KDataBasePath];
-//    [res setObject:_fileName forKey:KDataBaseFileName];
-//    [res setObject:_fileTime forKey:KDataBaseTime];
-//    [res setObject:[MAUtils getStringByFloat:_recorder.currentTime decimal:0] forKey:KDataBaseDuration];
-//    [res setObject:[MAUtils getNumberByInt:MATypeFileNormal] forKey:KDataBaseDataEver];
-//    [resArr addObject:res];
-//    [[MADataManager shareDataManager] insertValueToTabel:resArr tableName:KTableVoiceFiles maxCount:0];
 }
 
 -(void)resetPlan{

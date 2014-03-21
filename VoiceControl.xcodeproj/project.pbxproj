@@ -235,6 +235,7 @@
 		18E08B5C18DAFB1900866C7B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18E08B5E18DBD3E200866C7B /* MAVoiceFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVoiceFiles.h; sourceTree = "<group>"; };
 		18E08B5F18DBD3E200866C7B /* MAVoiceFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVoiceFiles.m; sourceTree = "<group>"; };
+		18E08B6118DC218E00866C7B /* MAServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAServerConfig.h; sourceTree = "<group>"; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -462,6 +463,7 @@
 				04E65672178C5150003A6ACA /* MAConfig.h */,
 				04E65673178C5150003A6ACA /* Tools */,
 				04E65676178C5150003A6ACA /* views */,
+				18E08B6118DC218E00866C7B /* MAServerConfig.h */,
 			);
 			path = classes;
 			sourceTree = "<group>";
