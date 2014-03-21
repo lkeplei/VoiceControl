@@ -85,8 +85,8 @@
 		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
 		18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */; };
 		18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */; };
-		18E08B5B18DAF6AE00866C7B /* MAVoiceFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */; };
 		18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E08B5C18DAFB1900866C7B /* CoreData.framework */; };
+		18E08B6018DBD3E200866C7B /* MAVoiceFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5F18DBD3E200866C7B /* MAVoiceFiles.m */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
 		18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */; };
@@ -232,9 +232,9 @@
 		18E08B4D18DAE0BE00866C7B /* MACoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACoreDataManager.h; sourceTree = "<group>"; };
 		18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACoreDataManager.m; sourceTree = "<group>"; };
 		18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ma_core_data.xcdatamodel; sourceTree = "<group>"; };
-		18E08B5918DAF6AE00866C7B /* MAVoiceFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVoiceFiles.h; sourceTree = "<group>"; };
-		18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVoiceFiles.m; sourceTree = "<group>"; };
 		18E08B5C18DAFB1900866C7B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		18E08B5E18DBD3E200866C7B /* MAVoiceFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVoiceFiles.h; sourceTree = "<group>"; };
+		18E08B5F18DBD3E200866C7B /* MAVoiceFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVoiceFiles.m; sourceTree = "<group>"; };
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
@@ -534,8 +534,8 @@
 		18E08B4C18DAE0BE00866C7B /* coreData */ = {
 			isa = PBXGroup;
 			children = (
-				18E08B5918DAF6AE00866C7B /* MAVoiceFiles.h */,
-				18E08B5A18DAF6AE00866C7B /* MAVoiceFiles.m */,
+				18E08B5E18DBD3E200866C7B /* MAVoiceFiles.h */,
+				18E08B5F18DBD3E200866C7B /* MAVoiceFiles.m */,
 				18E08B4D18DAE0BE00866C7B /* MACoreDataManager.h */,
 				18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */,
 			);
@@ -760,7 +760,7 @@
 				18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */,
 				046B183B187C253700387497 /* NSDictionary_JSONExtensions.m in Sources */,
 				045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */,
-				18E08B5B18DAF6AE00866C7B /* MAVoiceFiles.m in Sources */,
+				18E08B6018DBD3E200866C7B /* MAVoiceFiles.m in Sources */,
 				0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */,
 				0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */,
 				046B183A187C253700387497 /* CDataScanner_Extensions.m in Sources */,

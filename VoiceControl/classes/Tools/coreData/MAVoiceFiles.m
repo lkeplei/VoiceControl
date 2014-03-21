@@ -2,7 +2,7 @@
 //  MAVoiceFiles.m
 //  VoiceControl
 //
-//  Created by apple on 14-3-20.
+//  Created by apple on 14-3-21.
 //  Copyright (c) 2014年 ken. All rights reserved.
 //
 
@@ -11,14 +11,15 @@
 
 @implementation MAVoiceFiles
 
+@dynamic custom;
+@dynamic duration;
+@dynamic level;
 @dynamic name;
 @dynamic path;
-@dynamic custom;
-@dynamic level;
-@dynamic type;
-@dynamic time;
-@dynamic duration;
 @dynamic tag;
+@dynamic time;
+@dynamic type;
+@dynamic image;
 
 @synthesize status = _status;
 

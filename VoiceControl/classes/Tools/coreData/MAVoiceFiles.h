@@ -2,7 +2,7 @@
 //  MAVoiceFiles.h
 //  VoiceControl
 //
-//  Created by apple on 14-3-20.
+//  Created by apple on 14-3-21.
 //  Copyright (c) 2014年 ken. All rights reserved.
 //
 
@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSDate * time;                //开始时间
 @property (nonatomic, retain) NSNumber * duration;          //文件时长
 @property (nonatomic, retain) NSString * tag;               //标记（1-***;2-***;3***）
-
+@property (nonatomic, retain) NSString * image;             //头像 -- 备用字段
 
 @property (assign) BOOL status;
 

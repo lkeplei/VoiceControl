@@ -285,11 +285,11 @@
 /* audioRecorderEndInterruption:withOptions: is called when the audio session interruption has ended and this recorder had been interrupted while recording. */
 /* Currently the only flag is AVAudioSessionInterruptionFlags_ShouldResume. */
 - (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withOptions:(NSUInteger)flags NS_AVAILABLE_IOS(6_0){
-    DebugLog(@"audioRecorderEndInterruption flags = %d", flags);
+    DebugLog(@"audioRecorderEndInterruption flags = %d", (int)flags);
 }
 
 - (void)audioRecorderEndInterruption:(AVAudioRecorder *)recorder withFlags:(NSUInteger)flags NS_DEPRECATED_IOS(4_0, 6_0){
-    DebugLog(@"audioRecorderEndInterruption flags = %d", flags);
+    DebugLog(@"audioRecorderEndInterruption flags = %d", (int)flags);
 }
 
 /* audioRecorderEndInterruption: is called when the preferred method, audioRecorderEndInterruption:withFlags:, is not implemented. */
@@ -307,7 +307,8 @@
     file.type = [MAUtils getNumberByInt:MATypeFileCustomDefault];
     file.time = _fileTime;
     file.duration = [NSNumber numberWithFloat:_recorder.currentTime];
-    file.tag = @"";
+    file.tag = nil;
+    file.image = nil;
     [[MACoreDataManager sharedCoreDataManager] saveEntry];
     
     

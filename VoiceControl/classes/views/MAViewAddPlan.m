@@ -224,11 +224,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanRepeat];
-        view.delegate = self;
+        view.viewBaseDelegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     } else if(indexPath.section == 0 && indexPath.row == 1){
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
-        view.delegate = self;
+        view.viewBaseDelegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
         
         UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];

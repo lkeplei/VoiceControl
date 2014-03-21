@@ -107,7 +107,7 @@
 #pragma mark -others
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left) {
-        if (self.delegate) {
+        if (self.viewBaseDelegate) {
             NSMutableDictionary* resDic = [[NSMutableDictionary alloc] init];
             
             NSString* string = @"";
@@ -129,7 +129,7 @@
                 [resDic setObject:string forKey:KText];
             }
             
-            [self.delegate MAViewBack:resDic viewType:self.viewType];
+            [self.viewBaseDelegate MAViewBack:resDic viewType:self.viewType];
         }
         
         [self popView:MATypeChangeViewNull];

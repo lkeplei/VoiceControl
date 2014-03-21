@@ -33,6 +33,6 @@
 @property (assign)BOOL subEventRight;
 @property (nonatomic, strong)NSString* viewTitle;
 
-@property (nonatomic, assign) id<MAViewBaseDelegate> delegate;
+@property (nonatomic, assign) id<MAViewBaseDelegate> viewBaseDelegate;
 
 @end

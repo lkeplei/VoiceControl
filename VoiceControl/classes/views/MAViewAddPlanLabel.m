@@ -100,10 +100,10 @@
 
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left) {
-        if (self.delegate) {
+        if (self.viewBaseDelegate) {
             NSMutableDictionary* resDic = [[NSMutableDictionary alloc] init];
             [resDic setObject:[_textFieldLabel text] forKey:KText];
-            [self.delegate MAViewBack:resDic viewType:self.viewType];
+            [self.viewBaseDelegate MAViewBack:resDic viewType:self.viewType];
         }
         
         [self popView:MATypeChangeViewNull];
