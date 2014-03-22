@@ -192,6 +192,7 @@
 #define KFileManEdit            @"file_manager_edit"
 #define KFileManDelete          @"file_manager_delete"
 #define KFileManAddEver         @"file_manager_add_ever"
+#define KFileManRename          @"file_manager_rename"
 #define KFileManSendMail        @"file_manager_send_mail"
 #define KFileManCancelEver      @"file_manager_cancel_ever"
 #define KAddPlanSave            @"add_plan_save"

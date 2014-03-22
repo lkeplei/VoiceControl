@@ -179,6 +179,9 @@
 
 
 ////////////////////////////////    1.1
+"cancel" = "取消";
 "file_top_more" = "更多";//7
+"file_menu_rename" = "重命名";
+"file_input_new_name" = "新输入新名字";
 
 "custom_default" = "未命名";

@@ -37,10 +37,10 @@
 
 -(void)setCellResource:(MAVoiceFiles*)file editing:(BOOL)editing{
     if (file) {
-        [self setCellLabel:file.name tag:KCellLabelNameTag alignment:KTextAlignmentLeft
-                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
+        [self setCellLabel:file.custom tag:KCellLabelNameTag alignment:KTextAlignmentLeft
+                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
-                     frame:CGRectMake(KCellOffset, 0, self.frame.size.width, self.frame.size.height * 0.7)];
+                     frame:CGRectMake(KCellOffset, 0, self.frame.size.width, self.frame.size.height * 0.68)];
         
         [self setCellLabel:[MAUtils getStringFromDate:file.time format:KTimeFormat] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]

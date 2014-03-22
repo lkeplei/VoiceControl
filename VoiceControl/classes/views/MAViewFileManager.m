@@ -36,6 +36,7 @@
     BOOL    showAudioPlay;
     int     currentRow;
     int     currentSection;
+    int     currentSecTag;
 }
 @property (assign) BOOL editing;
 @property (nonatomic, strong) UITableView* tableView;
@@ -453,12 +454,19 @@
         [menuItems addObject:item2];
     }
     
-    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_menu_rename")
+                                       image:nil
+                                    userInfo:[NSNumber numberWithInt:cell.tag]
+                                      target:self
+                                      action:@selector(fileRename:)];
+    [menuItems addObject:item3];
+    
+    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil
                                     userInfo:[NSNumber numberWithInt:cell.tag]
                                       target:self
                                       action:@selector(sendEmail:)];
-    [menuItems addObject:item3];
+    [menuItems addObject:item4];
     
     first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
     first.alignment = NSTextAlignmentCenter;
@@ -571,7 +579,41 @@
     [self changeFileType:MATypeFileNormal sender:sender];
 }
 
-#pragma mark - email
+-(void)fileRename:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManRename label:nil];
+    
+    UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"file_input_new_name")
+                                                          message:nil
+                                                         delegate:self
+                                                cancelButtonTitle:MyLocal(@"cancel")
+                                                otherButtonTitles:MyLocal(@"ok"), nil];
+    promptAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [promptAlert show];
+    
+    currentSecTag = [(NSNumber*)[sender userInfo] intValue];
+}
 
+#pragma mark - alert
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        UITextField* field = [alertView textFieldAtIndex:0];
+        
+        int row = KCellButtonRow(currentSecTag);
+        int section = KCellButtonSec(currentSecTag);
+        
+        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
+
+        NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:file.name];
+        if (fileArr && [fileArr count] > 0) {
+            for (int i = 0; i < [fileArr count]; i++) {
+                MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
+                file.custom = field.text;
+            }
+            [[MACoreDataManager sharedCoreDataManager] saveEntry];
+        }
+        
+        [_tableView reloadData];
+    }
+}
 
 @end

@@ -10,6 +10,6 @@
 
 #import "MACellFile.h"
 
-@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, MACellFileDelegate>
+@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MACellFileDelegate>
 
 @end
