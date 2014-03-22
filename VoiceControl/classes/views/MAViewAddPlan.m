@@ -223,10 +223,14 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanRepeat label:nil];
+        
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanRepeat];
         view.viewBaseDelegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     } else if(indexPath.section == 0 && indexPath.row == 1){
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanLabel label:nil];
+        
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
         view.viewBaseDelegate = self;
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
@@ -236,6 +240,8 @@
             [(MAViewAddPlanLabel*)view setText:[cell.detailTextLabel text]];
         }
     } else if(indexPath.section == 0 && indexPath.row == 2){
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanDuration label:nil];
+        
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanDuration];
         
         ((MAViewAddPlanDuration*)view).durationCallBack = ^(NSDictionary* resDic, MAViewType type){
@@ -250,6 +256,8 @@
         
         [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
     } else if(indexPath.section == 1 && indexPath.row == 0){
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanDelete label:nil];
+        
         [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan ID:[[_resourceDic objectForKey:KDataBaseId] intValue]];
         
         [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
@@ -264,6 +272,8 @@
 
 -(void)eventTopBtnClicked:(BOOL)left{
     if (!left)  {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanSave label:nil];
+        
         NSMutableDictionary* dic = [[NSMutableDictionary alloc] init];
         NSString* time = [NSString stringWithFormat:@"%@:%@", [_hourArray objectAtIndex:[_timePicker selectedRowInComponent:0]],
                           [_secondArray objectAtIndex:[_timePicker selectedRowInComponent:1]]];

@@ -182,4 +182,26 @@
 #define KMailAttachment         @"mail_attachment"
 #define KMailBody               @"mail_body"
 
+//baidu event
+#define KAboutUsSendMail        @"about_us_send_mail"
+#define KHomeRecordBtn          @"home_record_btn"
+#define KHomePlayBtn            @"home_play_btn"
+#define KPlanCustomAdd          @"plan_custom_add"
+#define KPlanCustomEdit         @"plan_custom_edit"
+#define KPlanCustomModify       @"plan_custom_modify"
+#define KFileManEdit            @"file_manager_edit"
+#define KFileManDelete          @"file_manager_delete"
+#define KFileManAddEver         @"file_manager_add_ever"
+#define KFileManSendMail        @"file_manager_send_mail"
+#define KFileManCancelEver      @"file_manager_cancel_ever"
+#define KAddPlanSave            @"add_plan_save"
+#define KAddPlanDelete          @"add_plan_delete"
+#define KAddPlanRepeat          @"add_plan_repeat"
+#define KAddPlanLabel           @"add_plan_label"
+#define KAddPlanDuration        @"add_plan_duration"
+#define KSettingMaxDuration     @"setting_max_duration"
+#define KSettingMinDuration     @"setting_min_duration"
+#define KSettingRubbishClear    @"setting_rubbish_clear"
+#define KSettingMinVoice        @"setting_min_voice"
+
 #endif

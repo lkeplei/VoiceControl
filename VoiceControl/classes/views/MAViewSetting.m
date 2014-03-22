@@ -120,14 +120,23 @@
         if (_fileTimeMax == view) {
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMaxTime1 + [selection intValue]]
                                  forkey:KUserDefaultFileTimeMax];
+            
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMaxDuration
+                                            label:[NSString stringWithFormat:@"-%d", MASettingMaxTime1 + [selection intValue]]];
         } else if (_fileTimeMin == view) {
             [[MAModel shareModel] resetFileMin:MASettingMinTime3 + [selection intValue]];
+            
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMinDuration
+                                            label:[NSString stringWithFormat:@"-%d", MASettingMinTime3 + [selection intValue]]];
         } else if(_clearRubbish == view){
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearRightNow + [selection intValue]]
                                  forkey:KUserDefaultClearRubbish];
             if ([selection intValue] == 0) {
                 [[MAModel shareModel] clearRubbish:YES];
             }
+            
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingRubbishClear
+                                            label:[NSString stringWithFormat:@"-%d", MASettingClearRightNow + [selection intValue]]];
         }
         
         [view setSelectedContent:[view selectedContent]];

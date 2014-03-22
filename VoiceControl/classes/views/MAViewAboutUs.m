@@ -105,6 +105,8 @@
         [mailDic setObject:[NSArray arrayWithObject:MyLocal(@"about_mail_to")] forKey:KMailToRecipients];
         [mailDic setObject:MyLocal(@"about_mail_subject") forKey:KMailSubject];
         [SysDelegate.viewController sendEMail:mailDic];
+        
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAboutUsSendMail label:nil];
     }
 }
 @end

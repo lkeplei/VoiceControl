@@ -16,4 +16,8 @@
 
 @property (strong, nonatomic) MAViewController *viewController;
 
+@property (nonatomic, unsafe_unretained) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
+@property (nonatomic, strong) NSTimer *myTimer;
+
+
 @end

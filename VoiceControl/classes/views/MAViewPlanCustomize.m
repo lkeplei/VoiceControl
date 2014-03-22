@@ -111,9 +111,13 @@
             
             MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlan];
             [(MAViewAddPlan*)view setResource:dic];
+            
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomModify label:nil];
         }
     } else if([indexPath section] == 1) {
         [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan];
+        
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
     }
 }
 
@@ -182,6 +186,8 @@
     [_tableView setEditing:_editing animated:YES];
     
     if (edit) {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomEdit label:nil];
+        
         [self setTopBtn:MyLocal(@"plan_top_ok") rightBtn:nil enabled:NO];
     } else {
         [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];

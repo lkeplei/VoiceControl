@@ -285,6 +285,8 @@
         if (_editing) {
             [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
         } else {
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManEdit label:nil];
+            
             [self setTopBtn:MyLocal(@"plan_top_ok") rightBtn:MyLocal(@"file_top_more") enabled:NO];
         }
         [MAMenu dismissMenu];
@@ -469,6 +471,8 @@
 
 #pragma mark - pop menu
 -(void)deleteFile:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManDelete label:nil];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docspath = [paths objectAtIndex:0];
     
@@ -501,6 +505,8 @@
 }
 
 -(void)sendEmail:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManSendMail label:nil];
+    
     NSMutableArray* attachArray = [[NSMutableArray alloc] init];
     if (_editing) {
         for (int i = 0; i < [_resourceArray count]; i++) {
@@ -553,11 +559,15 @@
     if (_editing) {
         
     } else {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManAddEver label:nil];
+        
         [self changeFileType:MATypeFileForEver sender:sender];
     }
 }
 
 -(void)cancelFileToEver:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManCancelEver label:nil];
+    
     [self changeFileType:MATypeFileNormal sender:sender];
 }
 

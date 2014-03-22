@@ -151,13 +151,16 @@
         [self startBtnClicked:nil];
     }
     
+    NSString* eventLabel = nil;
     if (isPlaying) {
         [_playBtn setTitle:MyLocal(@"play") forState:UIControlStateNormal];
+        eventLabel = [MyLocal(@"view_title_home") stringByAppendingFormat:@"-%@", MyLocal(@"play")];
 
         [_avPlay stop];
         isPlaying = NO;
     } else {
         [_playBtn setTitle:MyLocal(@"stop") forState:UIControlStateNormal];
+        eventLabel = [MyLocal(@"view_title_home") stringByAppendingFormat:@"-%@", MyLocal(@"stop")];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
@@ -173,6 +176,8 @@
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
     }
+    
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KHomeRecordBtn label:eventLabel];
 }
 
 - (void)startBtnClicked:(id)sender{
@@ -190,6 +195,15 @@
     }
     
     [self setStartBtnStatus:[[MAModel shareModel] isRecording]];
+    
+    NSString* eventLabel = nil;
+    if ([[MAModel shareModel] isRecording]) {
+        eventLabel = [MyLocal(@"view_title_home") stringByAppendingFormat:@"-%@", MyLocal(@"filish_record")];
+    } else {
+        eventLabel = [MyLocal(@"view_title_home") stringByAppendingFormat:@"-%@", MyLocal(@"start_record")];
+    }
+
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KHomePlayBtn label:eventLabel];
 }
 
 #pragma mark - audio play
