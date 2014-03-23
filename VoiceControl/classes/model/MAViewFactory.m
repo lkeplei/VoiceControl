@@ -20,6 +20,7 @@
 #import "MAViewAddPlanRepeat.h"
 #import "MAViewAddPlanLabel.h"
 #import "MAViewAddPlanDuration.h"
+#import "MAViewAboutWeRecorder.h"
 
 @interface MAViewFactory ()
 
@@ -32,6 +33,7 @@
 @property (nonatomic, strong) MAViewAddPlanLabel* addPlanLabelView;
 @property (nonatomic, strong) MAViewAddPlanDuration* addPlanDurationView;
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
+@property (nonatomic, strong) MAViewAboutWeRecorder* recorderView;
 @property (nonatomic, strong) MAViewSetting* settingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
 
@@ -126,7 +128,15 @@
             view = _aboutUsView;
         }
             break;
-            
+        case MAViewTypeAboutWeRcorder:
+        {
+            if (_recorderView == nil) {
+                _recorderView = [[MAViewAboutWeRecorder alloc] initWithFrame:frame];
+            }
+            view = _recorderView;
+        }
+            break;
+
         default:
             break;
     }
@@ -216,7 +226,14 @@
             }
         }
             break;
-            
+        case MAViewTypeAboutWeRcorder:
+        {
+            if (_recorderView) {
+                [_recorderView removeFromSuperview];
+                _recorderView = nil;
+            }
+        }
+            break;
         default:
             break;
     }

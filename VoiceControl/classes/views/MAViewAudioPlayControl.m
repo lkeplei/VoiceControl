@@ -17,9 +17,7 @@
 #define KTimeLabelHeight            (20)
 #define KTimeLabelWidth             (60)
 
-@interface MAViewAudioPlayControl (){
-//    int     currentIndex;
-}
+@interface MAViewAudioPlayControl ()
 
 @property (nonatomic, strong) UISlider* progressSlider;
 @property (retain, nonatomic) AVAudioPlayer *avPlay;
@@ -38,8 +36,6 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-//        currentIndex = 0;
-        
         // Initialization code
         [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
         
@@ -180,6 +176,7 @@
         _avPlay.delegate = self;
         if ([_avPlay play]) {
             _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+//            _fileLabel.text = file.tag;
             _fileLabel.text = file.name;
             
             //slider

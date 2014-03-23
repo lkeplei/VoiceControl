@@ -58,7 +58,7 @@
 #define KUserDefaultFileTimeMax            @"default_file_time_max"
 #define KUserDefaultFileTimeMin            @"default_file_time_min"
 #define KUserDefaultClearRubbish           @"default_clear_rubbish"
-#define KUserDefaultVoiceStartPos          @"default_voice_start_pos"
+#define KUserDefaultMarkVoice              @"default_mark_voice"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserDefaultPassword               @"default_user_password"
 #define KUserDefaultResetPassword          @"default_user_reset_password"
@@ -202,6 +202,7 @@
 #define KAddPlanDuration        @"add_plan_duration"
 #define KSettingMaxDuration     @"setting_max_duration"
 #define KSettingMinDuration     @"setting_min_duration"
+#define KSettingMarkVoice       @"setting_mark_voice"
 #define KSettingRubbishClear    @"setting_rubbish_clear"
 #define KSettingMinVoice        @"setting_min_voice"
 

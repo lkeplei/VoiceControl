@@ -47,6 +47,17 @@
     _recordController = [[MARecordController alloc] init];
     
     //初始数据
+    [self initSettingData];
+    
+    //数据转移
+    [self dataTransfer];
+    
+    //初始声音服务
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
+-(void)initSettingData{
     if ([MADataManager getDataByKey:KUserDefaultSetSkin] == nil) {
         [MADataManager setDataByKey:KSkinSetDefault forkey:KUserDefaultSetSkin];
     }
@@ -63,12 +74,9 @@
         [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearEveryDay] forkey:KUserDefaultClearRubbish];
     }
     
-    //数据转移
-    [self dataTransfer];
-    
-    //初始声音服务
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    if ([MADataManager getDataByKey:KUserDefaultMarkVoice] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinVoice30] forkey:KUserDefaultMarkVoice];
+    }
 }
 
 -(void)dataTransfer{
@@ -303,7 +311,7 @@
 
 -(int)getVoiceStartPos{
     int res = 20;
-    int type = [[MADataManager getDataByKey:KUserDefaultVoiceStartPos] intValue];
+    int type = [[MADataManager getDataByKey:KUserDefaultMarkVoice] intValue];
     switch (type) {
         case MASettingMinVoice10:
             res = 10;
@@ -354,8 +362,6 @@
                 [self getNextClearDate:date];
                 [MADataManager setDataByKey:[MAUtils getStringFromDate:date format:KDateTimeFormat] forkey:KUserDefaultNextClearTime];
             }
-            
-            DebugLog(@"preDateStr = %@", [MAUtils getStringFromDate:date format:KDateTimeFormat]);
             
             if ([[NSDate date] timeIntervalSince1970] >= [date timeIntervalSince1970]) {
                 [self clearRubbish];

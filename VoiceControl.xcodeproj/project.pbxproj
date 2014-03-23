@@ -10,6 +10,7 @@
 		0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407464E17ABEFF100B70537 /* MAViewHome.m */; };
 		0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407465117ABFA7F00B70537 /* MAViewFileManager.m */; };
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
+		0423066518DE872E00E2D9AC /* MAViewAboutWeRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */; };
 		042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042BDBB318C4BE200041C078 /* icon-120@2x.png */; };
 		044C03D318BA2F4300FD060B /* button_circle_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03CE18BA2F4300FD060B /* button_circle_gray@2x.png */; };
 		044C03D418BA2F4300FD060B /* button_circle_green_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03CF18BA2F4300FD060B /* button_circle_green_sec@2x.png */; };
@@ -114,6 +115,8 @@
 		0407465017ABFA7F00B70537 /* MAViewFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFileManager.h; sourceTree = "<group>"; };
 		0407465117ABFA7F00B70537 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
 		0422DDF817EC01660004C289 /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
+		0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAboutWeRecorder.h; sourceTree = "<group>"; };
+		0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAboutWeRecorder.m; sourceTree = "<group>"; };
 		042BDBB318C4BE200041C078 /* icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120@2x.png"; sourceTree = "<group>"; };
 		044C03CE18BA2F4300FD060B /* button_circle_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_gray@2x.png"; sourceTree = "<group>"; };
 		044C03CF18BA2F4300FD060B /* button_circle_green_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_green_sec@2x.png"; sourceTree = "<group>"; };
@@ -520,6 +523,8 @@
 				BEBB070617E06916004F1C01 /* MAViewSettingFile.m */,
 				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
 				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
+				0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */,
+				0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
 				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
+				0423066518DE872E00E2D9AC /* MAViewAboutWeRecorder.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				046B183C187C253700387497 /* CJSONDeserializer.m in Sources */,

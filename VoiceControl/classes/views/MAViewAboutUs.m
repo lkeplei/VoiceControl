@@ -12,7 +12,7 @@
 #import "MAUtils.h"
 
 #define KViewHorOffset      (10)
-#define KTopViewHeight      (150)
+#define KTopViewHeight      (120)
 
 @interface MAViewAboutUs ()
 @property (nonatomic, strong) UITableView* tableView;
@@ -72,7 +72,14 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    if (section == 0) {
+        return 4;
+    }
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -81,17 +88,24 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
                                       reuseIdentifier:reuseIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        if ([indexPath row] == 0) {
-            [cell.textLabel setText:MyLocal(@"about_cell_qq")];
-        } else if ([indexPath row] == 1){
-            [cell.textLabel setText:MyLocal(@"about_cell_wechat")];
-        } else if ([indexPath row] == 2){
-            [cell.textLabel setText:MyLocal(@"about_cell_msn")];
-        } else if ([indexPath row] == 3){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            [cell.textLabel setText:MyLocal(@"about_cell_email")];
+        if ([indexPath section] == 0) {
+            if ([indexPath row] == 0) {
+                [cell.textLabel setText:MyLocal(@"about_cell_qq")];
+            } else if ([indexPath row] == 1){
+                [cell.textLabel setText:MyLocal(@"about_cell_wechat")];
+            } else if ([indexPath row] == 2){
+                [cell.textLabel setText:MyLocal(@"about_cell_msn")];
+            } else if ([indexPath row] == 3){
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                [cell.textLabel setText:MyLocal(@"about_cell_email")];
+            }
+        } else if ([indexPath section] == 1) {
+            if ([indexPath row] == 0){
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                [cell.textLabel setText:MyLocal(@"about_cell_werecorder")];
+            }
         }
     }
 
@@ -100,13 +114,15 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([indexPath row] == 3) {
+    if ([indexPath section] == 0 && [indexPath row] == 3) {
         NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
         [mailDic setObject:[NSArray arrayWithObject:MyLocal(@"about_mail_to")] forKey:KMailToRecipients];
         [mailDic setObject:MyLocal(@"about_mail_subject") forKey:KMailSubject];
         [SysDelegate.viewController sendEMail:mailDic];
         
         [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAboutUsSendMail label:nil];
+    } else if ([indexPath row] == 0 && [indexPath section] == 1) {
+        [SysDelegate.viewController changeToViewByType:MAViewTypeAboutWeRcorder];
     }
 }
 @end

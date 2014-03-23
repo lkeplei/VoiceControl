@@ -33,10 +33,10 @@
     int soundMeters[SOUND_METER_COUNT];
 }
 
-//@property (strong, nonatomic) UIImage *imagePhone;
 @property (strong, nonatomic) UIButton *startBtn;
 @property (strong, nonatomic) UIButton *playBtn;
 @property (strong, nonatomic) UILabel* labelVoice;
+@property (strong, nonatomic) UILabel* labelDuration;
 @property (strong, nonatomic) AVAudioPlayer *avPlay;
 
 @end
@@ -136,6 +136,13 @@
 //    _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
+    
+    _labelDuration = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]
+                                  frame:CGRectMake(10, 260, 300, 30)
+                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    [_labelDuration setNumberOfLines:0];
+    [self addSubview:_labelDuration];
 }
 
 - (void)initView{
@@ -252,6 +259,7 @@
         voiceMin = level * 120;
         
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
+        _labelDuration.text = [[MAModel shareModel] getStringTime:[[MAModel shareModel] getRecorder].currentTime type:MATypeTimeClock];
         
         [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
     } else {
@@ -261,6 +269,7 @@
         
         [self addSoundMeterItem:KMaxLengthOfWave];
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0, 0, 0, 0];
+        _labelDuration.text = [[MAModel shareModel] getStringTime:0 type:MATypeTimeClock];
     }
 }
 

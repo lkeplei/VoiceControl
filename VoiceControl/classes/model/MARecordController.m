@@ -16,16 +16,21 @@
 #import "MACoreDataManager.h"
 
 #define KTimeRecorderDuration       (20)
+#define KTimeOffset                 (1)
+#define KMarkDuration               (60)
 
 @interface MARecordController (){
     NSTimer*    autoTimer;
     NSURL*      urlPlay;
 }
 
-@property (assign) int recordId;
-@property (assign) float recorderDuration;
-@property (assign) float durationStart;
-@property (assign) float offsetDuration;
+@property (assign) int recordId;                //当前运行的计划Id
+@property (assign) int markStart;               //标记计点
+@property (assign) int recorderTimer;           //录音计点
+@property (assign) float recorderDuration;      //录音计时
+@property (assign) float durationStart;         //录音计划起点
+@property (assign) float offsetDuration;        //录音间隔点
+@property (nonatomic, strong) NSMutableString* markResource;
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSDate* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
@@ -44,6 +49,7 @@
         _recordId = -1;
         _recorderDuration = 0;
         _durationStart = 0;
+        _markStart = 0;
         _offsetDuration = KTimeRecorderDuration;
         
         [self initAudio];
@@ -130,6 +136,7 @@
     _fileName = [NSString stringWithFormat:@"%@", [formatter stringFromDate:[NSDate date]]];
     _filePath = [NSString stringWithFormat:@"%@/%@.aac", strUrl, _fileName];
     _fileTime = [NSDate date];
+    _markResource = nil;
     
     NSURL* url = [NSURL fileURLWithPath:_filePath];
     urlPlay = url;
@@ -153,6 +160,7 @@
         return;
     }
     
+    _markStart = 0;
     _recorderDuration = 0;
     _durationStart = 0;
     _isRecording = NO;
@@ -197,45 +205,49 @@
 }
 
 -(void)autoTimerOut{
-    if (_isRecording) {
-        if (_recordId != -1) {
-            _recorderDuration += _offsetDuration;
-            BOOL stop = YES;
-            
-            for (NSDictionary* plan in _planArray) {
-                if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
-                    if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
-                        int durationMin = _recorderDuration / 60;
-                        DebugLog(@"durationMin = %d, planDuration = %d, timeMax = %d", durationMin, [[plan objectForKey:KDataBaseDuration] intValue], [[MAModel shareModel] getFileTimeMax]);
-                        if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue]
-                            && ((_recorderDuration - _durationStart) / 60) < [[MAModel shareModel] getFileTimeMax]) {
-                            stop = NO;
+    _recorderTimer--;
+    if (_recorderTimer <= 0) {
+        _recorderTimer = _offsetDuration;
+        
+        if (_isRecording) {
+            if (_recordId != -1) {
+                _recorderDuration += _offsetDuration;
+                BOOL stop = YES;
+                
+                for (NSDictionary* plan in _planArray) {
+                    if ([[plan objectForKey:KDataBaseId] intValue] == _recordId) {
+                        if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
+                            int durationMin = _recorderDuration / 60;
+                            if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue]
+                                && ((_recorderDuration - _durationStart) / 60) < [[MAModel shareModel] getFileTimeMax]) {
+                                stop = NO;
+                            }
                         }
+                        break;
                     }
-                    break;
+                }
+                
+                if (stop) {
+                    [self stopRecord];
                 }
             }
-            
-            if (stop) {
-                [self stopRecord];
-            }
-        }
-    } else {
-        for (NSDictionary* plan in _planArray) {
-            if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
-                NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
-                if (array && [array count] > 0) {
-                    if ([[array objectAtIndex:0] intValue] == 99) {
-                        NSString* dateTime = [[array objectAtIndex:1] stringByAppendingFormat:@" %@", [plan objectForKey:KDataBaseTime]];
-                        if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
-                        }
-                    } else {
-                        for (NSString* planTime in array) {
-                            NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
-                            if ([planTime intValue] == ([components weekday] - 1)) {
-                                NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", [components year], [components month], [components day], [plan objectForKey:KDataBaseTime]];
-                                if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
-                                    break;
+        } else {
+            for (NSDictionary* plan in _planArray) {
+                if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
+                    NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:[plan objectForKey:KDataBasePlanTime] character:@","];
+                    if (array && [array count] > 0) {
+                        if ([[array objectAtIndex:0] intValue] == 99) {
+                            NSString* dateTime = [[array objectAtIndex:1] stringByAppendingFormat:@" %@", [plan objectForKey:KDataBaseTime]];
+                            if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
+                            }
+                        } else {
+                            for (NSString* planTime in array) {
+                                NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
+                                if ([planTime intValue] == ([components weekday] - 1)) {
+                                    NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", [components year], [components month], [components day], [plan objectForKey:KDataBaseTime]];
+                                    if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -245,6 +257,9 @@
         }
     }
     
+    //记录标记点
+    [self markRecord];
+
     //清理垃圾文件
     [[MAModel shareModel] clearRubbish:NO];
 }
@@ -265,6 +280,22 @@
     return NO;
 }
 
+-(void)markRecord{
+    if ([_recorder isRecording]) {
+        [_recorder updateMeters];//刷新音量数据
+        float averageVoice = [_recorder averagePowerForChannel:0] + 100;
+        
+        if (_recorder.currentTime / KMarkDuration > _markStart && averageVoice >= [[MAModel shareModel] getVoiceStartPos]) {
+            _markStart++;
+            if (_markResource == nil) {
+                _markResource = [[NSMutableString alloc] init];
+                [_markResource appendFormat:@"%f-%@", _recorder.currentTime, MyLocal(@"custom_default")];
+            } else {
+                [_markResource appendFormat:@";%f-%@", _recorder.currentTime, MyLocal(@"custom_default")];
+            }
+        }
+    }
+}
 
 #pragma mark - audio delegate
 /* audioRecorderDidFinishRecording:successfully: is called when a recording has been finished or stopped. This method is NOT called if the recorder is stopped due to an interruption. */
@@ -307,7 +338,7 @@
     file.type = [MAUtils getNumberByInt:MATypeFileCustomDefault];
     file.time = _fileTime;
     file.duration = [NSNumber numberWithFloat:_recorder.currentTime];
-    file.tag = nil;
+    file.tag = _markResource;
     file.image = nil;
     [[MACoreDataManager sharedCoreDataManager] saveEntry];
 }
@@ -326,12 +357,13 @@
 }
 
 -(void)resetTimer{
-    if (autoTimer) {
-        [autoTimer invalidate];
-        autoTimer = nil;
+    if (autoTimer == nil) {
+        autoTimer = [NSTimer scheduledTimerWithTimeInterval:KTimeOffset target:self
+                                                   selector:@selector(autoTimerOut)
+                                                   userInfo:nil repeats:YES];
     }
     
     _offsetDuration = MIN([[MAModel shareModel] getFileTimeMin], _offsetDuration);
-    autoTimer = [NSTimer scheduledTimerWithTimeInterval:_offsetDuration target:self selector:@selector(autoTimerOut) userInfo:nil repeats:YES];
+    _recorderTimer = _offsetDuration;
 }
 @end

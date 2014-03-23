@@ -18,7 +18,6 @@
 "view_title_home" = "首页";
 "view_title_select_menu" = "菜单";
 "view_title_file_manager" = "文件管理";
-"view_title_about_us" = "关于我们";
 "view_title_plan_customize" = "私人定制";
 "view_title_add_plan" = "添加定制";
 "view_title_set_file" = "文件设置";
@@ -184,4 +183,9 @@
 "file_menu_rename" = "重命名";
 "file_input_new_name" = "新输入新名字";
 
+"view_title_about_us" = "关于微录";
+"about_cell_werecorder" = "关于微录";
+
 "custom_default" = "未命名";
+
+"view_title_about_werecorder" = "关于微录";
