@@ -20,12 +20,14 @@ typedef enum {
 
 #define KAudioPlayViewHeight        (100)
 
-typedef BOOL (^audioPlayCallBack)(MAAudioPlayType type);
+@protocol MAAudioPlayDelegate <NSObject>
+-(BOOL)MAAudioPlayBack:(MAAudioPlayType)type;
+@end
 
 @interface MAViewAudioPlayControl : UIView<AVAudioPlayerDelegate>
 
 -(void)playWithPath:(MAVoiceFiles*)resDic array:(NSArray*)array;
 
-@property(nonatomic, copy)audioPlayCallBack audioPlayCallBack;
+@property (nonatomic, assign) id<MAAudioPlayDelegate> audioPlayDelegate;
 
 @end

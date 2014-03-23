@@ -85,7 +85,7 @@ public:
 	
 	bool Open(std::string const& db_file);
 	
-    int lastInsertRowid();
+    long long lastInsertRowid();
     
 	class ResultRecord {
 	public:

@@ -365,7 +365,9 @@
                 [mailPicker setMessageBody:body isHTML:YES];
             }
             
-            [self presentModalViewController: mailPicker animated:YES];
+            [self presentViewController:mailPicker animated:YES completion:^{
+                DebugLog(@"present mail view")
+            }];
         }
     }
 }
@@ -390,7 +392,9 @@
             break;
     }
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:^{
+        DebugLog(@"dismiss mail view");
+    }];
 }
 @end
 

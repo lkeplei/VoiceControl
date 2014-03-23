@@ -11,7 +11,6 @@
 #import "MAConfig.h"
 #import "MAModel.h"
 #import "MAUtils.h"
-#import "MAViewAudioPlayControl.h"
 #import "MAMenu.h"
 #import "MAViewFactory.h"
 
@@ -175,21 +174,8 @@
     if (_audioPlayControl == nil) {
         _audioPlayControl = [[SysDelegate.viewController viewFactory] getAudioPlayControl:CGRectMake(0, self.frame.size.height,
                                                                                            self.frame.size.width, KAudioPlayViewHeight)];
-//        _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height,
-//                                                                                     self.frame.size.width, KAudioPlayViewHeight)];
         [self addSubview:_audioPlayControl];
-
-        _audioPlayControl.audioPlayCallBack = ^(MAAudioPlayType type){
-            BOOL res = YES;
-            if (type == MAAudioPlayNext) {
-                res = [self playNext];
-            } else if (type == MAAudioPlayPre) {
-                res = [self playPre];
-            } else if (type == MAAudioPlayHide) {
-                [self hideAudioPlay];
-            }
-            return res;
-        };
+        _audioPlayControl.audioPlayDelegate = self;
     }
     
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
@@ -280,6 +266,17 @@
     return res;
 }
 
+-(BOOL)MAAudioPlayBack:(MAAudioPlayType)type{
+    BOOL res = YES;
+    if (type == MAAudioPlayNext) {
+        res = [self playNext];
+    } else if (type == MAAudioPlayPre) {
+        res = [self playPre];
+    } else if (type == MAAudioPlayHide) {
+        [self hideAudioPlay];
+    }
+    return res;
+}
 #pragma mark - other
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left)  {

@@ -247,7 +247,7 @@ static MAUtils* _shareUtils = nil;
 
 +(const CGFloat*)getRGBAFromColor:(UIColor *)color{
     CGColorRef colorRef = [color CGColor];
-    int numComponents = CGColorGetNumberOfComponents(colorRef);
+    size_t numComponents = CGColorGetNumberOfComponents(colorRef);
     
     if (numComponents >= 4){
         return CGColorGetComponents(colorRef);
@@ -513,7 +513,8 @@ static MAUtils* _shareUtils = nil;
 }
 
 + (CGSize)getFontSize:(NSString*)text font:(UIFont*)font{
-    return [text sizeWithFont:font];
+    NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
+    return [text sizeWithAttributes:attributes];
 }
 
 + (NSArray*)getArrayFromStrByCharactersInSet:(NSString*)strResource character:(NSString*)character{

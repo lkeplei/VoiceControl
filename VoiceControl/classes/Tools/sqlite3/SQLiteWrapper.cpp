@@ -38,7 +38,7 @@ bool SQLiteWrapper::Open(std::string const& db_file){
 	return true;
 }
 
-int SQLiteWrapper::lastInsertRowid() 
+long long SQLiteWrapper::lastInsertRowid()
 {
     return sqlite3_last_insert_rowid(db_);
 }

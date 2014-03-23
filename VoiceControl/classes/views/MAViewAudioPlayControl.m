@@ -33,6 +33,8 @@
 
 @implementation MAViewAudioPlayControl
 
+@synthesize audioPlayDelegate = _audioPlayDelegate;
+
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
@@ -243,8 +245,8 @@
 
 - (void)preBtnClicked:(id)sender{
     if (_resouceArr) {
-        if (self.audioPlayCallBack) {
-            if (self.audioPlayCallBack(MAAudioPlayPre)) {
+        if (_audioPlayDelegate) {
+            if ([_audioPlayDelegate MAAudioPlayBack:MAAudioPlayPre]) {
                 
             }
         }
@@ -253,8 +255,8 @@
 
 - (void)nextBtnClicked:(id)sender{
     if (_resouceArr) {
-        if (self.audioPlayCallBack) {
-            if (self.audioPlayCallBack(MAAudioPlayNext)) {
+        if (_audioPlayDelegate) {
+            if ([_audioPlayDelegate MAAudioPlayBack:MAAudioPlayNext]) {
                 
             }
         }
