@@ -176,8 +176,10 @@
         _avPlay.delegate = self;
         if ([_avPlay play]) {
             _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
-//            _fileLabel.text = file.tag;
             _fileLabel.text = file.name;
+            
+            //设置标记点
+            [self setTags:file];
             
             //slider
             _progressSlider.maximumValue = _avPlay.duration;
@@ -208,6 +210,44 @@
         
         _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
         _progressSlider.value = _avPlay.currentTime;
+    } else {
+        [self setPlayBtnStatus:YES];
+    }
+}
+
+-(void)setTags:(MAVoiceFiles*)file{
+    if (file.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
+        for(int i = 0; i < [tagArr count]; i++){
+            NSString* tag = [tagArr objectAtIndex:i];
+            NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:tag character:@"-"];
+            if (array && [array count] >= 2) {
+                float x = _progressSlider.frame.origin.x + ([[array objectAtIndex:0] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
+                UIImageView* imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
+                imgView.frame = CGRectOffset(imgView.frame, x, _progressSlider.center.y);
+                [self addSubview:imgView];
+            }
+        }
+    }
+}
+
+-(void)setPlayBtnStatus:(BOOL)play{
+    if (_playBtn) {
+        if (play) {
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateNormal];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateSelected];
+        } else {
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateNormal];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateSelected];
+        }
     }
 }
 
@@ -216,27 +256,11 @@
     if (_avPlay.playing) {
         [_avPlay pause];
 
-        //set btn
-        if (_playBtn) {
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                forState:UIControlStateNormal];
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                forState:UIControlStateHighlighted];
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                forState:UIControlStateSelected];
-        }
+        [self setPlayBtnStatus:YES];
     } else {
         [_avPlay play];
         
-        //set btn
-        if (_playBtn) {
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
-                                forState:UIControlStateNormal];
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
-                                forState:UIControlStateHighlighted];
-            [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
-                                forState:UIControlStateSelected];
-        }
+        [self setPlayBtnStatus:NO];
     }
 }
 
