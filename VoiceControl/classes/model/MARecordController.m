@@ -260,9 +260,6 @@
     
     //记录标记点
     [self markRecord];
-
-    //清理垃圾文件
-    [[MAModel shareModel] clearRubbish:NO];
 }
 
 -(BOOL)whetherStart:(NSDate*)planDate plan:(NSDictionary*)plan{

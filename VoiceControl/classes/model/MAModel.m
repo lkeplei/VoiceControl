@@ -53,20 +53,21 @@
     [self dataTransfer];
     
     //垃圾数据清理
-//    NSFileManager* manager = [NSFileManager defaultManager];
-//    if (![manager fileExistsAtPath:folderPath]) return 0;
-//    NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
-//    NSString* fileName;
-//    unsigned long long folderSize = 0;
-//    while ((fileName = [childFilesEnumerator nextObject]) != nil){
-//        NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
-//        folderSize += [self getFileSize:fileAbsolutePath];
-//    }
-//    return folderSize;
+    [self performSelectorInBackground:@selector(clearRubbish) withObject:nil];
     
     //初始声音服务
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
+}
+
+-(void)clearRubbish{
+    NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
+    for (int i = 0; i < [array count]; i++) {
+        MAVoiceFiles* file = (MAVoiceFiles*)[array objectAtIndex:i];
+        if ([MAUtils getFileSize:file.path] > KZipMinSize) {
+            [MAUtils deleteFileWithPath:file.path];
+        }
+    }
 }
 
 -(void)initSettingData{
@@ -80,10 +81,6 @@
     
     if ([MADataManager getDataByKey:KUserDefaultFileTimeMin] == nil) {
         [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinTime5] forkey:KUserDefaultFileTimeMin];
-    }
-    
-    if ([MADataManager getDataByKey:KUserDefaultClearRubbish] == nil) {
-        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearEveryDay] forkey:KUserDefaultClearRubbish];
     }
     
     if ([MADataManager getDataByKey:KUserDefaultMarkVoice] == nil) {
@@ -123,8 +120,46 @@
             [[MACoreDataManager sharedCoreDataManager] saveEntry];
         }
         
+        //旧版本的数据表格
         [[MADataManager shareDataManager] dropTabel:KTableVoiceFiles];
+        //旧版本的设置
+        [MADataManager removeDataByKey:@"default_clear_rubbish"];
+        [MADataManager removeDataByKey:@"default_pre_clear_time"];
+        [MADataManager removeDataByKey:@"default_next_clear_time"];
+        //清除旧版本产生的批量垃圾文件
+        [self performSelectorInBackground:@selector(clearOlderVersionRubbish) withObject:nil];
     }
+}
+
+-(void)clearOlderVersionRubbish{
+    NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
+
+    NSArray* pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* folderPath = [pathArray lastObject];
+
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:folderPath]) {
+        NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+        NSString* fileName;
+        while ((fileName = [childFilesEnumerator nextObject]) != nil){
+            if ([[fileName substringFromIndex:fileName.length - 3] compare:@"aac"] == NSOrderedSame) {
+                NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+                if (![self isExistFile:array path:fileAbsolutePath]) {
+                    [MAUtils deleteFileWithPath:fileAbsolutePath];
+                }
+            }
+        }
+    }
+}
+
+-(BOOL)isExistFile:(NSArray*)array path:(NSString*)path{
+    for (int i = 0; i < [array count]; i++) {
+        MAVoiceFiles* file = (MAVoiceFiles*)[array objectAtIndex:i];
+        if ([file.path compare:path] == NSOrderedSame) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 -(UIColor*)getColorByType:(MAType)type default:(BOOL)defult{
@@ -359,95 +394,6 @@
     }
     
     return res;
-}
-
--(void)clearRubbish:(BOOL)now{
-    if (now) {
-        [self clearRubbish];
-    } else {
-        dispatch_queue_t queue = dispatch_queue_create("clearBlock", NULL);
-        
-        dispatch_async(queue, ^(void) {
-            NSString* nextDate = [MADataManager getDataByKey:KUserDefaultNextClearTime];
-            NSDate* date = [NSDate date];
-            if (nextDate) {
-                date = [MAUtils getDateFromString:nextDate format:KDateTimeFormat];
-            } else {
-                [self getNextClearDate:date];
-                [MADataManager setDataByKey:[MAUtils getStringFromDate:date format:KDateTimeFormat] forkey:KUserDefaultNextClearTime];
-            }
-            
-            if ([[NSDate date] timeIntervalSince1970] >= [date timeIntervalSince1970]) {
-                [self clearRubbish];
-                [MADataManager setDataByKey:[MAUtils getStringFromDate:[date dateByAddingTimeInterval:60] format:KDateTimeFormat] forkey:KUserDefaultPreClearTime];
-                [MADataManager removeDataByKey:KUserDefaultNextClearTime];
-            }
-        });
-    }
-}
-
--(void)clearRubbish{
-    NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
-    for (int i = 0; i < [array count]; i++) {
-        MAVoiceFiles* file = (MAVoiceFiles*)[array objectAtIndex:i];
-        if ([MAUtils getFileSize:file.path] > KZipMinSize) {
-            [MAUtils deleteFileWithPath:file.path];
-        }
-    }
-}
-
--(void)getNextClearDate:(NSDate*)date{
-    NSString* preDateStr = [MADataManager getDataByKey:KUserDefaultPreClearTime];
-    if (preDateStr) {
-        date = [MAUtils getDateFromString:preDateStr format:KDateTimeFormat];
-    } else {
-        [MADataManager setDataByKey:[MAUtils getStringFromDate:date format:KDateTimeFormat] forkey:KUserDefaultPreClearTime];
-    }
-    
-    MASettingType type = [[MADataManager getDataByKey:KUserDefaultClearRubbish] intValue];
-    NSTimeInterval timeInterval = 0;
-    NSDate* newDate = date;
-    switch (type) {
-        case MASettingClearRightNow:
-        case MASettingClearEveryDay:
-        case MASettingClearEveryWeek:
-        case MASettingClearEveryMonth:{
-            NSDateComponents* com = [MAUtils getComponentsFromDate:[NSDate date]];
-            newDate = [MAUtils getDateFromString:[NSString stringWithFormat:@"%d-%d-%d %@:%@",
-                                                  (int)[com year], (int)[com month], (int)[com day], @"02", @"00"]
-                                                  format:KDateTimeFormat];
-            if ([com hour] > 2 || ([com hour] == 2 && [com minute] > 0)) {
-                if (type == MASettingClearRightNow || type == MASettingClearEveryDay) {
-                    timeInterval = 24 * 3600;
-                } else if (type == MASettingClearEveryWeek){
-                    timeInterval = 24 * 3600 * 7;
-                } else if (type == MASettingClearEveryWeek){
-                    timeInterval = 24 * 3600 * 30;
-                }
-            } else {
-                date = newDate;
-            }
-        }
-            break;
-        case MASettingClearTwoHour:{
-            timeInterval = 7200;
-        }
-            break;
-        case MASettingClearFiveHour:{
-            timeInterval = 18000;
-        }
-            break;
-        case MASettingClearTenHour:{
-            timeInterval = 36000;
-        }
-            break;
-        default:
-            break;
-    }
-    
-    if (timeInterval != 0) {
-        date = [newDate dateByAddingTimeInterval:timeInterval];
-    }
 }
 
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add{

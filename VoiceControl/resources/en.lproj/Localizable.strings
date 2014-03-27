@@ -63,15 +63,6 @@
 "setting_time_50second" = "50s";        //"50秒";
 "setting_time_60second" = "1m";        //"1分";
 
-"setting_clear_rubbish" = "Clean up junk file: ";        //"垃圾文件清理:  ";
-"setting_clear_right_now" = "Clean";        //"立即";
-"setting_clear_two_hour" = "Every 2 hour";        //"每2小时";
-"setting_clear_five_hour" = "Every 5 hour";        //"每5小时";
-"setting_clear_ten_hour" = "Every 10 hour";        //"每10小时";
-"setting_clear_every_day" = "Every day";        //"每天";
-"setting_clear_every_week" = "Every week";        //"每周";
-"setting_clear_every_month" = "Every month";        //"每月";
-
 "setting_voice_min" = "Lowest voice for recording: ";        //"最低录音分贝:  ";
 "setting_voice_10" = "10";        //"10";
 "setting_voice_20" = "20";        //"20";

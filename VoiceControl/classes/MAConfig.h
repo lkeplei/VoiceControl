@@ -57,13 +57,10 @@
 //NSUserDefaults key
 #define KUserDefaultFileTimeMax            @"default_file_time_max"
 #define KUserDefaultFileTimeMin            @"default_file_time_min"
-#define KUserDefaultClearRubbish           @"default_clear_rubbish"
 #define KUserDefaultMarkVoice              @"default_mark_voice"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserDefaultPassword               @"default_user_password"
 #define KUserDefaultResetPassword          @"default_user_reset_password"
-#define KUserDefaultPreClearTime           @"default_pre_clear_time"
-#define KUserDefaultNextClearTime          @"default_next_clear_time"
 
 #define KUserDefaultDataVersion            @"default_data_version"
 //数据库部分

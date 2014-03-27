@@ -92,8 +92,6 @@ typedef enum {
 -(int)getFileTimeMax;
 //获取录音分贝开始点
 -(int)getVoiceStartPos;
-//删除垃圾文件
--(void)clearRubbish:(BOOL)now;
 //重设最小时长
 -(void)resetFileMin:(int)time;
 //获取repeat时间设置

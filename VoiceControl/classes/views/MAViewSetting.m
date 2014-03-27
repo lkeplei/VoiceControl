@@ -18,7 +18,6 @@
 @interface MAViewSetting ()
 @property (nonatomic, strong) MADropDownControlView* fileTimeMax;
 @property (nonatomic, strong) MADropDownControlView* fileTimeMin;
-@property (nonatomic, strong) MADropDownControlView* clearRubbish;
 @property (nonatomic, strong) MADropDownControlView* markVoice;
 @end
 
@@ -69,26 +68,10 @@
     [_fileTimeMin setSelectionOptions:options];
     [_fileTimeMin setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
                                                               KUserDefaultFileTimeMin] intValue] - MASettingMinTime3]];
-
-    //清理垃圾文件设置
-    _clearRubbish = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
-                                                                           KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
-                                                                           self.frame.size.width - off * 2, KDropDownHeight)];
-    [_clearRubbish setTitle:MyLocal(@"setting_clear_rubbish")];
-    _clearRubbish.delegate = self;
-    
-    options = [[NSArray alloc] initWithObjects:MyLocal(@"setting_clear_right_now"), MyLocal(@"setting_clear_two_hour"),
-               MyLocal(@"setting_clear_five_hour"), MyLocal(@"setting_clear_ten_hour"), MyLocal(@"setting_clear_every_day"),
-               MyLocal(@"setting_clear_every_week"), MyLocal(@"setting_clear_every_month"), nil];
-    [_clearRubbish setSelectionOptions:options];
-    [_clearRubbish setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
-                                                               KUserDefaultClearRubbish] intValue] - MASettingClearRightNow]];
-    
-    //文件管理的密码设置
     
     //自动录音，最低分贝数(暂时不加分贝限制)
     _markVoice = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
-                                                                            KElementHOff + CGRectGetMaxY(_clearRubbish.frame),
+                                                                            KElementHOff + CGRectGetMaxY(_fileTimeMin.frame),
                                                                             self.frame.size.width - off * 2, KDropDownHeight)];
     [_markVoice setTitle:MyLocal(@"setting_voice_min")];
     _markVoice.delegate = self;
@@ -101,7 +84,6 @@
                                                                KUserDefaultMarkVoice] intValue] - MASettingMinVoice10]];
     
     [self addSubview:_markVoice];
-    [self addSubview:_clearRubbish];
     [self addSubview:_fileTimeMin];
     [self addSubview:_fileTimeMax];
 }
@@ -110,20 +92,13 @@
 - (void)dropDownControlViewWillBecomeActive:(MADropDownControlView *)view  {
     if (_fileTimeMax == view) {
         [_fileTimeMin inactivateControl];
-        [_clearRubbish inactivateControl];
         [_markVoice inactivateControl];
     } else if (_fileTimeMin == view) {
-        [_fileTimeMax inactivateControl];
-        [_clearRubbish inactivateControl];
-        [_markVoice inactivateControl];
-    } else if(_clearRubbish == view){
-        [_fileTimeMin inactivateControl];
         [_fileTimeMax inactivateControl];
         [_markVoice inactivateControl];
     } else if(_markVoice == view){
         [_fileTimeMin inactivateControl];
         [_fileTimeMax inactivateControl];
-        [_clearRubbish inactivateControl];
     }
     
     [self setGestureEnabled];
@@ -146,15 +121,6 @@
             
             [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMinDuration
                                             label:[NSString stringWithFormat:@"-%d", MASettingMinTime3 + [selection intValue]]];
-        } else if(_clearRubbish == view){
-            [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingClearRightNow + [selection intValue]]
-                                 forkey:KUserDefaultClearRubbish];
-            if ([selection intValue] == 0) {
-                [[MAModel shareModel] clearRubbish:YES];
-            }
-            
-            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingRubbishClear
-                                            label:[NSString stringWithFormat:@"-%d", MASettingClearRightNow + [selection intValue]]];
         } else if (_markVoice == view) {
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinVoice10 + [selection intValue]]
                                  forkey:KSettingMarkVoice];
@@ -169,7 +135,7 @@
 
 #pragma mark - others
 - (void)setGestureEnabled{
-    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_clearRubbish controlIsActive] || [_markVoice controlIsActive]) {
+    if ([_fileTimeMin controlIsActive] || [_fileTimeMax controlIsActive] || [_markVoice controlIsActive]) {
         [SysDelegate.viewController setGestureEnabled:NO];
     } else {
         [SysDelegate.viewController setGestureEnabled:YES];
