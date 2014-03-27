@@ -113,8 +113,8 @@
     }
     
     if ([_recorder isRecording]) {
-        [_recorder deleteRecording];
         [_recorder stop];
+        [_recorder deleteRecording];
     }
 }
 
@@ -165,6 +165,8 @@
     _durationStart = 0;
     _isRecording = NO;
     double duration = _recorder.currentTime;
+    
+    [_recorder stop];
     if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
         //删除记录的文件
         [_recorder deleteRecording];
@@ -196,7 +198,6 @@
             });
         }
     }
-    [_recorder stop];
     
     //结束之后，如果在后台，开启默认录音
     if ([[MAModel shareModel] isAppForeground]) {
@@ -244,7 +245,7 @@
                             for (NSString* planTime in array) {
                                 NSDateComponents* components = [MAUtils getComponentsFromDate:[NSDate date]];
                                 if ([planTime intValue] == ([components weekday] - 1)) {
-                                    NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", [components year], [components month], [components day], [plan objectForKey:KDataBaseTime]];
+                                    NSString* dateTime = [@"" stringByAppendingFormat:@"%d-%d-%d %@", (int)[components year], (int)[components month], (int)[components day], [plan objectForKey:KDataBaseTime]];
                                     if ([self whetherStart:[MAUtils getDateFromString:dateTime format:KDateTimeFormat] plan:plan]) {
                                         break;
                                     }

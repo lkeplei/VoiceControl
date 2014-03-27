@@ -33,8 +33,8 @@
 
 @interface MAViewFileManager (){
     BOOL    showAudioPlay;
-    int     currentRow;
-    int     currentSection;
+    NSInteger     currentRow;
+    NSInteger     currentSection;
     int     currentSecTag;
 }
 @property (assign) BOOL editing;
@@ -420,7 +420,7 @@
 
 #pragma mark - cell file back
 -(void)MACellFileBack:(MACellFile *)cell btn:(UIButton *)btn{
-    int section = KCellButtonSec(cell.tag);
+    int section = (int)KCellButtonSec(cell.tag);
     
     NSMutableArray* menuItems = [[NSMutableArray alloc] init];
     MAMenuItem* first = [MAMenuItem menuItem:@"MENU" image:nil userInfo:nil target:nil action:NULL];
@@ -431,21 +431,21 @@
     if ([name compare:MyLocal(@"file_ever")] == NSOrderedSame) {
         MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"file_cancel_ever")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:cell.tag]
+                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
                                           target:self
                                           action:@selector(cancelFileToEver:)];
         [menuItems addObject:item1];
     } else {
         MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"delete")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:cell.tag]
+                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
                                           target:self
                                           action:@selector(deleteFile:)];
         [menuItems addObject:item1];
         
         MAMenuItem* item2 = [MAMenuItem menuItem:MyLocal(@"file_add_ever")
                                            image:nil
-                                        userInfo:[NSNumber numberWithInt:cell.tag]
+                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
                                           target:self
                                           action:@selector(addFileToEver:)];
         [menuItems addObject:item2];
@@ -453,14 +453,14 @@
     
     MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_menu_rename")
                                        image:nil
-                                    userInfo:[NSNumber numberWithInt:cell.tag]
+                                    userInfo:[NSNumber numberWithInt:(int)cell.tag]
                                       target:self
                                       action:@selector(fileRename:)];
     [menuItems addObject:item3];
     
     MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil
-                                    userInfo:[NSNumber numberWithInt:cell.tag]
+                                    userInfo:[NSNumber numberWithInt:(int)cell.tag]
                                       target:self
                                       action:@selector(sendEmail:)];
     [menuItems addObject:item4];

@@ -147,7 +147,7 @@ bool SQLiteStatement::Bind(int pos_zero_indexed,std::string const& value){
 						  stmt_,
 						  pos_zero_indexed+1, // 通配符索引
 						  value.c_str(),
-						  value.length(), // 文本长度
+						  (int)value.length(), // 文本长度
 						  SQLITE_TRANSIENT // SQLITE_TRANSIENT: SQLite 自我复制
 						  )
 		!=SQLITE_OK) {

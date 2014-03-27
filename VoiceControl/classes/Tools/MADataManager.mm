@@ -190,7 +190,7 @@ static MADataManager* _shareDataManager = nil;
             if(valueCount){
                 valueCount->NextRow();
                 int count = valueCount->ValueInt(0);
-                int arrCount = [valueArr count];
+                int arrCount = (int)[valueArr count];
                 int off = count + arrCount - maxCount;
                 if (off > 0){
                     KSafeRelease(valueCount);

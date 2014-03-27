@@ -52,6 +52,18 @@
     //数据转移
     [self dataTransfer];
     
+    //垃圾数据清理
+//    NSFileManager* manager = [NSFileManager defaultManager];
+//    if (![manager fileExistsAtPath:folderPath]) return 0;
+//    NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+//    NSString* fileName;
+//    unsigned long long folderSize = 0;
+//    while ((fileName = [childFilesEnumerator nextObject]) != nil){
+//        NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+//        folderSize += [self getFileSize:fileAbsolutePath];
+//    }
+//    return folderSize;
+    
     //初始声音服务
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
@@ -110,6 +122,8 @@
             }
             [[MACoreDataManager sharedCoreDataManager] saveEntry];
         }
+        
+        [[MADataManager shareDataManager] dropTabel:KTableVoiceFiles];
     }
 }
 
@@ -399,7 +413,8 @@
         case MASettingClearEveryWeek:
         case MASettingClearEveryMonth:{
             NSDateComponents* com = [MAUtils getComponentsFromDate:[NSDate date]];
-            newDate = [MAUtils getDateFromString:[NSString stringWithFormat:@"%d-%d-%d %@:%@", [com year], [com month], [com day], @"02", @"00"]
+            newDate = [MAUtils getDateFromString:[NSString stringWithFormat:@"%d-%d-%d %@:%@",
+                                                  (int)[com year], (int)[com month], (int)[com day], @"02", @"00"]
                                                   format:KDateTimeFormat];
             if ([com hour] > 2 || ([com hour] == 2 && [com minute] > 0)) {
                 if (type == MASettingClearRightNow || type == MASettingClearEveryDay) {

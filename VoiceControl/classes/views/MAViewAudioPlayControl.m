@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIButton* playBtn;
 @property (nonatomic, strong) NSString* filePath;
 @property (nonatomic) NSMutableArray* resouceArr;
+@property (nonatomic, strong) UIView* tagView;
 
 @end
 
@@ -216,16 +217,26 @@
 }
 
 -(void)setTags:(MAVoiceFiles*)file{
+    if (_tagView) {
+        [_tagView removeFromSuperview];
+        _tagView = nil;
+    }
+    
     if (file.tag) {
         NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
+        if ([tagArr count] > 0) {
+            _tagView = [[UIView alloc] initWithFrame:_progressSlider.frame];
+            [self addSubview:_tagView];
+        }
+        
         for(int i = 0; i < [tagArr count]; i++){
             NSString* tag = [tagArr objectAtIndex:i];
             NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:tag character:@"-"];
             if (array && [array count] >= 2) {
-                float x = _progressSlider.frame.origin.x + ([[array objectAtIndex:0] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
+                float x = ([[array objectAtIndex:0] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
                 UIImageView* imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
                 imgView.frame = CGRectOffset(imgView.frame, x, _progressSlider.center.y);
-                [self addSubview:imgView];
+                [_tagView addSubview:imgView];
             }
         }
     }

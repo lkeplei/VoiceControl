@@ -165,7 +165,7 @@
             [self inactivateControl];
             
             if (mSelectionIndex < [mSelectionOptions count]) {
-                [self.delegate dropDownControlView:self didFinishWithSelection:[NSNumber numberWithInt:mSelectionIndex]];
+                [self.delegate dropDownControlView:self didFinishWithSelection:[NSNumber numberWithInt:(int)mSelectionIndex]];
             } else {
                 [self.delegate dropDownControlView:self didFinishWithSelection:nil];
             }
@@ -234,7 +234,7 @@
     self.frame = newFrame;
 
     // Show selection cells animated
-    int count = [mSelectionCells count];
+    int count = (int)[mSelectionCells count];
     for (int i = 0; i < count; i++) {
         UIView *cell = [mSelectionCells objectAtIndex:i];
         cell.alpha = 1.0;
@@ -256,7 +256,7 @@
         [self.delegate dropDownControlViewWillBecomeInactive:self];
     }
     
-    int count = [mSelectionCells count];
+    int count = (int)[mSelectionCells count];
     for (int i = count - 1; i >= 0; i--) {
         UIView *cell = [mSelectionCells objectAtIndex:i];
         [UIView animateWithDuration:kAnimationDuration delay:((count - 1 - i) * kAnimationDuration / count) options:0 animations:^{
