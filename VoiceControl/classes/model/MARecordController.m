@@ -166,13 +166,14 @@
     _isRecording = NO;
     double duration = _recorder.currentTime;
     
-    [_recorder stop];
     if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
+        [_recorder stop];
         //删除记录的文件
         [_recorder deleteRecording];
     } else {
         //insert value to table
         [self saveData];
+        [_recorder stop];
         
         if ([MAUtils getFileSize:_filePath] > KZipMinSize) {
             // create dispatch queue

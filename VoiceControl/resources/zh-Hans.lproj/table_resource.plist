@@ -71,13 +71,13 @@
 					<key>enabled</key>
 					<false/>
 					<key>title</key>
-					<string>关于我们</string>
+					<string>关于微录</string>
 				</dict>
 				<key>cell_array</key>
 				<array>
 					<dict>
 						<key>content</key>
-						<string>关于我们</string>
+						<string>关于微录</string>
 					</dict>
 				</array>
 			</dict>

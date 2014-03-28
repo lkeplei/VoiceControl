@@ -8,7 +8,9 @@
 
 #import "MAViewAboutWeRecorder.h"
 #import "MAConfig.h"
+#import "MAModel.h"
 
+#define KAboutOffset        (6)
 @implementation MAViewAboutWeRecorder
 
 - (id)initWithFrame:(CGRect)frame
@@ -24,13 +26,15 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+-(void)showView{
+    UITextView* textview=[[UITextView alloc]initWithFrame:CGRectMake(KAboutOffset, KAboutOffset,
+                                                                     self.frame.size.width - KAboutOffset * 2,
+                                                                     self.frame.size.height - KAboutOffset * 3)];
+    textview.font = [[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize16];
+    textview.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefault default:NO];
+    textview.text = MyLocal(@"about_us_content");
+    textview.editable = NO;
+    [self addSubview:textview];
 }
-*/
 
 @end

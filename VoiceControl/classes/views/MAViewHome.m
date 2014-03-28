@@ -181,6 +181,7 @@
             isPlaying = YES;
         } else {
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+            [_playBtn setTitle:MyLocal(@"play") forState:UIControlStateNormal];
         }
     }
     
@@ -269,7 +270,12 @@
         
         [self addSoundMeterItem:KMaxLengthOfWave];
         _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0, 0, 0, 0];
-        _labelDuration.text = [[MAModel shareModel] getStringTime:0 type:MATypeTimeClock];
+        
+        if (isPlaying) {
+            _labelDuration.text = [[MAModel shareModel] getStringTime:_avPlay.duration - _avPlay.currentTime type:MATypeTimeClock];
+        } else {
+            _labelDuration.text = [[MAModel shareModel] getStringTime:0 type:MATypeTimeClock];
+        }
     }
 }
 
