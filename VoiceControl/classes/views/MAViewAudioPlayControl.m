@@ -76,30 +76,13 @@
     _progressSlider.minimumValue = 0.0;
     [self addSubview:_progressSlider];
     
-    //add label
-    float hOff = _progressSlider.frame.origin.y + _progressSlider.frame.size.height;
-    _timeLabel = [MAUtils labelWithTxt:@""
-                                 frame:CGRectMake(KSpaceOff, hOff, KTimeLabelWidth, KTimeLabelHeight)
-                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-    _timeLabel.textAlignment = KTextAlignmentLeft;
-    [self addSubview:_timeLabel];
-    
-    _fileLabel = [MAUtils labelWithTxt:@""
-                                 frame:CGRectMake(KSpaceOff + _timeLabel.frame.origin.x + _timeLabel.frame.size.width,
-                                                  hOff, self.frame.size.width , KTimeLabelHeight)
-                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-    _fileLabel.textAlignment = KTextAlignmentLeft;
-    [self addSubview:_fileLabel];
-    
     //add contrl button
     UIButton* preBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                          image:[[MAModel shareModel] getImageByType:MATypeImgPlayPre default:NO]
                                       imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPre default:NO]
                                         target:self
                                         action:@selector(preBtnClicked:)];
-    preBtn.frame = CGRectOffset(preBtn.frame, 20, 40);
+    preBtn.frame = CGRectOffset(preBtn.frame, 10, 46);
     [self addSubview:preBtn];
     
     _playBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -107,7 +90,7 @@
                               imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
                                 target:self
                                 action:@selector(playBtnClicked:)];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, 60, 40);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, 50, 46);
     [self addSubview:_playBtn];
     
     UIButton* nextBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -115,9 +98,26 @@
                                        imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
                                          target:self
                                          action:@selector(nextBtnClicked:)];
-    nextBtn.frame = CGRectOffset(nextBtn.frame, 100, 40);
+    nextBtn.frame = CGRectOffset(nextBtn.frame, 90, 46);
     [self addSubview:nextBtn];
 
+    //add label
+    float x = KSpaceOff + CGRectGetMaxX(nextBtn.frame);
+    _fileLabel = [MAUtils labelWithTxt:@""
+                                 frame:CGRectMake(x, CGRectGetMinY(nextBtn.frame),
+                                                  self.frame.size.width - x, KTimeLabelHeight)
+                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    _fileLabel.textAlignment = KTextAlignmentLeft;
+    [self addSubview:_fileLabel];
+    
+    _timeLabel = [MAUtils labelWithTxt:@""
+                                 frame:CGRectMake(x, CGRectGetMidY(nextBtn.frame),
+                                                  self.frame.size.width - x, KTimeLabelHeight)
+                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    _timeLabel.textAlignment = KTextAlignmentLeft;
+    [self addSubview:_timeLabel];
 }
 
 -(void)playWithPath:(MAVoiceFiles*)file array:(NSArray *)array{
@@ -176,7 +176,8 @@
         _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_filePath] error:nil];
         _avPlay.delegate = self;
         if ([_avPlay play]) {
-            _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+            _timeLabel.text = [NSString stringWithFormat:@"0:00:00 | %@",
+                               [[MAModel shareModel] getStringTime:[file.duration floatValue] type:MATypeTimeClock]];
             _fileLabel.text = file.name;
             
             //设置标记点
@@ -209,7 +210,8 @@
     if (_avPlay && _avPlay.playing) {
         [_avPlay updateMeters];//刷新音量数据
         
-        _timeLabel.text = [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeNum];
+        _timeLabel.text = [NSString stringWithFormat:@"%@ | %@", [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock],
+                           [[MAModel shareModel] getStringTime:_avPlay.duration type:MATypeTimeClock]];
         _progressSlider.value = _avPlay.currentTime;
     } else {
         [self setPlayBtnStatus:YES];

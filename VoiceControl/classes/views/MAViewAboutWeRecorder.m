@@ -13,8 +13,7 @@
 #define KAboutOffset        (6)
 @implementation MAViewAboutWeRecorder
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
