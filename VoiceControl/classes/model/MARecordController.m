@@ -19,13 +19,48 @@
 #define KTimeOffset                 (1)
 #define KMarkDuration               (60)
 
+
+#pragma mark - MATagObject
+@interface MATagObject : NSObject{
+    int     points;
+}
+
+@property (assign) Float32 startTime;
+@property (assign) Float32 endTime;
+@property (assign) Float32 averageVoice;
+@property (nonatomic, retain) NSString* tagName;
+
+-(void)addAverage:(Float32)voice;
+-(void)initData;
+@end
+
+@implementation MATagObject
+-(void)initData{
+    _startTime = 0;
+    _endTime = 0;
+    _averageVoice = 0;
+    _tagName = MyLocal(@"custom_default");
+    
+    points = 0;
+}
+
+-(void)addAverage:(Float32)voice{
+    Float32 total = points * _averageVoice;
+    points++;
+    _averageVoice = (total + voice) / points;
+}
+@end
+
+
+
+
+#pragma mark - MARecordController
 @interface MARecordController (){
     NSTimer*    autoTimer;
     NSURL*      urlPlay;
 }
 
 @property (assign) int recordId;                //当前运行的计划Id
-@property (assign) int markStart;               //标记计点
 @property (assign) int recorderTimer;           //录音计点
 @property (assign) float recorderDuration;      //录音计时
 @property (assign) float durationStart;         //录音计划起点
@@ -34,6 +69,8 @@
 @property (nonatomic, strong) NSMutableArray* planArray;
 @property (nonatomic, strong) NSDate* fileTime;
 @property (nonatomic, strong) NSMutableDictionary* recordSetting;
+
+@property (nonatomic, strong) MATagObject* tagObject;
 
 @end
 
@@ -49,7 +86,6 @@
         _recordId = -1;
         _recorderDuration = 0;
         _durationStart = 0;
-        _markStart = 0;
         _offsetDuration = KTimeRecorderDuration;
         
         [self initAudio];
@@ -75,6 +111,14 @@
     [_recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
     //录音的质量
     [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+}
+
+-(void)initTagObject{
+    if (_tagObject == nil) {
+        _tagObject = [[MATagObject alloc] init];
+    }
+    
+    [_tagObject initData];
 }
 
 #pragma mark - about record
@@ -159,8 +203,7 @@
     if (!_isRecording) {
         return;
     }
-    
-    _markStart = 0;
+
     _recorderDuration = 0;
     _durationStart = 0;
     _isRecording = NO;
@@ -283,14 +326,29 @@
     if ([_recorder isRecording]) {
         [_recorder updateMeters];//刷新音量数据
         float averageVoice = [_recorder averagePowerForChannel:0] + 100;
-        
-        if (_recorder.currentTime / KMarkDuration > _markStart && averageVoice >= [[MAModel shareModel] getVoiceStartPos]) {
-            _markStart++;
-            if (_markResource == nil) {
-                _markResource = [[NSMutableString alloc] init];
-                [_markResource appendFormat:@"%f-%@", _recorder.currentTime, MyLocal(@"custom_default")];
-            } else {
-                [_markResource appendFormat:@";%f-%@", _recorder.currentTime, MyLocal(@"custom_default")];
+        int tagVoice = [[MAModel shareModel] getTagVoice];
+        if (averageVoice >= tagVoice) {
+            if (_tagObject == nil || _tagObject.startTime == 0) {
+                [self initTagObject];
+            }
+            if (_tagObject.startTime == 0) {
+                _tagObject.startTime = _recorder.currentTime;
+            }
+            [_tagObject addAverage:averageVoice];
+        } else {
+            if (_tagObject && _tagObject.startTime != 0) {
+                _tagObject.endTime = _recorder.currentTime;
+                
+                if (_markResource == nil) {
+                    _markResource = [[NSMutableString alloc] init];
+                    [_markResource appendFormat:@"%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
+                     _tagObject.averageVoice, _tagObject.tagName];
+                } else {
+                    [_markResource appendFormat:@";%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
+                     _tagObject.averageVoice, _tagObject.tagName];
+                }
+                
+                [self initTagObject];
             }
         }
     }

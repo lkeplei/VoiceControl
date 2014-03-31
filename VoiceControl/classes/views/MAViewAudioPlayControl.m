@@ -17,7 +17,9 @@
 #define KTimeLabelHeight            (20)
 #define KTimeLabelWidth             (60)
 
-@interface MAViewAudioPlayControl ()
+@interface MAViewAudioPlayControl (){
+    float fileDuration;
+}
 
 @property (nonatomic, strong) UISlider* progressSlider;
 @property (retain, nonatomic) AVAudioPlayer *avPlay;
@@ -176,9 +178,10 @@
         _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_filePath] error:nil];
         _avPlay.delegate = self;
         if ([_avPlay play]) {
+            fileDuration = [file.duration floatValue];
             _timeLabel.text = [NSString stringWithFormat:@"0:00:00 | %@",
-                               [[MAModel shareModel] getStringTime:[file.duration floatValue] type:MATypeTimeClock]];
-            _fileLabel.text = file.name;
+                               [[MAModel shareModel] getStringTime:fileDuration type:MATypeTimeClock]];
+            _fileLabel.text = [NSString stringWithFormat:@"%@ - %@", file.custom, file.name];
             
             //设置标记点
             [self setTags:file];
@@ -211,7 +214,7 @@
         [_avPlay updateMeters];//刷新音量数据
         
         _timeLabel.text = [NSString stringWithFormat:@"%@ | %@", [[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock],
-                           [[MAModel shareModel] getStringTime:_avPlay.duration type:MATypeTimeClock]];
+                           [[MAModel shareModel] getStringTime:fileDuration type:MATypeTimeClock]];
         _progressSlider.value = _avPlay.currentTime;
     } else {
         [self setPlayBtnStatus:YES];
@@ -234,11 +237,33 @@
         for(int i = 0; i < [tagArr count]; i++){
             NSString* tag = [tagArr objectAtIndex:i];
             NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:tag character:@"-"];
-            if (array && [array count] >= 2) {
+            if (array && [array count] >= 4) {
                 float x = ([[array objectAtIndex:0] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
-                UIImageView* imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
-                imgView.frame = CGRectOffset(imgView.frame, x, _progressSlider.center.y);
-                [_tagView addSubview:imgView];
+                UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
+                imgViewS.frame = CGRectOffset(imgViewS.frame, x, _progressSlider.center.y);
+                [_tagView addSubview:imgViewS];
+                UILabel* labelS = [MAUtils labelWithTxt:@"s" frame:imgViewS.frame
+                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                [_tagView addSubview:labelS];
+                
+                x = ([[array objectAtIndex:1] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
+                UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
+                imgViewE.frame = CGRectOffset(imgViewE.frame, x, _progressSlider.center.y);
+                [_tagView addSubview:imgViewE];
+                UILabel* labelE = [MAUtils labelWithTxt:@"e" frame:imgViewE.frame
+                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                [_tagView addSubview:labelE];
+                
+                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:[[array objectAtIndex:2] floatValue] decimal:1]
+                                                  frame:CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMaxY(imgViewS.frame),
+                                                                   CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame),
+                                                                   imgViewE.frame.size.height)
+                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                [_tagView addSubview:labelA];
+
             }
         }
     }

@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSNumber * type;              //用户分类（娱乐、家庭等）-- 备用字段
 @property (nonatomic, retain) NSDate * time;                //开始时间
 @property (nonatomic, retain) NSNumber * duration;          //文件时长
-@property (nonatomic, retain) NSString * tag;               //标记（1-***;2-***;3***）
+@property (nonatomic, retain) NSString * tag;               //标记（1-2-3-4;1-2-3-4;）--》1、开始时间；2、结束时间；3、平均分贝；4、标记点名（备用字段）
 @property (nonatomic, retain) NSString * image;             //头像 -- 备用字段
 
 @property (assign) BOOL status;

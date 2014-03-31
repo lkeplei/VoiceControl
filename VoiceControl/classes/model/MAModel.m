@@ -358,7 +358,7 @@
     return res;
 }
 
--(int)getVoiceStartPos{
+-(int)getTagVoice{
     int res = 20;
     int type = [[MADataManager getDataByKey:KUserDefaultMarkVoice] intValue];
     switch (type) {

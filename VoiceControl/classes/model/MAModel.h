@@ -90,8 +90,8 @@ typedef enum {
 -(int)getFileTimeMin;
 //获取单文件最大时长
 -(int)getFileTimeMax;
-//获取录音分贝开始点
--(int)getVoiceStartPos;
+//获取录音分贝标记点
+-(int)getTagVoice;
 //重设最小时长
 -(void)resetFileMin:(int)time;
 //获取repeat时间设置
