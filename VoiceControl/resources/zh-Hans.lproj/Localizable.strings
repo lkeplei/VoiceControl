@@ -62,7 +62,7 @@
 "setting_time_50second" = "50秒";
 "setting_time_60second" = "1分";
 
-"setting_voice_min" = "最低录音分贝:  ";
+"setting_voice_min" = "标记录音分贝:  ";
 "setting_voice_10" = "10";
 "setting_voice_20" = "20";
 "setting_voice_30" = "30";

@@ -63,7 +63,7 @@
 "setting_time_50second" = "50s";        //"50秒";
 "setting_time_60second" = "1m";        //"1分";
 
-"setting_voice_min" = "Lowest voice for recording: ";        //"最低录音分贝:  ";
+"setting_voice_min" = "Mark record DB: ";        //"标记录音分贝:  ";
 "setting_voice_10" = "10";        //"10";
 "setting_voice_20" = "20";        //"20";
 "setting_voice_30" = "30";        //"30";

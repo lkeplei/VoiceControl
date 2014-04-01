@@ -74,6 +74,7 @@
 		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
+		1878308E18EACCB100DEA9F1 /* MAViewTagDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */; };
 		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
 		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; };
@@ -216,6 +217,8 @@
 		185F2909188E4325005D163B /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
 		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
 		186E4A8F18AC6F6800945619 /* MARecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARecordController.m; sourceTree = "<group>"; };
+		1878308C18EACCB100DEA9F1 /* MAViewTagDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagDetail.h; sourceTree = "<group>"; };
+		1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagDetail.m; sourceTree = "<group>"; };
 		187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
 		187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
 		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
@@ -495,6 +498,8 @@
 			children = (
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
+				0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */,
+				0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */,
 				185F2908188E4325005D163B /* MAViewAddPlan.h */,
 				185F2909188E4325005D163B /* MAViewAddPlan.m */,
 				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
@@ -525,8 +530,8 @@
 				BEBB070617E06916004F1C01 /* MAViewSettingFile.m */,
 				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
 				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
-				0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */,
-				0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */,
+				1878308C18EACCB100DEA9F1 /* MAViewTagDetail.h */,
+				1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -773,6 +778,7 @@
 				0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */,
 				0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */,
 				04D444B417B13FED00F04486 /* MAViewBase.m in Sources */,
+				1878308E18EACCB100DEA9F1 /* MAViewTagDetail.m in Sources */,
 				BE4C565D17B22BC300E675CA /* ioapi.c in Sources */,
 				043A6ECD18E44A3A005A422D /* CFilteringJSONSerializer.m in Sources */,
 				BE4C565E17B22BC300E675CA /* mztools.c in Sources */,
@@ -930,8 +936,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C5EC6C9A-252D-4540-AEFF-190FBB1A9728";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -945,8 +951,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: liu kun (5BDYTYLTH3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu kun (5BDYTYLTH3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: liu kun (H775962835)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: liu kun (H775962835)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -962,8 +968,8 @@
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "098CC0E3-1B48-4B39-AAE5-B1275B29A7BC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "098CC0E3-1B48-4B39-AAE5-B1275B29A7BC";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";

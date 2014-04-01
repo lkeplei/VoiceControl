@@ -21,17 +21,9 @@
 
 
 #pragma mark - MATagObject
-@interface MATagObject : NSObject{
+@interface MATagObject (){
     int     points;
 }
-
-@property (assign) Float32 startTime;
-@property (assign) Float32 endTime;
-@property (assign) Float32 averageVoice;
-@property (nonatomic, retain) NSString* tagName;
-
--(void)addAverage:(Float32)voice;
--(void)initData;
 @end
 
 @implementation MATagObject
@@ -41,13 +33,30 @@
     _averageVoice = 0;
     _tagName = MyLocal(@"custom_default");
     
+    _duration = 0;
     points = 0;
 }
 
 -(void)addAverage:(Float32)voice{
+    _duration += KTimeOffset;
+    
     Float32 total = points * _averageVoice;
     points++;
     _averageVoice = (total + voice) / points;
+}
+
+-(BOOL)initDataWithString:(NSString*)string{
+    NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:string character:@"-"];
+    if (array && [array count] >= 4) {
+        _startTime = [[array objectAtIndex:0] floatValue];
+        _endTime = [[array objectAtIndex:1] floatValue];
+        _averageVoice = [[array objectAtIndex:2] floatValue];
+        _tagName = [array objectAtIndex:3];
+        
+        return YES;
+    }
+    
+    return NO;
 }
 @end
 
@@ -170,6 +179,8 @@
     //开始正式录音之前先停掉默认录音
     [self stopDefaultRecord];
     
+    [self initTagObject];
+    
     //录音设置
     _isRecording = YES;
     NSArray* array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -204,6 +215,9 @@
         return;
     }
 
+    //结束之前先打结束标记
+    [self markEndPoint];
+    
     _recorderDuration = 0;
     _durationStart = 0;
     _isRecording = NO;
@@ -328,7 +342,7 @@
         float averageVoice = [_recorder averagePowerForChannel:0] + 100;
         int tagVoice = [[MAModel shareModel] getTagVoice];
         if (averageVoice >= tagVoice) {
-            if (_tagObject == nil || _tagObject.startTime == 0) {
+            if (_tagObject.startTime == 0) {
                 [self initTagObject];
             }
             if (_tagObject.startTime == 0) {
@@ -336,21 +350,27 @@
             }
             [_tagObject addAverage:averageVoice];
         } else {
-            if (_tagObject && _tagObject.startTime != 0) {
-                _tagObject.endTime = _recorder.currentTime;
-                
-                if (_markResource == nil) {
-                    _markResource = [[NSMutableString alloc] init];
-                    [_markResource appendFormat:@"%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
-                     _tagObject.averageVoice, _tagObject.tagName];
-                } else {
-                    [_markResource appendFormat:@";%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
-                     _tagObject.averageVoice, _tagObject.tagName];
-                }
-                
-                [self initTagObject];
+            if (_tagObject.duration > [[MAModel shareModel] getFileTimeMin]) {
+                [self markEndPoint];
             }
         }
+    }
+}
+
+-(void)markEndPoint{
+    if (_tagObject.startTime != 0) {
+        _tagObject.endTime = _recorder.currentTime;
+        
+        if (_markResource == nil) {
+            _markResource = [[NSMutableString alloc] init];
+            [_markResource appendFormat:@"%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
+             _tagObject.averageVoice, _tagObject.tagName];
+        } else {
+            [_markResource appendFormat:@";%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
+             _tagObject.averageVoice, _tagObject.tagName];
+        }
+        
+        [self initTagObject];
     }
 }
 

@@ -123,7 +123,7 @@
                                             label:[NSString stringWithFormat:@"-%d", MASettingMinTime3 + [selection intValue]]];
         } else if (_markVoice == view) {
             [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinVoice10 + [selection intValue]]
-                                 forkey:KSettingMarkVoice];
+                                 forkey:KUserDefaultMarkVoice];
             
             [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMarkVoice
                                             label:[NSString stringWithFormat:@"-%d", MASettingMinVoice10 + [selection intValue]]];

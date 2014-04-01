@@ -7,20 +7,21 @@
 //
 
 #import "MAViewAudioPlayControl.h"
+#import "MARecordController.h"
 #import "MAConfig.h"
 #import "MAUtils.h"
 #import "MAModel.h"
+#import "MAViewTagDetail.h"
 
 #import "MAVoiceFiles.h"
 
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
+#define KProgressHeight             (40)
 #define KHideRectWidth              (60)
 
 @interface MAViewAudioPlayControl (){
     float fileDuration;
-    CGRect hideRect;
-    CGRect tagRect;
 }
 
 @property (nonatomic, strong) UISlider* progressSlider;
@@ -31,6 +32,7 @@
 @property (nonatomic, strong) NSString* filePath;
 @property (nonatomic) NSMutableArray* resouceArr;
 @property (nonatomic, strong) UIView* tagView;
+@property (nonatomic, strong) MAVoiceFiles* currentFile;
 
 @end
 
@@ -61,9 +63,6 @@
         [self setupGestures];
         
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
-        
-        //init rect
-        hideRect = CGRectMake(self.frame.size.width - KHideRectWidth, self.frame.size.height - KHideRectWidth, KHideRectWidth, KHideRectWidth);
     }
     return self;
 }
@@ -71,7 +70,7 @@
 #pragma mark - init area
 -(void)initView{
     //add progress
-    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 10, self.frame.size.width, 10)];
+    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, KSpaceOff, self.frame.size.width, KSpaceOff)];
     [_progressSlider setThumbImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]
                           forState:UIControlStateNormal];
     [_progressSlider setMinimumTrackImage:[[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
@@ -114,10 +113,9 @@
                                       imagesec:nil
                                         target:self
                                         action:@selector(hideBtnClicked:)];
-    hideBtn.frame = hideRect;
+    hideBtn.frame = CGRectMake(self.frame.size.width - KHideRectWidth, self.frame.size.height - KHideRectWidth, KHideRectWidth, KHideRectWidth);
     [self addSubview:hideBtn];
     
-
     //add label
     float x = KSpaceOff + CGRectGetMaxX(nextBtn.frame);
     _fileLabel = [MAUtils labelWithTxt:@""
@@ -196,7 +194,7 @@
             fileDuration = [file.duration floatValue];
             _timeLabel.text = [NSString stringWithFormat:@"0:00:00 | %@",
                                [[MAModel shareModel] getStringTime:fileDuration type:MATypeTimeClock]];
-            _fileLabel.text = [NSString stringWithFormat:@"%@ - %@", file.custom, file.name];
+            _fileLabel.text = [NSString stringWithFormat:@"%@ - %@", file.custom, [MAUtils getStringFromDate:file.time format:KTimeFormat]];
             
             //设置标记点
             [self setTags:file];
@@ -237,23 +235,25 @@
 }
 
 -(void)setTags:(MAVoiceFiles*)file{
+    _currentFile = file;
+    
     if (_tagView) {
         [_tagView removeFromSuperview];
         _tagView = nil;
     }
     
-    if (file.tag) {
-        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
+    if (_currentFile.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_currentFile.tag character:@";"];
         if ([tagArr count] > 0) {
-            _tagView = [[UIView alloc] initWithFrame:_progressSlider.frame];
+            _tagView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, KProgressHeight)];
             [self addSubview:_tagView];
         }
         
         for(int i = 0; i < [tagArr count]; i++){
             NSString* tag = [tagArr objectAtIndex:i];
-            NSArray* array = [MAUtils getArrayFromStrByCharactersInSet:tag character:@"-"];
-            if (array && [array count] >= 4) {
-                float x = ([[array objectAtIndex:0] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
+            MATagObject* tagObject = [[MATagObject alloc] init];
+            if ([tagObject initDataWithString:tag]) {
+                float x = (tagObject.startTime / [_currentFile.duration floatValue]) * _progressSlider.frame.size.width;
                 UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
                 imgViewS.frame = CGRectOffset(imgViewS.frame, x, _progressSlider.center.y);
                 [_tagView addSubview:imgViewS];
@@ -262,7 +262,7 @@
                                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
                 [_tagView addSubview:labelS];
                 
-                x = ([[array objectAtIndex:1] floatValue] / [file.duration floatValue]) * _progressSlider.frame.size.width;
+                x = (tagObject.endTime / [_currentFile.duration floatValue]) * _progressSlider.frame.size.width;
                 UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
                 imgViewE.frame = CGRectOffset(imgViewE.frame, x, _progressSlider.center.y);
                 [_tagView addSubview:imgViewE];
@@ -271,14 +271,23 @@
                                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
                 [_tagView addSubview:labelE];
                 
-                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:[[array objectAtIndex:2] floatValue] decimal:1]
+                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:tagObject.averageVoice decimal:1]
                                                   frame:CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMaxY(imgViewS.frame),
                                                                    CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame),
                                                                    imgViewE.frame.size.height)
                                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
                 [_tagView addSubview:labelA];
-
+                
+                UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                                     image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                                  imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                                    target:self
+                                                    action:@selector(tagsBtnClicked:)];
+                tagsBtn.frame = CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMinY(imgViewS.frame),
+                                           CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame), imgViewS.frame.size.height);
+                tagsBtn.tag = i;
+                [_tagView addSubview:tagsBtn];
             }
         }
     }
@@ -338,7 +347,27 @@
 }
 
 -(void)hideBtnClicked:(id)sender{
-    DebugLog(@"hide clicked");
+    if (_audioPlayDelegate) {
+        if ([_audioPlayDelegate MAAudioPlayBack:MAAudioPlayHide]) {
+            
+        }
+    }
+}
+
+-(void)tagsBtnClicked:(id)sender{
+    DebugLog(@"tag button clicked = %d", ((UIButton*)sender).tag);
+
+    int tagIndex = ((UIButton*)sender).tag;
+    if (_currentFile && _currentFile.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_currentFile.tag character:@";"];
+        if ([tagArr count] > tagIndex) {
+            MATagObject* tagObject = [[MATagObject alloc] init];
+            if ([tagObject initDataWithString:[tagArr objectAtIndex:tagIndex]]) {
+                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject frame:self.frame];
+                [self addSubview:tagDetail];
+            }
+        }
+    }
 }
 
 #pragma mark - slider
@@ -393,16 +422,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     // Draw sound meter wave
-//    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4] set];
-    
-    CGContextSetLineWidth(context, 1.0);
-    CGContextSetLineJoin(context, kCGLineJoinRound);
-    
-    CGContextMoveToPoint(context, 20, 30);
-    CGContextAddLineToPoint(context, 200, 30);
-    
-    CGContextStrokePath(context);
-
+    [self drawTagRect:context];
     
     //draw hide line
     CGContextSetLineWidth(context, 2.0);
@@ -429,5 +449,15 @@
 //    [line addLineToPoint:CGPointMake(300, 70)];
 //    [line setLineWidth:3.0];
 //    [line stroke];
+}
+
+-(void)drawTagRect:(CGContextRef)context{
+//    CGContextSetLineWidth(context, 1.0);
+//    CGContextSetLineJoin(context, kCGLineJoinRound);
+//    
+//    CGContextMoveToPoint(context, 20, 30);
+//    CGContextAddLineToPoint(context, 200, 30);
+//    
+//    CGContextStrokePath(context);
 }
 @end
