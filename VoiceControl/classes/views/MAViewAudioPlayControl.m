@@ -14,6 +14,7 @@
 #import "MAViewTagDetail.h"
 
 #import "MAVoiceFiles.h"
+#import "RNBlurModalView.h"
 
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
@@ -363,8 +364,15 @@
         if ([tagArr count] > tagIndex) {
             MATagObject* tagObject = [[MATagObject alloc] init];
             if ([tagObject initDataWithString:[tagArr objectAtIndex:tagIndex]]) {
-                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject frame:self.frame];
-                [self addSubview:tagDetail];
+//                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject
+//                                                                                  frame:(CGRect){CGPointZero, self.superview.frame.size}];
+//                [self.superview addSubview:tagDetail];
+                
+                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject];
+                [tagDetail show];
+                
+//                RNBlurModalView* modal = [[RNBlurModalView alloc] initWithViewController:SysDelegate.viewController title:@"Code4App.com" message:@"由Code4App小编亲自截图。请大家继续支持Code4App！"];
+//                [modal show];
             }
         }
     }

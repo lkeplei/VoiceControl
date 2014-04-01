@@ -12,6 +12,8 @@
 
 @interface MAViewTagDetail : UIView
 
--(id)initWithTagObject:(MATagObject*)object frame:(CGRect)frame;
+-(id)initWithTagObject:(MATagObject*)object;
+
+-(void)show;
 
 @end

@@ -31,6 +31,8 @@
 		04559A1C17C98EE000DCEB8A /* MADropDownControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A1B17C98EE000DCEB8A /* MADropDownControlView.m */; };
 		04559A1E17C990BB00DCEB8A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04559A1D17C990BB00DCEB8A /* QuartzCore.framework */; };
 		04559A2317CA076300DCEB8A /* MASectionHeadBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A2217CA076300DCEB8A /* MASectionHeadBase.m */; };
+		0458CF5D18EAF4A4007B7C3D /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0458CF5C18EAF4A4007B7C3D /* RNBlurModalView.m */; };
+		0458CF5F18EAF548007B7C3D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0458CF5E18EAF548007B7C3D /* Accelerate.framework */; };
 		045D8E5218E04B7B0086BC33 /* slider_tag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 045D8E5118E04B7B0086BC33 /* slider_tag@2x.png */; };
 		045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 045DFA9117A9422500F517AA /* MAViewTableBase.m */; };
 		0465B28118C0BD83007919AC /* table_resource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0465B27F18C0BD83007919AC /* table_resource.plist */; };
@@ -153,6 +155,9 @@
 		04559A1D17C990BB00DCEB8A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		04559A2117CA076300DCEB8A /* MASectionHeadBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASectionHeadBase.h; sourceTree = "<group>"; };
 		04559A2217CA076300DCEB8A /* MASectionHeadBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASectionHeadBase.m; sourceTree = "<group>"; };
+		0458CF5B18EAF4A4007B7C3D /* RNBlurModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBlurModalView.h; sourceTree = "<group>"; };
+		0458CF5C18EAF4A4007B7C3D /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = "<group>"; };
+		0458CF5E18EAF548007B7C3D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		045D8E5118E04B7B0086BC33 /* slider_tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_tag@2x.png"; sourceTree = "<group>"; };
 		045DFA9017A9422500F517AA /* MAViewTableBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTableBase.h; sourceTree = "<group>"; };
 		045DFA9117A9422500F517AA /* MAViewTableBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTableBase.m; sourceTree = "<group>"; };
@@ -286,6 +291,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0458CF5F18EAF548007B7C3D /* Accelerate.framework in Frameworks */,
 				18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */,
 				187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */,
 				046B184A187C283400387497 /* Security.framework in Frameworks */,
@@ -401,6 +407,7 @@
 		04E65644178C4F15003A6ACA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0458CF5E18EAF548007B7C3D /* Accelerate.framework */,
 				18E08B5C18DAFB1900866C7B /* CoreData.framework */,
 				187F5A94188682FE00D72FA6 /* libicucore.dylib */,
 				046B1849187C283300387497 /* Security.framework */,
@@ -559,6 +566,8 @@
 		BE073A65179E9A1400340A47 /* control */ = {
 			isa = PBXGroup;
 			children = (
+				0458CF5B18EAF4A4007B7C3D /* RNBlurModalView.h */,
+				0458CF5C18EAF4A4007B7C3D /* RNBlurModalView.m */,
 				187F5A961886863A00D72FA6 /* MACheckBox.h */,
 				187F5A971886863A00D72FA6 /* MACheckBox.m */,
 				BEFE8E7E17DECCF0003150F9 /* MAMenu.h */,
@@ -786,6 +795,7 @@
 				043A6ECF18E44A3A005A422D /* CJSONSerialization.m in Sources */,
 				043A6ED018E44A3A005A422D /* CJSONSerializedData.m in Sources */,
 				BE4C565F17B22BC300E675CA /* unzip.c in Sources */,
+				0458CF5D18EAF4A4007B7C3D /* RNBlurModalView.m in Sources */,
 				BE4C566017B22BC300E675CA /* zip.c in Sources */,
 				043A6ECE18E44A3A005A422D /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				BE4C566117B22BC300E675CA /* ZipArchive.mm in Sources */,
