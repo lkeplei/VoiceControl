@@ -15,10 +15,12 @@
 
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
-#define KTimeLabelWidth             (60)
+#define KHideRectWidth              (60)
 
 @interface MAViewAudioPlayControl (){
     float fileDuration;
+    CGRect hideRect;
+    CGRect tagRect;
 }
 
 @property (nonatomic, strong) UISlider* progressSlider;
@@ -59,6 +61,9 @@
         [self setupGestures];
         
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+        
+        //init rect
+        hideRect = CGRectMake(self.frame.size.width - KHideRectWidth, self.frame.size.height - KHideRectWidth, KHideRectWidth, KHideRectWidth);
     }
     return self;
 }
@@ -102,6 +107,16 @@
                                          action:@selector(nextBtnClicked:)];
     nextBtn.frame = CGRectOffset(nextBtn.frame, 90, 46);
     [self addSubview:nextBtn];
+    
+    //hide btn
+    UIButton* hideBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                         image:nil
+                                      imagesec:nil
+                                        target:self
+                                        action:@selector(hideBtnClicked:)];
+    hideBtn.frame = hideRect;
+    [self addSubview:hideBtn];
+    
 
     //add label
     float x = KSpaceOff + CGRectGetMaxX(nextBtn.frame);
@@ -322,6 +337,10 @@
     }
 }
 
+-(void)hideBtnClicked:(id)sender{
+    DebugLog(@"hide clicked");
+}
+
 #pragma mark - slider
 -(void)progressSliderMoved:(id)sender{
     _avPlay.currentTime = _progressSlider.value;
@@ -367,5 +386,48 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application{
     DebugLog(@"app will enter back ground");
 //    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+}
+
+#pragma mark - Drawing operations
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    // Draw sound meter wave
+//    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4] set];
+    
+    CGContextSetLineWidth(context, 1.0);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    
+    CGContextMoveToPoint(context, 20, 30);
+    CGContextAddLineToPoint(context, 200, 30);
+    
+    CGContextStrokePath(context);
+
+    
+    //draw hide line
+    CGContextSetLineWidth(context, 2.0);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    
+    CGContextMoveToPoint(context, 290, 64);
+    CGContextAddLineToPoint(context, 300, 70);
+    
+    CGContextMoveToPoint(context, 290, 70);
+    CGContextAddLineToPoint(context, 300, 76);
+    
+    CGContextMoveToPoint(context, 300, 70);
+    CGContextAddLineToPoint(context, 310, 64);
+
+    CGContextMoveToPoint(context, 300, 76);
+    CGContextAddLineToPoint(context, 310, 70);
+    
+    CGContextStrokePath(context);
+    
+//  Draw title
+//    [[UIColor colorWithWhite:1.0 alpha:1.0] setFill];
+//    UIBezierPath *line = [UIBezierPath bezierPath];
+//    [line moveToPoint:CGPointMake(290, 60)];
+//    [line addLineToPoint:CGPointMake(300, 70)];
+//    [line setLineWidth:3.0];
+//    [line stroke];
 }
 @end

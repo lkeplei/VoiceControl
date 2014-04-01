@@ -212,9 +212,6 @@
     }
 
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KHomePlayBtn label:eventLabel];
-    
-    
-    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:@"eventTest" label:@"tttttttttttttt"];
 }
 
 #pragma mark - audio play
