@@ -38,6 +38,7 @@
 @property (assign) Float32 startTime;
 @property (assign) Float32 endTime;
 @property (assign) Float32 averageVoice;
+@property (assign) Float32 totalTime;
 @property (nonatomic, retain) NSString* tagName;
 
 -(void)addAverage:(Float32)voice;

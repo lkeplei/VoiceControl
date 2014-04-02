@@ -8,14 +8,22 @@
 
 #import "MAViewTagDetail.h"
 #import "MAViewController.h"
+#import "MAUtils.h"
+#import "MARecordController.h"
+#import "MAConfig.h"
+
 #import <Accelerate/Accelerate.h>
 #import <QuartzCore/QuartzCore.h>
 
+#define KContentViewHeight      (150)
+#define KContentViewWidth       (290)
+#define KContentViewOffset      (10)
 
 CGFloat const KDefaultDelay = 0.125f;
 CGFloat const KDefaultDuration = 0.2f;
-CGFloat const KDefaultBlurScale = 0.2f;
+CGFloat const KDefaultBlurScale = 0.075f;
 NSString * const KShowNotification = @"tagDetailShow";
+NSString * const KHideNotification = @"tagDetailHide";
 
 typedef void (^tagDetailCompletion)(void);
 
@@ -167,21 +175,95 @@ typedef void (^tagDetailCompletion)(void);
     self = [super initWithFrame:(CGRect){CGPointZero, SysDelegate.viewController.view.frame.size}];
     if (self) {
         // Initialization code
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
-        [_contentView setBackgroundColor:[UIColor grayColor]];
-        [self addSubview:_contentView];
-        _contentView.clipsToBounds = YES;
-        _contentView.layer.masksToBounds = YES;
-        
         _tagObject = object;
+        
+        [self initContentView];
+        [self initDetail];
     }
     return self;
 }
 
+-(void)initContentView{
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KContentViewWidth, KContentViewHeight)];
+    _contentView.center = SysDelegate.viewController.view.center;
+    [_contentView setBackgroundColor:[UIColor grayColor]];
+    _contentView.clipsToBounds = YES;
+    _contentView.layer.masksToBounds = YES;
+    [self addSubview:_contentView];
+    
+    //add border and corner radius
+    UIColor* whiteColor = [UIColor colorWithRed:0.816 green:0.788 blue:0.788 alpha:1.000];
+    _contentView.layer.borderColor = whiteColor.CGColor;
+    _contentView.layer.borderWidth = 2.f;       //设置边沿宽度
+    _contentView.layer.cornerRadius = 6.f;      //设置圆角
+    
+    //add hide button
+    UIButton* hideBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                         image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                      imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                        target:self
+                                        action:@selector(hide)];
+    hideBtn.center = _contentView.frame.origin;
+    [self addSubview:hideBtn];
+}
+
+-(void)initDetail{
+    //输入
+    UITextField* textName = [MAUtils textFieldInit:CGRectMake(20, 110, KContentViewWidth - 40, 30)
+                                            color:[UIColor blueColor]
+                                          bgcolor:[UIColor grayColor]
+                                             secu:NO
+                                             font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
+                                             text:nil];
+    textName.delegate = self;
+    textName.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textName.text = _tagObject.tagName;
+    textName.layer.borderColor = [UIColor lightGrayColor].CGColor; // set color as you want.
+    textName.layer.borderWidth = 1.0;
+    textName.layer.cornerRadius = 4.f;
+    [_contentView addSubview:textName];
+}
+
+#pragma mark - text field
+- (BOOL)textFieldShouldReturn:(UITextField*)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - hide view
+- (void)hide {
+    [self hideWithDuration:KDefaultDuration delay:0 options:kNilOptions completion:NULL];
+}
+
+- (void)hideWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion {
+    if (self.isVisible) {
+        [UIView animateWithDuration:duration
+                              delay:delay
+                            options:options
+                         animations:^{
+                             self.alpha = 0.f;
+                             _blurView.alpha = 0.f;
+                         }
+                         completion:^(BOOL finished){
+                             if (finished) {
+                                 [_blurView removeFromSuperview];
+                                 _blurView = nil;
+                                 [self removeFromSuperview];
+                                 
+                                 [[NSNotificationCenter defaultCenter] postNotificationName:KHideNotification object:nil];
+                                 self.isVisible = NO;
+                                 if (completion) {
+                                     completion();
+                                 }
+                             }
+                         }];
+    }
+}
+
+#pragma mark - show view
 - (void)show {
     [self showWithDuration:KDefaultDuration delay:0 options:kNilOptions completion:NULL];
 }
-
 
 - (void)showWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion {
     self.animationDuration = duration;
@@ -197,7 +279,6 @@ typedef void (^tagDetailCompletion)(void);
     if (!self.isVisible) {
         if (!self.superview) {
             [SysDelegate.viewController.view addSubview:self];
-//            self.top = 0;
         }
         
         _blurView = [[MABlurView alloc] initWithCoverView:SysDelegate.viewController.view];

@@ -10,7 +10,7 @@
 
 @class MATagObject;
 
-@interface MAViewTagDetail : UIView
+@interface MAViewTagDetail : UIView<UITextFieldDelegate>
 
 -(id)initWithTagObject:(MATagObject*)object;
 

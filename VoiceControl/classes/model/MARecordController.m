@@ -31,6 +31,7 @@
     _startTime = 0;
     _endTime = 0;
     _averageVoice = 0;
+    _totalTime = 0;
     _tagName = MyLocal(@"custom_default");
     
     _duration = 0;

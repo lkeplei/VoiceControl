@@ -14,7 +14,6 @@
 #import "MAViewTagDetail.h"
 
 #import "MAVoiceFiles.h"
-#import "RNBlurModalView.h"
 
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
@@ -281,8 +280,8 @@
                 [_tagView addSubview:labelA];
                 
                 UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                                     image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
-                                                  imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                                     image:nil
+                                                  imagesec:nil
                                                     target:self
                                                     action:@selector(tagsBtnClicked:)];
                 tagsBtn.frame = CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMinY(imgViewS.frame),
@@ -356,23 +355,15 @@
 }
 
 -(void)tagsBtnClicked:(id)sender{
-    DebugLog(@"tag button clicked = %d", ((UIButton*)sender).tag);
-
     int tagIndex = ((UIButton*)sender).tag;
     if (_currentFile && _currentFile.tag) {
         NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_currentFile.tag character:@";"];
         if ([tagArr count] > tagIndex) {
             MATagObject* tagObject = [[MATagObject alloc] init];
             if ([tagObject initDataWithString:[tagArr objectAtIndex:tagIndex]]) {
-//                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject
-//                                                                                  frame:(CGRect){CGPointZero, self.superview.frame.size}];
-//                [self.superview addSubview:tagDetail];
-                
+                tagObject.totalTime = [_currentFile.duration floatValue];
                 MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject];
                 [tagDetail show];
-                
-//                RNBlurModalView* modal = [[RNBlurModalView alloc] initWithViewController:SysDelegate.viewController title:@"Code4App.com" message:@"由Code4App小编亲自截图。请大家继续支持Code4App！"];
-//                [modal show];
             }
         }
     }
