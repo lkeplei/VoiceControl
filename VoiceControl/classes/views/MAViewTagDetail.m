@@ -18,6 +18,7 @@
 #define KContentViewHeight      (150)
 #define KContentViewWidth       (290)
 #define KContentViewOffset      (10)
+#define KPercentOffset          (0.1)
 
 CGFloat const KDefaultDelay = 0.125f;
 CGFloat const KDefaultDuration = 0.2f;
@@ -183,47 +184,6 @@ typedef void (^tagDetailCompletion)(void);
     return self;
 }
 
--(void)initContentView{
-    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KContentViewWidth, KContentViewHeight)];
-    _contentView.center = SysDelegate.viewController.view.center;
-    [_contentView setBackgroundColor:[UIColor grayColor]];
-    _contentView.clipsToBounds = YES;
-    _contentView.layer.masksToBounds = YES;
-    [self addSubview:_contentView];
-    
-    //add border and corner radius
-    UIColor* whiteColor = [UIColor colorWithRed:0.816 green:0.788 blue:0.788 alpha:1.000];
-    _contentView.layer.borderColor = whiteColor.CGColor;
-    _contentView.layer.borderWidth = 2.f;       //设置边沿宽度
-    _contentView.layer.cornerRadius = 6.f;      //设置圆角
-    
-    //add hide button
-    UIButton* hideBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                         image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
-                                      imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
-                                        target:self
-                                        action:@selector(hide)];
-    hideBtn.center = _contentView.frame.origin;
-    [self addSubview:hideBtn];
-}
-
--(void)initDetail{
-    //输入
-    UITextField* textName = [MAUtils textFieldInit:CGRectMake(20, 110, KContentViewWidth - 40, 30)
-                                            color:[UIColor blueColor]
-                                          bgcolor:[UIColor grayColor]
-                                             secu:NO
-                                             font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
-                                             text:nil];
-    textName.delegate = self;
-    textName.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    textName.text = _tagObject.tagName;
-    textName.layer.borderColor = [UIColor lightGrayColor].CGColor; // set color as you want.
-    textName.layer.borderWidth = 1.0;
-    textName.layer.cornerRadius = 4.f;
-    [_contentView addSubview:textName];
-}
-
 #pragma mark - text field
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
@@ -301,4 +261,83 @@ typedef void (^tagDetailCompletion)(void);
         }];
     }
 }
+
+#pragma mark - init view
+-(void)initContentView{
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KContentViewWidth, KContentViewHeight)];
+    _contentView.center = SysDelegate.viewController.view.center;
+    [_contentView setBackgroundColor:[UIColor grayColor]];
+    _contentView.clipsToBounds = YES;
+    _contentView.layer.masksToBounds = YES;
+    [self addSubview:_contentView];
+    
+    //add border and corner radius
+    UIColor* whiteColor = [UIColor colorWithRed:0.816 green:0.788 blue:0.788 alpha:1.000];
+    _contentView.layer.borderColor = whiteColor.CGColor;
+    _contentView.layer.borderWidth = 2.f;       //设置边沿宽度
+    _contentView.layer.cornerRadius = 6.f;      //设置圆角
+    
+    //add hide button
+    UIButton* hideBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                         image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                      imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                        target:self
+                                        action:@selector(hide)];
+    hideBtn.center = _contentView.frame.origin;
+    [self addSubview:hideBtn];
+}
+
+-(void)initDetail{
+    Float32 offset = (_tagObject.endTime - _tagObject.startTime) * KPercentOffset;
+    Float32 start = _tagObject.startTime > offset ? _tagObject.startTime - offset : 0;
+    Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
+    Float32 startX = ((_tagObject.startTime - start) / (end - start)) * _contentView.frame.size.width;
+    Float32 endX = ((_tagObject.endTime - start) / (end - start)) * _contentView.frame.size.width;
+    UIButton* startBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                          image:[UIImage imageNamed:@"slider_tag.png"]
+                                       imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                         target:self action:@selector(startBtnClicked:)];
+    startBtn.center = CGPointMake(startX, 80);
+    [_contentView addSubview:startBtn];
+
+    UIButton* endBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                        image:[UIImage imageNamed:@"slider_tag.png"]
+                                     imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                       target:self action:@selector(endBtnClicked:)];
+    endBtn.center = CGPointMake(endX, 80);
+    [_contentView addSubview:endBtn];
+    
+    //average
+    UILabel* labelAverage = [MAUtils labelWithTxt:[MAUtils getStringByFloat:_tagObject.averageVoice decimal:1]
+                                            frame:CGRectMake(0, 70, _contentView.frame.size.width, 20)
+                                             font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                            color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+    [_contentView addSubview:labelAverage];
+
+
+    //输入
+    UITextField* textName = [MAUtils textFieldInit:CGRectMake(20, 110, KContentViewWidth - 40, 30)
+                                             color:[UIColor blueColor]
+                                           bgcolor:[UIColor grayColor]
+                                              secu:NO
+                                              font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
+                                              text:nil];
+    textName.delegate = self;
+    textName.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textName.text = _tagObject.tagName;
+    textName.layer.borderColor = [UIColor lightGrayColor].CGColor; // set color as you want.
+    textName.layer.borderWidth = 1.0;
+    textName.layer.cornerRadius = 4.f;
+    [_contentView addSubview:textName];
+}
+
+#pragma mark - btn clicked
+-(void)startBtnClicked:(id)sender{
+    DebugLog(@"start btn");
+}
+
+-(void)endBtnClicked:(id)sender{
+    DebugLog(@"end btn")
+}
+
 @end
