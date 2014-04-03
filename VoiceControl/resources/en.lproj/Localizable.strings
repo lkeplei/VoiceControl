@@ -168,4 +168,21 @@
 "plan_time_7" = "Every day";        //"每天";//7
 
 ////////////////////////////////    1.1
+"cancel" = "cancel";
 "file_top_more" = "more";//7
+"file_menu_rename" = "rename";
+"file_input_new_name" = "remame the file";
+
+"view_title_about_us" = "About us";
+"about_cell_werecorder" = "About WeRecord";
+
+"custom_default" = "unname the file";
+
+"view_title_about_werecorder" = "About WeRecord";
+
+"about_us_content" = "1、What is “WeRecord”？\
+“WeRecord” is a lightweight record application.it can be user-defined,personality settled.Comparing to the traditional recorder,it is more simplied and easily operated.WeRecord,we record everything in the day!\r\n\
+2、What is “user-defineding” here,how can I use？\
+User-defineding is referring that you could define the recording time,the time length,period. The application will be on and save the file in a certain time,according to your user-defining.Anytime,anything voice could be recorder as you wish.\r\n\
+3、What is the “mark DB” for?\
+You could set up a dividing line of the DB.It can mark the parts of the higher db when the voice is higher than the dividing line,while recording.And you could easily find the mark,when you review the file.";
