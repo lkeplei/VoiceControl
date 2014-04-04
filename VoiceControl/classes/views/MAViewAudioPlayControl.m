@@ -361,9 +361,22 @@
         if ([tagArr count] > tagIndex) {
             MATagObject* tagObject = [[MATagObject alloc] init];
             if ([tagObject initDataWithString:[tagArr objectAtIndex:tagIndex]]) {
+                //stop playing voice
+                if (_avPlay.playing) {
+                    [_avPlay pause];
+                    [self setPlayBtnStatus:YES];
+                }
+                
+                //go to tag detail
                 tagObject.totalTime = [_currentFile.duration floatValue];
+                tagObject.tag = tagIndex;
                 MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject];
                 [tagDetail show];
+                tagDetail.tagDetailBlock = ^(MATagObject* object){
+                    _avPlay.currentTime = object.pointX;
+                    [_avPlay play];
+                    [self setPlayBtnStatus:NO];
+                };
             }
         }
     }

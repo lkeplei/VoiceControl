@@ -9,7 +9,7 @@
 #ifndef VoiceControl_MAServerConfig_h
 #define VoiceControl_MAServerConfig_h
 
-//#define KVersionDuration
+//#define KVersionProduction
 
 
 #define KDataVersion           @"1.1.0"

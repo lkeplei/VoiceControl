@@ -45,10 +45,10 @@
     statTracker.logSendWifiOnly = NO; //是否仅在WIfi情况下发送日志数据
     statTracker.sessionResumeInterval = 35;//设置应用进入后台再回到前台为同一次session的间隔时间[0~600s],超过600s则设为600s，默认为30s,测试时使用1S可以用来测试日志的发送。
     statTracker.enableDebugOn = YES; //打开sdk调试接口，会有log打印
-#ifdef KVersionDuration
+#ifdef KVersionProduction
     [statTracker startWithAppId:@"cd71526237"];//设置您在mtj网站上添加的app的appkey
 #else
-    [statTracker startWithAppId:@"bfdf1e446b"];//设置您在mtj网站上添加的app的appkey
+    [statTracker startWithAppId:@"a3b8cb00e3"];//设置您在mtj网站上添加的app的appkey
 #endif
 }
 
