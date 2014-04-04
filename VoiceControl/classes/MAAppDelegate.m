@@ -32,7 +32,7 @@
     [self.window makeKeyAndVisible];
     
     [self initBaiduMob];
-    
+
     return YES;
 }
 

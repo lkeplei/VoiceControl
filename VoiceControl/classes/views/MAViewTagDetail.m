@@ -161,8 +161,11 @@ typedef void (^tagDetailCompletion)(void);
 @property (assign) CGFloat animationDelay;
 @property (assign) UIViewAnimationOptions animationOptions;
 @property (assign, readwrite) BOOL isVisible;
+@property (nonatomic, strong) UIImageView* tagPointView;
+@property (nonatomic, strong) UIImageView* tagBtnView;
+@property (nonatomic, strong) UILabel* tagLabel;
 
-@property (assign) MATagObject* tagObject;
+@property (nonatomic, strong) MATagObject* tagObject;
 
 @end
 
@@ -293,6 +296,15 @@ typedef void (^tagDetailCompletion)(void);
     Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
     Float32 startX = ((_tagObject.startTime - start) / (end - start)) * _contentView.frame.size.width;
     Float32 endX = ((_tagObject.endTime - start) / (end - start)) * _contentView.frame.size.width;
+    
+    //progress
+    UIImageView* imgBack = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO]];
+    imgBack.frame = CGRectMake(0, 40, _contentView.frame.size.width, 10);
+    [_contentView addSubview:imgBack];
+    
+    [self setTagPointX:startX];
+    
+    //tag btn
     UIButton* startBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                           image:[UIImage imageNamed:@"slider_tag.png"]
                                        imagesec:[UIImage imageNamed:@"slider_tag.png"]
@@ -329,15 +341,73 @@ typedef void (^tagDetailCompletion)(void);
     textName.layer.borderWidth = 1.0;
     textName.layer.cornerRadius = 4.f;
     [_contentView addSubview:textName];
+    
+    //add pan gesture
+    UIPanGestureRecognizer* panGesture=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
+    [_contentView addGestureRecognizer:panGesture];
+}
+
+-(void)setTagPointX:(float)pointX{
+    if (!_tagPointView) {
+        _tagPointView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO]];
+        _tagPointView.frame = CGRectMake(0, 40, pointX, 10);
+        [_contentView addSubview:_tagPointView];
+    } else {
+        _tagPointView.frame = CGRectMake(0, 40, pointX, 10);
+    }
+    
+    if (!_tagBtnView) {
+        _tagBtnView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]];
+        _tagBtnView.frame = CGRectOffset(_tagBtnView.frame, pointX, 32);
+        [_contentView addSubview:_tagBtnView];
+    } else {
+        _tagBtnView.center = CGPointMake(pointX, _tagBtnView.center.y);
+    }
+    
+    if (!_tagLabel) {
+        _tagLabel = [MAUtils labelWithTxt:[MAUtils getStringByFloat:pointX decimal:1]
+                                        frame:CGRectMake(pointX, 20, 40, 20)
+                                         font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                        color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];;
+        _tagLabel.textAlignment = KTextAlignmentLeft;
+        [_contentView addSubview:_tagLabel];
+    } else {
+        _tagLabel.text = [MAUtils getStringByFloat:pointX decimal:1];
+        _tagLabel.center = CGPointMake(pointX, _tagLabel.center.y);
+    }
+}
+
+#pragma mark - pan gesture
+-(void)handlePanGesture:(UIPanGestureRecognizer*)sender{
+    //得到拖的过程中的xy坐标
+    CGPoint translation=[sender translationInView:_contentView];
+    DebugLog(@"handleSwipeGesture point = (%f, %f)", translation.x, translation.y);
+    //平移图片CGAffineTransformMakeTranslation
+    [self setTagPointX:translation.x];
+    
+    //状态结束，保存数据
+    if(sender.state==UIGestureRecognizerStateEnded){
+
+    }
 }
 
 #pragma mark - btn clicked
 -(void)startBtnClicked:(id)sender{
-    DebugLog(@"start btn");
+    Float32 offset = (_tagObject.endTime - _tagObject.startTime) * KPercentOffset;
+    Float32 start = _tagObject.startTime > offset ? _tagObject.startTime - offset : 0;
+    Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
+    Float32 startX = ((_tagObject.startTime - start) / (end - start)) * _contentView.frame.size.width;
+    
+    [self setTagPointX:startX];
 }
 
 -(void)endBtnClicked:(id)sender{
-    DebugLog(@"end btn")
+    Float32 offset = (_tagObject.endTime - _tagObject.startTime) * KPercentOffset;
+    Float32 start = _tagObject.startTime > offset ? _tagObject.startTime - offset : 0;
+    Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
+    Float32 endX = ((_tagObject.endTime - start) / (end - start)) * _contentView.frame.size.width;
+    
+    [self setTagPointX:endX];
 }
 
 @end
