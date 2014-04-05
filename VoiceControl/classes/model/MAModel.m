@@ -68,6 +68,9 @@
             [MAUtils deleteFileWithPath:file.path];
         }
     }
+    
+    //清除异常产生的批量垃圾文件
+    [self performSelectorInBackground:@selector(clearOlderVersionRubbish) withObject:nil];
 }
 
 -(void)initSettingData{
@@ -126,8 +129,6 @@
         [MADataManager removeDataByKey:@"default_clear_rubbish"];
         [MADataManager removeDataByKey:@"default_pre_clear_time"];
         [MADataManager removeDataByKey:@"default_next_clear_time"];
-        //清除旧版本产生的批量垃圾文件
-        [self performSelectorInBackground:@selector(clearOlderVersionRubbish) withObject:nil];
     }
 }
 

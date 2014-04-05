@@ -32,7 +32,7 @@
 @property (nonatomic, strong) NSString* filePath;
 @property (nonatomic) NSMutableArray* resouceArr;
 @property (nonatomic, strong) UIView* tagView;
-@property (nonatomic, strong) MAVoiceFiles* currentFile;
+@property (nonatomic, strong) NSMutableArray* fileTagArray;
 
 @end
 
@@ -235,15 +235,19 @@
 }
 
 -(void)setTags:(MAVoiceFiles*)file{
-    _currentFile = file;
-    
     if (_tagView) {
         [_tagView removeFromSuperview];
         _tagView = nil;
     }
     
-    if (_currentFile.tag) {
-        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_currentFile.tag character:@";"];
+    if (_fileTagArray) {
+        [_fileTagArray removeAllObjects];
+    } else {
+        _fileTagArray = [[NSMutableArray alloc] init];
+    }
+    
+    if (file.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
         if ([tagArr count] > 0) {
             _tagView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, KProgressHeight)];
             [self addSubview:_tagView];
@@ -253,7 +257,13 @@
             NSString* tag = [tagArr objectAtIndex:i];
             MATagObject* tagObject = [[MATagObject alloc] init];
             if ([tagObject initDataWithString:tag]) {
-                float x = (tagObject.startTime / [_currentFile.duration floatValue]) * _progressSlider.frame.size.width;
+                tagObject.tag = i;
+                tagObject.totalTime = [file.duration floatValue];
+                tagObject.name = file.name;
+                [_fileTagArray addObject:tagObject];
+                
+                
+                float x = (tagObject.startTime / [file.duration floatValue]) * _progressSlider.frame.size.width;
                 UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
                 imgViewS.frame = CGRectOffset(imgViewS.frame, x, _progressSlider.center.y);
                 [_tagView addSubview:imgViewS];
@@ -262,7 +272,7 @@
                                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
                 [_tagView addSubview:labelS];
                 
-                x = (tagObject.endTime / [_currentFile.duration floatValue]) * _progressSlider.frame.size.width;
+                x = (tagObject.endTime / [file.duration floatValue]) * _progressSlider.frame.size.width;
                 UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
                 imgViewE.frame = CGRectOffset(imgViewE.frame, x, _progressSlider.center.y);
                 [_tagView addSubview:imgViewE];
@@ -356,29 +366,23 @@
 
 -(void)tagsBtnClicked:(id)sender{
     int tagIndex = ((UIButton*)sender).tag;
-    if (_currentFile && _currentFile.tag) {
-        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_currentFile.tag character:@";"];
-        if ([tagArr count] > tagIndex) {
-            MATagObject* tagObject = [[MATagObject alloc] init];
-            if ([tagObject initDataWithString:[tagArr objectAtIndex:tagIndex]]) {
-                //stop playing voice
-                if (_avPlay.playing) {
-                    [_avPlay pause];
-                    [self setPlayBtnStatus:YES];
-                }
-                
-                //go to tag detail
-                tagObject.totalTime = [_currentFile.duration floatValue];
-                tagObject.tag = tagIndex;
-                MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:tagObject];
-                [tagDetail show];
-                tagDetail.tagDetailBlock = ^(MATagObject* object){
-                    _avPlay.currentTime = object.pointX;
-                    [_avPlay play];
-                    [self setPlayBtnStatus:NO];
-                };
-            }
+    if (_fileTagArray && [_fileTagArray count] > tagIndex) {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobEventStart eventName:KTagDetail label:nil];
+        
+        //stop playing voice
+        if (_avPlay.playing) {
+            [_avPlay pause];
+            [self setPlayBtnStatus:YES];
         }
+        
+        //go to tag detail
+        MAViewTagDetail* tagDetail = [[MAViewTagDetail alloc] initWithTagObject:_fileTagArray index:tagIndex];
+        [tagDetail show];
+        tagDetail.tagDetailBlock = ^(MATagObject* object){
+            _avPlay.currentTime = object.pointX;
+            [_avPlay play];
+            [self setPlayBtnStatus:NO];
+        };
     }
 }
 

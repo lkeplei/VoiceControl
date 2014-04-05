@@ -203,4 +203,6 @@
 #define KSettingRubbishClear    @"setting_rubbish_clear"
 #define KSettingMinVoice        @"setting_min_voice"
 
+#define KTagDetail              @"tag_detail"
+
 #endif

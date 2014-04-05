@@ -38,9 +38,12 @@
 @property (assign) Float32 startTime;           //开始时间
 @property (assign) Float32 endTime;             //结束时间
 @property (assign) Float32 averageVoice;        //平均分贝
+
 @property (assign) Float32 totalTime;           //总时长
 @property (assign) Float32 pointX;              //选择时间点
 @property (assign) int tag;                     //标记，用来找到对应的标记点
+@property (nonatomic, strong) NSString* name;   //文件名，用于查找对应的句柄，保存数据
+
 @property (nonatomic, retain) NSString* tagName;
 
 -(void)addAverage:(Float32)voice;

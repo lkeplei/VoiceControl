@@ -20,7 +20,7 @@ typedef enum {
 
 @interface MAViewTagDetail : UIView<UITextFieldDelegate>
 
--(id)initWithTagObject:(MATagObject*)object;
+-(id)initWithTagObject:(NSArray*)tagArray index:(int16_t)intdex;
 
 -(void)show;
 

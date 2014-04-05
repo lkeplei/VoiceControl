@@ -11,6 +11,8 @@
 #import "MAUtils.h"
 #import "MARecordController.h"
 #import "MAConfig.h"
+#import "MACoreDataManager.h"
+#import "MAVoiceFiles.h"
 
 #import <Accelerate/Accelerate.h>
 #import <QuartzCore/QuartzCore.h>
@@ -157,6 +159,7 @@ typedef void (^tagDetailCompletion)(void);
 
 @interface MAViewTagDetail ()
 
+@property (assign) int16_t currentIndex;
 @property (assign) CGFloat animationDuration;
 @property (assign) CGFloat animationDelay;
 @property (assign) UIViewAnimationOptions animationOptions;
@@ -166,8 +169,11 @@ typedef void (^tagDetailCompletion)(void);
 @property (nonatomic, strong) UIImageView* tagBtnView;
 @property (nonatomic, strong) UILabel* tagLabel;
 @property (nonatomic, strong) UITextField* tagNameTextField;
+@property (nonatomic, strong) UIButton* startButton;
+@property (nonatomic, strong) UIButton* endButton;
+@property (nonatomic, strong) UILabel* averageLabel;
 
-@property (nonatomic, strong) MATagObject* tagObject;
+@property (nonatomic, copy) NSArray* tagObjectArray;
 
 @end
 
@@ -177,14 +183,15 @@ typedef void (^tagDetailCompletion)(void);
     tagDetailCompletion _completion;
 }
 
--(id)initWithTagObject:(MATagObject*)object{
+-(id)initWithTagObject:(NSArray*)tagArray index:(int16_t)index{
     self = [super initWithFrame:(CGRect){CGPointZero, SysDelegate.viewController.view.frame.size}];
     if (self) {
         // Initialization code
-        _tagObject = object;
+        _tagObjectArray = [tagArray copy];
+        _currentIndex = index;
         
         [self initContentView];
-        [self initDetail];
+        [self setDetailWithObject:[self getCurrentTagObject]];
     }
     return self;
 }
@@ -193,6 +200,12 @@ typedef void (^tagDetailCompletion)(void);
 - (BOOL)textFieldShouldReturn:(UITextField*)textField{
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (![_tagNameTextField isExclusiveTouch]) {
+        [_tagNameTextField resignFirstResponder];
+    }
 }
 
 #pragma mark - hide view
@@ -290,96 +303,131 @@ typedef void (^tagDetailCompletion)(void);
                                         action:@selector(hideBtnClicked:)];
     hideBtn.center = _contentView.frame.origin;
     [self addSubview:hideBtn];
-}
-
--(void)initDetail{
-    Float32 offset = (_tagObject.endTime - _tagObject.startTime) * KPercentOffset;
-    Float32 start = _tagObject.startTime > offset ? _tagObject.startTime - offset : 0;
-    Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
-    Float32 startX = ((_tagObject.startTime - start) / (end - start)) * _contentView.frame.size.width;
-    Float32 endX = ((_tagObject.endTime - start) / (end - start)) * _contentView.frame.size.width;
     
-    //progress
-    UIImageView* imgBack = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO]];
-    imgBack.frame = CGRectMake(0, 40, _contentView.frame.size.width, 10);
-    [_contentView addSubview:imgBack];
-    
-    [self setTagPointX:startX];
-    
-    //tag btn
-    UIButton* startBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                          image:[UIImage imageNamed:@"slider_tag.png"]
-                                       imagesec:[UIImage imageNamed:@"slider_tag.png"]
-                                         target:self action:@selector(startBtnClicked:)];
-    startBtn.center = CGPointMake(startX, 80);
-    [_contentView addSubview:startBtn];
-
-    UIButton* endBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                        image:[UIImage imageNamed:@"slider_tag.png"]
-                                     imagesec:[UIImage imageNamed:@"slider_tag.png"]
-                                       target:self action:@selector(endBtnClicked:)];
-    endBtn.center = CGPointMake(endX, 80);
-    [_contentView addSubview:endBtn];
-    
-    //average
-    UILabel* labelAverage = [MAUtils labelWithTxt:[NSString stringWithFormat:@"%@DB",
-                                                   [MAUtils getStringByFloat:_tagObject.averageVoice decimal:1]]
-                                            frame:CGRectMake(0, 70, _contentView.frame.size.width, 20)
-                                             font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
-                                            color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-    [_contentView addSubview:labelAverage];
-
+    //add pan gesture
+    UIPanGestureRecognizer* panGesture=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
+    [_contentView addGestureRecognizer:panGesture];
 
     //输入
-    _tagNameTextField = [MAUtils textFieldInit:CGRectMake(20, 110, KContentViewWidth - 40, 30)
-                                             color:[UIColor blueColor]
-                                           bgcolor:[UIColor grayColor]
-                                              secu:NO
-                                              font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
-                                              text:nil];
+    _tagNameTextField = [MAUtils textFieldInit:CGRectMake(20, 10, KContentViewWidth - 40, 30)
+                                         color:[UIColor blueColor]
+                                       bgcolor:[UIColor grayColor]
+                                          secu:NO
+                                          font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
+                                          text:nil];
     _tagNameTextField.delegate = self;
     _tagNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    _tagNameTextField.text = _tagObject.tagName;
+    _tagNameTextField.textAlignment = KTextAlignmentCenter;
     _tagNameTextField.layer.borderColor = [UIColor lightGrayColor].CGColor; // set color as you want.
     _tagNameTextField.layer.borderWidth = 1.0;
     _tagNameTextField.layer.cornerRadius = 4.f;
     [_contentView addSubview:_tagNameTextField];
     
-    //add pan gesture
-    UIPanGestureRecognizer* panGesture=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
-    [_contentView addGestureRecognizer:panGesture];
+    //progress
+    UIImageView* imgBack = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO]];
+    imgBack.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3, _contentView.frame.size.width, 10);
+    [_contentView addSubview:imgBack];
+    
+    //pre next btn
+    UIButton* preBtn = [MAUtils buttonWithImg:@"pre" off:0 zoomIn:NO
+                                        image:nil
+                                     imagesec:nil
+                                       target:self action:@selector(preBtnClicked:)];
+    preBtn.frame = CGRectMake(KContentViewOffset, 110, 130, 30);
+    preBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    preBtn.layer.borderWidth = 1.0;
+    preBtn.layer.cornerRadius = 4.f;
+    [_contentView addSubview:preBtn];
+    
+    UIButton* nextBtn = [MAUtils buttonWithImg:@"next" off:0 zoomIn:NO
+                                         image:nil
+                                      imagesec:nil
+                                        target:self action:@selector(nextBtnClicked:)];
+    nextBtn.frame = CGRectMake(CGRectGetMaxX(preBtn.frame) + KContentViewOffset, 110, 130, 30);
+    nextBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    nextBtn.layer.borderWidth = 1.0;
+    nextBtn.layer.cornerRadius = 4.f;
+    [_contentView addSubview:nextBtn];
+}
+
+-(void)setDetailWithObject:(MATagObject*)object{
+    //输入
+    if (_tagNameTextField) {
+        _tagNameTextField.text = [self getCurrentTagObject].tagName;
+    }
+    
+    [self setTagPointX:[self getX:MATagDetailStartX pointX:0]];
+    
+    //tag btn
+    if (_startButton) {
+        _startButton.center = CGPointMake([self getX:MATagDetailStartX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+    } else {
+        _startButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                        image:[UIImage imageNamed:@"slider_tag.png"]
+                                     imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                       target:self action:@selector(startBtnClicked:)];
+        _startButton.center = CGPointMake([self getX:MATagDetailStartX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        [_contentView addSubview:_startButton];
+    }
+    
+    if (_endButton) {
+        _endButton.center = CGPointMake([self getX:MATagDetailEndX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+    } else {
+        _endButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                      image:[UIImage imageNamed:@"slider_tag.png"]
+                                   imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                     target:self action:@selector(endBtnClicked:)];
+        _endButton.center = CGPointMake([self getX:MATagDetailEndX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        [_contentView addSubview:_endButton];
+    }
+    
+    //average
+    if (_averageLabel) {
+        _averageLabel.text = [NSString stringWithFormat:@"%@DB-(%d/%d)",
+                              [MAUtils getStringByFloat:[self getCurrentTagObject].averageVoice decimal:1],
+                              _currentIndex + 1, [_tagObjectArray count]];
+    } else {
+        _averageLabel = [MAUtils labelWithTxt:[NSString stringWithFormat:@"%@DB-(%d/%d)",
+                                               [MAUtils getStringByFloat:[self getCurrentTagObject].averageVoice decimal:1],
+                                               _currentIndex + 1, [_tagObjectArray count]]
+                                        frame:CGRectMake(0, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset,
+                                                         _contentView.frame.size.width, 20)
+                                         font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                        color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+        [_contentView addSubview:_averageLabel];
+    }
 }
 
 -(void)setTagPointX:(float)pointX{
     if (!_tagPointView) {
         _tagPointView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO]];
-        _tagPointView.frame = CGRectMake(0, 40, pointX, 10);
+        _tagPointView.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3, pointX, 10);
         [_contentView addSubview:_tagPointView];
     } else {
-        _tagPointView.frame = CGRectMake(0, 40, pointX, 10);
+        _tagPointView.frame = CGRectMake(0, _tagPointView.frame.origin.y, pointX, 10);
     }
     
     if (!_tagBtnView) {
         _prePointX = pointX;
         
         _tagBtnView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]];
-        _tagBtnView.frame = CGRectOffset(_tagBtnView.frame, pointX, 32);
+        _tagBtnView.frame = CGRectOffset(_tagBtnView.frame, pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3);
         [_contentView addSubview:_tagBtnView];
     } else {
-        _tagObject.pointX = [self getX:MATagDetailTimeX pointX:pointX];
+        [self getCurrentTagObject].pointX = [self getX:MATagDetailTimeX pointX:pointX];
         
         _tagBtnView.center = CGPointMake(pointX, _tagBtnView.center.y);
     }
     
     if (!_tagLabel) {
         _tagLabel = [MAUtils labelWithTxt:[MAUtils getStringByFloat:[self getX:MATagDetailTimeX pointX:pointX] decimal:1]
-                                        frame:CGRectMake(pointX, 20, 40, 20)
+                                        frame:CGRectMake(pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset, 40, 20)
                                          font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                         color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];;
         _tagLabel.textAlignment = KTextAlignmentLeft;
         [_contentView addSubview:_tagLabel];
     } else {
-        _tagLabel.text = [MAUtils getStringByFloat:_tagObject.pointX decimal:1];
+        _tagLabel.text = [MAUtils getStringByFloat:[self getCurrentTagObject].pointX decimal:1];
         _tagLabel.center = CGPointMake(pointX, _tagLabel.center.y);
     }
 }
@@ -399,10 +447,28 @@ typedef void (^tagDetailCompletion)(void);
 }
 
 #pragma mark - btn clicked
+-(void)preBtnClicked:(id)sender{
+    if (_currentIndex > 0) {
+        [self saveCurrentTagObject];
+        _currentIndex--;
+        [self setDetailWithObject:[self getCurrentTagObject]];
+    }
+}
+
+-(void)nextBtnClicked:(id)sender{
+    if (_currentIndex < [_tagObjectArray count] - 1) {
+        [self saveCurrentTagObject];
+        _currentIndex++;
+        [self setDetailWithObject:[self getCurrentTagObject]];
+    }
+}
+
 -(void)hideBtnClicked:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobEventEnd eventName:KTagDetail label:nil];
+
     if (self.tagDetailBlock) {
-        _tagObject.tagName = _tagNameTextField.text;
-        self.tagDetailBlock(_tagObject);    
+        [self saveCurrentTagObject];
+        self.tagDetailBlock([self getCurrentTagObject]);
     }
     
     [self hide];
@@ -419,17 +485,48 @@ typedef void (^tagDetailCompletion)(void);
 }
 
 #pragma mark - other
+-(void)saveCurrentTagObject{
+    MATagObject* object = [self getCurrentTagObject];
+    object.tagName = _tagNameTextField.text;
+    
+    NSArray* array = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:object.name];
+    if (array && [array count] > 0) {
+        MAVoiceFiles* file = [array objectAtIndex:0];
+        
+        NSMutableString* mark = nil;
+        for (int i = 0; i < [_tagObjectArray count]; i++) {
+            if (i == 0) {
+                mark = [[NSMutableString alloc] init];
+                [mark appendFormat:@"%.1f-%.1f-%.1f-%@", object.startTime, object.endTime, object.averageVoice, object.tagName];
+            } else {
+                [mark appendFormat:@";%.1f-%.1f-%.1f-%@", object.startTime, object.endTime,object.averageVoice, object.tagName];
+            }
+        }
+        file.tag = mark;
+        
+        [[MACoreDataManager sharedCoreDataManager] saveEntry];
+    }
+}
+
+-(MATagObject*)getCurrentTagObject{
+    if (_tagObjectArray && [_tagObjectArray count] > _currentIndex && _currentIndex >= 0) {
+        return [_tagObjectArray objectAtIndex:_currentIndex];
+    }
+    return nil;
+}
+
 -(Float32)getX:(MATagDetailType)type pointX:(Float32)pointX{
-    Float32 offset = (_tagObject.endTime - _tagObject.startTime) * KPercentOffset;
-    Float32 start = _tagObject.startTime > offset ? _tagObject.startTime - offset : 0;
-    Float32 end = _tagObject.endTime + offset < _tagObject.totalTime ? _tagObject.endTime + offset : _tagObject.totalTime;
+    MATagObject* object = [self getCurrentTagObject];
+    Float32 offset = (object.endTime - object.startTime) * KPercentOffset;
+    Float32 start = object.startTime > offset ? object.startTime - offset : 0;
+    Float32 end = object.endTime + offset < object.totalTime ? object.endTime + offset : object.totalTime;
     
     switch (type) {
         case MATagDetailStartX:
-            return ((_tagObject.startTime - start) / (end - start)) * _contentView.frame.size.width;
+            return ((object.startTime - start) / (end - start)) * _contentView.frame.size.width;
             break;
         case MATagDetailEndX:
-            return ((_tagObject.endTime - start) / (end - start)) * _contentView.frame.size.width;
+            return ((object.endTime - start) / (end - start)) * _contentView.frame.size.width;
             break;
         case MATagDetailTimeX:
             return (pointX / _contentView.frame.size.width) * (end - start);
