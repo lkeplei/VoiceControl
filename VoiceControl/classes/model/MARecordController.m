@@ -71,6 +71,7 @@
     NSURL*      urlPlay;
 }
 
+@property (assign) Float32 tagOffset;           //两个标记的间隔
 @property (assign) int recordId;                //当前运行的计划Id
 @property (assign) int recorderTimer;           //录音计点
 @property (assign) float recorderDuration;      //录音计时
@@ -97,6 +98,7 @@
         _recordId = -1;
         _recorderDuration = 0;
         _durationStart = 0;
+        _tagOffset = 0;
         _offsetDuration = KTimeRecorderDuration;
         
         [self initAudio];
@@ -339,7 +341,7 @@
 }
 
 -(void)markRecord{
-    if ([_recorder isRecording]) {
+    if (_tagOffset <= 0 && [_recorder isRecording]) {
         [_recorder updateMeters];//刷新音量数据
         float averageVoice = [_recorder averagePowerForChannel:0] + 100;
         int tagVoice = [[MAModel shareModel] getTagVoice];
@@ -357,6 +359,8 @@
             }
         }
     }
+    
+    _tagOffset -= _offsetDuration;
 }
 
 -(void)markEndPoint{
@@ -373,6 +377,7 @@
         }
         
         [self initTagObject];
+        _tagOffset = [[MAModel shareModel] getFileTimeMin];
     }
 }
 

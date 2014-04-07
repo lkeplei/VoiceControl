@@ -20,6 +20,7 @@
 #define KContentViewHeight      (150)
 #define KContentViewWidth       (290)
 #define KContentViewOffset      (10)
+#define KProgressHeight         (6)
 #define KPercentOffset          (0.1)
 
 CGFloat const KDefaultDelay = 0.125f;
@@ -325,7 +326,8 @@ typedef void (^tagDetailCompletion)(void);
     
     //progress
     UIImageView* imgBack = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO]];
-    imgBack.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3, _contentView.frame.size.width, 10);
+    imgBack.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3,
+                               _contentView.frame.size.width, KProgressHeight);
     [_contentView addSubview:imgBack];
     
     //pre next btn
@@ -348,6 +350,12 @@ typedef void (^tagDetailCompletion)(void);
     nextBtn.layer.borderWidth = 1.0;
     nextBtn.layer.cornerRadius = 4.f;
     [_contentView addSubview:nextBtn];
+    
+    //back
+    _tagPointView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO]];
+    _tagPointView.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3,
+                                     [self getX:MATagDetailStartX pointX:0], KProgressHeight);
+    [_contentView addSubview:_tagPointView];
 }
 
 -(void)setDetailWithObject:(MATagObject*)object{
@@ -356,30 +364,37 @@ typedef void (^tagDetailCompletion)(void);
         _tagNameTextField.text = [self getCurrentTagObject].tagName;
     }
     
-    [self setTagPointX:[self getX:MATagDetailStartX pointX:0]];
-    
     //tag btn
+    float x = [self getX:MATagDetailStartX pointX:0];
+    UIImage* img = [UIImage imageNamed:@"slider_tag.png"];
+    float offser = img.size.width / 2;
+    x = x >= offser ? x : offser;
     if (_startButton) {
-        _startButton.center = CGPointMake([self getX:MATagDetailStartX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        _startButton.center = CGPointMake(x, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
     } else {
         _startButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                        image:[UIImage imageNamed:@"slider_tag.png"]
-                                     imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                        image:img
+                                     imagesec:img
                                        target:self action:@selector(startBtnClicked:)];
-        _startButton.center = CGPointMake([self getX:MATagDetailStartX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        _startButton.center = CGPointMake(x, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
         [_contentView addSubview:_startButton];
     }
     
+    x = [self getX:MATagDetailEndX pointX:0];
+    offser = _contentView.frame.size.width - offser;
+    x = x >= offser ? offser : x;
     if (_endButton) {
-        _endButton.center = CGPointMake([self getX:MATagDetailEndX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        _endButton.center = CGPointMake(x, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
     } else {
         _endButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                      image:[UIImage imageNamed:@"slider_tag.png"]
-                                   imagesec:[UIImage imageNamed:@"slider_tag.png"]
+                                      image:img
+                                   imagesec:img
                                      target:self action:@selector(endBtnClicked:)];
-        _endButton.center = CGPointMake([self getX:MATagDetailEndX pointX:0], CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
+        _endButton.center = CGPointMake(x, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset);
         [_contentView addSubview:_endButton];
     }
+    
+    [self setTagPointX:[self getX:MATagDetailStartX pointX:0]];
     
     //average
     if (_averageLabel) {
@@ -399,19 +414,16 @@ typedef void (^tagDetailCompletion)(void);
 }
 
 -(void)setTagPointX:(float)pointX{
-    if (!_tagPointView) {
-        _tagPointView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO]];
-        _tagPointView.frame = CGRectMake(0, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3, pointX, 10);
-        [_contentView addSubview:_tagPointView];
-    } else {
-        _tagPointView.frame = CGRectMake(0, _tagPointView.frame.origin.y, pointX, 10);
+    if (_tagPointView) {
+        _tagPointView.frame = CGRectMake(0, _tagPointView.frame.origin.y, pointX, KProgressHeight);
     }
     
     if (!_tagBtnView) {
         _prePointX = pointX;
         
         _tagBtnView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]];
-        _tagBtnView.frame = CGRectOffset(_tagBtnView.frame, pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 3);
+        _tagBtnView.frame = CGRectOffset(_tagBtnView.frame, pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset * 2);
+        _tagBtnView.center = CGPointMake(pointX, _tagBtnView.center.y);
         [_contentView addSubview:_tagBtnView];
     } else {
         [self getCurrentTagObject].pointX = [self getX:MATagDetailTimeX pointX:pointX];
@@ -420,15 +432,19 @@ typedef void (^tagDetailCompletion)(void);
     }
     
     if (!_tagLabel) {
-        _tagLabel = [MAUtils labelWithTxt:[MAUtils getStringByFloat:[self getX:MATagDetailTimeX pointX:pointX] decimal:1]
-                                        frame:CGRectMake(pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset, 40, 20)
+        _tagLabel = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:[self getX:MATagDetailTimeX pointX:pointX] type:MATypeTimeClock]
+                                        frame:CGRectMake(pointX, CGRectGetMaxY(_tagNameTextField.frame) + KContentViewOffset, 42, 20)
                                          font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                         color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];;
-        _tagLabel.textAlignment = KTextAlignmentLeft;
         [_contentView addSubview:_tagLabel];
     } else {
-        _tagLabel.text = [MAUtils getStringByFloat:[self getCurrentTagObject].pointX decimal:1];
-        _tagLabel.center = CGPointMake(pointX, _tagLabel.center.y);
+        _tagLabel.text = [[MAModel shareModel] getStringTime:[self getX:MATagDetailTimeX pointX:pointX] type:MATypeTimeClock];
+    }
+    _tagLabel.center = CGPointMake(pointX, _tagLabel.center.y);
+    if (CGRectGetMinX(_tagLabel.frame) < 0.000001) {
+        _tagLabel.center = CGPointMake(_tagLabel.frame.size.width / 2, _tagLabel.center.y);
+    } else if (CGRectGetMaxX(_tagLabel.frame) > _contentView.frame.size.width) {
+        _tagLabel.center = CGPointMake(_contentView.frame.size.width - _tagLabel.frame.size.width / 2, _tagLabel.center.y);
     }
 }
 
@@ -438,11 +454,18 @@ typedef void (^tagDetailCompletion)(void);
     CGPoint translation=[sender translationInView:_contentView];
     DebugLog(@"handleSwipeGesture point = (%f, %f)", translation.x, translation.y);
     //平移图片CGAffineTransformMakeTranslation
-    [self setTagPointX:_prePointX + translation.x];
+    float x = _prePointX + translation.x;
+    if (x >= 0.000001 && x <= _contentView.frame.size.width) {
+        [self setTagPointX:x];
+    }
     
     //状态结束，保存数据
-    if(sender.state==UIGestureRecognizerStateEnded){
-        _prePointX += translation.x;
+    if(sender.state == UIGestureRecognizerStateEnded){
+        if (x >= 0.000001 && x <= _contentView.frame.size.width) {
+            _prePointX = x;
+        } else {
+            _prePointX = x < 0.000001 ? 0 : _contentView.frame.size.width;
+        }
     }
 }
 
@@ -529,7 +552,7 @@ typedef void (^tagDetailCompletion)(void);
             return ((object.endTime - start) / (end - start)) * _contentView.frame.size.width;
             break;
         case MATagDetailTimeX:
-            return (pointX / _contentView.frame.size.width) * (end - start);
+            return (pointX / _contentView.frame.size.width) * (end - start) + start;
             break;
         default:
             break;

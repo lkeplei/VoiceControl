@@ -15,6 +15,8 @@
 
 #import "MAVoiceFiles.h"
 
+#define KTagBtnTag(a)               (1000 + (a))
+#define KIndexFromTag(a)            ((a) - 1000)
 #define KSpaceOff                   (10)
 #define KTimeLabelHeight            (20)
 #define KProgressHeight             (40)
@@ -72,7 +74,7 @@
     //add progress
     _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, KSpaceOff, self.frame.size.width, KSpaceOff)];
     [_progressSlider setThumbImage:[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberKnob default:NO]
-                          forState:UIControlStateNormal];
+                          forState:UIControlStateHighlighted];
     [_progressSlider setMinimumTrackImage:[[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberLeft default:NO] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
                                 forState:UIControlStateNormal];
     [_progressSlider setMaximumTrackImage:[[[MAModel shareModel] getImageByType:MATypeImgSliderScrubberRight default:NO] stretchableImageWithLeftCapWidth:5 topCapHeight:3]
@@ -259,45 +261,51 @@
             if ([tagObject initDataWithString:tag]) {
                 tagObject.tag = i;
                 tagObject.totalTime = [file.duration floatValue];
+                if (tagObject.endTime > tagObject.totalTime) {
+                    tagObject.endTime = tagObject.totalTime;
+                }
                 tagObject.name = file.name;
                 [_fileTagArray addObject:tagObject];
                 
                 
-                float x = (tagObject.startTime / [file.duration floatValue]) * _progressSlider.frame.size.width;
-                UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
-                imgViewS.frame = CGRectOffset(imgViewS.frame, x, _progressSlider.center.y);
-                [_tagView addSubview:imgViewS];
-                UILabel* labelS = [MAUtils labelWithTxt:@"s" frame:imgViewS.frame
-                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-                [_tagView addSubview:labelS];
+                float x = (tagObject.startTime / tagObject.totalTime) * _progressSlider.frame.size.width;
+                float x2 = (tagObject.endTime / tagObject.totalTime) * _progressSlider.frame.size.width;
                 
-                x = (tagObject.endTime / [file.duration floatValue]) * _progressSlider.frame.size.width;
-                UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
-                imgViewE.frame = CGRectOffset(imgViewE.frame, x, _progressSlider.center.y);
-                [_tagView addSubview:imgViewE];
-                UILabel* labelE = [MAUtils labelWithTxt:@"e" frame:imgViewE.frame
-                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-                [_tagView addSubview:labelE];
                 
-                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:tagObject.averageVoice decimal:1]
-                                                  frame:CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMaxY(imgViewS.frame),
-                                                                   CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame),
-                                                                   imgViewE.frame.size.height)
-                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-                [_tagView addSubview:labelA];
+//                UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
+//                imgViewS.center = CGPointMake(x, CGRectGetMaxY(_progressSlider.frame) + imgViewS.frame.size.height / 2);
+//                [_tagView addSubview:imgViewS];
+//                UILabel* labelS = [MAUtils labelWithTxt:@"s" frame:imgViewS.frame
+//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+//                [_tagView addSubview:labelS];
+//
+//                UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
+//                imgViewE.center = CGPointMake(x2, CGRectGetMaxY(_progressSlider.frame) + imgViewE.frame.size.height / 2);
+//                [_tagView addSubview:imgViewE];
+//                UILabel* labelE = [MAUtils labelWithTxt:@"e" frame:imgViewE.frame
+//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+//                [_tagView addSubview:labelE];
+//                
+//                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:tagObject.averageVoice decimal:1]
+//                                                  frame:CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMaxY(imgViewS.frame),
+//                                                                   CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame),
+//                                                                   imgViewE.frame.size.height)
+//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+//                [_tagView addSubview:labelA];
                 
                 UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                                      image:nil
                                                   imagesec:nil
                                                     target:self
                                                     action:@selector(tagsBtnClicked:)];
-                tagsBtn.frame = CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMinY(imgViewS.frame),
-                                           CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame), imgViewS.frame.size.height);
-                tagsBtn.tag = i;
+                tagsBtn.frame = CGRectMake(x, 0, x2 - x, KProgressHeight);
+                tagsBtn.tag = KTagBtnTag(i);
                 [_tagView addSubview:tagsBtn];
+                
+                [self setNeedsDisplay];
             }
         }
     }
@@ -365,7 +373,7 @@
 }
 
 -(void)tagsBtnClicked:(id)sender{
-    int tagIndex = ((UIButton*)sender).tag;
+    int tagIndex = KIndexFromTag(((UIButton*)sender).tag);
     if (_fileTagArray && [_fileTagArray count] > tagIndex) {
         [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobEventStart eventName:KTagDetail label:nil];
         
@@ -436,9 +444,6 @@
 #pragma mark - Drawing operations
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-
-    // Draw sound meter wave
-    [self drawTagRect:context];
     
     //draw hide line
     CGContextSetLineWidth(context, 2.0);
@@ -458,6 +463,9 @@
     
     CGContextStrokePath(context);
     
+    // Draw sound meter wave
+    [self drawTagRect:context];
+    
 //  Draw title
 //    [[UIColor colorWithWhite:1.0 alpha:1.0] setFill];
 //    UIBezierPath *line = [UIBezierPath bezierPath];
@@ -468,12 +476,75 @@
 }
 
 -(void)drawTagRect:(CGContextRef)context{
-//    CGContextSetLineWidth(context, 1.0);
-//    CGContextSetLineJoin(context, kCGLineJoinRound);
-//    
-//    CGContextMoveToPoint(context, 20, 30);
-//    CGContextAddLineToPoint(context, 200, 30);
-//    
-//    CGContextStrokePath(context);
+    if (_tagView) {
+        BOOL goon = YES;
+        int tag = 0;
+        while (goon) {
+            UIView* view = [_tagView viewWithTag:KTagBtnTag(tag)];
+            if (view) {
+                CGRect frame = CGRectMake(view.frame.origin.x, view.center.y, view.frame.size.width, view.frame.size.height / 2);
+                CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+                
+                UIColor *strokeColor = [UIColor colorWithRed:0.886 green:0.0 blue:0.0 alpha:0.8];
+                UIColor *gradientColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
+                UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+                
+                NSArray *gradientColors = [NSArray arrayWithObjects:(id)fillColor.CGColor, (id)gradientColor.CGColor, nil];
+                CGFloat gradientLocations[] = {0, 1};
+                CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
+                
+                UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:0];
+                CGContextSaveGState(context);
+                [border addClip];
+                CGContextDrawRadialGradient(context, gradient,
+                                            CGPointMake(frame.origin.x, frame.size.height), 20,
+                                            CGPointMake(CGRectGetMaxX(view.frame), frame.size.height), 20,
+                                            kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+                CGContextRestoreGState(context);
+                [strokeColor setStroke];
+                border.lineWidth = 0;       //设置边框宽度
+                [border stroke];
+                
+//              start and end line
+                CGContextSetRGBFillColor(context, 1, 0, 0, 1);
+                
+                CGContextSetLineWidth(context, 1.0);
+                CGContextMoveToPoint(context, frame.origin.x, frame.size.height);
+                CGContextAddLineToPoint(context, frame.origin.x, CGRectGetMaxY(view.frame));
+                
+                CGContextMoveToPoint(context, CGRectGetMaxX(frame), frame.size.height);
+                CGContextAddLineToPoint(context, CGRectGetMaxX(frame), CGRectGetMaxY(frame));
+                
+                CGContextStrokePath(context);
+                
+//                NSDictionary* dic =[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize: KLabelFontSize14],
+//                                    NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
+//                [@"1231" drawAtPoint:CGPointMake(view.frame.origin.x, view.center.y) withAttributes:dic];
+                
+                int number = view.frame.size.width / (self.frame.size.width / 4);
+                number = number <= 0 ? 1 : number;
+                float width = view.frame.size.width / number;
+                CGContextSetLineWidth(context, 0.5);
+                CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+                float y = frame.origin.y + frame.size.height / 2;
+                float x = frame.origin.x;
+                for (int i = 0; i < number; i++) {
+                    float off = width / 4;
+                    CGContextBeginPath(context);
+                    CGContextMoveToPoint(context, x, y);
+                    CGContextAddCurveToPoint(context, x , y, x + off, 50, x + width / 2, y);
+                    CGContextAddCurveToPoint(context, x + width / 2, y,
+                                             x + off * 3, 10, x + width, y);
+                    
+                    x += width;
+                    CGContextStrokePath(context);
+                }
+            } else {
+                goon = NO;
+            }
+            
+            tag++;
+        }
+    }
 }
 @end
