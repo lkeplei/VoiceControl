@@ -298,8 +298,8 @@ typedef void (^tagDetailCompletion)(void);
     
     //add hide button
     UIButton* hideBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                         image:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
-                                      imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayNext default:NO]
+                                         image:[UIImage imageNamed:@"tag_detail_close.png"]
+                                      imagesec:[UIImage imageNamed:@"tag_detail_close.png"]
                                         target:self
                                         action:@selector(hideBtnClicked:)];
     hideBtn.center = _contentView.frame.origin;

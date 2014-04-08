@@ -14,6 +14,7 @@
 #import "MAViewTagDetail.h"
 
 #import "MAVoiceFiles.h"
+#import "MAAnimatedLabel.h"
 
 #define KTagBtnTag(a)               (1000 + (a))
 #define KIndexFromTag(a)            ((a) - 1000)
@@ -295,6 +296,13 @@
 //                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
 //                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
 //                [_tagView addSubview:labelA];
+                
+                
+                MAAnimatedLabel* label = [[MAAnimatedLabel alloc] initWithFrame:_tagView.frame];
+                label.text = @"this is a animation";
+                label.textColor = [UIColor blueColor];
+                [label startAnimating];
+                [_tagView addSubview:label];
                 
                 UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                                      image:nil
