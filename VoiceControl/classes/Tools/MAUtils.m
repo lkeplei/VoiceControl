@@ -160,8 +160,8 @@ static MAUtils* _shareUtils = nil;
     button.frame = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
     button.titleLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     button.titleLabel.textColor = [UIColor whiteColor];
-    button.titleLabel.shadowOffset = CGSizeMake(0,-1);
-    button.titleLabel.shadowColor = [UIColor darkGrayColor];
+//    button.titleLabel.shadowOffset = CGSizeMake(0,-1);
+//    button.titleLabel.shadowColor = [UIColor darkGrayColor];
     
     if (buttonText != nil) {
         NSString* text = [NSString stringWithFormat:@"%@", buttonText];

@@ -311,8 +311,8 @@ typedef void (^tagDetailCompletion)(void);
 
     //输入
     _tagNameTextField = [MAUtils textFieldInit:CGRectMake(20, 10, KContentViewWidth - 40, 30)
-                                         color:[UIColor blueColor]
-                                       bgcolor:[UIColor grayColor]
+                                         color:[UIColor magentaColor]
+                                       bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
                                           secu:NO
                                           font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
                                           text:nil];
@@ -331,24 +331,27 @@ typedef void (^tagDetailCompletion)(void);
     [_contentView addSubview:imgBack];
     
     //pre next btn
-    UIButton* preBtn = [MAUtils buttonWithImg:@"pre" off:0 zoomIn:NO
+    UIButton* preBtn = [MAUtils buttonWithImg:MyLocal(@"detail_pre") off:0 zoomIn:NO
                                         image:nil
                                      imagesec:nil
                                        target:self action:@selector(preBtnClicked:)];
     preBtn.frame = CGRectMake(KContentViewOffset, 110, 130, 30);
-    preBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    preBtn.layer.borderWidth = 1.0;
-    preBtn.layer.cornerRadius = 4.f;
+    preBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize18];
+    [preBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO] forState:UIControlStateNormal];
+    [preBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO] forState:UIControlStateHighlighted];
+    [preBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO] forState:UIControlStateSelected];
     [_contentView addSubview:preBtn];
     
-    UIButton* nextBtn = [MAUtils buttonWithImg:@"next" off:0 zoomIn:NO
+    UIButton* nextBtn = [MAUtils buttonWithImg:MyLocal(@"detail_next") off:0 zoomIn:NO
                                          image:nil
                                       imagesec:nil
                                         target:self action:@selector(nextBtnClicked:)];
     nextBtn.frame = CGRectMake(CGRectGetMaxX(preBtn.frame) + KContentViewOffset, 110, 130, 30);
-    nextBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    nextBtn.layer.borderWidth = 1.0;
-    nextBtn.layer.cornerRadius = 4.f;
+    nextBtn.titleLabel.font = [UIFont fontWithName:KLabelFontArial size:KLabelFontSize18];
+    [nextBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO] forState:UIControlStateNormal];
+    [nextBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO] forState:UIControlStateHighlighted];
+    [nextBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO] forState:UIControlStateSelected];
+
     [_contentView addSubview:nextBtn];
     
     //back
@@ -405,10 +408,10 @@ typedef void (^tagDetailCompletion)(void);
         _averageLabel = [MAUtils labelWithTxt:[NSString stringWithFormat:@"%@DB-(%d/%d)",
                                                [MAUtils getStringByFloat:[self getCurrentTagObject].averageVoice decimal:1],
                                                _currentIndex + 1, [_tagObjectArray count]]
-                                        frame:CGRectMake(0, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset,
+                                        frame:CGRectMake(0, CGRectGetMaxY(_tagPointView.frame) + KContentViewOffset / 2,
                                                          _contentView.frame.size.width, 20)
                                          font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
-                                        color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                                        color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
         [_contentView addSubview:_averageLabel];
     }
 }

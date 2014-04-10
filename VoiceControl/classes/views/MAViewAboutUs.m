@@ -43,7 +43,7 @@
 -(void)initTopView{
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KViewHorOffset, self.frame.size.width, KTopViewHeight)];
     
-    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-ipad.png"]];
+    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"werecorder_qr_code.png"]];
     imgView.center = CGPointMake(_topView.center.x, _topView.center.y);
     [self addSubview:imgView];
     

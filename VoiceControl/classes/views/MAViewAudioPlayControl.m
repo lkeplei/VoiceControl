@@ -12,6 +12,7 @@
 #import "MAUtils.h"
 #import "MAModel.h"
 #import "MAViewTagDetail.h"
+#import "MADataManager.h"
 
 #import "MAVoiceFiles.h"
 #import "MAAnimatedLabel.h"
@@ -271,39 +272,6 @@
                 
                 float x = (tagObject.startTime / tagObject.totalTime) * _progressSlider.frame.size.width;
                 float x2 = (tagObject.endTime / tagObject.totalTime) * _progressSlider.frame.size.width;
-                
-                
-//                UIImageView* imgViewS = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
-//                imgViewS.center = CGPointMake(x, CGRectGetMaxY(_progressSlider.frame) + imgViewS.frame.size.height / 2);
-//                [_tagView addSubview:imgViewS];
-//                UILabel* labelS = [MAUtils labelWithTxt:@"s" frame:imgViewS.frame
-//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-//                [_tagView addSubview:labelS];
-//
-//                UIImageView* imgViewE = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider_tag.png"]];
-//                imgViewE.center = CGPointMake(x2, CGRectGetMaxY(_progressSlider.frame) + imgViewE.frame.size.height / 2);
-//                [_tagView addSubview:imgViewE];
-//                UILabel* labelE = [MAUtils labelWithTxt:@"e" frame:imgViewE.frame
-//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-//                [_tagView addSubview:labelE];
-//                
-//                UILabel* labelA = [MAUtils labelWithTxt:[MAUtils getStringByFloat:tagObject.averageVoice decimal:1]
-//                                                  frame:CGRectMake(CGRectGetMinX(imgViewS.frame), CGRectGetMaxY(imgViewS.frame),
-//                                                                   CGRectGetMaxX(imgViewE.frame) - CGRectGetMinX(imgViewS.frame),
-//                                                                   imgViewE.frame.size.height)
-//                                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
-//                                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
-//                [_tagView addSubview:labelA];
-                
-                
-                MAAnimatedLabel* label = [[MAAnimatedLabel alloc] initWithFrame:_tagView.frame];
-                label.text = @"this is a animation";
-                label.textColor = [UIColor blueColor];
-                [label startAnimating];
-                [_tagView addSubview:label];
-                
                 UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                                      image:nil
                                                   imagesec:nil
@@ -315,6 +283,25 @@
                 
                 [self setNeedsDisplay];
             }
+        }
+        
+        if (![[MADataManager getDataByKey:KUserDefaultTagRemind] boolValue]) {
+            CGRect frame = CGRectMake(_tagView.frame.origin.x, _tagView.center.y, _tagView.frame.size.width, _tagView.frame.size.height / 2);
+            MAAnimatedLabel* label = [[MAAnimatedLabel alloc] initWithFrame:frame];
+            label.text = MyLocal(@"audio_tag_remind");
+            label.textColor = [UIColor cyanColor];
+            [label startAnimating];
+            label.tag = 9999;
+            label.textAlignment = KTextAlignmentCenter;
+            [_tagView addSubview:label];
+            
+            UIButton* tagsBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                                 image:nil
+                                              imagesec:nil
+                                                target:self
+                                                action:@selector(remindTagBtnClicked:)];
+            tagsBtn.frame = _tagView.frame;
+            [_tagView addSubview:tagsBtn];
         }
     }
 }
@@ -377,6 +364,22 @@
         if ([_audioPlayDelegate MAAudioPlayBack:MAAudioPlayHide]) {
             
         }
+    }
+}
+
+-(void)remindTagBtnClicked:(UIButton*)sender{
+    [MADataManager setDataByKey:[NSNumber numberWithBool:YES] forkey:KUserDefaultTagRemind];
+    [self setNeedsDisplay];
+    
+    [sender removeFromSuperview];
+    id animationLabel = [_tagView viewWithTag:9999];
+    if (animationLabel) {
+        [animationLabel removeFromSuperview];
+    }
+    
+    id btn = [_tagView viewWithTag:KTagBtnTag(0)];
+    if (btn) {
+        [self tagsBtnClicked:btn];
     }
 }
 
@@ -485,74 +488,83 @@
 
 -(void)drawTagRect:(CGContextRef)context{
     if (_tagView) {
-        BOOL goon = YES;
-        int tag = 0;
-        while (goon) {
-            UIView* view = [_tagView viewWithTag:KTagBtnTag(tag)];
-            if (view) {
-                CGRect frame = CGRectMake(view.frame.origin.x, view.center.y, view.frame.size.width, view.frame.size.height / 2);
-                CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-                
-                UIColor *strokeColor = [UIColor colorWithRed:0.886 green:0.0 blue:0.0 alpha:0.8];
-                UIColor *gradientColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
-                UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
-                
-                NSArray *gradientColors = [NSArray arrayWithObjects:(id)fillColor.CGColor, (id)gradientColor.CGColor, nil];
-                CGFloat gradientLocations[] = {0, 1};
-                CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
-                
-                UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:0];
-                CGContextSaveGState(context);
-                [border addClip];
-                CGContextDrawRadialGradient(context, gradient,
-                                            CGPointMake(frame.origin.x, frame.size.height), 20,
-                                            CGPointMake(CGRectGetMaxX(view.frame), frame.size.height), 20,
-                                            kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
-                CGContextRestoreGState(context);
-                [strokeColor setStroke];
-                border.lineWidth = 0;       //设置边框宽度
-                [border stroke];
-                
-//              start and end line
-                CGContextSetRGBFillColor(context, 1, 0, 0, 1);
-                
-                CGContextSetLineWidth(context, 1.0);
-                CGContextMoveToPoint(context, frame.origin.x, frame.size.height);
-                CGContextAddLineToPoint(context, frame.origin.x, CGRectGetMaxY(view.frame));
-                
-                CGContextMoveToPoint(context, CGRectGetMaxX(frame), frame.size.height);
-                CGContextAddLineToPoint(context, CGRectGetMaxX(frame), CGRectGetMaxY(frame));
-                
-                CGContextStrokePath(context);
-                
-//                NSDictionary* dic =[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize: KLabelFontSize14],
-//                                    NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
-//                [@"1231" drawAtPoint:CGPointMake(view.frame.origin.x, view.center.y) withAttributes:dic];
-                
-                int number = view.frame.size.width / (self.frame.size.width / 4);
-                number = number <= 0 ? 1 : number;
-                float width = view.frame.size.width / number;
-                CGContextSetLineWidth(context, 0.5);
-                CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-                float y = frame.origin.y + frame.size.height / 2;
-                float x = frame.origin.x;
-                for (int i = 0; i < number; i++) {
-                    float off = width / 4;
-                    CGContextBeginPath(context);
-                    CGContextMoveToPoint(context, x, y);
-                    CGContextAddCurveToPoint(context, x , y, x + off, 50, x + width / 2, y);
-                    CGContextAddCurveToPoint(context, x + width / 2, y,
-                                             x + off * 3, 10, x + width, y);
+        if (![[MADataManager getDataByKey:KUserDefaultTagRemind] boolValue]) {
+            CGRect frame = CGRectMake(_tagView.frame.origin.x, _tagView.center.y, _tagView.frame.size.width, _tagView.frame.size.height / 2);
+            [self drawGradientRect:frame context:context];
+        } else {
+            BOOL goon = YES;
+            int tag = 0;
+            while (goon) {
+                UIView* view = [_tagView viewWithTag:KTagBtnTag(tag)];
+                if (view) {
+                    CGRect frame = CGRectMake(view.frame.origin.x, view.center.y, view.frame.size.width, view.frame.size.height / 2);
+                    [self drawGradientRect:frame context:context];
                     
-                    x += width;
+                    //              start and end line
+                    CGContextSetRGBFillColor(context, 1, 0, 0, 1);
+                
+                    CGContextSetLineWidth(context, 1.0);
+                    CGContextMoveToPoint(context, frame.origin.x, frame.size.height);
+                    CGContextAddLineToPoint(context, frame.origin.x, CGRectGetMaxY(view.frame));
+                    
+                    CGContextMoveToPoint(context, CGRectGetMaxX(frame), frame.size.height);
+                    CGContextAddLineToPoint(context, CGRectGetMaxX(frame), CGRectGetMaxY(frame));
+                    
                     CGContextStrokePath(context);
+                    
+                    //                NSDictionary* dic =[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize: KLabelFontSize14],
+                    //                                    NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
+                    //                [@"1231" drawAtPoint:CGPointMake(view.frame.origin.x, view.center.y) withAttributes:dic];
+                    
+                    int number = view.frame.size.width / (self.frame.size.width / 4);
+                    number = number <= 0 ? 1 : number;
+                    float width = view.frame.size.width / number;
+                    CGContextSetLineWidth(context, 0.5);
+                    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+                    float y = frame.origin.y + frame.size.height / 2;
+                    float x = frame.origin.x;
+                    for (int i = 0; i < number; i++) {
+                        float off = width / 4;
+                        CGContextBeginPath(context);
+                        CGContextMoveToPoint(context, x, y);
+                        CGContextAddCurveToPoint(context, x , y, x + off, 50, x + width / 2, y);
+                        CGContextAddCurveToPoint(context, x + width / 2, y,
+                                                 x + off * 3, 10, x + width, y);
+                        
+                        x += width;
+                        CGContextStrokePath(context);
+                    }
+                } else {
+                    goon = NO;
                 }
-            } else {
-                goon = NO;
+                
+                tag++;
             }
-            
-            tag++;
         }
     }
+}
+
+-(void)drawGradientRect:(CGRect)frame context:(CGContextRef)context{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    UIColor *strokeColor = [UIColor colorWithRed:0.886 green:0.0 blue:0.0 alpha:0.8];
+    UIColor *gradientColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
+    UIColor *fillColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0];
+    
+    NSArray *gradientColors = [NSArray arrayWithObjects:(id)fillColor.CGColor, (id)gradientColor.CGColor, nil];
+    CGFloat gradientLocations[] = {0, 1};
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
+    
+    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:0];
+    CGContextSaveGState(context);
+    [border addClip];
+    CGContextDrawRadialGradient(context, gradient,
+                                CGPointMake(frame.origin.x, frame.size.height), 20,
+                                CGPointMake(CGRectGetMaxX(frame), frame.size.height), 20,
+                                kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+    CGContextRestoreGState(context);
+    [strokeColor setStroke];
+    border.lineWidth = 0;       //设置边框宽度
+    [border stroke];
 }
 @end
