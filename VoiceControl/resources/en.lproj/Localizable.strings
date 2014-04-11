@@ -186,3 +186,8 @@
 User-defineding is referring that you could define the recording time,the time length,period. The application will be on and save the file in a certain time,according to your user-defining.Anytime,anything voice could be recorder as you wish.\r\n\
 3、What is the “mark DB” for?\
 You could set up a dividing line of the DB.It can mark the parts of the higher db when the voice is higher than the dividing line,while recording.And you could easily find the mark,when you review the file.";
+
+////////////////////////////////    1.1.1
+"audio_tag_remind" = "suprise,click here";
+"detail_pre" = "Pre";
+"detail_next" = "Next";

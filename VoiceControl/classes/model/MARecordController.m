@@ -356,6 +356,8 @@
         } else {
             if (_tagObject.duration > [[MAModel shareModel] getFileTimeMin]) {
                 [self markEndPoint];
+            } else {
+                [_tagObject addAverage:averageVoice];
             }
         }
     }
@@ -364,7 +366,7 @@
 }
 
 -(void)markEndPoint{
-    if (_tagObject.startTime != 0) {
+    if ([self needMarkEnd]) {
         _tagObject.endTime = _recorder.currentTime;
         
         if (_markResource == nil) {
@@ -375,10 +377,10 @@
             [_markResource appendFormat:@";%.1f-%.1f-%.1f-%@", _tagObject.startTime, _tagObject.endTime,
              _tagObject.averageVoice, _tagObject.tagName];
         }
-        
-        [self initTagObject];
-        _tagOffset = [[MAModel shareModel] getFileTimeMin];
     }
+    
+    [self initTagObject];
+    _tagOffset = [[MAModel shareModel] getFileTimeMin];
 }
 
 #pragma mark - audio delegate
@@ -413,6 +415,22 @@
 }
 
 #pragma mark - other
+-(BOOL)needMarkEnd{
+    BOOL res = YES;
+    if (_tagObject.startTime < 0.0001) {
+        res = NO;
+    } else if (_markResource) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_markResource character:@";"];
+        if (tagArr && [tagArr count] > 0) {
+            NSArray* element = [MAUtils getArrayFromStrByCharactersInSet:[tagArr lastObject] character:@"-"];
+            if (_tagObject.startTime - [[element objectAtIndex:0] floatValue] < [[MAModel shareModel] getFileTimeMin]) {
+                res = NO;
+            }
+        }
+    }
+    return res;
+}
+
 -(void)saveData{
     MAVoiceFiles* file = (MAVoiceFiles*)[[MACoreDataManager sharedCoreDataManager] getNewManagedObject:KCoreVoiceFiles];
     file.name = _fileName;

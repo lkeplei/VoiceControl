@@ -132,6 +132,10 @@
     
     [cell setCellResource:[[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row] editing:_editing];
     
+    if (currentSection == [indexPath section] && [indexPath row] == currentRow) {
+        [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    
     return cell;
 }
 
@@ -321,6 +325,11 @@
     NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
     if (array) {
         [self initResouce:array];
+    }
+    
+    
+    for (MAVoiceFiles* file in array) {
+        DebugLog(@"file mark = %@", file.tag);
     }
     
     if (_tableView == nil) {
