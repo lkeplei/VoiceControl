@@ -501,20 +501,17 @@
                     [self drawGradientRect:frame context:context];
                     
                     //              start and end line
-                    CGContextSetRGBFillColor(context, 1, 0, 0, 1);
-                
-                    CGContextSetLineWidth(context, 1.0);
-                    CGContextMoveToPoint(context, frame.origin.x, frame.size.height);
-                    CGContextAddLineToPoint(context, frame.origin.x, CGRectGetMaxY(view.frame));
+//                    CGContextSetRGBFillColor(context, 1, 0, 0, 1);
+//                
+//                    CGContextSetLineWidth(context, 1.0);
+//                    CGContextMoveToPoint(context, frame.origin.x, frame.size.height);
+//                    CGContextAddLineToPoint(context, frame.origin.x, CGRectGetMaxY(view.frame));
+//                    
+//                    CGContextMoveToPoint(context, CGRectGetMaxX(frame), frame.size.height);
+//                    CGContextAddLineToPoint(context, CGRectGetMaxX(frame), CGRectGetMaxY(frame));
+//                    
+//                    CGContextStrokePath(context);
                     
-                    CGContextMoveToPoint(context, CGRectGetMaxX(frame), frame.size.height);
-                    CGContextAddLineToPoint(context, CGRectGetMaxX(frame), CGRectGetMaxY(frame));
-                    
-                    CGContextStrokePath(context);
-                    
-                    //                NSDictionary* dic =[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize: KLabelFontSize14],
-                    //                                    NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
-                    //                [@"1231" drawAtPoint:CGPointMake(view.frame.origin.x, view.center.y) withAttributes:dic];
                     
                     int number = view.frame.size.width / (self.frame.size.width / 4);
                     number = number <= 0 ? 1 : number;

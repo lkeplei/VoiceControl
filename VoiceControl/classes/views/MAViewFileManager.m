@@ -147,6 +147,7 @@
             MAVoiceFiles* file = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
             [cell setCellEditing:file.status];
             file.status = !file.status;
+            [_tableView reloadData];
         }
     } else {
         if (!showAudioPlay) {
