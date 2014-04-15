@@ -32,6 +32,8 @@
 		044C03D518BA2F4300FD060B /* button_circle_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03D018BA2F4300FD060B /* button_circle_green@2x.png */; };
 		044C03D618BA2F4300FD060B /* button_circle_red_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03D118BA2F4300FD060B /* button_circle_red_sec@2x.png */; };
 		044C03D718BA2F4300FD060B /* button_circle_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 044C03D218BA2F4300FD060B /* button_circle_red@2x.png */; };
+		045089B518FD5B14004BE9D1 /* view_separator_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 045089B418FD5B14004BE9D1 /* view_separator_line@2x.png */; };
+		045089B718FD71DB004BE9D1 /* system_setting_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 045089B618FD71DB004BE9D1 /* system_setting_cell_bg@2x.png */; };
 		04559A1C17C98EE000DCEB8A /* MADropDownControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A1B17C98EE000DCEB8A /* MADropDownControlView.m */; };
 		04559A1E17C990BB00DCEB8A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04559A1D17C990BB00DCEB8A /* QuartzCore.framework */; };
 		04559A2317CA076300DCEB8A /* MASectionHeadBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A2217CA076300DCEB8A /* MASectionHeadBase.m */; };
@@ -159,6 +161,8 @@
 		044C03D018BA2F4300FD060B /* button_circle_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_green@2x.png"; sourceTree = "<group>"; };
 		044C03D118BA2F4300FD060B /* button_circle_red_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_red_sec@2x.png"; sourceTree = "<group>"; };
 		044C03D218BA2F4300FD060B /* button_circle_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_circle_red@2x.png"; sourceTree = "<group>"; };
+		045089B418FD5B14004BE9D1 /* view_separator_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "view_separator_line@2x.png"; sourceTree = "<group>"; };
+		045089B618FD71DB004BE9D1 /* system_setting_cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "system_setting_cell_bg@2x.png"; sourceTree = "<group>"; };
 		04559A1A17C98EE000DCEB8A /* MADropDownControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADropDownControlView.h; sourceTree = "<group>"; };
 		04559A1B17C98EE000DCEB8A /* MADropDownControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADropDownControlView.m; sourceTree = "<group>"; };
 		04559A1D17C990BB00DCEB8A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -612,6 +616,8 @@
 		BE073A75179E9F3400340A47 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				045089B618FD71DB004BE9D1 /* system_setting_cell_bg@2x.png */,
+				045089B418FD5B14004BE9D1 /* view_separator_line@2x.png */,
 				0442FA2F18F6D84200A6C7D6 /* werecorder_qr_code@2x.png */,
 				044ADED718F436E70000DB63 /* tag_detail_close@2x.png */,
 				049007AE18F2370E00EF97C2 /* slider_scrubber_left@2x.png */,
@@ -753,11 +759,13 @@
 				0465B28118C0BD83007919AC /* table_resource.plist in Resources */,
 				187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */,
 				04D7DE6917A4BB7900AF0450 /* play_control_pause@2x.png in Resources */,
+				045089B518FD5B14004BE9D1 /* view_separator_line@2x.png in Resources */,
 				18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */,
 				049007B018F2370E00EF97C2 /* slider_scrubber_left@2x.png in Resources */,
 				183DA90418BAF6A5005C6ABA /* slider_scrubber_knob.png in Resources */,
 				04D7DE6B17A4BB7900AF0450 /* play_control_pre@2x.png in Resources */,
 				044C03D318BA2F4300FD060B /* button_circle_gray@2x.png in Resources */,
+				045089B718FD71DB004BE9D1 /* system_setting_cell_bg@2x.png in Resources */,
 				04D7DE6F17A4D90900AF0450 /* play_control_play@2x.png in Resources */,
 				044C03D518BA2F4300FD060B /* button_circle_green@2x.png in Resources */,
 				044ADED818F436E70000DB63 /* tag_detail_close@2x.png in Resources */,
@@ -972,8 +980,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1004,8 +1012,8 @@
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";

@@ -24,8 +24,6 @@
         // Initialization code
         self.viewType = MAViewTypeAddPlanDuration;
         self.viewTitle = MyLocal(@"view_title_add_plan_duration");
-        
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
 }
@@ -40,18 +38,20 @@
 
 #pragma mark - init area
 - (void)initTable{
-    _durationArray = [[NSArray alloc] initWithObjects:@"5", @"10", @"20", @"30", @"60", @"120", @"180", @"300", @"480", @"720", @"1080", @"1440", nil];
+    _durationArray = [[NSArray alloc] initWithObjects:@"5", @"10", @"20", @"30", @"60", @"120",
+                      @"180", @"300", @"480", @"720", @"1080", @"1440", nil];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
                                                                self.frame.size.width,
-                                                               self.frame.size.height)
+                                                               self.frame.size.height - KStatusBarHeight)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.separatorColor = [[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO];
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
 	[self addSubview:_tableView];
 }
 

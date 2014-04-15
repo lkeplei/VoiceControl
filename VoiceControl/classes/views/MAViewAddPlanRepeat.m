@@ -27,8 +27,6 @@
         // Initialization code
         self.viewType = MAViewTypeAddPlanRepeat;
         self.viewTitle = MyLocal(@"view_title_add_plan_repeat");
-        
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
 }
@@ -62,7 +60,8 @@
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    _tableView.separatorColor = [[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO];
+    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
 	[self addSubview:_tableView];
 }
 

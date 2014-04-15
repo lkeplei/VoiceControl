@@ -28,8 +28,6 @@
         // Initialization code
         self.viewType = MAViewTypeAboutUs;
         self.viewTitle = MyLocal(@"view_title_about_us");
-        
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
 }

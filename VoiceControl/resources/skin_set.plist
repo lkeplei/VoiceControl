@@ -132,6 +132,13 @@
 				<key>image</key>
 				<string>slider_scrubber_right.png</string>
 			</dict>
+			<key>skin_image_system_setting_cell_bg</key>
+			<dict>
+				<key>describe</key>
+				<string>系统设置而单个cell背景</string>
+				<key>image</key>
+				<string>system_setting_cell_bg.png</string>
+			</dict>
 		</dict>
 		<key>skin_set_color</key>
 		<dict>
@@ -225,6 +232,20 @@
 				<string>自定义按钮标签灰</string>
 				<key>color</key>
 				<string>169,168,171,1</string>
+			</dict>
+			<key>skin_color_def_top_view</key>
+			<dict>
+				<key>describe</key>
+				<string>页面头部颜色</string>
+				<key>color</key>
+				<string>244,244,242,1</string>
+			</dict>
+			<key>skin_color_def_view_bg</key>
+			<dict>
+				<key>describe</key>
+				<string>页面主背景色</string>
+				<key>color</key>
+				<string>226,225,220,1</string>
 			</dict>
 		</dict>
 	</dict>

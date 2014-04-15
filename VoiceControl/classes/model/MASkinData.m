@@ -123,6 +123,12 @@
         case MATypeColorBtnGray:
             return KSkinSetColorBtnGray;
             break;
+        case MATypeColorTopView:
+            return KSkinSetColorTopView;
+            break;
+        case MATypeColorViewBg:
+            return KSkinSetColorViewBg;
+            break;
             
         case MATypeImgHomePhone:
             return KSkinSetImgHomePhone;
@@ -177,6 +183,9 @@
             break;
         case MATypeImgSliderScrubberRight:
             return KSkinSetImgScrubberKnobRight;
+            break;
+        case MATypeImgSysSettingCellBg:
+            return KSkinSetImgSysSettingCellBg;
             break;
         default:
             return nil;

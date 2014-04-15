@@ -32,8 +32,6 @@
         self.viewType = MAViewTypeSettingFile;
         self.viewTitle = MyLocal(@"view_title_set_file");
         
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-        
         [self initView];
     }
     return self;

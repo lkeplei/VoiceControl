@@ -44,6 +44,8 @@ typedef enum {
     MATypeColorBtnRed,
     MATypeColorBtnDarkRed,
     MATypeColorBtnGray,
+    MATypeColorTopView,
+    MATypeColorViewBg,
     
     MATypeImgHomePhone = 300,
     MATypeImgHomeMenu,
@@ -63,6 +65,7 @@ typedef enum {
     MATypeImgSliderScrubberKnob,
     MATypeImgSliderScrubberLeft,
     MATypeImgSliderScrubberRight,
+    MATypeImgSysSettingCellBg,
     
     MATypeBaiduMobLogEvent = 400,
     MATypeBaiduMobEventStart,

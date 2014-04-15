@@ -17,8 +17,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-
         self.viewType = MAViewTypeAboutWeRcorder;
         self.viewTitle = MyLocal(@"view_title_about_werecorder");
     }

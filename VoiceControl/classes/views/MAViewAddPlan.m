@@ -43,7 +43,6 @@
 
         duration = 60;
         _planTimeString = [NSString stringWithFormat:@"99,%@", [MAUtils getStringFromDate:[NSDate date] format:KDateFormat]];
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
 }
@@ -104,7 +103,7 @@
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
 	[self addSubview:_tableView];
 }
 
@@ -120,6 +119,7 @@
     _timePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 160)];
     _timePicker.delegate = self;
     _timePicker.dataSource = self;
+    [_timePicker setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:NO]];
     
     [_timePicker reloadAllComponents];
     
@@ -155,7 +155,6 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO];
         
         if ([indexPath section] == 1) {
             UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_add_delete") frame:cell.frame

@@ -35,8 +35,6 @@
         // Initialization code
         self.viewType = MAViewTypePlanCustomize;
         self.viewTitle = MyLocal(@"view_title_plan_customize");
-
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
         
         _editing = NO;
         [self initTable];
@@ -60,6 +58,7 @@
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.allowsSelectionDuringEditing = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.separatorColor = [[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO];
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:NO]];
 	[self addSubview:_tableView];

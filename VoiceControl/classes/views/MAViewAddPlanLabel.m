@@ -26,8 +26,6 @@
         // Initialization code
         self.viewType = MAViewTypeAddPlanLabel;
         self.viewTitle = MyLocal(@"view_title_add_plan_label");
-        
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
     }
     return self;
 }
@@ -45,8 +43,9 @@
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.separatorColor = [[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO];
 	_tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
+    [_tableView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
     [_tableView reloadData];
     
     [self addSubview:_tableView];
@@ -63,7 +62,6 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-        //        cell.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO];
         
         _textFieldLabel = [MAUtils textFieldInit:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)
                                            color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:YES]

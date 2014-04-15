@@ -146,8 +146,6 @@
 }
 
 - (void)initView{
-    [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-    
     [self initBtns];
     [self initLabels];
 }

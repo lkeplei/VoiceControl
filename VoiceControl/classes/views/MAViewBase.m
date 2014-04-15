@@ -29,6 +29,8 @@
         _viewType = MAViewTypeBase;
         _subEventLeft = NO;
         _subEventRight = NO;
+        
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
     }
     return self;
 }

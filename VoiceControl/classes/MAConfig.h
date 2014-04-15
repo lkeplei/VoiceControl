@@ -111,6 +111,8 @@
 #define KSkinSetColorBtnRed         @"skin_color_def_btn_red"
 #define KSkinSetColorBtnDarkRed     @"skin_color_def_btn_dark_red"
 #define KSkinSetColorBtnGray        @"skin_color_def_btn_gray"
+#define KSkinSetColorTopView        @"skin_color_def_top_view"
+#define KSkinSetColorViewBg         @"skin_color_def_view_bg"
 
 #define KSkinSetDicImage            @"skin_set_image"
 #define KSkinSetImgHomePhone        @"skin_image_home_phone"
@@ -131,7 +133,7 @@
 #define KSkinSetImgScrubberKnob         @"skin_image_scrubber_knob"
 #define KSkinSetImgScrubberLeft         @"skin_image_scrubber_left"
 #define KSkinSetImgScrubberKnobRight    @"skin_image_scrubber_right"
-
+#define KSkinSetImgSysSettingCellBg     @"skin_image_system_setting_cell_bg"
 
 //资源Key值宏定义
 #define KID                     @"id"

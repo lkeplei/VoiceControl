@@ -51,8 +51,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]];
-        
         [self initTable];
         
         self.viewType = MAViewTypeFileManager;

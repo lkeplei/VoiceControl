@@ -63,40 +63,45 @@
 }
 
 -(void)initTopView{
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KStatusBarHeight, self.view.frame.size.width, KNavigationHeight)];
-    [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KNavigationHeight + KStatusBarHeight)];
+    [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self.view addSubview:_topView];
     
+    UIImageView* separatorLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"view_separator_line.png"]];
+    separatorLine.frame = CGRectMake(0, CGRectGetHeight(_topView.frame) - separatorLine.frame.size.height,
+                                     CGRectGetWidth(_topView.frame), separatorLine.frame.size.height);
+    [_topView addSubview:separatorLine];
+    
     _titleLabel = [MAUtils labelWithTxt:nil
-                                  frame:CGRectMake(0, 0, _topView.frame.size.width, _topView.frame.size.height)
+                                  frame:CGRectMake(0, KStatusBarHeight, _topView.frame.size.width, KNavigationHeight)
                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
-                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_topView addSubview:_titleLabel];
     
     //right btn
     _homeBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                          image:nil imagesec:nil
                                         target:self action:@selector(homeBtnClicked:)];
-    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, 0, KTopButtonWidth, KNavigationHeight);
+    _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, KStatusBarHeight, KTopButtonWidth, KNavigationHeight);
     [_topView addSubview:_homeBtn];
     
     _homeLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_right")
                                  frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_homeBtn addSubview:_homeLabel];
     
     //left btn
     _menuBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
                                          image:nil imagesec:nil
                                         target:self action:@selector(menuBtnClicked:)];
-    _menuBtn.frame = CGRectMake(0, 0, KTopButtonWidth, KNavigationHeight);
+    _menuBtn.frame = CGRectMake(0, KStatusBarHeight, KTopButtonWidth, KNavigationHeight);
     [_topView addSubview:_menuBtn];
     
     _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
                                  frame:CGRectMake(0, 0, _menuBtn.frame.size.width, _menuBtn.frame.size.height)
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_menuBtn addSubview:_menuLabel];
 }
 
