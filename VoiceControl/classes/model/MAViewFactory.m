@@ -14,6 +14,7 @@
 #import "MAViewFileManager.h"
 #import "MAViewAboutUs.h"
 #import "MAViewSetting.h"
+#import "MAViewSystemSetting.h"
 #import "MAViewSettingFile.h"
 #import "MAViewPlanCustomize.h"
 #import "MAViewAddPlan.h"
@@ -35,6 +36,7 @@
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewAboutWeRecorder* recorderView;
 @property (nonatomic, strong) MAViewSetting* settingView;
+@property (nonatomic, strong) MAViewSystemSetting* systemSettingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
 
 @property (nonatomic, strong) MAViewAudioPlayControl* audioPlayControl;
@@ -66,10 +68,14 @@
             break;
         case MAViewTypeSetting:
         {
-            if (_settingView == nil) {
-                _settingView = [[MAViewSetting alloc] initWithFrame:frame];
+//            if (_settingView == nil) {
+//                _settingView = [[MAViewSetting alloc] initWithFrame:frame];
+//            }
+//            view = _settingView;
+            if (_systemSettingView == nil) {
+                _systemSettingView = [[MAViewSystemSetting alloc] initWithFrame:frame];
             }
-            view = _settingView;
+            view = _systemSettingView;
         }
             break;
         case MAViewTypeSettingFile:
@@ -164,10 +170,14 @@
             break;
         case MAViewTypeSetting:
         {
-            if (_settingView) {
-                [_settingView removeFromSuperview];
-                _settingView = nil;
+            if (_systemSettingView) {
+                [_systemSettingView removeFromSuperview];
+                _systemSettingView = nil;
             }
+//            if (_settingView) {
+//                [_settingView removeFromSuperview];
+//                _settingView = nil;
+//            }
         }
             break;
         case MAViewTypeSettingFile:

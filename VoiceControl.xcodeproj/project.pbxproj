@@ -48,7 +48,6 @@
 		046B184A187C283400387497 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 046B1849187C283300387497 /* Security.framework */; };
 		049007B018F2370E00EF97C2 /* slider_scrubber_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049007AE18F2370E00EF97C2 /* slider_scrubber_left@2x.png */; };
 		049007B118F2370E00EF97C2 /* slider_scrubber_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049007AF18F2370E00EF97C2 /* slider_scrubber_right@2x.png */; };
-		04C238D717B6330E00B8B388 /* MAViewSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C238D617B6330E00B8B388 /* MAViewSetting.m */; };
 		04C238DA17B6332000B8B388 /* MAViewAboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C238D917B6332000B8B388 /* MAViewAboutUs.m */; };
 		04C6DE40179270BC00ED2EB5 /* SQLiteWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04C6DE3E179270BC00ED2EB5 /* SQLiteWrapper.cpp */; };
 		04C6DE451792711400ED2EB5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C6DE441792711400ED2EB5 /* libsqlite3.0.dylib */; };
@@ -78,14 +77,17 @@
 		185D6BF818C4762200D448F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D6BFA18C4762300D448F6 /* Default@2x.png */; };
 		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
+		1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
 		1878308E18EACCB100DEA9F1 /* MAViewTagDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */; };
-		187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */; };
 		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; };
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
+		188F920A18FD1428003EC721 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */; };
+		188F920B18FD1428003EC721 /* MAViewSettingFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920918FD1428003EC721 /* MAViewSettingFile.m */; };
+		188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920D18FD35FE003EC721 /* MAViewSetting.m */; };
 		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
 		18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF13F318D70C7E0055B72A /* MACellFile.m */; };
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
@@ -112,7 +114,6 @@
 		BE4C566017B22BC300E675CA /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = BE4C565917B22BC300E675CA /* zip.c */; };
 		BE4C566117B22BC300E675CA /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4C565C17B22BC300E675CA /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BE4C566317B22C9F00E675CA /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE4C566217B22C9F00E675CA /* libz.1.2.5.dylib */; };
-		BEBB070717E06916004F1C01 /* MAViewSettingFile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBB070617E06916004F1C01 /* MAViewSettingFile.m */; };
 		BEFE8E8017DECCF0003150F9 /* MAMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BEFE8E7F17DECCF0003150F9 /* MAMenu.m */; };
 /* End PBXBuildFile section */
 
@@ -179,8 +180,6 @@
 		046B1849187C283300387497 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		049007AE18F2370E00EF97C2 /* slider_scrubber_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_scrubber_left@2x.png"; sourceTree = "<group>"; };
 		049007AF18F2370E00EF97C2 /* slider_scrubber_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_scrubber_right@2x.png"; sourceTree = "<group>"; };
-		04C238D517B6330E00B8B388 /* MAViewSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSetting.h; sourceTree = "<group>"; };
-		04C238D617B6330E00B8B388 /* MAViewSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSetting.m; sourceTree = "<group>"; };
 		04C238D817B6332000B8B388 /* MAViewAboutUs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAboutUs.h; sourceTree = "<group>"; };
 		04C238D917B6332000B8B388 /* MAViewAboutUs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAboutUs.m; sourceTree = "<group>"; };
 		04C6DE3E179270BC00ED2EB5 /* SQLiteWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SQLiteWrapper.cpp; sourceTree = "<group>"; };
@@ -226,12 +225,12 @@
 		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
 		185F2909188E4325005D163B /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
+		1864B3DB18FD134300E974BF /* MAViewSystemSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSystemSetting.h; sourceTree = "<group>"; };
+		1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSystemSetting.m; sourceTree = "<group>"; };
 		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
 		186E4A8F18AC6F6800945619 /* MARecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARecordController.m; sourceTree = "<group>"; };
 		1878308C18EACCB100DEA9F1 /* MAViewTagDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagDetail.h; sourceTree = "<group>"; };
 		1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagDetail.m; sourceTree = "<group>"; };
-		187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
-		187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
 		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		187F5A92188682BB00D72FA6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		187F5A94188682FE00D72FA6 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -239,6 +238,12 @@
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
+		188F920618FD1428003EC721 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
+		188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
+		188F920818FD1428003EC721 /* MAViewSettingFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSettingFile.h; sourceTree = "<group>"; };
+		188F920918FD1428003EC721 /* MAViewSettingFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSettingFile.m; sourceTree = "<group>"; };
+		188F920C18FD35FE003EC721 /* MAViewSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSetting.h; sourceTree = "<group>"; };
+		188F920D18FD35FE003EC721 /* MAViewSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSetting.m; sourceTree = "<group>"; };
 		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
 		18AF13F218D70C7E0055B72A /* MACellFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellFile.h; sourceTree = "<group>"; };
 		18AF13F318D70C7E0055B72A /* MACellFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellFile.m; sourceTree = "<group>"; };
@@ -286,8 +291,6 @@
 		BE4C565B17B22BC300E675CA /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		BE4C565C17B22BC300E675CA /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
 		BE4C566217B22C9F00E675CA /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
-		BEBB070517E06916004F1C01 /* MAViewSettingFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSettingFile.h; sourceTree = "<group>"; };
-		BEBB070617E06916004F1C01 /* MAViewSettingFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSettingFile.m; sourceTree = "<group>"; };
 		BEFE8E7E17DECCF0003150F9 /* MAMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAMenu.h; sourceTree = "<group>"; };
 		BEFE8E7F17DECCF0003150F9 /* MAMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -511,6 +514,7 @@
 		04E65676178C5150003A6ACA /* views */ = {
 			isa = PBXGroup;
 			children = (
+				188F920518FD1428003EC721 /* unused */,
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
 				0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */,
@@ -531,22 +535,18 @@
 				04E65678178C5150003A6ACA /* MAViewController.m */,
 				0407465017ABFA7F00B70537 /* MAViewFileManager.h */,
 				0407465117ABFA7F00B70537 /* MAViewFileManager.m */,
-				187F5A8D188682AA00D72FA6 /* MAViewFilePasswordManager.h */,
-				187F5A8E188682AA00D72FA6 /* MAViewFilePasswordManager.m */,
 				0407464D17ABEFF100B70537 /* MAViewHome.h */,
 				0407464E17ABEFF100B70537 /* MAViewHome.m */,
 				185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */,
 				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
 				04D7DE7017A503F200AF0450 /* MAViewSelectMenu.h */,
 				04D7DE7117A503F200AF0450 /* MAViewSelectMenu.m */,
-				04C238D517B6330E00B8B388 /* MAViewSetting.h */,
-				04C238D617B6330E00B8B388 /* MAViewSetting.m */,
-				BEBB070517E06916004F1C01 /* MAViewSettingFile.h */,
-				BEBB070617E06916004F1C01 /* MAViewSettingFile.m */,
 				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
 				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
 				1878308C18EACCB100DEA9F1 /* MAViewTagDetail.h */,
 				1878308D18EACCB100DEA9F1 /* MAViewTagDetail.m */,
+				1864B3DB18FD134300E974BF /* MAViewSystemSetting.h */,
+				1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -558,6 +558,19 @@
 				187F5A92188682BB00D72FA6 /* RegexKitLite.m */,
 			);
 			path = RegexKitLite;
+			sourceTree = "<group>";
+		};
+		188F920518FD1428003EC721 /* unused */ = {
+			isa = PBXGroup;
+			children = (
+				188F920C18FD35FE003EC721 /* MAViewSetting.h */,
+				188F920D18FD35FE003EC721 /* MAViewSetting.m */,
+				188F920618FD1428003EC721 /* MAViewFilePasswordManager.h */,
+				188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */,
+				188F920818FD1428003EC721 /* MAViewSettingFile.h */,
+				188F920918FD1428003EC721 /* MAViewSettingFile.m */,
+			);
+			path = unused;
 			sourceTree = "<group>";
 		};
 		18E08B4C18DAE0BE00866C7B /* coreData */ = {
@@ -766,13 +779,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				043A6ED318E44A3A005A422D /* CJSONDeserializer.m in Sources */,
+				188F920A18FD1428003EC721 /* MAViewFilePasswordManager.m in Sources */,
 				18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */,
 				04E65652178C4F15003A6ACA /* main.m in Sources */,
 				18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */,
 				18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */,
-				187F5A8F188682AA00D72FA6 /* MAViewFilePasswordManager.m in Sources */,
 				18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
+				188F920B18FD1428003EC721 /* MAViewSettingFile.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
 				18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */,
@@ -789,6 +803,7 @@
 				043A6ED418E44A3A005A422D /* CJSONScanner.m in Sources */,
 				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
+				188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */,
 				0423066518DE872E00E2D9AC /* MAViewAboutWeRecorder.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
@@ -801,6 +816,7 @@
 				04D444B417B13FED00F04486 /* MAViewBase.m in Sources */,
 				1878308E18EACCB100DEA9F1 /* MAViewTagDetail.m in Sources */,
 				BE4C565D17B22BC300E675CA /* ioapi.c in Sources */,
+				1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */,
 				043A6ECD18E44A3A005A422D /* CFilteringJSONSerializer.m in Sources */,
 				BE4C565E17B22BC300E675CA /* mztools.c in Sources */,
 				186E4A9018AC6F6800945619 /* MARecordController.m in Sources */,
@@ -811,7 +827,6 @@
 				BE4C566017B22BC300E675CA /* zip.c in Sources */,
 				043A6ECE18E44A3A005A422D /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				BE4C566117B22BC300E675CA /* ZipArchive.mm in Sources */,
-				04C238D717B6330E00B8B388 /* MAViewSetting.m in Sources */,
 				04C238DA17B6332000B8B388 /* MAViewAboutUs.m in Sources */,
 				04E39BBC17B72AFA00B0BEEE /* MACellBase.m in Sources */,
 				04559A1C17C98EE000DCEB8A /* MADropDownControlView.m in Sources */,
@@ -819,7 +834,6 @@
 				04559A2317CA076300DCEB8A /* MASectionHeadBase.m in Sources */,
 				BEFE8E8017DECCF0003150F9 /* MAMenu.m in Sources */,
 				043A6ED118E44A3A005A422D /* CDataScanner_Extensions.m in Sources */,
-				BEBB070717E06916004F1C01 /* MAViewSettingFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
