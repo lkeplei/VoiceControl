@@ -128,10 +128,13 @@
         cell.tag = KCellButtonTag(indexPath.section, indexPath.row);
     }
     
-    [cell setCellResource:[[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row] editing:_editing];
-    
-    if (currentSection == [indexPath section] && [indexPath row] == currentRow) {
-        [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    NSArray* array = [[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray];
+    if (array && indexPath.row < [array count]) {
+        [cell setCellResource:[array objectAtIndex:[array count] - indexPath.row - 1] editing:_editing];
+        
+        if (currentSection == [indexPath section] && [indexPath row] == currentRow) {
+            [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        }
     }
     
     return cell;
@@ -326,11 +329,6 @@
         [self initResouce:array];
     }
     
-    
-    for (MAVoiceFiles* file in array) {
-        DebugLog(@"file mark = %@", file.tag);
-    }
-    
     if (_tableView == nil) {
         [self initTable];
     }
@@ -425,6 +423,26 @@
         [_tableView reloadData];
     }
 }
+
+
+//-(NSArray*)getSortOrderList:(NSMutableArray*)array{
+//    NSMutableArray* sortArray = [[NSMutableArray alloc] init];
+//    
+//    int count = [array count];
+//    for(int i = 0; i < count; i++){
+//        JJHTradeOrder* order = [array objectAtIndex:0];
+//        for (int j = 1; j < [array count]; j++) {
+//            if ([[self getSortOrderData:order] timeIntervalSince1970] < [[self getSortOrderData:[array objectAtIndex:j]] timeIntervalSince1970]) {
+//                order = [array objectAtIndex:j];
+//            }
+//        }
+//        [sortArray addObject:order];
+//        [array removeObject:order];
+//    }
+//    
+//    array = nil;
+//    return sortArray;
+//}
 
 #pragma mark - cell file back
 -(void)MACellFileBack:(MACellFile *)cell btn:(UIButton *)btn{
