@@ -192,3 +192,11 @@
 "audio_tag_remind" = "点击有惊喜";
 "detail_pre" = "前一个";
 "detail_next" = "后一个";
+
+////////////////////////////////    1.2.0
+"system_setting_duration_label" = "单文件最大时长设置";
+"system_setting_duration_describe" = "在此时间后结束保存文件";
+"system_setting_mark_label" = "标记分贝设置";
+"system_setting_mark_describe" = "当前声音达到这个点开启一个标记段";
+"system_setting_quality_label" = "录音品质";
+"system_setting_contact_label" = "让我们做得更好";
