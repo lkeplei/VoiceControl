@@ -14,4 +14,6 @@
 
 #define KDataVersion           @"1.1.0"
 
+#define KIosItunesIP           @"https://itunes.apple.com/us/app/wei-lu/id832238889?ls=1&mt=8"
+
 #endif
