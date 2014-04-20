@@ -227,7 +227,7 @@
     _isRecording = NO;
     double duration = _recorder.currentTime;
     
-    if (duration < [[MAModel shareModel] getFileTimeMin]) {//如果录制时间小于最小时长 不发送
+    if (duration < KFileTimeMin) {//如果录制时间小于最小时长 不发送
         [_recorder stop];
         //删除记录的文件
         [_recorder deleteRecording];
@@ -282,7 +282,7 @@
                         if ([[plan objectForKey:KDataBaseStatus] boolValue]) {
                             int durationMin = _recorderDuration / 60;
                             if (durationMin < [[plan objectForKey:KDataBaseDuration] intValue]
-                                && ((_recorderDuration - _durationStart) / 60) < [[MAModel shareModel] getFileTimeMax]) {
+                                && (_recorderDuration - _durationStart) < [[MAModel shareModel] getFileTimeMax]) {
                                 stop = NO;
                             }
                         }
@@ -354,7 +354,7 @@
             }
             [_tagObject addAverage:averageVoice];
         } else {
-            if (_tagObject.duration > [[MAModel shareModel] getFileTimeMin]) {
+            if (_tagObject.duration > KFileTimeMin) {
                 [self markEndPoint];
             } else {
                 [_tagObject addAverage:averageVoice];
@@ -380,7 +380,7 @@
     }
     
     [self initTagObject];
-    _tagOffset = [[MAModel shareModel] getFileTimeMin];
+    _tagOffset = KFileTimeMin;
 }
 
 #pragma mark - audio delegate
@@ -423,7 +423,7 @@
         NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:_markResource character:@";"];
         if (tagArr && [tagArr count] > 0) {
             NSArray* element = [MAUtils getArrayFromStrByCharactersInSet:[tagArr lastObject] character:@"-"];
-            if (_tagObject.startTime - [[element objectAtIndex:0] floatValue] < [[MAModel shareModel] getFileTimeMin]) {
+            if (_tagObject.startTime - [[element objectAtIndex:0] floatValue] < KFileTimeMin) {
                 res = NO;
             }
         }
@@ -465,7 +465,7 @@
                                                    userInfo:nil repeats:YES];
     }
     
-    _offsetDuration = MIN([[MAModel shareModel] getFileTimeMin], _offsetDuration);
+    _offsetDuration = MIN(KFileTimeMin, _offsetDuration);
     _recorderTimer = _offsetDuration;
 }
 @end

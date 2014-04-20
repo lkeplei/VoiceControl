@@ -56,7 +56,6 @@
 
 //NSUserDefaults key
 #define KUserDefaultFileTimeMax            @"default_file_time_max"
-#define KUserDefaultFileTimeMin            @"default_file_time_min"
 #define KUserDefaultMarkVoice              @"default_mark_voice"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserDefaultPassword               @"default_user_password"
@@ -93,6 +92,7 @@
 #define KStatusBarHeight        (20)
 #define KZipMinSize             (32 * 1024)       //kb
 #define KAnimationTime          (0.5)  
+#define KFileTimeMin            (5)
 
 //set color and image
 #define KSkinSetDefault             @"skin_default"

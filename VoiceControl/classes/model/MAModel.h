@@ -89,14 +89,10 @@ typedef enum {
 -(NSString*)getStringTime:(int32_t)time type:(MAType)type;
 //视图切换
 -(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate selector:(SEL)selector;
-//获取单文件最短时长
--(int)getFileTimeMin;
 //获取单文件最大时长
 -(int)getFileTimeMax;
 //获取录音分贝标记点
 -(int)getTagVoice;
-//重设最小时长
--(void)resetFileMin:(int)time;
 //获取repeat时间设置
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add;
 

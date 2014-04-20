@@ -79,15 +79,11 @@
     }
     
     if ([MADataManager getDataByKey:KUserDefaultFileTimeMax] == nil) {
-        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMaxTime10] forkey:KUserDefaultFileTimeMax];
-    }
-    
-    if ([MADataManager getDataByKey:KUserDefaultFileTimeMin] == nil) {
-        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinTime5] forkey:KUserDefaultFileTimeMin];
+        [MADataManager setDataByKey:[NSNumber numberWithInt:1800] forkey:KUserDefaultFileTimeMax];
     }
     
     if ([MADataManager getDataByKey:KUserDefaultMarkVoice] == nil) {
-        [MADataManager setDataByKey:[NSNumber numberWithInt:MASettingMinVoice30] forkey:KUserDefaultMarkVoice];
+        [MADataManager setDataByKey:[NSNumber numberWithInt:40] forkey:KUserDefaultMarkVoice];
     }
 }
 
@@ -129,6 +125,11 @@
         [MADataManager removeDataByKey:@"default_clear_rubbish"];
         [MADataManager removeDataByKey:@"default_pre_clear_time"];
         [MADataManager removeDataByKey:@"default_next_clear_time"];
+        
+        //1.3.0
+        [MADataManager removeDataByKey:@"default_file_time_min"];
+        [MADataManager setDataByKey:[NSNumber numberWithInt:1800] forkey:KUserDefaultFileTimeMax];
+        [MADataManager setDataByKey:[NSNumber numberWithInt:40] forkey:KUserDefaultMarkVoice];
     }
 }
 
@@ -295,106 +296,12 @@
     [UIView commitAnimations];
 }
 
--(int)getFileTimeMin{
-    //以秒为单位
-    int res = 5;
-    int type = [[MADataManager getDataByKey:KUserDefaultFileTimeMin] intValue];
-    switch (type) {
-        case MASettingMinTime3:
-            res = 3;
-            break;
-        case MASettingMinTime5:
-            res = 5;
-            break;
-        case MASettingMinTime10:
-            res = 10;
-            break;
-        case MASettingMinTime20:
-            res = 20;
-            break;
-        case MASettingMinTime30:
-            res = 30;
-            break;
-        case MASettingMinTime50:
-            res = 50;
-            break;
-        case MASettingMinTime60:
-            res = 60;
-            break;
-        default:
-            break;
-    }
-    return res;
-}
-
 -(int)getFileTimeMax{
-    //以秒为单位
-    int res = 10;
-    int type = [[MADataManager getDataByKey:KUserDefaultFileTimeMax] intValue];
-    switch (type) {
-        case MASettingMaxTime1:
-            res = 1;
-            break;
-        case MASettingMaxTime2:
-            res = 2;
-            break;
-        case MASettingMaxTime5:
-            res = 5;
-            break;
-        case MASettingMaxTime10:
-            res = 10;
-            break;
-        case MASettingMaxTime30:
-            res = 30;
-            break;
-        case MASettingMaxTime60:
-            res = 60;
-            break;
-        case MASettingMaxTime120:
-            res = 120;
-            break;
-        default:
-            break;
-    }
-    return res;
+    return [[MADataManager getDataByKey:KUserDefaultFileTimeMax] intValue];
 }
 
 -(int)getTagVoice{
-    int res = 20;
-    int type = [[MADataManager getDataByKey:KUserDefaultMarkVoice] intValue];
-    switch (type) {
-        case MASettingMinVoice10:
-            res = 10;
-            break;
-        case MASettingMinVoice20:
-            res = 20;
-            break;
-        case MASettingMinVoice30:
-            res = 30;
-            break;
-        case MASettingMinVoice40:
-            res = 40;
-            break;
-        case MASettingMinVoice50:
-            res = 50;
-            break;
-        case MASettingMinVoice60:
-            res = 60;
-            break;
-        case MASettingMinVoice70:
-            res = 70;
-            break;
-        case MASettingMinVoice80:
-            res = 80;
-            break;
-        case MASettingMinVoice90:
-            res = 90;
-            break;
-        default:
-            break;
-    }
-    
-    return res;
+    return [[MADataManager getDataByKey:KUserDefaultMarkVoice] intValue];
 }
 
 -(NSString*)getRepeatTest:(NSString*)resource add:(BOOL)add{
@@ -451,10 +358,6 @@
 
 -(AVAudioRecorder*)getRecorder{
     return [_recordController recorder];
-}
-
--(void)resetFileMin:(int)time{
-    [MADataManager setDataByKey:[NSNumber numberWithInt:time] forkey:KUserDefaultFileTimeMin];
 }
 
 -(void)setAppForeground:(BOOL)appForeground{

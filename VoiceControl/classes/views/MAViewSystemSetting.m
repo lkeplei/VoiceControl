@@ -128,24 +128,37 @@
     [_durationView addSubview:add];
     
     //progress
-    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(add.frame) + KViewVerOffset / 2,
+    _progressSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(add.frame),
                                                                  _durationView.frame.size.width, 30)];
     [_progressSlider addTarget:self action:@selector(durationSliderMoved:) forControlEvents:UIControlEventValueChanged];
-    _progressSlider.maximumValue = 1;
-    _progressSlider.minimumValue = 180;
+    _progressSlider.maximumValue = 180;
+    _progressSlider.minimumValue = 1;
+    _progressSlider.value = [[MAModel shareModel] getFileTimeMax] / 60;
     [_durationView addSubview:_progressSlider];
 }
 
 -(void)delDuration:(id)sender{
-    
+    int max = [[MAModel shareModel] getFileTimeMax];
+    max -= 300;
+    max = max > 60 ? max : 60;
+    _progressSlider.value = max / 60;
+    [_timeLabel setText:[[MAModel shareModel] getStringTime:max type:MATypeTimeClock]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:max] forkey:KUserDefaultFileTimeMax];
 }
 
 -(void)addDuration:(id)sender{
-    
+    int max = [[MAModel shareModel] getFileTimeMax];
+    max += 300;
+    max = max > 180 * 60 ? 180 * 60 : max;
+    _progressSlider.value = max / 60;
+    [_timeLabel setText:[[MAModel shareModel] getStringTime:max type:MATypeTimeClock]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:max] forkey:KUserDefaultFileTimeMax];
 }
 
 -(void)durationSliderMoved:(id)sender{
-//    _avPlay.currentTime = _progressSlider.value;
+    int max = _progressSlider.value * 60;
+    [_timeLabel setText:[[MAModel shareModel] getStringTime:max type:MATypeTimeClock]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:max] forkey:KUserDefaultFileTimeMax];
 }
 
 #pragma mark - mark db area
@@ -170,7 +183,7 @@
     descr.textAlignment = KTextAlignmentLeft;
     [_markDBView addSubview:descr];
     
-    _dbLabel = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:[[MAModel shareModel] getFileTimeMax] type:MATypeTimeClock]
+    _dbLabel = [MAUtils labelWithTxt:[MAUtils getStringByInt:[[MAModel shareModel] getTagVoice]]
                                  frame:CGRectMake(0, 0, _markDBView.frame.size.width, KViewLabelHeight)
                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
@@ -210,21 +223,33 @@
     _markSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(add.frame) + KViewVerOffset / 2,
                                                              _markDBView.frame.size.width, 30)];
     [_markSlider addTarget:self action:@selector(markSliderMoved:) forControlEvents:UIControlEventValueChanged];
-    _markSlider.maximumValue = 10;
-    _markSlider.minimumValue = 90;
+    _markSlider.maximumValue = 90;
+    _markSlider.minimumValue = 10;
+    _markSlider.value = [[MAModel shareModel] getTagVoice];
     [_markDBView addSubview:_markSlider];
 }
 
 -(void)delDB:(id)sender{
-    
+    int tag = [[MAModel shareModel] getTagVoice];
+    tag -= 5;
+    tag = tag > 10 ? tag : 10;
+    _markSlider.value = tag;
+    [_dbLabel setText:[MAUtils getStringByInt:tag]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:tag] forkey:KUserDefaultMarkVoice];
 }
 
 -(void)addDB:(id)sender{
-    
+    int tag = [[MAModel shareModel] getTagVoice];
+    tag += 5;
+    tag = tag > 90 ? 90 : tag;
+    _markSlider.value = tag;
+    [_dbLabel setText:[MAUtils getStringByInt:tag]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:tag] forkey:KUserDefaultMarkVoice];
 }
 
 -(void)markSliderMoved:(id)sender{
-    //    _avPlay.currentTime = _progressSlider.value;
+    [_dbLabel setText:[MAUtils getStringByInt:_markSlider.value]];
+    [MADataManager setDataByKey:[NSNumber numberWithInt:_markSlider.value] forkey:KUserDefaultMarkVoice];
 }
 
 #pragma mark - quality area
@@ -243,16 +268,15 @@
     
 
     
-    NSArray *array=@[@"搜索\r\naa",@"选择",@"视频",@"图片"];
+    NSArray *array=@[@"low",@"normal",@"high"];
     UISegmentedControl* segmentControl = [[UISegmentedControl alloc]initWithItems:array];
-    segmentControl.segmentedControlStyle = UISegmentedControlStyleBordered;
     //设置位置 大小
-    segmentControl.frame = CGRectMake(60, 40, 200, 50);
+    segmentControl.frame = CGRectMake((_qualityView.frame.size.width - 270) / 2, CGRectGetMaxY(label.frame) + KViewVerOffset, 270, 40);
     //默认选择
     segmentControl.selectedSegmentIndex = 1;
     //设置背景色
-    segmentControl.tintColor = [UIColor greenColor];
-    [segmentControl setImage:[UIImage imageNamed:@"slider_tag.png"] forSegmentAtIndex:1];
+//    segmentControl.tintColor = [UIColor greenColor];
+//    [segmentControl setImage:[[UIImage imageNamed:@"slider_tag"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:1];
     //设置监听事件
     [segmentControl addTarget:self action:@selector(segmentedSelected:) forControlEvents:UIControlEventValueChanged];
     [_qualityView addSubview:segmentControl];
@@ -290,6 +314,7 @@
               forState:UIControlStateNormal];
     [contact setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
               forState:UIControlStateHighlighted];
+    [contact setSelected:YES];
     [_contactView addSubview:contact];
     
     UIButton* evaluation = [MAUtils buttonWithImg:MyLocal(@"system_setting_evaluation") off:0 zoomIn:NO

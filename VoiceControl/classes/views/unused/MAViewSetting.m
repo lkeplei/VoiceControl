@@ -64,8 +64,8 @@
                         MyLocal(@"setting_time_10second"), MyLocal(@"setting_time_20second"), MyLocal(@"setting_time_30second"),
                         MyLocal(@"setting_time_50second"), MyLocal(@"setting_time_60second"), nil];
     [_fileTimeMin setSelectionOptions:options];
-    [_fileTimeMin setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
-                                                              KUserDefaultFileTimeMin] intValue] - MASettingMinTime3]];
+//    [_fileTimeMin setSelectedContent:[options objectAtIndex:[[MADataManager getDataByKey:
+//                                                              KUserDefaultFileTimeMin] intValue] - MASettingMinTime3]];
     
     //自动录音，最低分贝数(暂时不加分贝限制)
     _markVoice = [[MADropDownControlView alloc] initWithFrame:CGRectMake(off,
@@ -115,7 +115,7 @@
             [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMaxDuration
                                             label:[NSString stringWithFormat:@"-%d", MASettingMaxTime1 + [selection intValue]]];
         } else if (_fileTimeMin == view) {
-            [[MAModel shareModel] resetFileMin:MASettingMinTime3 + [selection intValue]];
+//            [[MAModel shareModel] resetFileMin:MASettingMinTime3 + [selection intValue]];
             
             [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KSettingMinDuration
                                             label:[NSString stringWithFormat:@"-%d", MASettingMinTime3 + [selection intValue]]];
