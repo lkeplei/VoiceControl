@@ -8,6 +8,6 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewAboutUs : MAViewBase<UITableViewDataSource, UITableViewDelegate>
+@interface MAViewAboutUs : MAViewBase
 
 @end

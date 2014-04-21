@@ -42,11 +42,11 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [SysDelegate.viewController setGestureEnabled:NO];
+//    [SysDelegate.viewController setGestureEnabled:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
-    [SysDelegate.viewController setGestureEnabled:YES];
+//    [SysDelegate.viewController setGestureEnabled:YES];
 }
 
 - (void)initView{
@@ -266,10 +266,13 @@
     label.textAlignment = KTextAlignmentLeft;
     [_qualityView addSubview:label];
     
-
-    
-    NSArray *array=@[@"low",@"normal",@"high"];
+    //segment
+    NSArray *array=@[MyLocal(@"system_setting_quality_low"), MyLocal(@"system_setting_quality_normal"), MyLocal(@"system_setting_quality_high")];
     UISegmentedControl* segmentControl = [[UISegmentedControl alloc]initWithItems:array];
+    //设置字体属性
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,
+                         [UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize18], NSFontAttributeName, nil];
+    [segmentControl setTitleTextAttributes:dic forState:UIControlStateNormal];
     //设置位置 大小
     segmentControl.frame = CGRectMake((_qualityView.frame.size.width - 270) / 2, CGRectGetMaxY(label.frame) + KViewVerOffset, 270, 40);
     //默认选择
@@ -280,6 +283,23 @@
     //设置监听事件
     [segmentControl addTarget:self action:@selector(segmentedSelected:) forControlEvents:UIControlEventValueChanged];
     [_qualityView addSubview:segmentControl];
+    
+    //describle
+    UILabel* label1 = [MAUtils labelWithTxt:MyLocal(@"system_setting_quality_des_low")
+                                      frame:CGRectMake(CGRectGetMinX(segmentControl.frame), KViewVerOffset / 2 + CGRectGetMaxY(segmentControl.frame), 90, KViewLabelHeight)
+                                       font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize14]
+                                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    [_qualityView addSubview:label1];
+    UILabel* label2 = [MAUtils labelWithTxt:MyLocal(@"system_setting_quality_des_normal")
+                                      frame:CGRectMake(CGRectGetMaxX(label1.frame), CGRectGetMinY(label1.frame), 90, KViewLabelHeight)
+                                       font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize14]
+                                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    [_qualityView addSubview:label2];
+    UILabel* label3 = [MAUtils labelWithTxt:MyLocal(@"system_setting_quality_des_high")
+                                      frame:CGRectMake(CGRectGetMaxX(label2.frame), CGRectGetMinY(label1.frame), 90, KViewLabelHeight)
+                                       font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize14]
+                                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    [_qualityView addSubview:label3];
 }
 
 -(void)segmentedSelected:(id)sender{

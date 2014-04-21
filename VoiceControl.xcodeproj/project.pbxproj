@@ -10,7 +10,6 @@
 		0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407464E17ABEFF100B70537 /* MAViewHome.m */; };
 		0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407465117ABFA7F00B70537 /* MAViewFileManager.m */; };
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
-		0423066518DE872E00E2D9AC /* MAViewAboutWeRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */; };
 		042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042BDBB318C4BE200041C078 /* icon-120@2x.png */; };
 		043A6ECB18E44A3A005A422D /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 043A6EB118E44A3A005A422D /* libBaiduMobStat.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		043A6ECC18E44A3A005A422D /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A6EB418E44A3A005A422D /* CDataScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -129,8 +128,6 @@
 		0407465017ABFA7F00B70537 /* MAViewFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFileManager.h; sourceTree = "<group>"; };
 		0407465117ABFA7F00B70537 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
 		0422DDF817EC01660004C289 /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
-		0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAboutWeRecorder.h; sourceTree = "<group>"; };
-		0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAboutWeRecorder.m; sourceTree = "<group>"; };
 		042BDBB318C4BE200041C078 /* icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120@2x.png"; sourceTree = "<group>"; };
 		043A6EB018E44A3A005A422D /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
 		043A6EB118E44A3A005A422D /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
@@ -529,8 +526,6 @@
 				188F920518FD1428003EC721 /* unused */,
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
-				0423066318DE872E00E2D9AC /* MAViewAboutWeRecorder.h */,
-				0423066418DE872E00E2D9AC /* MAViewAboutWeRecorder.m */,
 				185F2908188E4325005D163B /* MAViewAddPlan.h */,
 				185F2909188E4325005D163B /* MAViewAddPlan.m */,
 				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
@@ -828,7 +823,6 @@
 				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
 				188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */,
-				0423066518DE872E00E2D9AC /* MAViewAboutWeRecorder.m in Sources */,
 				BE207D7C17A2249800E0A12A /* MAViewAudioPlayControl.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */,
@@ -996,8 +990,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1028,8 +1022,8 @@
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/baidu",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";

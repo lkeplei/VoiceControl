@@ -199,6 +199,12 @@
 "system_setting_mark_label" = "标记分贝设置";
 "system_setting_mark_describe" = "当前声音达到这个点开启一个标记段";
 "system_setting_quality_label" = "录音品质";
+"system_setting_quality_low" = "低";
+"system_setting_quality_normal" = "标准";
+"system_setting_quality_high" = "最佳";
+"system_setting_quality_des_low" = "最小尺寸";
+"system_setting_quality_des_normal" = "适合声音";
+"system_setting_quality_des_high" = "CD音质";
 "system_setting_contact_label" = "让我们做得更好";
 "system_setting_del_five" = "-5分钟";
 "system_setting_add_five" = "+5分钟";

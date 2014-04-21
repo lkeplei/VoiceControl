@@ -455,7 +455,6 @@ typedef void (^tagDetailCompletion)(void);
 -(void)handlePanGesture:(UIPanGestureRecognizer*)sender{
     //得到拖的过程中的xy坐标
     CGPoint translation=[sender translationInView:_contentView];
-    DebugLog(@"handleSwipeGesture point = (%f, %f)", translation.x, translation.y);
     //平移图片CGAffineTransformMakeTranslation
     float x = _prePointX + translation.x;
     if (x >= 0.000001 && x <= _contentView.frame.size.width) {
