@@ -256,6 +256,7 @@
 		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
 		18AF13F218D70C7E0055B72A /* MACellFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellFile.h; sourceTree = "<group>"; };
 		18AF13F318D70C7E0055B72A /* MACellFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellFile.m; sourceTree = "<group>"; };
+		18BF40ED1905FECF00AA45B5 /* MAModelDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAModelDef.h; sourceTree = "<group>"; };
 		18DCB27A18A47F6600C13CDC /* MACellPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellPlan.h; sourceTree = "<group>"; };
 		18DCB27B18A47F6600C13CDC /* MACellPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellPlan.m; sourceTree = "<group>"; };
 		18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
@@ -661,6 +662,7 @@
 				182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */,
 				186E4A8E18AC6F6800945619 /* MARecordController.h */,
 				186E4A8F18AC6F6800945619 /* MARecordController.m */,
+				18BF40ED1905FECF00AA45B5 /* MAModelDef.h */,
 			);
 			path = model;
 			sourceTree = "<group>";

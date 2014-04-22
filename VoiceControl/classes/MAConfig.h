@@ -61,6 +61,7 @@
 #define KUserDefaultPassword               @"default_user_password"
 #define KUserDefaultResetPassword          @"default_user_reset_password"
 #define KUserDefaultTagRemind              @"default_tag_remind"
+#define KUserDefaultQualityLevel           @"default_quality_level"
 
 #define KUserDefaultDataVersion            @"default_data_version"
 //数据库部分

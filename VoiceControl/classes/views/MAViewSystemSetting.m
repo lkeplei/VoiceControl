@@ -42,11 +42,11 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-//    [SysDelegate.viewController setGestureEnabled:NO];
+    [SysDelegate.viewController setGestureEnabled:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
-//    [SysDelegate.viewController setGestureEnabled:YES];
+    [SysDelegate.viewController setGestureEnabled:YES];
 }
 
 - (void)initView{
@@ -276,7 +276,7 @@
     //设置位置 大小
     segmentControl.frame = CGRectMake((_qualityView.frame.size.width - 270) / 2, CGRectGetMaxY(label.frame) + KViewVerOffset, 270, 40);
     //默认选择
-    segmentControl.selectedSegmentIndex = 1;
+    segmentControl.selectedSegmentIndex = [[MADataManager getDataByKey:KUserDefaultQualityLevel] intValue] - MARecorderQualityLow;
     //设置背景色
 //    segmentControl.tintColor = [UIColor greenColor];
 //    [segmentControl setImage:[[UIImage imageNamed:@"slider_tag"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:1];
@@ -303,7 +303,7 @@
 }
 
 -(void)segmentedSelected:(id)sender{
-    
+    [[MAModel shareModel] resetRecorderQuality:[(UISegmentedControl*)sender selectedSegmentIndex] + MARecorderQualityLow];
 }
 
 #pragma mark - contact area

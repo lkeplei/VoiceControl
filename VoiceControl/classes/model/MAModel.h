@@ -7,72 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MAModelDef.h"
 
 @class AVAudioRecorder;
-
-typedef enum {
-    MATypeTimeCh = 0,
-    MATypeTimeNum,
-    MATypeTimeClock,
-    
-    MATypeSkinDefault = 50,
-    MATypeSkinBlack,
-    
-    MATypeFileNormal = 70,
-    MATypeFileForEver,
-    MATypeFilePwd,
-    
-    MATypeFileCustomDefault = 80,
-    
-    MATypeChangeViewNull = 100,
-    MATypeChangeViewCurlDown,
-    MATypeChangeViewCurlUp,
-    MATypeChangeViewFlipFromLeft,
-    MATypeChangeViewFlipFromRight,
-    
-    MATypeColorDefault = 200,
-    MATypeColorDefWhite,
-    MATypeColorDefBlack,
-    MATypeColorDefGray,
-    MATypeColorDefBlue,
-    MATypeColorHomeBg,
-    MATypeColorTableLabel,
-    MATypeColorDropBG,
-    MATypeColorDropCellBG,
-    MATypeColorBtnGreen,
-    MATypeColorBtnDarkGreen,
-    MATypeColorBtnRed,
-    MATypeColorBtnDarkRed,
-    MATypeColorBtnGray,
-    MATypeColorTopView,
-    MATypeColorViewBg,
-    
-    MATypeImgHomePhone = 300,
-    MATypeImgHomeMenu,
-    MATypeImgPlayPlay,
-    MATypeImgPlayNext,
-    MATypeImgPlayPause,
-    MATypeImgPlayPre,
-    MATypeImgBtnGreenCircleSec,
-    MATypeImgBtnGreenCircle,
-    MATypeImgBtnRedCircleSec,
-    MATypeImgBtnRedCircle,
-    MATypeImgBtnGrayCircle,
-    MATypeImgAddPlanReSec,
-    MATypeImgCheckBoxNormal,
-    MATypeImgCheckBoxSec,
-    MATypeImgCellIndicator,
-    MATypeImgSliderScrubberKnob,
-    MATypeImgSliderScrubberLeft,
-    MATypeImgSliderScrubberRight,
-    MATypeImgSysSettingCellBg,
-    
-    MATypeBaiduMobLogEvent = 400,
-    MATypeBaiduMobEventStart,
-    MATypeBaiduMobEventEnd,
-    MATypeBaiduMobPageStart,
-    MATypeBaiduMobPageEnd,
-} MAType;
 
 @interface MAModel : NSObject
 
@@ -101,6 +38,7 @@ typedef enum {
 -(void)stopRecord;
 -(void)resetPlan;
 -(BOOL)isRecording;
+-(void)resetRecorderQuality:(MARecorderQualityType)type;
 -(NSString*)getCurrentFileName;
 -(NSString*)getcurrentFilePath;
 -(AVAudioRecorder*)getRecorder;

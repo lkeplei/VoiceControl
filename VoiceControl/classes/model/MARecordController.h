@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MAModelDef.h"
 
 @interface MARecordController : NSObject<AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
@@ -21,6 +22,7 @@
 
 -(void)resetPlan;
 -(void)resetTimer;
+-(void)resetRecorderQuality:(MARecorderQualityType)type;
 
 @property (assign) BOOL isRecording;
 @property (nonatomic, strong) NSString* fileName;

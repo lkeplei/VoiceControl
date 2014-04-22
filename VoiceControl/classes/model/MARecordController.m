@@ -112,18 +112,7 @@
 - (void)initAudio{
     _isRecording = NO;
     
-    //录音设置
-    _recordSetting = [[NSMutableDictionary alloc]init];
-    //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
-    [_recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
-    [_recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
-    //录音通道数  1 或 2
-    [_recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
-    //线性采样位数  8、16、24、32
-    [_recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    //录音的质量
-    [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+    [self resetRecorderQuality:(MARecorderQualityType)[[MADataManager getDataByKey:KUserDefaultQualityLevel] intValue]];
 }
 
 -(void)initTagObject{
@@ -135,6 +124,51 @@
 }
 
 #pragma mark - about record
+-(void)resetRecorderQuality:(MARecorderQualityType)type{
+    MARecorderQualityType oldType = (MARecorderQualityType)[[MADataManager getDataByKey:KUserDefaultQualityLevel] intValue];
+    if (type != oldType) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:type] forkey:KUserDefaultQualityLevel];
+        
+        if (_recordSetting == nil) {
+            //录音设置
+            _recordSetting = [[NSMutableDictionary alloc]init];
+            //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
+            [_recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+            //录音通道数  1 或 2
+            [_recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
+            //线性采样位数  8、16、24、32
+            [_recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+        }
+        
+        switch (type) {
+            case MARecorderQualityLow:{
+                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+                [_recordSetting setValue:[NSNumber numberWithFloat:8000] forKey:AVSampleRateKey];
+                //录音的质量
+                [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityLow] forKey:AVEncoderAudioQualityKey];
+            }
+                break;
+            case MARecorderQualityNormal:{
+                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+                [_recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
+                //录音的质量
+                [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+            }
+                break;
+            case MARecorderQualityHigh:{
+                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+                [_recordSetting setValue:[NSNumber numberWithFloat:96000] forKey:AVSampleRateKey];
+                //录音的质量
+                [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
 -(void)startDefaultRecord{
     if (_isRecording) {
         return;

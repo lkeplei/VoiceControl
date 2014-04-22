@@ -85,6 +85,10 @@
     if ([MADataManager getDataByKey:KUserDefaultMarkVoice] == nil) {
         [MADataManager setDataByKey:[NSNumber numberWithInt:40] forkey:KUserDefaultMarkVoice];
     }
+    
+    if ([MADataManager getDataByKey:KUserDefaultQualityLevel] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithInt:MARecorderQualityNormal] forkey:KUserDefaultQualityLevel];
+    }
 }
 
 -(void)dataTransfer{
@@ -358,6 +362,10 @@
 
 -(AVAudioRecorder*)getRecorder{
     return [_recordController recorder];
+}
+
+-(void)resetRecorderQuality:(MARecorderQualityType)type{
+    [_recordController resetRecorderQuality:type];
 }
 
 -(void)setAppForeground:(BOOL)appForeground{
