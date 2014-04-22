@@ -134,7 +134,7 @@
 
 //私人订制
 "plan_top_left" = "编辑";
-"plan_top_right" = "添加定制";
+"plan_top_right" = "添加";
 "plan_top_ok" = "完成";
 
 "plan_add_top_left" = "取消";
@@ -194,6 +194,9 @@
 "detail_next" = "后一个";
 
 ////////////////////////////////    1.2.0
+"plan_no_plan" = "无订制";
+"plan_nothing_content" = "您还没有添加订制，个性化的订制可以让您的录音更随心所欲，赶快添加试试吧！";
+
 "system_setting_duration_label" = "单文件最大时长设置";
 "system_setting_duration_describe" = "在此时间后结束保存文件";
 "system_setting_mark_label" = "标记分贝设置";

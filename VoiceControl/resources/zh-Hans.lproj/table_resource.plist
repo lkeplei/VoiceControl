@@ -19,6 +19,26 @@
 					<key>enabled</key>
 					<false/>
 					<key>title</key>
+					<string>首页</string>
+				</dict>
+				<key>cell_array</key>
+				<array>
+					<dict>
+						<key>normal_bg_color</key>
+						<string>255,0,0,1</string>
+						<key>select_bg_color</key>
+						<string>0,255,0,1</string>
+						<key>content</key>
+						<string>首页</string>
+					</dict>
+				</array>
+			</dict>
+			<dict>
+				<key>section_property</key>
+				<dict>
+					<key>enabled</key>
+					<false/>
+					<key>title</key>
 					<string>文件管理</string>
 				</dict>
 				<key>cell_array</key>

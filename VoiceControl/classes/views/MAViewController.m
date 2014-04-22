@@ -88,7 +88,7 @@
     _homeLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_right")
                                  frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_homeBtn addSubview:_homeLabel];
     
     //left btn
@@ -101,7 +101,7 @@
     _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
                                  frame:CGRectMake(0, 0, _menuBtn.frame.size.width, _menuBtn.frame.size.height)
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
-                                 color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_menuBtn addSubview:_menuLabel];
 }
 
@@ -110,12 +110,16 @@
     if ([_currentShowView subEventLeft]) {
         [_currentShowView eventTopBtnClicked:YES];
     } else {
-        isMenuOpening = !isMenuOpening;
-        if (isMenuOpening) {
-            [self showMenu];
-        } else {
-            [self hideMenu];
-        }
+        [self resetMenu];
+    }
+}
+
+-(void)resetMenu{
+    isMenuOpening = !isMenuOpening;
+    if (isMenuOpening) {
+        [self showMenu];
+    } else {
+        [self hideMenu];
     }
 }
 
@@ -279,7 +283,7 @@
     
     //hide menu
     if (isMenuOpening) {
-        [self menuBtnClicked:nil];   
+        [self resetMenu];
     }
     
     //页面已切换

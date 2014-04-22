@@ -135,7 +135,7 @@
 
 //私人订制
 "plan_top_left" = "Edit";        //"编辑";
-"plan_top_right" = "Add custom";        //"添加定制";
+"plan_top_right" = "Add";        //"添加定制";
 "plan_top_ok" = "Done";        //"完成";
 
 "plan_add_top_left" = "Cancel";        //"取消";

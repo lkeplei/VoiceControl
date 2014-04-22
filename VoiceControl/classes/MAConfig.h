@@ -52,7 +52,7 @@
 #define KLabelFontSize16        (16)
 #define KLabelFontSize18        (18)
 #define KLabelFontSize22        (22)
-#define KLabelFontSize30        (30)
+#define KLabelFontSize36        (36)
 
 //NSUserDefaults key
 #define KUserDefaultFileTimeMax            @"default_file_time_max"

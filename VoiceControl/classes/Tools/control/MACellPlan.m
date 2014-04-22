@@ -65,8 +65,8 @@
         label.text = [resDic objectForKey:KDataBaseTime];
     } else {
         label = [MAUtils labelWithTxt:[resDic objectForKey:KDataBaseTime]
-                                frame:CGRectMake(offset, 0, self.frame.size.width, self.frame.size.height * heightRate)
-                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize30]
+                                frame:CGRectMake(offset, offset / 2, self.frame.size.width, self.frame.size.height * heightRate)
+                                 font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize36]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         label.textAlignment = KTextAlignmentLeft;
         label.tag = KTimeLabelTag;
@@ -79,7 +79,7 @@
         duration.text = [self getDateString:[[resDic objectForKey:KDataBaseDuration] intValue]];
     } else {
         duration = [MAUtils labelWithTxt:[self getDateString:[[resDic objectForKey:KDataBaseDuration] intValue]]
-                                frame:CGRectMake(90, 15, self.frame.size.width, label.frame.size.height / 2)
+                                frame:CGRectMake(100, 20, self.frame.size.width, label.frame.size.height / 2)
                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         duration.textAlignment = KTextAlignmentLeft;
@@ -93,7 +93,7 @@
         title.text = [resDic objectForKey:KDataBaseTitle];
     } else {
         title = [MAUtils labelWithTxt:[resDic objectForKey:KDataBaseTitle]
-                                frame:CGRectMake(offset, label.frame.origin.y + label.frame.size.height,
+                                frame:CGRectMake(offset, CGRectGetMaxY(label.frame) + offset / 2,
                                                  self.frame.size.width, self.frame.size.height - label.frame.size.height)
                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
@@ -110,7 +110,7 @@
         planTime = [MAUtils labelWithTxt:[self getPlanTimeString:[resDic objectForKey:KDataBasePlanTime]]
                                    frame:CGRectMake(title.frame.origin.x + [MAUtils getFontSize:[resDic objectForKey:KTitle]
                                                                                            font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]].width,
-                                                 title.frame.origin.y, self.frame.size.width, title.frame.size.height)
+                                                 CGRectGetMinY(title.frame), self.frame.size.width, title.frame.size.height)
                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                 color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         planTime.textAlignment = KTextAlignmentLeft;
@@ -174,7 +174,7 @@
         label = [MAUtils labelWithTxt:resource
                                 frame:self.frame
                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
-                                color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                                color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
         label.tag = KTimeLabelTag;
         [_bgView addSubview:label];
     }
