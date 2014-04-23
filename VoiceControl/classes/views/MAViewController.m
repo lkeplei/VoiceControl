@@ -127,7 +127,7 @@
     if ([_currentShowView subEventRight]) {
         [_currentShowView eventTopBtnClicked:NO];
     } else {
-        [self changeToViewByType:MAViewTypeHome];
+        [self changeToViewByType:MAViewTypeHome changeType:MATypeTransitionRippleEffect];
     }
 }
 #pragma mark - about panel
@@ -221,9 +221,8 @@
     
     [[MAModel shareModel] changeView:_preShowView
                                   to:_currentShowView
-                                type:MATypeChangeViewFlipFromLeft
-                            delegate:self
-                            selector:nil];
+                                type:type
+                            delegate:self];
     [_currentShowView showView];
     [_titleLabel setText:_currentShowView.viewTitle];
     [self.view addSubview:_currentShowView];
@@ -238,9 +237,8 @@
     
     [[MAModel shareModel] changeView:lastView
                                   to:preView
-                                type:MATypeChangeViewFlipFromLeft
-                            delegate:self
-                            selector:nil];
+                                type:type
+                            delegate:self];
     
     [_titleLabel setText:_currentShowView.viewTitle];
     
@@ -251,7 +249,7 @@
     [_viewFactory removeView:lastView.viewType];
 }
 
--(void)changeToViewByType:(MAViewType)type{
+-(void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType{
     //旧页面将切换
     [_preShowView viewWillDisappear:YES];
     
@@ -267,12 +265,16 @@
     //新页面将显示
     [_currentShowView viewWillAppear:YES];
     
+    //旧页面移除
+    if (_preShowView && _preShowView.viewType != _currentShowView.viewType) {
+        [_viewFactory removeView:_preShowView.viewType];
+    }
+    
     [[MAModel shareModel] changeView:_preShowView
                                   to:_currentShowView
-                                type:MATypeChangeViewFlipFromLeft
-                            delegate:self
-                            selector:@selector(animationFinished:)];
-    
+                                type:changeType
+                            delegate:self];
+    //新页面show
     [_currentShowView showView];
     
     [_titleLabel setText:_currentShowView.viewTitle];
@@ -312,12 +314,6 @@
         } else {
             [_homeLabel setText:MyLocal(@"home_top_right")];
         }
-    }
-}
-
--(void)animationFinished:(id)sender{
-    if (_preShowView && _preShowView.viewType != _currentShowView.viewType) {
-        [_viewFactory removeView:_preShowView.viewType];
     }
 }
 

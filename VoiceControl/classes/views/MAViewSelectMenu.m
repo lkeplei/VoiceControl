@@ -30,15 +30,15 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
-        [SysDelegate.viewController changeToViewByType:MAViewTypeHome];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeHome changeType:MATypeTransitionRippleEffect];
     } else if (indexPath.section == 1 && indexPath.row == 0) {
-        [SysDelegate.viewController changeToViewByType:MAViewTypeFileManager];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeFileManager changeType:MATypeTransitionRippleEffect];
     } else if(indexPath.section == 2 && indexPath.row == 0){
-        [SysDelegate.viewController changeToViewByType:MAViewTypeSetting];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeSetting changeType:MATypeTransitionRippleEffect];
     } else if(indexPath.section == 3 && indexPath.row == 0){
-        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
+        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize changeType:MATypeTransitionRippleEffect];
     } else if(indexPath.section == 4 && indexPath.row == 0){
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAboutUs];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeAboutUs changeType:MATypeTransitionRippleEffect];
     }
 }
 @end

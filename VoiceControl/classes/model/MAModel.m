@@ -266,38 +266,102 @@
     return timeStr;
 }
 
--(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate selector:(SEL)selector{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [UIView beginAnimations:nil context:context];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:KAnimationTime];
-
-    switch (type) {
-        case MATypeChangeViewCurlDown:
-            [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:delegate.view cache:YES];
-            break;
-        case MATypeChangeViewCurlUp:
-            [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:delegate.view cache:YES];
-            break;
-        case MATypeChangeViewFlipFromLeft:
-            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:delegate.view cache:YES];
-            break;
-        case MATypeChangeViewFlipFromRight:
-            [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:delegate.view cache:YES];
-            break;
-        default:
-            break;
+-(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate{
+    static NSString* const AnimationKey = @"transtionKey";
+    
+    if (type >= MATypeChangeViewCurlDown && type <= MATypeChangeViewFlipFromRight) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [UIView beginAnimations:nil context:context];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:KAnimationTime];
+        
+        switch (type) {
+            case MATypeChangeViewCurlDown:
+                [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:delegate.view cache:YES];
+                break;
+            case MATypeChangeViewCurlUp:
+                [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:delegate.view cache:YES];
+                break;
+            case MATypeChangeViewFlipFromLeft:
+                [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:delegate.view cache:YES];
+                break;
+            case MATypeChangeViewFlipFromRight:
+                [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:delegate.view cache:YES];
+                break;
+            default:
+                break;
+        }
+        
+        NSUInteger first = [[delegate.view subviews] indexOfObject:from];
+        NSUInteger second = [[delegate.view subviews] indexOfObject:to];
+        
+        [delegate.view exchangeSubviewAtIndex:first withSubviewAtIndex:second];
+        
+        [UIView setAnimationDelegate:delegate];
+        // 动画完毕后调用某个方法
+        [UIView commitAnimations];
+    } else {
+        CATransition *transtion = [CATransition animation];
+        transtion.duration = KAnimationTime;
+        switch (type) {
+            case MATypeTransitionCube:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:@"cube"];
+            }
+                break;
+            case MATypeTransitionPush:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:kCATransitionPush];
+            }
+                break;
+            case MATypeTransitionReveal:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:kCATransitionReveal];
+            }
+                break;
+            case MATypeTransitionMoveIn:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:kCATransitionMoveIn];
+            }
+                break;
+            case MATypeTransitionFade:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+                [transtion setType:kCATransitionFade];
+            }
+                break;
+            case MATypeTransitionSuckEffect:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:@"suckEffect"];
+            }
+                break;
+            case MATypeTransitionOglFlip:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:@"oglFlip"];
+            }
+                break;
+            case MATypeTransitionRippleEffect:{
+                [transtion setStartProgress:.2];
+                [transtion setEndProgress:.8];
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                [transtion setType:@"rippleEffect"];
+            }
+                break;
+            case MATypeTransitionCameraIrisHollowOpen:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:@"cameraIrisHollowOpen"];
+            }
+                break;
+            case MATypeTransitionCameraIrisHollowClose:{
+                [transtion setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+                [transtion setType:@"cameraIrisHollowClose"];
+            }
+                break;
+            default:
+                break;
+        }
+        [transtion setSubtype:kCATransitionFromTop];
+        [delegate.view.layer addAnimation:transtion forKey:AnimationKey];
     }
-    
-    NSUInteger first = [[delegate.view subviews] indexOfObject:from];
-    NSUInteger second = [[delegate.view subviews] indexOfObject:to];
-
-    [delegate.view exchangeSubviewAtIndex:first withSubviewAtIndex:second];
-    
-    [UIView setAnimationDelegate:delegate];
-    // 动画完毕后调用某个方法
-    [UIView setAnimationDidStopSelector:selector];
-    [UIView commitAnimations];
 }
 
 -(int)getFileTimeMax{

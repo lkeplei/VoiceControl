@@ -226,13 +226,13 @@
         
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanRepeat];
         view.viewBaseDelegate = self;
-        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
+        [self pushView:view animatedType:MATypeTransitionRippleEffect];
     } else if(indexPath.section == 0 && indexPath.row == 1){
         [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanLabel label:nil];
         
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlanLabel];
         view.viewBaseDelegate = self;
-        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
+        [self pushView:view animatedType:MATypeTransitionRippleEffect];
         
         UITableViewCell* cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
         if (cell) {
@@ -253,13 +253,13 @@
             }
         };
         
-        [self pushView:view animatedType:MATypeChangeViewFlipFromLeft];
+        [self pushView:view animatedType:MATypeTransitionRippleEffect];
     } else if(indexPath.section == 1 && indexPath.row == 0){
         [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KAddPlanDelete label:nil];
         
         [[MADataManager shareDataManager] deleteValueFromTabel:nil tableName:KTablePlan ID:[[_resourceDic objectForKey:KDataBaseId] intValue]];
         
-        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
+        [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize changeType:MATypeTransitionRippleEffect];
     }
 }
 
@@ -299,7 +299,7 @@
         [[MAModel shareModel] resetPlan];
     }
     
-    [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize];
+    [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize changeType:MATypeTransitionRippleEffect];
 }
 
 -(void)setResource:(NSDictionary*)resDic{

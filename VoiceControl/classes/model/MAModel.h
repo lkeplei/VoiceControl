@@ -25,7 +25,7 @@
 //获取时间字符串
 -(NSString*)getStringTime:(int32_t)time type:(MAType)type;
 //视图切换
--(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate selector:(SEL)selector;
+-(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate;
 //获取单文件最大时长
 -(int)getFileTimeMax;
 //获取录音分贝标记点

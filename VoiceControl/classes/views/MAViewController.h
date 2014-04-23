@@ -30,7 +30,7 @@ typedef enum {
 
 @interface MAViewController : UIViewController<MFMailComposeViewControllerDelegate>
 
--(void)changeToViewByType:(MAViewType)type;
+-(void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType;
 -(void)setGestureEnabled:(BOOL)enabled;
 
 -(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled;

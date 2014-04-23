@@ -42,6 +42,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [SysDelegate.viewController setGestureEnabled:NO];
 }
 

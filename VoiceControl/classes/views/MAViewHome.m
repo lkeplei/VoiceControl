@@ -264,6 +264,10 @@
     } else {
         if (soundMeters[SOUND_METER_COUNT - 1] != KMaxLengthOfWave) {
             [self setStartBtnStatus:NO];
+        } else {
+            if ([_playBtn isEnabled] && [[MAModel shareModel] getCurrentFileName] == nil) {
+                [_playBtn setEnabled:NO];
+            }
         }
         
         [self addSoundMeterItem:KMaxLengthOfWave];

@@ -93,7 +93,7 @@
     if (_editing) {
         NSDictionary* dic = [[NSDictionary alloc] initWithDictionary:[_resourceArray objectAtIndex:[indexPath row]]];
         
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
         
         MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeAddPlan];
         [(MAViewAddPlan*)view setResource:dic];
@@ -173,7 +173,7 @@
             [self setViewStatusEdit:!_editing];
         }
     } else {
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan];
+        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
         [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
     }
 }

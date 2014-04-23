@@ -126,7 +126,7 @@
 #pragma mark - about record
 -(void)resetRecorderQuality:(MARecorderQualityType)type{
     MARecorderQualityType oldType = (MARecorderQualityType)[[MADataManager getDataByKey:KUserDefaultQualityLevel] intValue];
-    if (type != oldType) {
+    if (type != oldType || _recordSetting == nil) {
         [MADataManager setDataByKey:[NSNumber numberWithInt:type] forkey:KUserDefaultQualityLevel];
         
         if (_recordSetting == nil) {
@@ -262,6 +262,8 @@
     double duration = _recorder.currentTime;
     
     if (duration < KFileTimeMin) {//如果录制时间小于最小时长 不发送
+        _fileName = nil;
+        
         [_recorder stop];
         //删除记录的文件
         [_recorder deleteRecording];
