@@ -138,26 +138,22 @@
             [_recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
             //线性采样位数  8、16、24、32
             [_recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+            //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+            [_recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
         }
         
         switch (type) {
             case MARecorderQualityLow:{
-                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
-                [_recordSetting setValue:[NSNumber numberWithFloat:8000] forKey:AVSampleRateKey];
                 //录音的质量
                 [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityLow] forKey:AVEncoderAudioQualityKey];
             }
                 break;
             case MARecorderQualityNormal:{
-                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
-                [_recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
                 //录音的质量
                 [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
             }
                 break;
             case MARecorderQualityHigh:{
-                //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
-                [_recordSetting setValue:[NSNumber numberWithFloat:96000] forKey:AVSampleRateKey];
                 //录音的质量
                 [_recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
             }
