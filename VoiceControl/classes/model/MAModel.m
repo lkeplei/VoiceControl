@@ -268,8 +268,15 @@
 
 -(void)changeView:(UIView*)from to:(UIView*)to type:(MAType)type delegate:(UIViewController*)delegate{
     static NSString* const AnimationKey = @"transtionKey";
-    
-    if (type >= MATypeChangeViewCurlDown && type <= MATypeChangeViewFlipFromRight) {
+    if (type == MATypePositionLeft) {
+        UIBezierPath *path = [UIBezierPath bezierPath];
+        [path moveToPoint:delegate.view.center];
+        [path addLineToPoint:CGPointMake(10, delegate.view.center.y)];
+        CAKeyframeAnimation *keyframe = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+        keyframe.path = path.CGPath;
+        keyframe.duration = KAnimationTime;
+        [delegate.view.layer addAnimation:keyframe forKey:AnimationKey];
+    } else if (type >= MATypeChangeViewCurlDown && type <= MATypeChangeViewFlipFromRight) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];

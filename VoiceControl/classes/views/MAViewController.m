@@ -85,7 +85,7 @@
     _homeBtn.frame = CGRectMake(_topView.frame.size.width - KTopButtonWidth, KStatusBarHeight, KTopButtonWidth, KNavigationHeight);
     [_topView addSubview:_homeBtn];
     
-    _homeLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_right")
+    _homeLabel = [MAUtils labelWithTxt:nil
                                  frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
                                   font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
@@ -221,7 +221,7 @@
     
     [[MAModel shareModel] changeView:_preShowView
                                   to:_currentShowView
-                                type:type
+                                type:MATypeChangeViewCurlDown
                             delegate:self];
     [_currentShowView showView];
     [_titleLabel setText:_currentShowView.viewTitle];
@@ -237,7 +237,7 @@
     
     [[MAModel shareModel] changeView:lastView
                                   to:preView
-                                type:type
+                                type:MATypeChangeViewCurlUp
                             delegate:self];
     
     [_titleLabel setText:_currentShowView.viewTitle];

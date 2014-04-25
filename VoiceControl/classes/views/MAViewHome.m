@@ -67,9 +67,8 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self setTopBtn:MyLocal(@"home_top_left") rightBtn:MyLocal(@"home_top_right") enabled:YES];
+    [self setTopBtn:MyLocal(@"home_top_left") rightBtn:nil enabled:YES];
     [self setSubEventLeft:NO];
-    [self setSubEventRight:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

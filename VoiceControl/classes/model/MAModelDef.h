@@ -38,6 +38,7 @@ typedef enum {
     MATypeTransitionRippleEffect,
     MATypeTransitionCameraIrisHollowOpen,
     MATypeTransitionCameraIrisHollowClose,
+    MATypePositionLeft,
     
     MATypeColorDefault = 200,
     MATypeColorDefWhite,

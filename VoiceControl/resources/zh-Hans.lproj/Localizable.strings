@@ -15,7 +15,7 @@
 "delete" = "删除";
 
 //view title
-"view_title_home" = "首页";
+"view_title_home" = "录音";
 "view_title_select_menu" = "菜单";
 "view_title_file_manager" = "文件管理";
 "view_title_plan_customize" = "私人定制";
@@ -130,7 +130,7 @@
 
 //主页
 "home_top_left" = "菜单";
-"home_top_right" = "主页";
+"home_top_right" = "录音";
 
 //私人订制
 "plan_top_left" = "编辑";
