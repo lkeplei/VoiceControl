@@ -26,6 +26,8 @@ typedef enum {
     MAViewTypeAddPlanLabel,
     MAViewTypeAboutUs,
     MAViewTypeSelectMenu,
+    MAViewTypeRecorderFile,
+    MaviewTypeTagManager,
 } MAViewType;
 
 @interface MAViewController : UIViewController<MFMailComposeViewControllerDelegate>

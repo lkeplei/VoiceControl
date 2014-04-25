@@ -21,6 +21,8 @@
 #import "MAViewAddPlanRepeat.h"
 #import "MAViewAddPlanLabel.h"
 #import "MAViewAddPlanDuration.h"
+#import "MAViewTagManager.h"
+#import "MAViewRecorderFile.h"
 
 @interface MAViewFactory ()
 
@@ -35,6 +37,8 @@
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewSystemSetting* systemSettingView;
 @property (nonatomic, strong) MAViewSettingFile* settingFileView;
+@property (nonatomic, strong) MAViewRecorderFile* recorderFileView;
+@property (nonatomic, strong) MAViewTagManager* tagManagerView;
 
 @property (nonatomic, strong) MAViewAudioPlayControl* audioPlayControl;
 
@@ -131,6 +135,22 @@
             view = _aboutUsView;
         }
             break;
+        case MAViewTypeRecorderFile:
+        {
+            if (_recorderFileView == nil) {
+                _recorderFileView = [[MAViewRecorderFile alloc] initWithFrame:frame];
+            }
+            view = _recorderFileView;
+        }
+            break;
+        case MaviewTypeTagManager:
+        {
+            if (_tagManagerView == nil) {
+                _tagManagerView = [[MAViewTagManager alloc] initWithFrame:frame];
+            }
+            view = _tagManagerView;
+        }
+            break;
 
         default:
             break;
@@ -218,6 +238,22 @@
             if (_aboutUsView) {
                 [_aboutUsView removeFromSuperview];
                 _aboutUsView = nil;
+            }
+        }
+            break;
+        case MAViewTypeRecorderFile:
+        {
+            if (_recorderFileView) {
+                [_recorderFileView removeFromSuperview];
+                _recorderFileView = nil;
+            }
+        }
+            break;
+        case MaviewTypeTagManager:
+        {
+            if (_tagManagerView) {
+                [_tagManagerView removeFromSuperview];
+                _tagManagerView = nil;
             }
         }
             break;

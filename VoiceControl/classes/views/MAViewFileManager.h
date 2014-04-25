@@ -10,9 +10,8 @@
 
 #import "MACellFile.h"
 
-#import "MAViewAudioPlayControl.h"
+//#import "MAViewAudioPlayControl.h"
 
-@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate,
-                                        MAAudioPlayDelegate, MACellFileDelegate>
+@interface MAViewFileManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MACellFileDelegate>
 
 @end

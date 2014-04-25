@@ -518,14 +518,17 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	}
 
 	CGFloat remainingHeight = bounds.size.height - totalSize.height - kPadding - 4 * margin; 
-	CGSize maxSize = CGSizeMake(maxWidth, remainingHeight);
-//	CGSize detailsLabelSize = [detailsLabel.text sizeWithFont:detailsLabel.font constrainedToSize:maxSize lineBreakMode:detailsLabel.lineBreakMode];
-//    
+	CGSize maxSize = CGSizeMake(maxWidth, remainingHeight); 
+#ifdef __IPHONE_7_0
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:detailsLabel.font, NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
     CGSize detailsLabelSize = [detailsLabel.text boundingRectWithSize:maxSize
                                                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                            attributes:attributes
                                                               context:nil].size;
+#else
+    CGSize detailsLabelSize = [detailsLabel.text sizeWithFont:detailsLabel.font constrainedToSize:maxSize lineBreakMode:detailsLabel.lineBreakMode];
+#endif
+    
 	totalSize.width = MAX(totalSize.width, detailsLabelSize.width);
 	totalSize.height += detailsLabelSize.height;
 	if (detailsLabelSize.height > 0.f && (indicatorF.size.height > 0.f || labelSize.height > 0.f)) {

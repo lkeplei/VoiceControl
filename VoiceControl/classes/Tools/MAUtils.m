@@ -513,8 +513,12 @@ static MAUtils* _shareUtils = nil;
 }
 
 + (CGSize)getFontSize:(NSString*)text font:(UIFont*)font{
+#ifdef __IPHONE_7_0
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil, NSForegroundColorAttributeName, nil];
     return [text sizeWithAttributes:attributes];
+#else
+    return [text sizeWithFont:font];
+#endif
 }
 
 + (NSArray*)getArrayFromStrByCharactersInSet:(NSString*)strResource character:(NSString*)character{

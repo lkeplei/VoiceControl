@@ -194,6 +194,10 @@
 "detail_next" = "后一个";
 
 ////////////////////////////////    1.2.0
+"view_title_recorder_file" = "播放";
+"view_title_tag_manager" = "标记点";
+"recorder_decrible_default" = "在这里写一些备注...";
+
 "plan_no_plan" = "无订制";
 "plan_nothing_content" = "您还没有添加订制，个性化的订制可以让您的录音更随心所欲，赶快添加试试吧！";
 
