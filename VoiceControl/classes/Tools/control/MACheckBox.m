@@ -160,7 +160,7 @@ static NSMutableDictionary* box_observers = nil; //按分组名称存放空间�
     //定义UILabel
     _label = [MAUtils labelWithTxt:nil
                               frame:CGRectMake(kBoxHeight + kBoxOff, 0, kBoxWidth - kBoxHeight - kBoxOff, kBoxHeight)
-                               font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize16]
+                               font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize16]
                               color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:YES]];
     _label.textAlignment = KTextAlignmentLeft;
     [self addSubview:_label];

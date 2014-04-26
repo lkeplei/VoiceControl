@@ -15,7 +15,6 @@
 #import "MAViewAboutUs.h"
 #import "MAViewSetting.h"
 #import "MAViewSystemSetting.h"
-#import "MAViewSettingFile.h"
 #import "MAViewPlanCustomize.h"
 #import "MAViewAddPlan.h"
 #import "MAViewAddPlanRepeat.h"
@@ -36,7 +35,6 @@
 @property (nonatomic, strong) MAViewAddPlanDuration* addPlanDurationView;
 @property (nonatomic, strong) MAViewAboutUs* aboutUsView;
 @property (nonatomic, strong) MAViewSystemSetting* systemSettingView;
-@property (nonatomic, strong) MAViewSettingFile* settingFileView;
 @property (nonatomic, strong) MAViewRecorderFile* recorderFileView;
 @property (nonatomic, strong) MAViewTagManager* tagManagerView;
 
@@ -77,14 +75,6 @@
                 _systemSettingView = [[MAViewSystemSetting alloc] initWithFrame:frame];
             }
             view = _systemSettingView;
-        }
-            break;
-        case MAViewTypeSettingFile:
-        {
-            if (_settingFileView == nil) {
-                _settingFileView = [[MAViewSettingFile alloc] initWithFrame:frame];
-            }
-            view = _settingFileView;
         }
             break;
         case MAViewTypePlanCustomize:
@@ -182,14 +172,6 @@
             if (_systemSettingView) {
                 [_systemSettingView removeFromSuperview];
                 _systemSettingView = nil;
-            }
-        }
-            break;
-        case MAViewTypeSettingFile:
-        {
-            if (_settingFileView) {
-                [_settingFileView removeFromSuperview];
-                _settingFileView = nil;
             }
         }
             break;

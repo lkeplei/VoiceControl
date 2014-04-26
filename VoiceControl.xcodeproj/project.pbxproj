@@ -76,6 +76,7 @@
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
 		04E6567A178C5150003A6ACA /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65678178C5150003A6ACA /* MAViewController.m */; };
 		04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6567C178C5188003A6ACA /* MAAppDelegate.m */; };
+		04E73F8B190BD5830029227A /* MACellTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E73F8A190BD5830029227A /* MACellTag.m */; };
 		18051843190A3FFA00DDEC35 /* MAViewRecorderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */; };
 		18051846190A401700DDEC35 /* MAViewTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051845190A401700DDEC35 /* MAViewTagManager.m */; };
 		1805184B190A463600DDEC35 /* MAViewAudioPlayControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051848190A463600DDEC35 /* MAViewAudioPlayControl.m */; };
@@ -88,13 +89,10 @@
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
-		187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A92188682BB00D72FA6 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
-		188F920A18FD1428003EC721 /* MAViewFilePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */; };
-		188F920B18FD1428003EC721 /* MAViewSettingFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920918FD1428003EC721 /* MAViewSettingFile.m */; };
 		188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920D18FD35FE003EC721 /* MAViewSetting.m */; };
 		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
 		18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF13F318D70C7E0055B72A /* MACellFile.m */; };
@@ -226,6 +224,8 @@
 		04E65678178C5150003A6ACA /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
 		04E6567B178C5188003A6ACA /* MAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppDelegate.h; sourceTree = "<group>"; };
 		04E6567C178C5188003A6ACA /* MAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppDelegate.m; sourceTree = "<group>"; };
+		04E73F89190BD5830029227A /* MACellTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellTag.h; sourceTree = "<group>"; };
+		04E73F8A190BD5830029227A /* MACellTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellTag.m; sourceTree = "<group>"; };
 		18051841190A3FFA00DDEC35 /* MAViewRecorderFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewRecorderFile.h; sourceTree = "<group>"; };
 		18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewRecorderFile.m; sourceTree = "<group>"; };
 		18051844190A401700DDEC35 /* MAViewTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagManager.h; sourceTree = "<group>"; };
@@ -248,17 +248,11 @@
 		1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSystemSetting.m; sourceTree = "<group>"; };
 		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
 		186E4A8F18AC6F6800945619 /* MARecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARecordController.m; sourceTree = "<group>"; };
-		187F5A91188682BB00D72FA6 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		187F5A92188682BB00D72FA6 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		187F5A94188682FE00D72FA6 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		187F5A961886863A00D72FA6 /* MACheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACheckBox.h; sourceTree = "<group>"; };
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
-		188F920618FD1428003EC721 /* MAViewFilePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFilePasswordManager.h; sourceTree = "<group>"; };
-		188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFilePasswordManager.m; sourceTree = "<group>"; };
-		188F920818FD1428003EC721 /* MAViewSettingFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSettingFile.h; sourceTree = "<group>"; };
-		188F920918FD1428003EC721 /* MAViewSettingFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSettingFile.m; sourceTree = "<group>"; };
 		188F920C18FD35FE003EC721 /* MAViewSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSetting.h; sourceTree = "<group>"; };
 		188F920D18FD35FE003EC721 /* MAViewSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSetting.m; sourceTree = "<group>"; };
 		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
@@ -515,7 +509,6 @@
 			children = (
 				043A6EAF18E44A3A005A422D /* baidu */,
 				18E08B4C18DAE0BE00866C7B /* coreData */,
-				187F5A90188682BB00D72FA6 /* RegexKitLite */,
 				BE4C565017B22BC300E675CA /* ZipArchive */,
 				BE073A65179E9A1400340A47 /* control */,
 				BE073A62179E998900340A47 /* MADataManager.h */,
@@ -565,15 +558,6 @@
 			path = views;
 			sourceTree = "<group>";
 		};
-		187F5A90188682BB00D72FA6 /* RegexKitLite */ = {
-			isa = PBXGroup;
-			children = (
-				187F5A91188682BB00D72FA6 /* RegexKitLite.h */,
-				187F5A92188682BB00D72FA6 /* RegexKitLite.m */,
-			);
-			path = RegexKitLite;
-			sourceTree = "<group>";
-		};
 		188F920518FD1428003EC721 /* unused */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,10 +567,6 @@
 				1805184A190A463600DDEC35 /* MAViewTagDetail.m */,
 				188F920C18FD35FE003EC721 /* MAViewSetting.h */,
 				188F920D18FD35FE003EC721 /* MAViewSetting.m */,
-				188F920618FD1428003EC721 /* MAViewFilePasswordManager.h */,
-				188F920718FD1428003EC721 /* MAViewFilePasswordManager.m */,
-				188F920818FD1428003EC721 /* MAViewSettingFile.h */,
-				188F920918FD1428003EC721 /* MAViewSettingFile.m */,
 			);
 			path = unused;
 			sourceTree = "<group>";
@@ -623,6 +603,8 @@
 				18DCB27B18A47F6600C13CDC /* MACellPlan.m */,
 				18AF13F218D70C7E0055B72A /* MACellFile.h */,
 				18AF13F318D70C7E0055B72A /* MACellFile.m */,
+				04E73F89190BD5830029227A /* MACellTag.h */,
+				04E73F8A190BD5830029227A /* MACellTag.m */,
 			);
 			path = control;
 			sourceTree = "<group>";
@@ -810,14 +792,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				043A6ED318E44A3A005A422D /* CJSONDeserializer.m in Sources */,
-				188F920A18FD1428003EC721 /* MAViewFilePasswordManager.m in Sources */,
 				18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */,
 				04E65652178C4F15003A6ACA /* main.m in Sources */,
 				18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */,
 				18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */,
 				18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
-				188F920B18FD1428003EC721 /* MAViewSettingFile.m in Sources */,
 				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
 				18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */,
@@ -832,12 +812,12 @@
 				187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */,
 				18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */,
 				BE044401179FE97300537368 /* MAModel.m in Sources */,
+				04E73F8B190BD5830029227A /* MACellTag.m in Sources */,
 				043A6ED418E44A3A005A422D /* CJSONScanner.m in Sources */,
 				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
 				188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
-				187F5A93188682BB00D72FA6 /* RegexKitLite.m in Sources */,
 				18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */,
 				045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */,
 				18E08B6018DBD3E200866C7B /* MAVoiceFiles.m in Sources */,
@@ -1005,8 +985,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1038,8 +1018,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";

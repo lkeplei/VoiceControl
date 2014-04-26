@@ -8,6 +8,8 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewTagManager : MAViewBase
+@interface MAViewTagManager : MAViewBase<UITableViewDataSource, UITableViewDelegate>
+
+-(void)initTagObject:(NSArray*)tagArray;
 
 @end

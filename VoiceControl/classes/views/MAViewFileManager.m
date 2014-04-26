@@ -13,6 +13,7 @@
 #import "MAUtils.h"
 #import "MAMenu.h"
 #import "MAViewFactory.h"
+#import "MAViewRecorderFile.h"
 
 #import "MACoreDataManager.h"
 #import "MAVoiceFiles.h"
@@ -32,7 +33,6 @@
 #define KKeyEver                  @"key_ever"
 
 @interface MAViewFileManager (){
-//    BOOL    showAudioPlay;
     NSInteger     currentRow;
     NSInteger     currentSection;
     int     currentSecTag;
@@ -55,8 +55,7 @@
         
         self.viewType = MAViewTypeFileManager;
         self.viewTitle = MyLocal(@"view_title_file_manager");
-        
-//        showAudioPlay = NO;
+
         _editing = NO;
         currentRow = 0;
         currentSection = 0;
@@ -65,10 +64,6 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-//    if ([[SysDelegate.viewController viewFactory] areadyExistAudioPlay]) {
-//        [self showAudioPlay];
-//    }
-    
     [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:nil enabled:NO];
 }
 
@@ -76,7 +71,7 @@
 - (void) initTable{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
                                                                self.frame.size.width,
-                                                               self.frame.size.height - 20)
+                                                               self.frame.size.height)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -151,10 +146,6 @@
             [_tableView reloadData];
         }
     } else {
-//        if (!showAudioPlay) {
-//            [self showAudioPlay];
-//        }
-
         MAVoiceFiles* file = [[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray] objectAtIndex:indexPath.row];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
@@ -162,9 +153,9 @@
         
         
         if ([MAUtils unzipFiles:filePath unZipFielPath:nil]) {
-//            [_audioPlayControl playWithPath:file array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
             MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeRecorderFile];
             [self pushView:view animatedType:MATypeTransitionRippleEffect];
+            [(MAViewRecorderFile*)view initResource:indexPath.row array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
         } else {
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
@@ -175,116 +166,6 @@
     }
 }
 
-#pragma mark - for play control view
-//-(void)showAudioPlay {
-//    showAudioPlay = YES;
-//    
-//    if (_audioPlayControl == nil) {
-//        _audioPlayControl = [[SysDelegate.viewController viewFactory] getAudioPlayControl:CGRectMake(0, self.frame.size.height,
-//                                                                                           self.frame.size.width, KAudioPlayViewHeight)];
-//        [self addSubview:_audioPlayControl];
-//        _audioPlayControl.audioPlayDelegate = self;
-//    }
-//    
-//	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-//        _audioPlayControl.frame = CGRectOffset(_audioPlayControl.frame, 0, -KAudioPlayViewHeight);
-//        _tableView.frame = CGRectMake(0, 0, self.frame.size.width, _tableView.frame.size.height - KAudioPlayViewHeight + 20);
-//    }
-//                     completion:^(BOOL finished) {
-//                         if (finished) {
-//                             [_tableView reloadData];
-//                         }
-//                     }];
-//}
-//
-//-(void)hideAudioPlay {
-//	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-//        _audioPlayControl.frame = CGRectOffset(_audioPlayControl.frame, 0, KAudioPlayViewHeight);
-//        _tableView.frame = CGRectMake(0, 0, self.frame.size.width, _tableView.frame.size.height + KAudioPlayViewHeight - 20);
-//    }
-//                     completion:^(BOOL finished) {
-//                         if (finished) {
-//                             showAudioPlay = NO;
-//                             [_tableView reloadData];
-//                         }
-//                     }];
-//}
-//
-//-(BOOL)playNext{
-//    BOOL res = NO;
-//    
-//    NSArray* resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
-//    if (resArray && [resArray count] > 0) {
-//        currentRow++;
-//        if (currentRow < [resArray count]) {
-//            res = YES;
-//        } else {
-//            currentSection++;
-//            if (currentSection < [_resourceArray count]) {
-//                resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
-//                if (resArray && [resArray count] > 0) {
-//                    currentRow = 0;
-//                    res = YES;
-//                }
-//            } else {
-//                currentSection = [_resourceArray count] - 1;
-//            }
-//        }
-//    }
-//    
-//    if (res) {
-//        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:resArray];
-//        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
-//    } else {
-//        currentRow = [resArray count] - 1;
-//    }
-//    
-//    return res;
-//}
-//
-//-(BOOL)playPre{
-//    BOOL res = NO;
-//    
-//    NSArray* resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
-//    if (resArray && [resArray count] > 0) {
-//        currentRow--;
-//        if (currentRow >= 0) {
-//            res = YES;
-//        } else {
-//            currentSection--;
-//            if (currentSection >= 0) {
-//                resArray = [[_resourceArray objectAtIndex:currentSection] objectForKey:KArray];
-//                if (resArray && [resArray count] > 0) {
-//                    currentRow = [resArray count] - 1;
-//                    res = YES;
-//                }
-//            } else {
-//                currentSection = 0;
-//            }
-//        }
-//    }
-//
-//    if (res) {
-//        [_audioPlayControl playWithPath:[resArray objectAtIndex:currentRow] array:resArray];
-//        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
-//    } else {
-//        currentRow = 0;
-//    }
-//
-//    return res;
-//}
-
--(BOOL)MAAudioPlayBack:(MAAudioPlayType)type{
-    BOOL res = YES;
-//    if (type == MAAudioPlayNext) {
-//        res = [self playNext];
-//    } else if (type == MAAudioPlayPre) {
-//        res = [self playPre];
-//    } else if (type == MAAudioPlayHide) {
-//        [self hideAudioPlay];
-//    }
-    return res;
-}
 #pragma mark - other
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left)  {
@@ -425,26 +306,6 @@
         [_tableView reloadData];
     }
 }
-
-
-//-(NSArray*)getSortOrderList:(NSMutableArray*)array{
-//    NSMutableArray* sortArray = [[NSMutableArray alloc] init];
-//    
-//    int count = [array count];
-//    for(int i = 0; i < count; i++){
-//        JJHTradeOrder* order = [array objectAtIndex:0];
-//        for (int j = 1; j < [array count]; j++) {
-//            if ([[self getSortOrderData:order] timeIntervalSince1970] < [[self getSortOrderData:[array objectAtIndex:j]] timeIntervalSince1970]) {
-//                order = [array objectAtIndex:j];
-//            }
-//        }
-//        [sortArray addObject:order];
-//        [array removeObject:order];
-//    }
-//    
-//    array = nil;
-//    return sortArray;
-//}
 
 #pragma mark - cell file back
 -(void)MACellFileBack:(MACellFile *)cell btn:(UIButton *)btn{
@@ -640,5 +501,4 @@
         [_tableView reloadData];
     }
 }
-
 @end

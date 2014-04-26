@@ -87,7 +87,7 @@
     
     _homeLabel = [MAUtils labelWithTxt:nil
                                  frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
-                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_homeBtn addSubview:_homeLabel];
     
@@ -100,7 +100,7 @@
     
     _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
                                  frame:CGRectMake(0, 0, _menuBtn.frame.size.width, _menuBtn.frame.size.height)
-                                  font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_menuBtn addSubview:_menuLabel];
 }
@@ -205,12 +205,12 @@
 #pragma mark - about view control
 -(MAViewBase*)getView:(MAViewType)type{
     return [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
-                                                                   self.view.frame.size.height - KNavigationHeight)];
+                                                                   self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
 }
 
 -(MAViewBase*)addView:(MAViewType)type{
     MAViewBase* view = [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
-                                                                   self.view.frame.size.height - KNavigationHeight)];
+                                                                   self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
     [self.view addSubview:view];
     return view;
 }

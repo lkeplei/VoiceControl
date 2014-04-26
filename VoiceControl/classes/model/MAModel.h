@@ -19,7 +19,7 @@
 -(UIColor*)getColorByType:(MAType)type default:(BOOL)defult;
 -(UIImage*)getImageByType:(MAType)type default:(BOOL)defult;
 //获取字体
--(UIFont *)getLaberFontSize:(NSString *)fontName size:(CGFloat)fontSize;
+-(UIFont *)getLabelFontSize:(NSString *)fontName size:(CGFloat)fontSize;
 //初始化一些基本数据
 -(void)initAppSource;
 //获取时间字符串

@@ -67,7 +67,7 @@
                                            color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:YES]
                                          bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:YES]
                                             secu:NO
-                                            font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize18]
+                                            font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize18]
                                             text:nil];
         _textFieldLabel.delegate = self;
         _textFieldLabel.autocapitalizationType = UITextAutocapitalizationTypeNone;

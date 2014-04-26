@@ -43,7 +43,7 @@
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
                                                                self.frame.size.width,
-                                                               self.frame.size.height - KStatusBarHeight)
+                                                               self.frame.size.height)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;

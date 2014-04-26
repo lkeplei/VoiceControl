@@ -158,7 +158,7 @@
         
         if ([indexPath section] == 1) {
             UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_add_delete") frame:cell.frame
-                                              font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize18]
+                                              font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize18]
                                              color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
             [cell.contentView addSubview:label];
         }

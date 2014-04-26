@@ -18,7 +18,6 @@ typedef enum {
     MAViewTypeHome,
     MAViewTypeFileManager,
     MAViewTypeSetting,
-    MAViewTypeSettingFile,
     MAViewTypePlanCustomize,
     MAViewTypeAddPlan,
     MAViewTypeAddPlanRepeat,

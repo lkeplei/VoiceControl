@@ -314,7 +314,7 @@ typedef void (^tagDetailCompletion)(void);
                                          color:[UIColor magentaColor]
                                        bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
                                           secu:NO
-                                          font:[[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize14]
+                                          font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize14]
                                           text:nil];
     _tagNameTextField.delegate = self;
     _tagNameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;

@@ -8,6 +8,8 @@
 
 #import "MAViewBase.h"
 
-@interface MAViewRecorderFile : MAViewBase<UITextFieldDelegate>
+@interface MAViewRecorderFile : MAViewBase<UITextFieldDelegate, UITextViewDelegate>
+
+-(void)initResource:(uint16_t)index array:(NSArray*)array;
 
 @end

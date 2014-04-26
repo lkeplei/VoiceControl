@@ -49,7 +49,7 @@
     
     UILabel* label = [MAUtils labelWithTxt:[NSString stringWithFormat:@"V %@", [MAUtils getAppVersion]]
                                      frame:CGRectMake(0, CGRectGetMaxY(imgView.frame), _topView.frame.size.width, 20)
-                                      font:[[MAModel shareModel] getLaberFontSize:KLabelFontHelvetica size:KLabelFontSize18]
+                                      font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize18]
                                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_topView addSubview:label];
 }
@@ -58,7 +58,7 @@
     UITextView* textview=[[UITextView alloc]initWithFrame:CGRectMake(KAboutOffset, KAboutOffset + CGRectGetMaxY(_topView.frame),
                                                                      self.frame.size.width - KAboutOffset * 2,
                                                                      self.frame.size.height - KAboutOffset * 3)];
-    textview.font = [[MAModel shareModel] getLaberFontSize:KLabelFontArial size:KLabelFontSize16];
+    textview.font = [[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize16];
     textview.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefault default:NO];
     textview.text = MyLocal(@"about_us_content");
     textview.editable = NO;
