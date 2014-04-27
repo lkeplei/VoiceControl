@@ -87,6 +87,8 @@
 #define KDateFormat                 @"YYYY-MM-dd"
 #define KDateTimeFormat             @"YYYY-MM-dd HH:mm"
 
+#define KCharactersInSetCustom      @";"
+
 //其它
 #define KCAPWidth               (5.0)
 #define KNavigationHeight       (44)

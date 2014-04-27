@@ -10,12 +10,17 @@
 #import "MAConfig.h"
 #import "MARecordController.h"
 #import "MACellTag.h"
+#import "MAUtils.h"
+#import "MAVoiceFiles.h"
 
 #define KCellTagHeight          (50)
 
 @interface MAViewTagManager ()
 @property (nonatomic, strong) UITableView* tableView;
+@property (nonatomic, strong) UIView* bottomView;
 @property (nonatomic, copy) NSMutableArray* resourceArray;
+@property (nonatomic, strong) UIButton* playButton;
+@property (retain, nonatomic) AVAudioPlayer *avPlay;
 @end
 
 @implementation MAViewTagManager
@@ -27,6 +32,8 @@
         // Initialization code
         self.viewType = MaviewTypeTagManager;
         self.viewTitle = MyLocal(@"view_title_tag_manager");
+        
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
@@ -37,13 +44,28 @@
 
 -(void)showView{
     [self initTable];
+    [self initBottomView];
 }
 
+-(void)initBottomView{
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - KNavigationHeight,
+                                                           self.frame.size.width, KNavigationHeight)];
+    [_bottomView setBackgroundColor:[UIColor blackColor]];
+    [self addSubview:_bottomView];
+    
+    _playButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                   image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                  target:self
+                                  action:@selector(playBtnClicked:)];
+    _playButton.center = CGPointMake(_playButton.center.x + 10, _bottomView.frame.size.height / 2);
+    [_bottomView addSubview:_playButton];
+}
 
-- (void) initTable{
+- (void)initTable{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
                                                                self.frame.size.width,
-                                                               self.frame.size.height)
+                                                               self.frame.size.height - KNavigationHeight)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -98,6 +120,52 @@
     }
 }
 
+-(void)setPlayBtnStatus:(BOOL)play{
+    if (_playButton) {
+        if (play) {
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                   forState:UIControlStateNormal];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                   forState:UIControlStateHighlighted];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                   forState:UIControlStateSelected];
+        } else {
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                   forState:UIControlStateNormal];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                   forState:UIControlStateHighlighted];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                   forState:UIControlStateSelected];
+        }
+    }
+}
+
+- (void)detectionVoice{
+    if (_avPlay && _avPlay.playing) {
+        [_avPlay updateMeters];//刷新音量数据
+    } else {
+        [self setPlayBtnStatus:YES];
+    }
+}
+
+#pragma mark - audio player
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+}
+
+#pragma mark - btn clicked
+-(void)playBtnClicked:(id)sender{
+    if (_avPlay.playing) {
+        [_avPlay pause];
+        
+        [self setPlayBtnStatus:YES];
+    } else {
+        [_avPlay play];
+        
+        [self setPlayBtnStatus:NO];
+    }
+}
+
 #pragma mark - other
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left)  {
@@ -105,7 +173,27 @@
     }
 }
 
--(void)initTagObject:(NSArray*)tagArray{
-    _resourceArray = [tagArray copy];
+-(void)initTagObject:(MAVoiceFiles*)file{
+    _resourceArray = [[NSMutableArray alloc] init];
+    
+    if (file.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
+        for(int i = 0; i < [tagArr count]; i++){
+            NSString* tag = [tagArr objectAtIndex:i];
+            MATagObject* tagObject = [[MATagObject alloc] init];
+            if ([tagObject initDataWithString:tag]) {
+                tagObject.tag = i;
+                tagObject.totalTime = [file.duration floatValue];
+                if (tagObject.endTime > tagObject.totalTime) {
+                    tagObject.endTime = tagObject.totalTime;
+                }
+                tagObject.name = file.name;
+                [_resourceArray addObject:tagObject];
+            }
+        }
+    }
+    
+    _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:file.path] error:nil];
+    _avPlay.delegate = self;
 }
 @end

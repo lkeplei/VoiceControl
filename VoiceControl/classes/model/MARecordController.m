@@ -467,7 +467,7 @@
     MAVoiceFiles* file = (MAVoiceFiles*)[[MACoreDataManager sharedCoreDataManager] getNewManagedObject:KCoreVoiceFiles];
     file.name = _fileName;
     file.path = _filePath;
-    file.custom = MyLocal(@"custom_default");
+    file.custom = nil;
     file.level = [MAUtils getNumberByInt:MATypeFileNormal];
     file.type = [MAUtils getNumberByInt:MATypeFileCustomDefault];
     file.time = _fileTime;

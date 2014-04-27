@@ -13,6 +13,7 @@
 #import "MAVoiceFiles.h"
 #import "MARecordController.h"
 #import "MAViewTagManager.h"
+#import "MACoreDataManager.h"
 
 #define KShowFileViewHeight             (150)
 
@@ -33,12 +34,14 @@
 @property (nonatomic, strong) UISlider* durationSlider;
 @property (nonatomic, strong) UITextField* renameField;
 @property (nonatomic, strong) UITextView* describleTextView;
+@property (retain, nonatomic) AVAudioPlayer *avPlay;
+@property (nonatomic, strong) MAVoiceFiles* voiceFile;
+
 @end
 
 @implementation MAViewRecorderFile
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -46,12 +49,19 @@
         self.viewTitle = MyLocal(@"view_title_recorder_file");
         
         currentIndex = 0;
+        
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self setTopBtn:MyLocal(@"plan_add_top_back") rightBtn:MyLocal(@"file_top_more") enabled:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    _voiceFile.custom = [NSString stringWithFormat:@"%@%@%@", _renameField.text, KCharactersInSetCustom, _describleTextView.text];
+    [[MACoreDataManager sharedCoreDataManager] saveEntry];
 }
 
 -(void)showView{
@@ -150,45 +160,86 @@
     [_tabbarView addSubview:item4];
 }
 
+-(void)setPlayBtnStatus:(BOOL)play{
+    if (_playButton) {
+        if (play) {
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateNormal];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                forState:UIControlStateSelected];
+        } else {
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateNormal];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateHighlighted];
+            [_playButton setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgPlayPause default:NO]
+                                forState:UIControlStateSelected];
+        }
+    }
+}
+
+- (void)detectionVoice{
+    if (_avPlay && _avPlay.playing) {
+        [_avPlay updateMeters];//刷新音量数据
+        
+        _durationSlider.value = _avPlay.currentTime;
+    } else {
+        [self setPlayBtnStatus:YES];
+    }
+}
+
+#pragma mark - audio player
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    _durationSlider.value = 0;
+}
+
 #pragma mark - btn clicked
 -(void)playBtnClicked:(id)sender{
-    
+    if (_avPlay) {
+        if (_avPlay.playing) {
+            [_avPlay pause];
+            
+            [self setPlayBtnStatus:YES];
+        } else {
+            [_avPlay play];
+            
+            [self setPlayBtnStatus:NO];
+        }
+    } else {
+        [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+    }
 }
 
 -(void)tabbarItemClicked:(id)sender{
-    UIButton* btn = (UIButton*)sender;
-    if (btn.tag == KTabbarItem1Tag) {
-        NSMutableArray* tagArray = [[NSMutableArray alloc] init];
-        MAVoiceFiles* file = [_resourceArray objectAtIndex:currentIndex];
-        if (file.tag) {
-            NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
-            for(int i = 0; i < [tagArr count]; i++){
-                NSString* tag = [tagArr objectAtIndex:i];
-                MATagObject* tagObject = [[MATagObject alloc] init];
-                if ([tagObject initDataWithString:tag]) {
-                    tagObject.tag = i;
-                    tagObject.totalTime = [file.duration floatValue];
-                    if (tagObject.endTime > tagObject.totalTime) {
-                        tagObject.endTime = tagObject.totalTime;
-                    }
-                    tagObject.name = file.name;
-                    [tagArray addObject:tagObject];
-                }
+    if (_avPlay) {
+        UIButton* btn = (UIButton*)sender;
+        if (btn.tag == KTabbarItem1Tag) {
+            if ([_avPlay play]) {
+                [_avPlay pause];
             }
+            
+            MAViewBase* view = [SysDelegate.viewController getView:MaviewTypeTagManager];
+            [self pushView:view animatedType:MATypeChangeViewCurlDown];
+            [(MAViewTagManager*)view initTagObject:[_resourceArray objectAtIndex:currentIndex]];
+        } else if (btn.tag == KTabbarItem2Tag) {
+        } else if (btn.tag == KTabbarItem3Tag) {
+        } else if (btn.tag == KTabbarItem4Tag) {
         }
-
-        MAViewBase* view = [SysDelegate.viewController getView:MaviewTypeTagManager];
-        [self pushView:view animatedType:MATypeChangeViewCurlDown];
-        [(MAViewTagManager*)view initTagObject:tagArray];
-    } else if (btn.tag == KTabbarItem2Tag) {
-    } else if (btn.tag == KTabbarItem3Tag) {
-    } else if (btn.tag == KTabbarItem4Tag) {
+    } else {
+        [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
     }
 }
 
 #pragma mark - slider
 -(void)durationSliderMoved:(id)sender{
+    if (![_avPlay isPlaying]) {
+        [_avPlay play];
+        [self setPlayBtnStatus:NO];
+    }
     
+    _avPlay.currentTime = _durationSlider.value;
 }
 
 #pragma mark - text field
@@ -233,7 +284,35 @@
     _resourceArray = [array copy];
     currentIndex = index;
     
-    MAVoiceFiles* file = [_resourceArray objectAtIndex:currentIndex];
-    _renameField.text = file.name;
+    _voiceFile = [_resourceArray objectAtIndex:currentIndex];
+    
+    //初始avplay
+    BOOL play = YES;
+    if (![MAUtils fileExistsAtPath:_voiceFile.path]) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = [paths objectAtIndex:0];
+        NSString* fileName = [docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name];
+        
+        if (![MAUtils unzipFiles:fileName unZipFielPath:nil]) {
+            play = NO;
+            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+        }
+    }
+    
+    if (play) {
+        _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_voiceFile.path] error:nil];
+        _avPlay.delegate = self;
+        _durationSlider.maximumValue = _avPlay.duration;
+    }
+    
+    //view content
+    NSArray* contentArr = [MAUtils getArrayFromStrByCharactersInSet:_voiceFile.custom character:KCharactersInSetCustom];
+    if ([contentArr count] >= 1) {
+        _renameField.text = [contentArr objectAtIndex:0];
+    }
+    if ([contentArr count] >= 2) {
+        _describleTextView.text = [contentArr objectAtIndex:1];
+        [self textViewDidChange:_describleTextView];
+    }
 }
 @end

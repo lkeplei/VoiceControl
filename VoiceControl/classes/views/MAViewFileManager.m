@@ -33,8 +33,6 @@
 #define KKeyEver                  @"key_ever"
 
 @interface MAViewFileManager (){
-    NSInteger     currentRow;
-    NSInteger     currentSection;
     int     currentSecTag;
 }
 @property (assign) BOOL editing;
@@ -57,10 +55,12 @@
         self.viewTitle = MyLocal(@"view_title_file_manager");
 
         _editing = NO;
-        currentRow = 0;
-        currentSection = 0;
     }
     return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -118,18 +118,14 @@
     MACellFile* cell = (MACellFile*)[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[MACellFile alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
         cell.tag = KCellButtonTag(indexPath.section, indexPath.row);
     }
     
     NSArray* array = [[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray];
     if (array && indexPath.row < [array count]) {
-        [cell setCellResource:[array objectAtIndex:[array count] - indexPath.row - 1] editing:_editing];
-        
-        if (currentSection == [indexPath section] && [indexPath row] == currentRow) {
-            [_tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-        }
+        [cell setCellResource:[array objectAtIndex:indexPath.row] editing:_editing];
     }
     
     return cell;
@@ -159,10 +155,6 @@
         } else {
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
-        
-        currentSection = [indexPath section];
-        currentRow = [indexPath row];
-        [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:currentRow inSection:currentSection] animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
 }
 
@@ -225,7 +217,8 @@
         NSMutableArray* yestoday = nil;
         NSMutableArray* week = nil;
         NSMutableArray* weekago = nil;
-        for (MAVoiceFiles* file in array) {
+        for (int i = [array count] - 1; i >= 0; i--) {
+            MAVoiceFiles* file = [array objectAtIndex:i];
             file.status = NO;
             if ([file.level intValue] == MATypeFileForEver && !_editing) {
                 if (ever == nil) {

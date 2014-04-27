@@ -37,7 +37,13 @@
 
 -(void)setCellResource:(MAVoiceFiles*)file editing:(BOOL)editing{
     if (file) {
-        [self setCellLabel:file.custom tag:KCellLabelNameTag alignment:KTextAlignmentLeft
+        float offsetY = self.frame.size.height * 0.75;
+        NSArray* contentArr = [MAUtils getArrayFromStrByCharactersInSet:file.custom character:KCharactersInSetCustom];
+        NSString* name = MyLocal(@"custom_default");
+        if ([contentArr count] >= 1) {
+            name = [contentArr objectAtIndex:0];
+        }
+        [self setCellLabel:name tag:KCellLabelNameTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                      frame:CGRectMake(KCellOffset, 0, self.frame.size.width, self.frame.size.height * 0.68)];
@@ -45,13 +51,13 @@
         [self setCellLabel:[MAUtils getStringFromDate:file.time format:KTimeFormat] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
-                     frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width, self.frame.size.height / 2)];
+                     frame:CGRectMake(KCellOffset, offsetY, self.frame.size.width, self.frame.size.height / 2)];
         
         [self setCellLabel:[[MAModel shareModel] getStringTime:[file.duration intValue] type:MATypeTimeClock]
                        tag:KCellLabelDurationTag alignment:KTextAlignmentRight
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
-                     frame:CGRectMake(KCellOffset, self.frame.size.height * 0.75, self.frame.size.width - KCellOffset * 2, self.frame.size.height / 2)];
+                     frame:CGRectMake(KCellOffset, offsetY, self.frame.size.width - KCellOffset * 2, self.frame.size.height / 2)];
         if (editing) {
             [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]
                            tag:KCellImgTag hide:file.status];

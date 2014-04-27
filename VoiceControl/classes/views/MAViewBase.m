@@ -67,6 +67,9 @@
             _viewArray = [[NSMutableArray alloc] init];
         }
         [_viewArray addObject:subView];
+        if ([_viewArray count] == 1) {
+            [SysDelegate.viewController setGestureEnabled:NO];
+        }
         
         if (type == MATypeChangeViewNull) {
             [subView viewWillAppear:NO];
@@ -107,6 +110,9 @@
             [SysDelegate.viewController popView:subView preView:view animatedType:type];
             
             [_viewArray removeLastObject];
+            if ([_viewArray count] == 0) {
+                [SysDelegate.viewController setGestureEnabled:YES];
+            }
             view = nil;
         }
     }
