@@ -22,6 +22,10 @@
         
         [self setTableResource:KMenuTableView];
         
+        UIImageView* separatorLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"view_separator_line.png"]];
+        separatorLine.frame = CGRectMake(self.frame.size.width - 1, 0, 1, self.frame.size.height);
+        [self addSubview:separatorLine];
+        
         [self setBackgroundColor:[UIColor whiteColor]];
     }
     return self;
