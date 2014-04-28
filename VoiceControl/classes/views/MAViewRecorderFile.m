@@ -15,7 +15,9 @@
 #import "MAViewTagManager.h"
 #import "MACoreDataManager.h"
 
-#define KShowFileViewHeight             (150)
+#define KRecorderFileOffset             (5)
+#define KMessageViewHeight              (30)
+#define KShowFileViewHeight             (250)
 
 #define KTabbarItem1Tag                 (100)
 #define KTabbarItem2Tag                 (101)
@@ -25,10 +27,10 @@
 
 @interface MAViewRecorderFile (){
     uint16_t    currentIndex;
+    CGRect hudRect;
 }
 
 @property (nonatomic, copy) NSMutableArray* resourceArray;
-@property (nonatomic, strong) UIView* showFileView;
 @property (nonatomic, strong) UIView* tabbarView;
 @property (nonatomic, strong) UIButton* playButton;
 @property (nonatomic, strong) UISlider* durationSlider;
@@ -36,6 +38,9 @@
 @property (nonatomic, strong) UITextView* describleTextView;
 @property (retain, nonatomic) AVAudioPlayer *avPlay;
 @property (nonatomic, strong) MAVoiceFiles* voiceFile;
+@property (nonatomic, strong) UILabel* durationLabel;
+@property (nonatomic, strong) UILabel* dateLabel;
+@property (nonatomic, strong) UILabel* timeLabel;
 
 @end
 
@@ -50,7 +55,7 @@
         
         currentIndex = 0;
         
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:0.04 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
@@ -60,33 +65,21 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    _voiceFile.custom = [NSString stringWithFormat:@"%@%@%@", _renameField.text, KCharactersInSetCustom, _describleTextView.text];
-    [[MACoreDataManager sharedCoreDataManager] saveEntry];
+    if (_voiceFile) {
+        _voiceFile.custom = [NSString stringWithFormat:@"%@%@%@", _renameField.text, KCharactersInSetCustom, _describleTextView.text];
+        [[MACoreDataManager sharedCoreDataManager] saveEntry];
+    }
 }
 
 -(void)showView{
-    //show file view
-    _showFileView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, self.frame.size.width, KShowFileViewHeight}];
-    [_showFileView setBackgroundColor:[UIColor blackColor]];
-    [self addSubview:_showFileView];
+    //msgView
+    [self initMessageView];
     
-    _playButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                   image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                  target:self
-                                  action:@selector(playBtnClicked:)];
-    _playButton.frame = (CGRect){0, KShowFileViewHeight - _playButton.frame.size.height, _playButton.frame.size};
-    [_showFileView addSubview:_playButton];
-    
-    _durationSlider = [[UISlider alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_playButton.frame), KShowFileViewHeight - 30,
-                                                                 260, 30)];
-    [_durationSlider addTarget:self action:@selector(durationSliderMoved:) forControlEvents:UIControlEventValueChanged];
-    _durationSlider.minimumValue = 0;
-    _durationSlider.maximumValue = 0;
-    [_showFileView addSubview:_durationSlider];
+    //play btn and slider
+    [self initControlView];
     
     //reanme
-    _renameField = [MAUtils textFieldInit:CGRectMake(10, CGRectGetMaxY(_showFileView.frame), 300, 30)
+    _renameField = [MAUtils textFieldInit:CGRectMake(10, KShowFileViewHeight, 300, KMessageViewHeight)
                                          color:[UIColor magentaColor]
                                        bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
                                           secu:NO
@@ -97,7 +90,8 @@
     [self addSubview:_renameField];
     
     //describle
-    _describleTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 15 + CGRectGetMaxY(_renameField.frame), 300,240)];
+    _describleTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 15 + CGRectGetMaxY(_renameField.frame), 300,
+                                                                      self.frame.size.height - 20 - KNavigationHeight - CGRectGetMaxY(_renameField.frame))];
     _describleTextView.scrollEnabled = YES;
     _describleTextView.font = [[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize14];
     _describleTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -114,6 +108,64 @@
 
     //tab bar
     [self initTabbarView];
+}
+
+-(void)initMessageView{
+    hudRect = CGRectMake(0, KMessageViewHeight, self.frame.size.width, KShowFileViewHeight - KMessageViewHeight * 2 - KRecorderFileOffset * 2);
+    UIView* mesView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, self.frame.size.width, KMessageViewHeight}];
+    [mesView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
+    [self addSubview:mesView];
+    
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KMessageViewHeight, KMessageViewHeight)];
+    [view setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
+    [mesView addSubview:view];
+    
+    UILabel* label = [MAUtils labelWithTxt:MyLocal(@"1")
+                                     frame:view.frame
+                                      font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize22]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    [view addSubview:label];
+    
+    _durationLabel = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]
+                                     frame:CGRectMake(KMessageViewHeight + 10, 0, 200, KMessageViewHeight)
+                                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]];
+    _durationLabel.textAlignment = KTextAlignmentLeft;
+    [mesView addSubview:_durationLabel];
+    
+    _dateLabel = [MAUtils labelWithTxt:nil
+                                 frame:CGRectMake(110, 0, 160, KMessageViewHeight / 2)
+                                  font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+    _dateLabel.textAlignment = KTextAlignmentRight;
+    [view addSubview:_dateLabel];
+    
+    _timeLabel = [MAUtils labelWithTxt:nil
+                                 frame:CGRectMake(110, KMessageViewHeight / 2, 205, KMessageViewHeight / 2)
+                                  font:[UIFont fontWithName:KLabelFontArial size:10]
+                                 color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+    _timeLabel.textAlignment = KTextAlignmentRight;
+    [view addSubview:_timeLabel];
+}
+
+-(void)initControlView{
+    UIView* conView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(hudRect), self.frame.size.width, KMessageViewHeight + KRecorderFileOffset * 2)];
+    [conView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
+    [self addSubview:conView];
+    
+    _playButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                   image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                  target:self
+                                  action:@selector(playBtnClicked:)];
+    _playButton.frame = (CGRect){KRecorderFileOffset, KRecorderFileOffset, _playButton.frame.size};
+    [conView addSubview:_playButton];
+    
+    _durationSlider = [[UISlider alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_playButton.frame) + KRecorderFileOffset, KRecorderFileOffset, 270, KMessageViewHeight)];
+    [_durationSlider addTarget:self action:@selector(durationSliderMoved:) forControlEvents:UIControlEventValueChanged];
+    _durationSlider.minimumValue = 0;
+    _durationSlider.maximumValue = 0;
+    [conView addSubview:_durationSlider];
 }
 
 -(void)initTabbarView{
@@ -185,6 +237,7 @@
         [_avPlay updateMeters];//刷新音量数据
         
         _durationSlider.value = _avPlay.currentTime;
+        _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] - _avPlay.currentTime type:MATypeTimeClock];
     } else {
         [self setPlayBtnStatus:YES];
     }
@@ -193,6 +246,7 @@
 #pragma mark - audio player
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
     _durationSlider.value = 0;
+    _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] type:MATypeTimeClock];
 }
 
 #pragma mark - btn clicked
@@ -224,11 +278,33 @@
             [self pushView:view animatedType:MATypeChangeViewCurlDown];
             [(MAViewTagManager*)view initTagObject:[_resourceArray objectAtIndex:currentIndex]];
         } else if (btn.tag == KTabbarItem2Tag) {
+            [[[UIAlertView alloc] initWithTitle:MyLocal(@"more_user_management_title")
+                                        message:MyLocal(@"more_user_management_title")
+                                       delegate:self
+                              cancelButtonTitle:MyLocal(@"cancel")
+                              otherButtonTitles:MyLocal(@"ok"), nil] show];
         } else if (btn.tag == KTabbarItem3Tag) {
         } else if (btn.tag == KTabbarItem4Tag) {
         }
     } else {
         [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManDelete label:nil];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = [paths objectAtIndex:0];
+        //删除数据库与文件
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name]];
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", _voiceFile.name]];
+        [[MACoreDataManager sharedCoreDataManager] deleteObject:_voiceFile];
+        
+        _voiceFile =  nil;
+        
+        [self popView:MATypeChangeViewCurlUp];
     }
 }
 
@@ -314,5 +390,63 @@
         _describleTextView.text = [contentArr objectAtIndex:1];
         [self textViewDidChange:_describleTextView];
     }
+    
+    _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] type:MATypeTimeClock];
+    _dateLabel.text = [MAUtils getStringFromDate:_voiceFile.time format:@"MMM dd,yyyy"];
+    NSDate* endTime = [_voiceFile.time dateByAddingTimeInterval:[_voiceFile.duration intValue]];
+    _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [MAUtils getStringFromDate:_voiceFile.time format:@"HH:mm:ss"], [MAUtils getStringFromDate:endTime format:@"HH:mm:ss"]];
+}
+
+#pragma mark - Drawing operations
+- (void)drawRect:(CGRect)rect {
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    UIColor *strokeColor = [UIColor colorWithRed:0.886 green:0.0 blue:0.0 alpha:0.8];
+    UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+    UIColor *gradientColor = [UIColor colorWithRed:0.72 green:0.76 blue:0.8 alpha:0.7];
+    
+    NSArray *gradientColors = [NSArray arrayWithObjects:
+                               (id)fillColor.CGColor,
+                               (id)gradientColor.CGColor, nil];
+    CGFloat gradientLocations[] = {0, 1};
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
+    
+    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:1.0];
+    CGContextSaveGState(context);
+    [border addClip];
+    CGContextDrawRadialGradient(context, gradient,
+                                CGPointMake(hudRect.origin.x + hudRect.size.width / 2, 120), 10,
+                                CGPointMake(hudRect.origin.x + hudRect.size.width / 2, 195), 215,
+                                kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
+    CGContextRestoreGState(context);
+    [strokeColor setStroke];
+    border.lineWidth = 0;       //设置边框宽度
+    [border stroke];
+
+    // Draw sound meter wave
+    [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.4] set];
+    
+    CGContextSetLineWidth(context, 1.0);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    
+//    int baseLine = hudRect.origin.y + hudRect.size.height / 2;
+//    int multiplier = 1;
+//    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--){
+//        multiplier = ((int)x % 2) == 0 ? 1 : -1;
+//        
+//        CGFloat y = baseLine + ((KMaxValueOfMetaer * (KMaxLengthOfWave - abs(soundMeters[(int)x]))) / KMaxLengthOfWave) * multiplier;
+//        
+//        if(x == SOUND_METER_COUNT - 1) {
+//            CGContextMoveToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
+//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
+//        }
+//        else {
+//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
+//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
+//        }
+//    }
+    
+    CGContextStrokePath(context);
 }
 @end

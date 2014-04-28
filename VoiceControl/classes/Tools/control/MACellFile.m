@@ -40,7 +40,7 @@
         float offsetY = self.frame.size.height * 0.75;
         NSArray* contentArr = [MAUtils getArrayFromStrByCharactersInSet:file.custom character:KCharactersInSetCustom];
         NSString* name = MyLocal(@"custom_default");
-        if ([contentArr count] >= 1) {
+        if ([contentArr count] >= 1 && [(NSString*)[contentArr objectAtIndex:0] length] > 0) {
             name = [contentArr objectAtIndex:0];
         }
         [self setCellLabel:name tag:KCellLabelNameTag alignment:KTextAlignmentLeft

@@ -9,7 +9,7 @@
 #import "MAViewBase.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface MAViewRecorderFile : MAViewBase<UITextFieldDelegate, UITextViewDelegate, AVAudioPlayerDelegate>
+@interface MAViewRecorderFile : MAViewBase<UITextFieldDelegate, UITextViewDelegate, AVAudioPlayerDelegate, UIAlertViewDelegate>
 
 -(void)initResource:(uint16_t)index array:(NSArray*)array;
 
