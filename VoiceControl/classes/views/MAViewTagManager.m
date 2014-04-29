@@ -21,6 +21,7 @@
 @property (nonatomic, copy) NSMutableArray* resourceArray;
 @property (nonatomic, strong) UIButton* playButton;
 @property (retain, nonatomic) AVAudioPlayer *avPlay;
+@property (nonatomic, strong) UILabel* runTimeLabel;
 @end
 
 @implementation MAViewTagManager
@@ -60,6 +61,13 @@
                                   action:@selector(playBtnClicked:)];
     _playButton.center = CGPointMake(_playButton.center.x + 10, _bottomView.frame.size.height / 2);
     [_bottomView addSubview:_playButton];
+    
+    _runTimeLabel = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]
+                                    frame:(CGRect){CGPointZero, _bottomView.frame.size.width - 10, _bottomView.frame.size.height}
+                                     font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize22]
+                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+    _runTimeLabel.textAlignment = KTextAlignmentRight;
+    [_bottomView addSubview:_runTimeLabel];
 }
 
 - (void)initTable{
@@ -93,11 +101,12 @@
     if (!cell) {
         cell = [[MACellTag alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.delegate = self;
     }
     
     if (_resourceArray && [_resourceArray count] > 0) {
         if (_resourceArray && [indexPath row] < [_resourceArray count]) {
-            [cell.detailTextLabel setText:[(MATagObject*)[_resourceArray objectAtIndex:indexPath.row] name]];
+            [cell setCellResource:[_resourceArray objectAtIndex:indexPath.row] index:indexPath.row];
         }
     }
     
@@ -143,8 +152,28 @@
 - (void)detectionVoice{
     if (_avPlay && _avPlay.playing) {
         [_avPlay updateMeters];//刷新音量数据
+        
+        [_runTimeLabel setText:[[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock]];
     } else {
         [self setPlayBtnStatus:YES];
+    }
+}
+#pragma mark - cell tag back
+-(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject{
+    if (_avPlay.playing) {
+        [_avPlay pause];
+        [self setPlayBtnStatus:YES];
+        
+        [cell setPlayBtnStatus:YES];
+    } else {
+        [_avPlay play];
+        [self setPlayBtnStatus:NO];
+        
+        [cell setPlayBtnStatus:NO];
+    }
+    
+    if ([_avPlay isPlaying]) {
+        _avPlay.currentTime = tagObject.startTime;
     }
 }
 

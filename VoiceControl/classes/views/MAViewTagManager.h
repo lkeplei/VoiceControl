@@ -7,11 +7,12 @@
 //
 
 #import "MAViewBase.h"
+#import "MACellTag.h"
 #import <AVFoundation/AVFoundation.h>
 
 @class MAVoiceFiles;
 
-@interface MAViewTagManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate>
+@interface MAViewTagManager : MAViewBase<UITableViewDataSource, UITableViewDelegate, AVAudioPlayerDelegate, MACellTagDelegate>
 
 -(void)initTagObject:(MAVoiceFiles*)file;
 

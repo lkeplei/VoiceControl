@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class MATagObject;
+@class MACellTag;
+
+@protocol MACellTagDelegate <NSObject>
+-(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject;
+@end
+
 @interface MACellTag : UITableViewCell
+
+-(void)setCellResource:(MATagObject*)object index:(NSInteger)index;
+-(void)setPlayBtnStatus:(BOOL)play;
+
+@property (nonatomic, assign) id<MACellTagDelegate> delegate;
 
 @end
