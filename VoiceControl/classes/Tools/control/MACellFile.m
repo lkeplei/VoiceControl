@@ -65,18 +65,8 @@
             [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxSec default:NO]
                            tag:KCellImgSecTag hide:!file.status];
         } else {
-            UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellButtonTag];
-            if (button) {
-                [button removeFromSuperview];
-            }
-            button = [MAUtils buttonWithImg:nil off:0 zoomIn:YES
-                                      image:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                   imagesec:[[MAModel shareModel] getImageByType:MATypeImgHomeMenu default:NO]
-                                     target:self
-                                     action:@selector(menuBtnClicked:)];
-            button.tag = KCellButtonTag;
-            button.frame = CGRectMake(self.frame.size.width - self.frame.size.height, 0, self.frame.size.height, self.frame.size.height);
-            [self.contentView addSubview:button];
+            [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCellIndicator default:NO]
+                           tag:KCellButtonTag hide:NO];
         }
     }
 }
@@ -111,14 +101,8 @@
     imgView = [[UIImageView alloc] initWithImage:img];
     imgView.tag = tag;
     [imgView setHidden:hide];
-    imgView.center = CGPointMake(self.frame.size.width - imgView.frame.size.width, (self.frame.size.height - imgView.frame.size.height) / 2 + KCellOffset);
+    imgView.center = CGPointMake(self.frame.size.width - imgView.frame.size.width,
+                                 (self.frame.size.height - imgView.frame.size.height) / 2 + KCellOffset * 2);
     [self.contentView addSubview:imgView];
-}
-
-#pragma mark - btn clicked
--(void)menuBtnClicked:(id)sender{
-    if (_delegate) {
-        [_delegate MACellFileBack:self btn:sender];
-    }
 }
 @end

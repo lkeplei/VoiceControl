@@ -129,6 +129,9 @@
         case MATypeColorViewBg:
             return KSkinSetColorViewBg;
             break;
+        case MATypeColorPlaceHolder:
+            return KSkinSetColorPlaceHolder;
+            break;
             
         case MATypeImgHomePhone:
             return KSkinSetImgHomePhone;

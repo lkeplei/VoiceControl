@@ -11,6 +11,6 @@
 
 @interface MAViewRecorderFile : MAViewBase<UITextFieldDelegate, UITextViewDelegate, AVAudioPlayerDelegate, UIAlertViewDelegate>
 
--(void)initResource:(uint16_t)index array:(NSArray*)array;
+-(void)initResource:(uint16_t)index secDic:(NSDictionary*)secDic;
 
 @end

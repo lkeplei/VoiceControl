@@ -14,6 +14,7 @@
 #import "MARecordController.h"
 #import "MAViewTagManager.h"
 #import "MACoreDataManager.h"
+#import "MAMenu.h"
 
 #define KRecorderFileOffset             (5)
 #define KMessageViewHeight              (30)
@@ -41,6 +42,7 @@
 @property (nonatomic, strong) UILabel* durationLabel;
 @property (nonatomic, strong) UILabel* dateLabel;
 @property (nonatomic, strong) UILabel* timeLabel;
+@property (nonatomic, strong) NSString* arrayName;
 
 @end
 
@@ -80,7 +82,7 @@
     
     //reanme
     _renameField = [MAUtils textFieldInit:CGRectMake(10, KShowFileViewHeight, 300, KMessageViewHeight)
-                                         color:[UIColor magentaColor]
+                                         color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                                        bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
                                           secu:NO
                                           font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize14]
@@ -93,6 +95,7 @@
     _describleTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 15 + CGRectGetMaxY(_renameField.frame), 300,
                                                                       self.frame.size.height - 20 - KNavigationHeight - CGRectGetMaxY(_renameField.frame))];
     _describleTextView.scrollEnabled = YES;
+    _describleTextView.textColor = [[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO];
     _describleTextView.font = [[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize14];
     _describleTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _describleTextView.delegate = self;
@@ -101,7 +104,7 @@
     UILabel* label = [MAUtils labelWithTxt:MyLocal(@"recorder_decrible_default")
                                      frame:CGRectMake(5, 2, 300, 30)
                                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize16]
-                                     color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorPlaceHolder default:NO]];
     label.tag = KTextViewLabelTag;
     label.textAlignment = KTextAlignmentLeft;
     [_describleTextView addSubview:label];
@@ -278,11 +281,7 @@
             [self pushView:view animatedType:MATypeChangeViewCurlDown];
             [(MAViewTagManager*)view initTagObject:[_resourceArray objectAtIndex:currentIndex]];
         } else if (btn.tag == KTabbarItem2Tag) {
-            [[[UIAlertView alloc] initWithTitle:MyLocal(@"more_user_management_title")
-                                        message:MyLocal(@"more_user_management_title")
-                                       delegate:self
-                              cancelButtonTitle:MyLocal(@"cancel")
-                              otherButtonTitles:MyLocal(@"ok"), nil] show];
+            [self deleteFile:nil];
         } else if (btn.tag == KTabbarItem3Tag) {
         } else if (btn.tag == KTabbarItem4Tag) {
         }
@@ -303,7 +302,6 @@
         [[MACoreDataManager sharedCoreDataManager] deleteObject:_voiceFile];
         
         _voiceFile =  nil;
-        
         [self popView:MATypeChangeViewCurlUp];
     }
 }
@@ -324,6 +322,14 @@
     return YES;
 }
 
+- (void)textFieldDidBeginEditing:(id)sender {
+    [self viewTranform:-80];
+}
+
+- (void)textFieldDidEndEditing:(id)sender {
+    [self viewTranform:0];
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if (![_renameField isExclusiveTouch]) {
         [_renameField resignFirstResponder];
@@ -334,6 +340,19 @@
     }
 }
 
+- (void)viewTranform:(Float32)y{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        //创建一个仿射变换，平移(0, -100)视图上移100像素
+        self.transform = CGAffineTransformMakeTranslation(0, y);;
+    }
+                     completion:^(BOOL finished) {
+                         if (finished) {
+                             
+                         }
+                     }];
+}
+
+#pragma mark - text view
 - (void)textViewDidChange:(UITextView *)textView{
     UIView* label = [textView viewWithTag:KTextViewLabelTag];
     if (textView.text.length == 0) {
@@ -345,19 +364,117 @@
     }
 }
 
+- (void)textViewDidBeginEditing:(id)sender {
+    [self viewTranform:-100];
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
+    
+    [self viewTranform:0];
+}
+
+#pragma mark - pop menu
+- (void)showPopMenu{
+    NSMutableArray* menuItems = [[NSMutableArray alloc] init];
+    MAMenuItem* first = [MAMenuItem menuItem:@"MENU" image:nil userInfo:nil target:nil action:NULL];
+    [menuItems addObject:first];
+
+    if ([_arrayName compare:MyLocal(@"file_ever")] == NSOrderedSame) {
+        MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"file_cancel_ever")
+                                           image:nil
+                                        userInfo:nil
+                                          target:self
+                                          action:@selector(cancelFileToEver:)];
+        [menuItems addObject:item1];
+    } else {
+        MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"delete")
+                                           image:nil
+                                        userInfo:nil
+                                          target:self
+                                          action:@selector(deleteFile:)];
+        [menuItems addObject:item1];
+        
+        MAMenuItem* item2 = [MAMenuItem menuItem:MyLocal(@"file_add_ever")
+                                           image:nil
+                                        userInfo:nil
+                                          target:self
+                                          action:@selector(addFileToEver:)];
+        [menuItems addObject:item2];
+    }
+    
+    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_menu_rename")
+                                       image:nil
+                                    userInfo:nil
+                                      target:self
+                                      action:@selector(fileRename:)];
+    [menuItems addObject:item3];
+    
+    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+                                       image:nil
+                                    userInfo:nil
+                                      target:self
+                                      action:@selector(sendEmail:)];
+    [menuItems addObject:item4];
+    
+    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+    first.alignment = NSTextAlignmentCenter;
+    
+    [MAMenu showMenuInView:self fromRect:CGRectMake(280, -10, 0, 0) menuItems:menuItems];
+}
+
+-(void)deleteFile:(id)sender{
+    [[[UIAlertView alloc] initWithTitle:MyLocal(@"more_user_management_title")
+                                message:MyLocal(@"more_user_management_title")
+                               delegate:self
+                      cancelButtonTitle:MyLocal(@"cancel")
+                      otherButtonTitles:MyLocal(@"ok"), nil] show];
+}
+
+-(void)sendEmail:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManSendMail label:nil];
+    
+    NSMutableArray* attachArray = [[NSMutableArray alloc] init];
+    [attachArray addObject:_voiceFile.name];
+    
+    NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
+    [mailDic setObject:attachArray forKey:KMailAttachment];
+    [SysDelegate.viewController sendEMail:mailDic];
+}
+
+-(void)changeFileType:(MAType)type sender:(id)sender{
+    NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:_voiceFile.name];
+    if (fileArr && [fileArr count] > 0) {
+        for (int i = 0; i < [fileArr count]; i++) {
+            MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
+            file.level = [MAUtils getNumberByInt:type];
+        }
+        [[MACoreDataManager sharedCoreDataManager] saveEntry];
+    }
+}
+
+-(void)addFileToEver:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManAddEver label:nil];
+    [self changeFileType:MATypeFileForEver sender:sender];
+}
+
+-(void)cancelFileToEver:(id)sender{
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManCancelEver label:nil];
+    [self changeFileType:MATypeFileNormal sender:sender];
 }
 
 #pragma mark - other
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left)  {
         [self popView:MATypeChangeViewCurlUp];
+    } else {
+        [self showPopMenu];
     }
 }
 
--(void)initResource:(uint16_t)index array:(NSArray*)array{
-    _resourceArray = [array copy];
+-(void)initResource:(uint16_t)index secDic:(NSDictionary *)secDic{
+    _arrayName = [secDic objectForKey:KName];
+    _resourceArray = [[secDic objectForKey:KArray] copy];
     currentIndex = index;
     
     _voiceFile = [_resourceArray objectAtIndex:currentIndex];

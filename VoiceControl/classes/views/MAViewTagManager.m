@@ -176,6 +176,43 @@
         _avPlay.currentTime = tagObject.startTime;
     }
 }
+//
+//-(void)fileRename:(id)sender{
+//    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManRename label:nil];
+//    
+//    UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"file_input_new_name")
+//                                                          message:nil
+//                                                         delegate:self
+//                                                cancelButtonTitle:MyLocal(@"cancel")
+//                                                otherButtonTitles:MyLocal(@"ok"), nil];
+//    promptAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [promptAlert show];
+//    
+//    currentSecTag = [(NSNumber*)[sender userInfo] intValue];
+//}
+
+#pragma mark - alert
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+//        UITextField* field = [alertView textFieldAtIndex:0];
+//        
+//        int row = KCellButtonRow(currentSecTag);
+//        int section = KCellButtonSec(currentSecTag);
+//        
+//        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
+//        
+//        NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:file.name];
+//        if (fileArr && [fileArr count] > 0) {
+//            for (int i = 0; i < [fileArr count]; i++) {
+//                MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
+//                file.custom = field.text;
+//            }
+//            [[MACoreDataManager sharedCoreDataManager] saveEntry];
+//        }
+//        
+//        [_tableView reloadData];
+    }
+}
 
 #pragma mark - audio player
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{

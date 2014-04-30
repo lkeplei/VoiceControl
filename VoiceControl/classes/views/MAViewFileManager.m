@@ -119,7 +119,6 @@
     if (!cell) {
         cell = [[MACellFile alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.delegate = self;
         cell.tag = KCellButtonTag(indexPath.section, indexPath.row);
     }
     
@@ -146,12 +145,11 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docspath = [paths objectAtIndex:0];
         NSString* filePath = [docspath stringByAppendingFormat:@"/%@.zip", file.name];
-        
-        
+            
         if ([MAUtils unzipFiles:filePath unZipFielPath:nil]) {
             MAViewBase* view = [SysDelegate.viewController getView:MAViewTypeRecorderFile];
             [self pushView:view animatedType:MATypeTransitionRippleEffect];
-            [(MAViewRecorderFile*)view initResource:indexPath.row array:[[_resourceArray objectAtIndex:indexPath.section] objectForKey:KArray]];
+            [(MAViewRecorderFile*)view initResource:indexPath.row secDic:[_resourceArray objectAtIndex:indexPath.section]];
         } else {
             [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
         }
@@ -300,62 +298,6 @@
     }
 }
 
-#pragma mark - cell file back
--(void)MACellFileBack:(MACellFile *)cell btn:(UIButton *)btn{
-    int section = (int)KCellButtonSec(cell.tag);
-    
-    NSMutableArray* menuItems = [[NSMutableArray alloc] init];
-    MAMenuItem* first = [MAMenuItem menuItem:@"MENU" image:nil userInfo:nil target:nil action:NULL];
-    [menuItems addObject:first];
-    
-    NSString* name = [[_resourceArray objectAtIndex:section] objectForKey:KName];
-    
-    if ([name compare:MyLocal(@"file_ever")] == NSOrderedSame) {
-        MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"file_cancel_ever")
-                                           image:nil
-                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
-                                          target:self
-                                          action:@selector(cancelFileToEver:)];
-        [menuItems addObject:item1];
-    } else {
-        MAMenuItem* item1 = [MAMenuItem menuItem:MyLocal(@"delete")
-                                           image:nil
-                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
-                                          target:self
-                                          action:@selector(deleteFile:)];
-        [menuItems addObject:item1];
-        
-        MAMenuItem* item2 = [MAMenuItem menuItem:MyLocal(@"file_add_ever")
-                                           image:nil
-                                        userInfo:[NSNumber numberWithInt:(int)cell.tag]
-                                          target:self
-                                          action:@selector(addFileToEver:)];
-        [menuItems addObject:item2];
-    }
-    
-    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_menu_rename")
-                                       image:nil
-                                    userInfo:[NSNumber numberWithInt:(int)cell.tag]
-                                      target:self
-                                      action:@selector(fileRename:)];
-    [menuItems addObject:item3];
-    
-    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
-                                       image:nil
-                                    userInfo:[NSNumber numberWithInt:(int)cell.tag]
-                                      target:self
-                                      action:@selector(sendEmail:)];
-    [menuItems addObject:item4];
-    
-    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    first.alignment = NSTextAlignmentCenter;
-
-    [MAMenu showMenuInView:self
-                  fromRect:CGRectMake(btn.frame.origin.x, cell.frame.origin.y - _tableView.contentOffset.y,
-                                      btn.frame.size.width, btn.frame.size.height)
-                 menuItems:menuItems];
-}
-
 #pragma mark - pop menu
 -(void)deleteFile:(id)sender{
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManDelete label:nil];
@@ -376,18 +318,6 @@
             }
         }
         [self reloadData];
-    } else {
-        int tag = [(NSNumber*)[sender userInfo] intValue];
-        int row = KCellButtonRow(tag);
-        int section = KCellButtonSec(tag);
-
-        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-        //删除数据库与文件
-        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", file.name]];
-        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", file.name]];
-        [[MACoreDataManager sharedCoreDataManager] deleteObject:file];
-        
-        [self reloadData];
     }
 }
 
@@ -405,93 +335,10 @@
                 }
             }
         }
-    } else {
-        int tag = [(NSNumber*)[sender userInfo] intValue];
-        int row = KCellButtonRow(tag);
-        int section = KCellButtonSec(tag);
-
-        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-        [attachArray addObject:file.name];
     }
     
     NSMutableDictionary* mailDic = [[NSMutableDictionary alloc] init];
     [mailDic setObject:attachArray forKey:KMailAttachment];
     [SysDelegate.viewController sendEMail:mailDic];
-}
-
--(void)changeFileType:(MAType)type sender:(id)sender{
-    int tag = [(NSNumber*)[sender userInfo] intValue];
-    int row = KCellButtonRow(tag);
-    int section = KCellButtonSec(tag);
-    
-    MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-    
-    NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:file.name];
-    if (fileArr && [fileArr count] > 0) {
-        for (int i = 0; i < [fileArr count]; i++) {
-            MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
-            file.level = [MAUtils getNumberByInt:type];
-        }
-        [[MACoreDataManager sharedCoreDataManager] saveEntry];
-    }
-
-    [self reloadData];
-}
-
--(void)addPwd:(id)sender{
-    [self changeFileType:MATypeFilePwd sender:sender];
-}
-
--(void)addFileToEver:(id)sender{
-    if (_editing) {
-        
-    } else {
-        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManAddEver label:nil];
-        
-        [self changeFileType:MATypeFileForEver sender:sender];
-    }
-}
-
--(void)cancelFileToEver:(id)sender{
-    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManCancelEver label:nil];
-    
-    [self changeFileType:MATypeFileNormal sender:sender];
-}
-
--(void)fileRename:(id)sender{
-    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManRename label:nil];
-    
-    UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"file_input_new_name")
-                                                          message:nil
-                                                         delegate:self
-                                                cancelButtonTitle:MyLocal(@"cancel")
-                                                otherButtonTitles:MyLocal(@"ok"), nil];
-    promptAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [promptAlert show];
-    
-    currentSecTag = [(NSNumber*)[sender userInfo] intValue];
-}
-
-#pragma mark - alert
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        UITextField* field = [alertView textFieldAtIndex:0];
-        
-        int row = KCellButtonRow(currentSecTag);
-        int section = KCellButtonSec(currentSecTag);
-        
-        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-
-        NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:file.name];
-        if (fileArr && [fileArr count] > 0) {
-            for (int i = 0; i < [fileArr count]; i++) {
-                MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
-                file.custom = field.text;
-            }
-            [[MACoreDataManager sharedCoreDataManager] saveEntry];
-        }
-        
-        [_tableView reloadData];
-    }
 }
 @end

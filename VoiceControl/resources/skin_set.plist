@@ -247,6 +247,13 @@
 				<key>color</key>
 				<string>226,225,220,1</string>
 			</dict>
+			<key>skin_color_def_place_holder</key>
+			<dict>
+				<key>describe</key>
+				<string>文本框默认文字颜色</string>
+				<key>color</key>
+				<string>199,199,205,1</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>
