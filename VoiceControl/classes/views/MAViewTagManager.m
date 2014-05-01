@@ -12,6 +12,7 @@
 #import "MACellTag.h"
 #import "MAUtils.h"
 #import "MAVoiceFiles.h"
+#import "MACoreDataManager.h"
 
 #define KCellTagHeight          (50)
 
@@ -43,6 +44,12 @@
     [self setTopBtn:MyLocal(@"plan_add_top_back") rightBtn:nil enabled:YES];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    if ([_avPlay isPlaying]) {
+        [_avPlay stop];
+    }
+}
+
 -(void)showView{
     [self initTable];
     [self initBottomView];
@@ -51,7 +58,7 @@
 -(void)initBottomView{
     _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - KNavigationHeight,
                                                            self.frame.size.width, KNavigationHeight)];
-    [_bottomView setBackgroundColor:[UIColor blackColor]];
+    [_bottomView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self addSubview:_bottomView];
     
     _playButton = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -100,7 +107,7 @@
     MACellTag* cell = (MACellTag*)[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[MACellTag alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
     
@@ -176,44 +183,29 @@
         _avPlay.currentTime = tagObject.startTime;
     }
 }
-//
-//-(void)fileRename:(id)sender{
-//    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManRename label:nil];
-//    
-//    UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"file_input_new_name")
-//                                                          message:nil
-//                                                         delegate:self
-//                                                cancelButtonTitle:MyLocal(@"cancel")
-//                                                otherButtonTitles:MyLocal(@"ok"), nil];
-//    promptAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [promptAlert show];
-//    
-//    currentSecTag = [(NSNumber*)[sender userInfo] intValue];
-//}
 
-#pragma mark - alert
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-//        UITextField* field = [alertView textFieldAtIndex:0];
-//        
-//        int row = KCellButtonRow(currentSecTag);
-//        int section = KCellButtonSec(currentSecTag);
-//        
-//        MAVoiceFiles* file = [[[_resourceArray objectAtIndex:section] objectForKey:KArray] objectAtIndex:row];
-//        
-//        NSArray* fileArr = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:file.name];
-//        if (fileArr && [fileArr count] > 0) {
-//            for (int i = 0; i < [fileArr count]; i++) {
-//                MAVoiceFiles* file = (MAVoiceFiles*)[fileArr objectAtIndex:i];
-//                file.custom = field.text;
-//            }
-//            [[MACoreDataManager sharedCoreDataManager] saveEntry];
-//        }
-//        
-//        [_tableView reloadData];
+-(void)MACellTagBackSave:(MACellTag *)cell object:(MATagObject *)tagObject{
+    NSArray* array = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:tagObject.name];
+    if (array && [array count] > 0) {
+        MAVoiceFiles* file = [array objectAtIndex:0];
+        
+        NSMutableString* mark = nil;
+        for (int i = 0; i < [_resourceArray count]; i++) {
+            MATagObject* object = [_resourceArray objectAtIndex:i];
+            if (i == 0) {
+                mark = [[NSMutableString alloc] init];
+                [mark appendFormat:@"%.1f-%.1f-%.1f-%@", object.startTime, object.endTime, object.averageVoice, object.tagName];
+            } else {
+                [mark appendFormat:@";%.1f-%.1f-%.1f-%@", object.startTime, object.endTime,object.averageVoice, object.tagName];
+            }
+        }
+        file.tag = mark;
+        
+        [_tableView reloadData];
+        
+        [[MACoreDataManager sharedCoreDataManager] saveEntry];
     }
 }
-
 #pragma mark - audio player
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
     
@@ -250,6 +242,7 @@
             if ([tagObject initDataWithString:tag]) {
                 tagObject.tag = i;
                 tagObject.totalTime = [file.duration floatValue];
+                tagObject.startDate = [file.time dateByAddingTimeInterval:tagObject.endTime - tagObject.startTime];
                 if (tagObject.endTime > tagObject.totalTime) {
                     tagObject.endTime = tagObject.totalTime;
                 }

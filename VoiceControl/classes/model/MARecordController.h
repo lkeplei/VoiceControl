@@ -41,6 +41,7 @@
 @property (assign) Float32 endTime;             //结束时间
 @property (assign) Float32 averageVoice;        //平均分贝
 
+@property (nonatomic, strong) NSDate* startDate;    //开始时间
 @property (assign) Float32 totalTime;           //总时长
 @property (assign) Float32 pointX;              //选择时间点
 @property (assign) int tag;                     //标记，用来找到对应的标记点

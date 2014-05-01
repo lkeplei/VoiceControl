@@ -11,10 +11,12 @@
 #import "MAUtils.h"
 #import "MAModel.h"
 #import "MARecordController.h"
+#import "MAVoiceFiles.h"
 
 #define KCellLabelNameTag       (1001)
 #define KCellLabelTimeTag       (1002)
 #define KCellLabelDurationTag   (1003)
+#define KCellRenameButtonTag    (1004)
 #define KCellOffset             (5)
 
 @interface MACellTag()
@@ -57,17 +59,29 @@
         [self setCellLabel:object.tagName tag:KCellLabelNameTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
-                     frame:CGRectMake(KCellOffset + CGRectGetMaxX(_playBtn.frame), 0, self.frame.size.width, self.frame.size.height * 0.68)];
+                     frame:CGRectMake(KCellOffset + CGRectGetMaxX(_playBtn.frame), 0, self.frame.size.width, self.frame.size.height * 0.65)];
         
-        [self setCellLabel:object.tagName tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
+        [self setCellLabel:[MAUtils getStringFromDate:object.startDate format:KTimeFormat] tag:KCellLabelTimeTag alignment:KTextAlignmentLeft
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                      frame:CGRectMake(KCellOffset + CGRectGetMaxX(_playBtn.frame), self.frame.size.height * 0.7, self.frame.size.width, self.frame.size.height * 0.3)];
         
-        [self setCellLabel:object.tagName tag:KCellLabelDurationTag alignment:KTextAlignmentRight
+        [self setCellLabel:[[MAModel shareModel] getStringTime:object.endTime - object.startTime type:MATypeTimeClock]
+                       tag:KCellLabelDurationTag alignment:KTextAlignmentRight
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                      frame:CGRectMake(self.frame.size.width - 120, self.frame.size.height * 0.7, 110, self.frame.size.height * 0.3)];
+        
+        UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellRenameButtonTag];
+        if (button == nil) {
+            button = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                        image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                     imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                       target:self
+                                       action:@selector(tagRename:)];
+            button.frame = (CGRect){self.frame.size.width - button.frame.size.width - KCellOffset, 0, button.frame.size};
+            [self addSubview:button];
+        }
     }
 }
 
@@ -108,6 +122,28 @@
 - (void)playBtnClicked:(id)sender{
     if (self.delegate && [self.delegate respondsToSelector:@selector(MACellTagBack:object:)]) {
         [self.delegate MACellTagBack:self object:_tagObject];
+    }
+}
+
+-(void)tagRename:(id)sender{
+    UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"file_input_new_name")
+                                                          message:nil
+                                                         delegate:self
+                                                cancelButtonTitle:MyLocal(@"cancel")
+                                                otherButtonTitles:MyLocal(@"ok"), nil];
+    promptAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [promptAlert show];
+}
+
+#pragma mark - alert
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        UITextField* field = [alertView textFieldAtIndex:0];
+        _tagObject.tagName = field.text;
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(MACellTagBackSave:object:)]) {
+            [self.delegate MACellTagBackSave:self object:_tagObject];
+        }
     }
 }
 @end

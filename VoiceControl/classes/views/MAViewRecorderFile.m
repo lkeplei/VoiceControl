@@ -26,9 +26,15 @@
 #define KTabbarItem4Tag                 (103)
 #define KTextViewLabelTag               (200)
 
+#define SOUND_METER_COUNT       60
+#define KMaxLengthOfWave        (50)
+#define KMaxValueOfMetaer       (70)
+
 @interface MAViewRecorderFile (){
-    uint16_t    currentIndex;
+    uint16_t detectionNumber;      //用来记数的，画波形用的
+    uint16_t currentIndex;
     CGRect hudRect;
+    int soundMeters[SOUND_METER_COUNT];
 }
 
 @property (nonatomic, copy) NSMutableArray* resourceArray;
@@ -56,6 +62,7 @@
         self.viewTitle = MyLocal(@"view_title_recorder_file");
         
         currentIndex = 0;
+        detectionNumber = 0;
         
         [NSTimer scheduledTimerWithTimeInterval:0.04 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
@@ -115,6 +122,10 @@
 
 -(void)initMessageView{
     hudRect = CGRectMake(0, KMessageViewHeight, self.frame.size.width, KShowFileViewHeight - KMessageViewHeight * 2 - KRecorderFileOffset * 2);
+    for(int i = 0; i < SOUND_METER_COUNT; i++) {
+        soundMeters[i] = KMaxLengthOfWave;
+    }
+    
     UIView* mesView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, self.frame.size.width, KMessageViewHeight}];
     [mesView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorViewBg default:NO]];
     [self addSubview:mesView];
@@ -174,7 +185,7 @@
 -(void)initTabbarView{
     _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - KNavigationHeight,
                                                            self.frame.size.width, KNavigationHeight)];
-    [_tabbarView setBackgroundColor:[UIColor blackColor]];
+    [_tabbarView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self addSubview:_tabbarView];
     
     float width = _tabbarView.frame.size.width / 4;
@@ -241,8 +252,18 @@
         
         _durationSlider.value = _avPlay.currentTime;
         _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] - _avPlay.currentTime type:MATypeTimeClock];
+        
+        if (detectionNumber == 5) {
+            detectionNumber = 0;
+            [self addSoundMeterItem:[_avPlay averagePowerForChannel:0]];
+        }
+        
+        detectionNumber++;
     } else {
         [self setPlayBtnStatus:YES];
+        
+        detectionNumber = 0;
+        [self addSoundMeterItem:KMaxLengthOfWave];
     }
 }
 
@@ -283,26 +304,11 @@
         } else if (btn.tag == KTabbarItem2Tag) {
             [self deleteFile:nil];
         } else if (btn.tag == KTabbarItem3Tag) {
+            [self sendEmail:nil];
         } else if (btn.tag == KTabbarItem4Tag) {
         }
     } else {
         [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManDelete label:nil];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docspath = [paths objectAtIndex:0];
-        //删除数据库与文件
-        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name]];
-        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", _voiceFile.name]];
-        [[MACoreDataManager sharedCoreDataManager] deleteObject:_voiceFile];
-        
-        _voiceFile =  nil;
-        [self popView:MATypeChangeViewCurlUp];
     }
 }
 
@@ -403,19 +409,12 @@
         [menuItems addObject:item2];
     }
     
-    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_menu_rename")
-                                       image:nil
-                                    userInfo:nil
-                                      target:self
-                                      action:@selector(fileRename:)];
-    [menuItems addObject:item3];
-    
-    MAMenuItem* item4 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
+    MAMenuItem* item3 = [MAMenuItem menuItem:MyLocal(@"file_send_email")
                                        image:nil
                                     userInfo:nil
                                       target:self
                                       action:@selector(sendEmail:)];
-    [menuItems addObject:item4];
+    [menuItems addObject:item3];
     
     first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
     first.alignment = NSTextAlignmentCenter;
@@ -429,6 +428,22 @@
                                delegate:self
                       cancelButtonTitle:MyLocal(@"cancel")
                       otherButtonTitles:MyLocal(@"ok"), nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManDelete label:nil];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docspath = [paths objectAtIndex:0];
+        //删除数据库与文件
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name]];
+        [MAUtils deleteFileWithPath:[docspath stringByAppendingFormat:@"/%@.aac", _voiceFile.name]];
+        [[MACoreDataManager sharedCoreDataManager] deleteObject:_voiceFile];
+        
+        _voiceFile =  nil;
+        [self popView:MATypeChangeViewCurlUp];
+    }
 }
 
 -(void)sendEmail:(id)sender{
@@ -456,11 +471,15 @@
 -(void)addFileToEver:(id)sender{
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManAddEver label:nil];
     [self changeFileType:MATypeFileForEver sender:sender];
+    
+    [self popView:MATypeChangeViewCurlUp];
 }
 
 -(void)cancelFileToEver:(id)sender{
     [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KFileManCancelEver label:nil];
     [self changeFileType:MATypeFileNormal sender:sender];
+    
+    [self popView:MATypeChangeViewCurlUp];
 }
 
 #pragma mark - other
@@ -495,7 +514,8 @@
     if (play) {
         _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_voiceFile.path] error:nil];
         _avPlay.delegate = self;
-        _durationSlider.maximumValue = _avPlay.duration;
+        _durationSlider.maximumValue = [_voiceFile.duration floatValue];
+        _avPlay.meteringEnabled = YES;
     }
     
     //view content
@@ -512,6 +532,22 @@
     _dateLabel.text = [MAUtils getStringFromDate:_voiceFile.time format:@"MMM dd,yyyy"];
     NSDate* endTime = [_voiceFile.time dateByAddingTimeInterval:[_voiceFile.duration intValue]];
     _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [MAUtils getStringFromDate:_voiceFile.time format:@"HH:mm:ss"], [MAUtils getStringFromDate:endTime format:@"HH:mm:ss"]];
+}
+
+#pragma mark - Sound meter operations
+- (void)shiftSoundMeterLeft {
+    for(int i=0; i<SOUND_METER_COUNT - 1; i++) {
+        soundMeters[i] = soundMeters[i+1];
+    }
+}
+
+- (void)addSoundMeterItem:(int)lastValue {
+    [self shiftSoundMeterLeft];
+    [self shiftSoundMeterLeft];
+    soundMeters[SOUND_METER_COUNT - 1] = lastValue;
+    soundMeters[SOUND_METER_COUNT - 2] = lastValue;
+    
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Drawing operations
@@ -547,22 +583,22 @@
     CGContextSetLineWidth(context, 1.0);
     CGContextSetLineJoin(context, kCGLineJoinRound);
     
-//    int baseLine = hudRect.origin.y + hudRect.size.height / 2;
-//    int multiplier = 1;
-//    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--){
-//        multiplier = ((int)x % 2) == 0 ? 1 : -1;
-//        
-//        CGFloat y = baseLine + ((KMaxValueOfMetaer * (KMaxLengthOfWave - abs(soundMeters[(int)x]))) / KMaxLengthOfWave) * multiplier;
-//        
-//        if(x == SOUND_METER_COUNT - 1) {
-//            CGContextMoveToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
-//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
-//        }
-//        else {
-//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
-//            CGContextAddLineToPoint(context, x * (KHudSizeWidth / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
-//        }
-//    }
+    int baseLine = hudRect.origin.y + hudRect.size.height / 2;
+    int multiplier = 1;
+    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--){
+        multiplier = ((int)x % 2) == 0 ? 1 : -1;
+        
+        CGFloat y = baseLine + ((KMaxValueOfMetaer * (KMaxLengthOfWave - abs(soundMeters[(int)x]))) / KMaxLengthOfWave) * multiplier;
+        
+        if(x == SOUND_METER_COUNT - 1) {
+            CGContextMoveToPoint(context, x * (hudRect.size.width / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
+            CGContextAddLineToPoint(context, x * (hudRect.size.width / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
+        }
+        else {
+            CGContextAddLineToPoint(context, x * (hudRect.size.width / SOUND_METER_COUNT) + hudRect.origin.x + 4, y);
+            CGContextAddLineToPoint(context, x * (hudRect.size.width / SOUND_METER_COUNT) + hudRect.origin.x + 2, y);
+        }
+    }
     
     CGContextStrokePath(context);
 }

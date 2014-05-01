@@ -13,6 +13,7 @@
 
 @protocol MACellTagDelegate <NSObject>
 -(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject;
+-(void)MACellTagBackSave:(MACellTag *)cell object:(MATagObject *)tagObject;
 @end
 
 @interface MACellTag : UITableViewCell
