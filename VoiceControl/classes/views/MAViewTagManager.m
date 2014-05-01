@@ -35,7 +35,7 @@
         self.viewType = MaviewTypeTagManager;
         self.viewTitle = MyLocal(@"view_title_tag_manager");
         
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
     }
     return self;
 }
@@ -72,7 +72,7 @@
     _runTimeLabel = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]
                                     frame:(CGRect){CGPointZero, _bottomView.frame.size.width - 10, _bottomView.frame.size.height}
                                      font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize22]
-                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlue default:NO]];
+                                    color:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]];
     _runTimeLabel.textAlignment = KTextAlignmentRight;
     [_bottomView addSubview:_runTimeLabel];
 }
@@ -132,7 +132,28 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-
+        MATagObject* tagObject = [_resourceArray objectAtIndex:indexPath.row];
+        [_resourceArray removeObjectAtIndex:indexPath.row];
+        NSArray* array = [[MACoreDataManager sharedCoreDataManager] getMAVoiceFile:tagObject.name];
+        if (array && [array count] > 0) {
+            MAVoiceFiles* file = [array objectAtIndex:0];
+            
+            NSMutableString* mark = nil;
+            for (int i = 0; i < [_resourceArray count]; i++) {
+                MATagObject* object = [_resourceArray objectAtIndex:i];
+                if (i == 0) {
+                    mark = [[NSMutableString alloc] init];
+                    [mark appendFormat:@"%.1f-%.1f-%.1f-%@", object.startTime, object.endTime, object.averageVoice, object.tagName];
+                } else {
+                    [mark appendFormat:@";%.1f-%.1f-%.1f-%@", object.startTime, object.endTime,object.averageVoice, object.tagName];
+                }
+            }
+            file.tag = mark;
+            
+            [_tableView reloadData];
+            
+            [[MACoreDataManager sharedCoreDataManager] saveEntry];
+        }
     }
 }
 
@@ -157,12 +178,30 @@
 }
 
 - (void)detectionVoice{
-    if (_avPlay && _avPlay.playing) {
-        [_avPlay updateMeters];//刷新音量数据
+    if ([_resourceArray count] <= 0 && [_playButton isEnabled]) {
+        [_playButton setEnabled:NO];
         
-        [_runTimeLabel setText:[[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock]];
+        [_runTimeLabel setText:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]];
     } else {
-        [self setPlayBtnStatus:YES];
+        if (_avPlay && _avPlay.playing) {
+            [_avPlay updateMeters];//刷新音量数据
+            
+            [_runTimeLabel setText:[[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock]];
+            
+            for (int i = 0; i < [_resourceArray count]; i++) {
+                MACellTag* cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                if (cell) {
+                    MATagObject* object = [_resourceArray objectAtIndex:i];
+                    if (object.startTime <= _avPlay.currentTime && object.endTime >= _avPlay.currentTime) {
+                        [cell setCellPlaying:YES];
+                    } else {
+                        [cell setCellPlaying:NO];
+                    }
+                }
+            }
+        } else {
+            [self setPlayBtnStatus:YES];
+        }
     }
 }
 #pragma mark - cell tag back

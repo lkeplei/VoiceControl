@@ -146,4 +146,15 @@
         }
     }
 }
+
+#pragma mark - other
+-(void)setCellPlaying:(BOOL)playing{
+    [self setPlayBtnStatus:!playing];
+    
+    if (playing) {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
+    } else {
+        [self setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    }
+}
 @end

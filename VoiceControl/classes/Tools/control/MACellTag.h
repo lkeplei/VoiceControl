@@ -20,6 +20,7 @@
 
 -(void)setCellResource:(MATagObject*)object index:(NSInteger)index;
 -(void)setPlayBtnStatus:(BOOL)play;
+-(void)setCellPlaying:(BOOL)playing;
 
 @property (nonatomic, assign) id<MACellTagDelegate> delegate;
 
