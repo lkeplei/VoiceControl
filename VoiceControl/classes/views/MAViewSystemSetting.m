@@ -134,6 +134,7 @@
     [_progressSlider addTarget:self action:@selector(durationSliderMoved:) forControlEvents:UIControlEventValueChanged];
     _progressSlider.maximumValue = 180;
     _progressSlider.minimumValue = 1;
+    [_progressSlider setMinimumTrackTintColor:[[MAModel shareModel] getColorByType:MATypeColorLightBlue default:NO]];
     _progressSlider.value = [[MAModel shareModel] getFileTimeMax] / 60;
     [_durationView addSubview:_progressSlider];
 }
@@ -226,6 +227,7 @@
     [_markSlider addTarget:self action:@selector(markSliderMoved:) forControlEvents:UIControlEventValueChanged];
     _markSlider.maximumValue = 90;
     _markSlider.minimumValue = 10;
+    [_markSlider setMinimumTrackTintColor:[[MAModel shareModel] getColorByType:MATypeColorLightBlue default:NO]];
     _markSlider.value = [[MAModel shareModel] getTagVoice];
     [_markDBView addSubview:_markSlider];
 }
@@ -279,7 +281,7 @@
     //默认选择
     segmentControl.selectedSegmentIndex = [[MADataManager getDataByKey:KUserDefaultQualityLevel] intValue] - MARecorderQualityLow;
     //设置背景色
-//    segmentControl.tintColor = [UIColor greenColor];
+    segmentControl.tintColor = [[MAModel shareModel] getColorByType:MATypeColorLightGreen default:NO];
 //    [segmentControl setImage:[[UIImage imageNamed:@"slider_tag"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forSegmentAtIndex:1];
     //设置监听事件
     [segmentControl addTarget:self action:@selector(segmentedSelected:) forControlEvents:UIControlEventValueChanged];

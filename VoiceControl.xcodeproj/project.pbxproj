@@ -53,6 +53,8 @@
 		0471C2D518FEC8760049CEB5 /* button_color4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0471C2D118FEC8760049CEB5 /* button_color4@2x.png */; };
 		049007B018F2370E00EF97C2 /* slider_scrubber_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049007AE18F2370E00EF97C2 /* slider_scrubber_left@2x.png */; };
 		049007B118F2370E00EF97C2 /* slider_scrubber_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049007AF18F2370E00EF97C2 /* slider_scrubber_right@2x.png */; };
+		0497E87C191482DA007C6E2E /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 0497E87A191482DA007C6E2E /* Appirater.m */; };
+		0497E87E1914837C007C6E2E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0497E87D1914837C007C6E2E /* StoreKit.framework */; };
 		04C238DA17B6332000B8B388 /* MAViewAboutUs.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C238D917B6332000B8B388 /* MAViewAboutUs.m */; };
 		04C6DE40179270BC00ED2EB5 /* SQLiteWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04C6DE3E179270BC00ED2EB5 /* SQLiteWrapper.cpp */; };
 		04C6DE451792711400ED2EB5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C6DE441792711400ED2EB5 /* libsqlite3.0.dylib */; };
@@ -189,6 +191,10 @@
 		0471C2D118FEC8760049CEB5 /* button_color4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_color4@2x.png"; sourceTree = "<group>"; };
 		049007AE18F2370E00EF97C2 /* slider_scrubber_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_scrubber_left@2x.png"; sourceTree = "<group>"; };
 		049007AF18F2370E00EF97C2 /* slider_scrubber_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_scrubber_right@2x.png"; sourceTree = "<group>"; };
+		0497E879191482DA007C6E2E /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
+		0497E87A191482DA007C6E2E /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
+		0497E87B191482DA007C6E2E /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
+		0497E87D1914837C007C6E2E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04C238D817B6332000B8B388 /* MAViewAboutUs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAboutUs.h; sourceTree = "<group>"; };
 		04C238D917B6332000B8B388 /* MAViewAboutUs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAboutUs.m; sourceTree = "<group>"; };
 		04C6DE3E179270BC00ED2EB5 /* SQLiteWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SQLiteWrapper.cpp; sourceTree = "<group>"; };
@@ -310,6 +316,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0497E87E1914837C007C6E2E /* StoreKit.framework in Frameworks */,
 				044ADEDD18F43ACB0000DB63 /* CoreText.framework in Frameworks */,
 				0458CF5F18EAF548007B7C3D /* Accelerate.framework in Frameworks */,
 				18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */,
@@ -427,6 +434,7 @@
 		04E65644178C4F15003A6ACA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0497E87D1914837C007C6E2E /* StoreKit.framework */,
 				044ADEDC18F43ACB0000DB63 /* CoreText.framework */,
 				0458CF5E18EAF548007B7C3D /* Accelerate.framework */,
 				18E08B5C18DAFB1900866C7B /* CoreData.framework */,
@@ -507,6 +515,9 @@
 		04E65673178C5150003A6ACA /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				0497E879191482DA007C6E2E /* Appirater.h */,
+				0497E87A191482DA007C6E2E /* Appirater.m */,
+				0497E87B191482DA007C6E2E /* AppiraterDelegate.h */,
 				043A6EAF18E44A3A005A422D /* baidu */,
 				18E08B4C18DAE0BE00866C7B /* coreData */,
 				BE4C565017B22BC300E675CA /* ZipArchive */,
@@ -837,6 +848,7 @@
 				044ADEDB18F437BF0000DB63 /* MAAnimatedLabel.m in Sources */,
 				1805184B190A463600DDEC35 /* MAViewAudioPlayControl.m in Sources */,
 				BE4C566017B22BC300E675CA /* zip.c in Sources */,
+				0497E87C191482DA007C6E2E /* Appirater.m in Sources */,
 				043A6ECE18E44A3A005A422D /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				BE4C566117B22BC300E675CA /* ZipArchive.mm in Sources */,
 				04C238DA17B6332000B8B388 /* MAViewAboutUs.m in Sources */,

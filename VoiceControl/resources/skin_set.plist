@@ -254,6 +254,20 @@
 				<key>color</key>
 				<string>199,199,205,1</string>
 			</dict>
+			<key>skin_color_def_light_green</key>
+			<dict>
+				<key>describe</key>
+				<string>淡绿色</string>
+				<key>color</key>
+				<string>185,248,180,1</string>
+			</dict>
+			<key>skin_color_def_light_blue</key>
+			<dict>
+				<key>describe</key>
+				<string>淡蓝色</string>
+				<key>color</key>
+				<string>218,242,241,1</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>

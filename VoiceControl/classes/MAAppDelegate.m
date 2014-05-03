@@ -10,7 +10,7 @@
 #import "MAModel.h"
 #import "MAViewController.h"
 #import "MACoreDataManager.h"
-//#import "AVAudioSession.h"
+#import "Appirater.h"
 #import <AVFoundation/AVFoundation.h>
 
 #import "BaiduMobStat.h"
@@ -32,8 +32,23 @@
     [self.window makeKeyAndVisible];
     
     [self initBaiduMob];
-
+    [self initAppirater];
+    
     return YES;
+}
+
+-(void)initAppirater{
+    [Appirater setAppId:@"832238889"];
+    [Appirater setDaysUntilPrompt:5];           //启动多少天
+    [Appirater setUsesUntilPrompt:8];           //启动多少次
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater appLaunched:YES];
+#ifdef KVersionProduction
+    [Appirater setDebug:NO];
+#else
+    [Appirater setDebug:NO];
+#endif
 }
 
 -(void)initBaiduMob{
@@ -89,6 +104,8 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
     [[MAModel shareModel] setAppForeground:NO];
+    
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application{

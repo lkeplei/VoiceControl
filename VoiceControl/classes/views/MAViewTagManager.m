@@ -188,16 +188,21 @@
             
             [_runTimeLabel setText:[[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock]];
             
+            BOOL find = NO;
             for (int i = 0; i < [_resourceArray count]; i++) {
                 MACellTag* cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                 if (cell) {
                     MATagObject* object = [_resourceArray objectAtIndex:i];
                     if (object.startTime <= _avPlay.currentTime && object.endTime >= _avPlay.currentTime) {
                         [cell setCellPlaying:YES];
+                        find = YES;
                     } else {
                         [cell setCellPlaying:NO];
                     }
                 }
+            }
+            if (!find && [_avPlay isPlaying]) {
+                [_avPlay stop];
             }
         } else {
             [self setPlayBtnStatus:YES];

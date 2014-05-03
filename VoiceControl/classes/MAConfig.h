@@ -117,6 +117,8 @@
 #define KSkinSetColorTopView        @"skin_color_def_top_view"
 #define KSkinSetColorViewBg         @"skin_color_def_view_bg"
 #define KSkinSetColorPlaceHolder    @"skin_color_def_place_holder"
+#define KSkinSetColorLightGreen     @"skin_color_def_light_green"
+#define KSkinSetColorLightBlue      @"skin_color_def_light_blue"
 
 #define KSkinSetDicImage            @"skin_set_image"
 #define KSkinSetImgHomePhone        @"skin_image_home_phone"

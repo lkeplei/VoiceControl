@@ -57,6 +57,8 @@ typedef enum {
     MATypeColorTopView,
     MATypeColorViewBg,
     MATypeColorPlaceHolder,
+    MATypeColorLightGreen,
+    MATypeColorLightBlue,
     
     MATypeImgHomePhone = 300,
     MATypeImgHomeMenu,

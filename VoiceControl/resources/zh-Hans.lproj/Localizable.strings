@@ -223,3 +223,8 @@
 "system_setting_mail_to" = "liukun927nh@163.com";
 "system_setting_mail_subject" = "给微录提建议";
 "system_setting_mail_body" = "我正在使用版本%@，对于微录我有些建议和想法：(在这里写下您的想法和建议，我们会看到并尽快做出回复)";
+
+"If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!" = "如果您喜欢使用%@，您介意花一点时间给它评分吗？不会超过一分钟。您的支持就是我们前进的动力，感谢您的支持！";
+"Rate %@" = "给%@评分";
+"No, Thanks" = "不，谢谢";
+"Remind me later" = "稍后提醒我";
