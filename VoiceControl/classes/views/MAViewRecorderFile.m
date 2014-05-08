@@ -189,40 +189,42 @@
     [self addSubview:_tabbarView];
     
     float width = _tabbarView.frame.size.width / 4;
+    UIImage* imgTag = [UIImage imageNamed:@"recorder_file_item_tag.png"];
+    float offX = (width - imgTag.size.width) / 2;
     UIButton* item1 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                    imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                       image:imgTag
+                                    imagesec:[UIImage imageNamed:@"recorder_file_item_tag_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item1.tag = KTabbarItem1Tag;
-    item1.frame = CGRectMake(0, 0, width, _tabbarView.frame.size.height);
+    item1.frame = CGRectMake(offX, 0, imgTag.size.width, _tabbarView.frame.size.height);
     [_tabbarView addSubview:item1];
     
     UIButton* item2 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                    imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                       image:[UIImage imageNamed:@"recorder_file_item_tag.png"]
+                                    imagesec:[UIImage imageNamed:@"recorder_file_item_tag_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item2.tag = KTabbarItem2Tag;
-    item2.frame = (CGRect){CGRectGetMaxX(item1.frame), 0, item1.frame.size};
+    item2.frame = (CGRect){width + offX, 0, item1.frame.size};
     [_tabbarView addSubview:item2];
     
     UIButton* item3 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                    imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                       image:[UIImage imageNamed:@"recorder_file_share.png"]
+                                    imagesec:[UIImage imageNamed:@"recorder_file_share_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item3.tag = KTabbarItem3Tag;
-    item3.frame = (CGRect){CGRectGetMaxX(item2.frame), 0, item1.frame.size};
+    item3.frame = (CGRect){width * 2 + offX, 0, item1.frame.size};
     [_tabbarView addSubview:item3];
     
     UIButton* item4 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                    imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                       image:[UIImage imageNamed:@"recorder_file_item_tag.png"]
+                                    imagesec:[UIImage imageNamed:@"recorder_file_item_tag_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item4.tag = KTabbarItem4Tag;
-    item4.frame = (CGRect){CGRectGetMaxX(item3.frame), 0, item1.frame.size};
+    item4.frame = (CGRect){width * 3 + offX, 0, item1.frame.size};
     [_tabbarView addSubview:item4];
 }
 

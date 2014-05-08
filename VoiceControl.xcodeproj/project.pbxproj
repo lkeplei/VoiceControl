@@ -11,6 +11,10 @@
 		0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407465117ABFA7F00B70537 /* MAViewFileManager.m */; };
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
 		042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042BDBB318C4BE200041C078 /* icon-120@2x.png */; };
+		0437E7991918F39B00026F0B /* recorder_file_item_tag_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0437E7971918F39B00026F0B /* recorder_file_item_tag_sec@2x.png */; };
+		0437E79A1918F39B00026F0B /* recorder_file_item_tag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0437E7981918F39B00026F0B /* recorder_file_item_tag@2x.png */; };
+		0437E79D1919283000026F0B /* recorder_file_share_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0437E79B1919283000026F0B /* recorder_file_share_sec@2x.png */; };
+		0437E79E1919283000026F0B /* recorder_file_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0437E79C1919283000026F0B /* recorder_file_share@2x.png */; };
 		043A6ECB18E44A3A005A422D /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 043A6EB118E44A3A005A422D /* libBaiduMobStat.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		043A6ECC18E44A3A005A422D /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A6EB418E44A3A005A422D /* CDataScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		043A6ECD18E44A3A005A422D /* CFilteringJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 043A6EB718E44A3A005A422D /* CFilteringJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -131,6 +135,10 @@
 		0407465117ABFA7F00B70537 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
 		0422DDF817EC01660004C289 /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
 		042BDBB318C4BE200041C078 /* icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120@2x.png"; sourceTree = "<group>"; };
+		0437E7971918F39B00026F0B /* recorder_file_item_tag_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorder_file_item_tag_sec@2x.png"; sourceTree = "<group>"; };
+		0437E7981918F39B00026F0B /* recorder_file_item_tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorder_file_item_tag@2x.png"; sourceTree = "<group>"; };
+		0437E79B1919283000026F0B /* recorder_file_share_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorder_file_share_sec@2x.png"; sourceTree = "<group>"; };
+		0437E79C1919283000026F0B /* recorder_file_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorder_file_share@2x.png"; sourceTree = "<group>"; };
 		043A6EB018E44A3A005A422D /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
 		043A6EB118E44A3A005A422D /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
 		043A6EB318E44A3A005A422D /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
@@ -623,6 +631,10 @@
 		BE073A75179E9F3400340A47 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				0437E79B1919283000026F0B /* recorder_file_share_sec@2x.png */,
+				0437E79C1919283000026F0B /* recorder_file_share@2x.png */,
+				0437E7971918F39B00026F0B /* recorder_file_item_tag_sec@2x.png */,
+				0437E7981918F39B00026F0B /* recorder_file_item_tag@2x.png */,
 				0471C2CE18FEC8760049CEB5 /* button_color1@2x.png */,
 				0471C2CF18FEC8760049CEB5 /* button_color2@2x.png */,
 				0471C2D018FEC8760049CEB5 /* button_color3@2x.png */,
@@ -757,6 +769,7 @@
 				04E65650178C4F15003A6ACA /* InfoPlist.strings in Resources */,
 				04E65658178C4F15003A6ACA /* Default.png in Resources */,
 				044C03D718BA2F4300FD060B /* button_circle_red@2x.png in Resources */,
+				0437E79D1919283000026F0B /* recorder_file_share_sec@2x.png in Resources */,
 				185D6BF818C4762200D448F6 /* Default@2x.png in Resources */,
 				0442FA3018F6D84200A6C7D6 /* werecorder_qr_code@2x.png in Resources */,
 				04697AD118C0CEAA0067E757 /* Default-568h@2x.png in Resources */,
@@ -765,6 +778,7 @@
 				0471C2D218FEC8760049CEB5 /* button_color1@2x.png in Resources */,
 				BE0443FD179FC50C00537368 /* icon-iphone.png in Resources */,
 				049007B118F2370E00EF97C2 /* slider_scrubber_right@2x.png in Resources */,
+				0437E7991918F39B00026F0B /* recorder_file_item_tag_sec@2x.png in Resources */,
 				BE0443FE179FC50C00537368 /* icon-iphone@2x.png in Resources */,
 				044C03D418BA2F4300FD060B /* button_circle_green_sec@2x.png in Resources */,
 				04D7DE6817A4BB7900AF0450 /* play_control_next@2x.png in Resources */,
@@ -776,7 +790,9 @@
 				0471C2D418FEC8760049CEB5 /* button_color3@2x.png in Resources */,
 				18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */,
 				049007B018F2370E00EF97C2 /* slider_scrubber_left@2x.png in Resources */,
+				0437E79E1919283000026F0B /* recorder_file_share@2x.png in Resources */,
 				0471C2D318FEC8760049CEB5 /* button_color2@2x.png in Resources */,
+				0437E79A1918F39B00026F0B /* recorder_file_item_tag@2x.png in Resources */,
 				183DA90418BAF6A5005C6ABA /* slider_scrubber_knob.png in Resources */,
 				04D7DE6B17A4BB7900AF0450 /* play_control_pre@2x.png in Resources */,
 				044C03D318BA2F4300FD060B /* button_circle_gray@2x.png in Resources */,
