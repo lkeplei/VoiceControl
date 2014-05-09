@@ -193,6 +193,36 @@ You could set up a dividing line of the DB.It can mark the parts of the higher d
 "detail_next" = "Next";
 
 ////////////////////////////////    1.2.0
+"view_title_recorder_file" = "Play";
+"view_title_tag_manager" = "Mark";
+"recorder_decrible_default" = "Remark here...";
+
+"plan_no_plan" = "No Custom-made";
+"plan_nothing_content" = "you have not added the \"Custom-made\",want to try to Custom";
+
+"system_setting_duration_label" = "Maximum length for single file";
+"system_setting_duration_describe" = "Save the file when time up";
+"system_setting_mark_label" = "mark DB settings";
+"system_setting_mark_describe" = "当前声音达到这个点开启一个标记段";
+"system_setting_quality_label" = "Voice quality";
+"system_setting_quality_low" = "Low";
+"system_setting_quality_normal" = "Standard";
+"system_setting_quality_high" = "Best";
+"system_setting_quality_des_low" = "Minimum size";
+"system_setting_quality_des_normal" = "common quality";
+"system_setting_quality_des_high" = "CD quality ";
+"system_setting_contact_label" = "Help us to do better";
+"system_setting_del_five" = "-5min";
+"system_setting_add_five" = "+5min";
+"system_setting_del_db" = "-5DB";
+"system_setting_add_db" = "+5DB";
+"system_setting_contact" = "Contact us";
+"system_setting_evaluation" = "your comment";
+
+"system_setting_mail_to" = "liukun927nh@163.com";
+"system_setting_mail_subject" = "your suggestion";
+"system_setting_mail_body" = "pls write your suggestion below,we will response ASAP)";
+
 "If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!" = "If you enjoy using %@, would you mind taking a moment to rate it? It won't take more than a minute. Thanks for your support!";
 "Rate %@" = "Rate %@";
 "No, Thanks" = "No, thanks";
