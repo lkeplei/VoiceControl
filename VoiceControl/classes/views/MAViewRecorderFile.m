@@ -48,6 +48,7 @@
 @property (nonatomic, strong) UILabel* durationLabel;
 @property (nonatomic, strong) UILabel* dateLabel;
 @property (nonatomic, strong) UILabel* timeLabel;
+@property (nonatomic, strong) UILabel* tagNumberLabel;
 @property (nonatomic, strong) NSString* arrayName;
 
 @end
@@ -200,9 +201,18 @@
     item1.frame = CGRectMake(offX, 0, imgTag.size.width, _tabbarView.frame.size.height);
     [_tabbarView addSubview:item1];
     
+    UIImageView* tagNumberView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"file_tag_number.png"]];
+    tagNumberView.frame = (CGRect){width - 60, tagNumberView.frame.origin.y, tagNumberView.frame.size};
+    _tagNumberLabel = [MAUtils labelWithTxt:@"0"
+                                     frame:(CGRect){CGPointZero, tagNumberView.frame.size}
+                                      font:[UIFont fontWithName:KLabelFontArial size:10]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]];
+    [tagNumberView addSubview:_tagNumberLabel];
+    [item1 addSubview:tagNumberView];
+    
     UIButton* item2 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[UIImage imageNamed:@"recorder_file_item_tag.png"]
-                                    imagesec:[UIImage imageNamed:@"recorder_file_item_tag_sec.png"]
+                                       image:[UIImage imageNamed:@"recorder_file_delete.png"]
+                                    imagesec:[UIImage imageNamed:@"recorder_file_delete_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item2.tag = KTabbarItem2Tag;
@@ -219,8 +229,8 @@
     [_tabbarView addSubview:item3];
     
     UIButton* item4 = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                       image:[UIImage imageNamed:@"recorder_file_item_tag.png"]
-                                    imagesec:[UIImage imageNamed:@"recorder_file_item_tag_sec.png"]
+                                       image:[UIImage imageNamed:@"recorder_file_list.png"]
+                                    imagesec:[UIImage imageNamed:@"recorder_file_list_sec.png"]
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item4.tag = KTabbarItem4Tag;
@@ -499,6 +509,7 @@
     currentIndex = index;
     
     _voiceFile = [_resourceArray objectAtIndex:currentIndex];
+    [self setTagNumber:_voiceFile];
     
     //初始avplay
     BOOL play = YES;
@@ -534,6 +545,13 @@
     _dateLabel.text = [MAUtils getStringFromDate:_voiceFile.time format:@"MMM dd,yyyy"];
     NSDate* endTime = [_voiceFile.time dateByAddingTimeInterval:[_voiceFile.duration intValue]];
     _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [MAUtils getStringFromDate:_voiceFile.time format:@"HH:mm:ss"], [MAUtils getStringFromDate:endTime format:@"HH:mm:ss"]];
+}
+
+-(void)setTagNumber:(MAVoiceFiles*)file{
+    if (file.tag) {
+        NSArray* tagArr = [MAUtils getArrayFromStrByCharactersInSet:file.tag character:@";"];
+        [_tagNumberLabel setText:[MAUtils getStringByInt:[tagArr count]]];
+    }
 }
 
 #pragma mark - Sound meter operations

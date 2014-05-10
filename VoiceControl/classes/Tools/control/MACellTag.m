@@ -75,8 +75,8 @@
         UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellRenameButtonTag];
         if (button == nil) {
             button = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
-                                        image:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
-                                     imagesec:[[MAModel shareModel] getImageByType:MATypeImgPlayPlay default:NO]
+                                        image:[UIImage imageNamed:@"recorder_tag_edit.png"]
+                                     imagesec:[UIImage imageNamed:@"recorder_tag_edit_sec.png"]
                                        target:self
                                        action:@selector(tagRename:)];
             button.frame = (CGRect){self.frame.size.width - button.frame.size.width - KCellOffset, 0, button.frame.size};
