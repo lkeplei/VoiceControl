@@ -12,7 +12,7 @@
 @class MACellTag;
 
 @protocol MACellTagDelegate <NSObject>
--(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject;
+-(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject index:(NSInteger)index;
 -(void)MACellTagBackSave:(MACellTag *)cell object:(MATagObject *)tagObject;
 @end
 

@@ -17,6 +17,7 @@
 #define KCellTagHeight          (50)
 
 @interface MAViewTagManager ()
+@property (assign) NSInteger currentPlayingTagIndex;
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIView* bottomView;
 @property (nonatomic, copy) NSMutableArray* resourceArray;
@@ -33,6 +34,7 @@
     if (self) {
         // Initialization code
         self.viewType = MaviewTypeTagManager;
+        _currentPlayingTagIndex = 0;
         self.viewTitle = MyLocal(@"view_title_tag_manager");
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
@@ -189,20 +191,36 @@
             [_runTimeLabel setText:[[MAModel shareModel] getStringTime:_avPlay.currentTime type:MATypeTimeClock]];
             
             BOOL find = NO;
+            
+            MACellTag* cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentPlayingTagIndex inSection:0]];
+            MATagObject* object = [_resourceArray objectAtIndex:_currentPlayingTagIndex];
+            if (_avPlay.currentTime >= object.endTime) {
+                [cell setCellPlaying:NO];
+                if ([_resourceArray count] - _currentPlayingTagIndex > 1) {
+                    _currentPlayingTagIndex++;
+                    find = YES;
+                    cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentPlayingTagIndex inSection:0]];
+                    [cell setCellPlaying:YES];
+                }
+            } else {
+                find = YES;
+                [cell setCellPlaying:YES];
+            }
+            
             for (int i = 0; i < [_resourceArray count]; i++) {
                 MACellTag* cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                 if (cell) {
-                    MATagObject* object = [_resourceArray objectAtIndex:i];
-                    if (object.startTime <= _avPlay.currentTime && object.endTime >= _avPlay.currentTime) {
-                        [cell setCellPlaying:YES];
-                        find = YES;
-                    } else {
+                    if (i != _currentPlayingTagIndex) {
                         [cell setCellPlaying:NO];
                     }
                 }
             }
+            
             if (!find && [_avPlay isPlaying]) {
                 [_avPlay stop];
+                
+                _avPlay.currentTime = 0;
+                _currentPlayingTagIndex = 0;
             }
         } else {
             [self setPlayBtnStatus:YES];
@@ -210,7 +228,7 @@
     }
 }
 #pragma mark - cell tag back
--(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject{
+-(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject index:(NSInteger)index{
     if (_avPlay.playing) {
         [_avPlay pause];
         [self setPlayBtnStatus:YES];
@@ -225,6 +243,7 @@
     
     if ([_avPlay isPlaying]) {
         _avPlay.currentTime = tagObject.startTime;
+        _currentPlayingTagIndex = index;
     }
 }
 
@@ -257,14 +276,22 @@
 
 #pragma mark - btn clicked
 -(void)playBtnClicked:(id)sender{
+    MACellTag* cell = (MACellTag*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentPlayingTagIndex inSection:0]];
+    
     if (_avPlay.playing) {
         [_avPlay pause];
         
         [self setPlayBtnStatus:YES];
+        [cell setPlayBtnStatus:YES];
     } else {
         [_avPlay play];
         
+        if (_avPlay.currentTime < 0.1) {
+            _currentPlayingTagIndex = 0;
+        }
+        
         [self setPlayBtnStatus:NO];
+        [cell setPlayBtnStatus:NO];
     }
 }
 

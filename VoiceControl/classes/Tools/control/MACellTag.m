@@ -20,6 +20,7 @@
 #define KCellOffset             (5)
 
 @interface MACellTag()
+@property (assign) NSInteger tagIndex;
 @property (nonatomic, strong) UIButton* playBtn;
 @property (nonatomic, strong) MATagObject* tagObject;
 @end
@@ -45,6 +46,7 @@
 -(void)setCellResource:(MATagObject*)object index:(NSInteger)index{
     if (object) {
         _tagObject = object;
+        _tagIndex = index;
         
         if (_playBtn == nil) {
             _playBtn = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
@@ -79,7 +81,7 @@
                                      imagesec:[UIImage imageNamed:@"recorder_tag_edit_sec.png"]
                                        target:self
                                        action:@selector(tagRename:)];
-            button.frame = (CGRect){self.frame.size.width - button.frame.size.width - KCellOffset, 0, button.frame.size};
+            button.frame = (CGRect){self.frame.size.width - button.frame.size.width - KCellOffset, KCellOffset / 2, button.frame.size};
             [self addSubview:button];
         }
     }
@@ -120,8 +122,8 @@
 
 #pragma mark - btn clicked
 - (void)playBtnClicked:(id)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(MACellTagBack:object:)]) {
-        [self.delegate MACellTagBack:self object:_tagObject];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(MACellTagBack:object:index:)]) {
+        [self.delegate MACellTagBack:self object:_tagObject index:_tagIndex];
     }
 }
 

@@ -15,6 +15,7 @@
 #import "MAViewTagManager.h"
 #import "MACoreDataManager.h"
 #import "MAMenu.h"
+#import "MAViewRecorderMoreFile.h"
 
 #define KRecorderFileOffset             (5)
 #define KMessageViewHeight              (30)
@@ -318,6 +319,7 @@
         } else if (btn.tag == KTabbarItem3Tag) {
             [self sendEmail:nil];
         } else if (btn.tag == KTabbarItem4Tag) {
+            [self showMoreRecorderList];
         }
     } else {
         [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
@@ -494,6 +496,24 @@
     [self popView:MATypeChangeViewCurlUp];
 }
 
+-(void)showMoreRecorderList{
+    MAViewRecorderMoreFile* view = (MAViewRecorderMoreFile*)[self viewWithTag:9999];
+    if (view) {
+        [view hideView];
+    } else {
+        view = [[MAViewRecorderMoreFile alloc] initWithFrame:(CGRect){CGPointZero, self.frame.size.width, self.frame.size.height - _tabbarView.frame.size.height}];
+        view.tag = 9999;
+        [view setResource:_arrayName array:_resourceArray];
+        
+        view.recorderMoreFileBlock = ^(int index){
+            [self setMessageFromIndex:index];
+        };
+        
+        [self addSubview:view];
+        [view showView];
+    }
+}
+
 #pragma mark - other
 -(void)eventTopBtnClicked:(BOOL)left{
     if (left)  {
@@ -506,45 +526,56 @@
 -(void)initResource:(uint16_t)index secDic:(NSDictionary *)secDic{
     _arrayName = [secDic objectForKey:KName];
     _resourceArray = [[secDic objectForKey:KArray] copy];
+
+    [self setMessageFromIndex:index];
+}
+
+-(void)setMessageFromIndex:(int)index{
     currentIndex = index;
-    
     _voiceFile = [_resourceArray objectAtIndex:currentIndex];
-    [self setTagNumber:_voiceFile];
     
-    //初始avplay
-    BOOL play = YES;
-    if (![MAUtils fileExistsAtPath:_voiceFile.path]) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docspath = [paths objectAtIndex:0];
-        NSString* fileName = [docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name];
+    if (_voiceFile) {
+        [self setTagNumber:_voiceFile];
         
-        if (![MAUtils unzipFiles:fileName unZipFielPath:nil]) {
-            play = NO;
-            [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+        if (_avPlay && [_avPlay isPlaying]) {
+            [_avPlay pause];
         }
+        
+        //初始avplay
+        BOOL play = YES;
+        if (![MAUtils fileExistsAtPath:_voiceFile.path]) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *docspath = [paths objectAtIndex:0];
+            NSString* fileName = [docspath stringByAppendingFormat:@"/%@.zip", _voiceFile.name];
+            
+            if (![MAUtils unzipFiles:fileName unZipFielPath:nil]) {
+                play = NO;
+                [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
+            }
+        }
+        
+        if (play) {
+            _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_voiceFile.path] error:nil];
+            _avPlay.delegate = self;
+            _durationSlider.maximumValue = [_voiceFile.duration floatValue];
+            _avPlay.meteringEnabled = YES;
+        }
+        
+        //view content
+        NSArray* contentArr = [MAUtils getArrayFromStrByCharactersInSet:_voiceFile.custom character:KCharactersInSetCustom];
+        if ([contentArr count] >= 1) {
+            _renameField.text = [contentArr objectAtIndex:0];
+        }
+        if ([contentArr count] >= 2) {
+            _describleTextView.text = [contentArr objectAtIndex:1];
+            [self textViewDidChange:_describleTextView];
+        }
+        
+        _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] type:MATypeTimeClock];
+        _dateLabel.text = [MAUtils getStringFromDate:_voiceFile.time format:@"MMM dd,yyyy"];
+        NSDate* endTime = [_voiceFile.time dateByAddingTimeInterval:[_voiceFile.duration intValue]];
+        _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [MAUtils getStringFromDate:_voiceFile.time format:@"HH:mm:ss"], [MAUtils getStringFromDate:endTime format:@"HH:mm:ss"]];
     }
-    
-    if (play) {
-        _avPlay = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:_voiceFile.path] error:nil];
-        _avPlay.delegate = self;
-        _durationSlider.maximumValue = [_voiceFile.duration floatValue];
-        _avPlay.meteringEnabled = YES;
-    }
-    
-    //view content
-    NSArray* contentArr = [MAUtils getArrayFromStrByCharactersInSet:_voiceFile.custom character:KCharactersInSetCustom];
-    if ([contentArr count] >= 1) {
-        _renameField.text = [contentArr objectAtIndex:0];
-    }
-    if ([contentArr count] >= 2) {
-        _describleTextView.text = [contentArr objectAtIndex:1];
-        [self textViewDidChange:_describleTextView];
-    }
-    
-    _durationLabel.text = [[MAModel shareModel] getStringTime:[_voiceFile.duration intValue] type:MATypeTimeClock];
-    _dateLabel.text = [MAUtils getStringFromDate:_voiceFile.time format:@"MMM dd,yyyy"];
-    NSDate* endTime = [_voiceFile.time dateByAddingTimeInterval:[_voiceFile.duration intValue]];
-    _timeLabel.text = [NSString stringWithFormat:@"%@ - %@", [MAUtils getStringFromDate:_voiceFile.time format:@"HH:mm:ss"], [MAUtils getStringFromDate:endTime format:@"HH:mm:ss"]];
 }
 
 -(void)setTagNumber:(MAVoiceFiles*)file{

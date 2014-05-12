@@ -102,6 +102,7 @@
 		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
+		187719C319207A21005E1BFE /* MAViewRecorderMoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */; };
 		187F5A95188682FE00D72FA6 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 187F5A94188682FE00D72FA6 /* libicucore.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
@@ -276,6 +277,8 @@
 		1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSystemSetting.m; sourceTree = "<group>"; };
 		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
 		186E4A8F18AC6F6800945619 /* MARecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MARecordController.m; sourceTree = "<group>"; };
+		187719C119207A21005E1BFE /* MAViewRecorderMoreFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewRecorderMoreFile.h; sourceTree = "<group>"; };
+		187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewRecorderMoreFile.m; sourceTree = "<group>"; };
 		187F5A94188682FE00D72FA6 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		187F5A961886863A00D72FA6 /* MACheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACheckBox.h; sourceTree = "<group>"; };
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
@@ -587,6 +590,8 @@
 				18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */,
 				18051844190A401700DDEC35 /* MAViewTagManager.h */,
 				18051845190A401700DDEC35 /* MAViewTagManager.m */,
+				187719C119207A21005E1BFE /* MAViewRecorderMoreFile.h */,
+				187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				043A6ED518E44A3A005A422D /* CJSONSerializer.m in Sources */,
 				04C6DE40179270BC00ED2EB5 /* SQLiteWrapper.cpp in Sources */,
 				BE073A64179E998900340A47 /* MADataManager.mm in Sources */,
+				187719C319207A21005E1BFE /* MAViewRecorderMoreFile.m in Sources */,
 				BE073A68179E9A1400340A47 /* MBProgressHUD.m in Sources */,
 				187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */,
 				18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */,
@@ -1041,8 +1047,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1074,8 +1080,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "289E8B34-072C-47D0-9F69-85E97524977D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "289E8B34-072C-47D0-9F69-85E97524977D";
+				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
