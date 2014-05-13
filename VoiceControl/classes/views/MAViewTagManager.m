@@ -230,10 +230,12 @@
 #pragma mark - cell tag back
 -(void)MACellTagBack:(MACellTag*)cell object:(MATagObject*)tagObject index:(NSInteger)index{
     if (_avPlay.playing) {
-        [_avPlay pause];
-        [self setPlayBtnStatus:YES];
-        
-        [cell setPlayBtnStatus:YES];
+        if (_currentPlayingTagIndex == index) {
+            [_avPlay pause];
+            [self setPlayBtnStatus:YES];
+            
+            [cell setPlayBtnStatus:YES];
+        } 
     } else {
         [_avPlay play];
         [self setPlayBtnStatus:NO];

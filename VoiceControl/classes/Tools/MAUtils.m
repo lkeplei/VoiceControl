@@ -257,7 +257,7 @@ static MAUtils* _shareUtils = nil;
 }
 
 +(void)showRemindMessage:(NSString *)message{
-    [[[UIAlertView alloc] initWithTitle:MyLocal(@"more_user_management_title")
+    [[[UIAlertView alloc] initWithTitle:MyLocal(@"alert_remind_title")
                                 message:message
                                delegate:nil
                       cancelButtonTitle:nil

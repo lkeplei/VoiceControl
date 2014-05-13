@@ -194,6 +194,10 @@
 "detail_next" = "后一个";
 
 ////////////////////////////////    1.2.0
+"alert_remind_title" = "提示";
+
+"recorder_file_delete" = "删除之后文件将无法恢复\r\n确定要删除吗？";
+
 "view_title_recorder_file" = "播放";
 "view_title_tag_manager" = "标记点";
 "recorder_decrible_default" = "在这里写一些备注...";
@@ -204,7 +208,7 @@
 "system_setting_duration_label" = "单文件最大时长设置";
 "system_setting_duration_describe" = "在此时间后结束保存文件";
 "system_setting_mark_label" = "标记分贝设置";
-"system_setting_mark_describe" = "当前声音达到这个点开启一个标记段";
+"system_setting_mark_describe" = "超过这个设置点的声音会有特殊标记";
 "system_setting_quality_label" = "录音品质";
 "system_setting_quality_low" = "低";
 "system_setting_quality_normal" = "标准";

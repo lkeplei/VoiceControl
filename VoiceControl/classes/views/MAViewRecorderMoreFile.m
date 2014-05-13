@@ -133,7 +133,7 @@
                              UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height - KContentViewHeight)];
                              view.alpha = 0.1;
                              view.tag = 1111;
-                             [view setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]];
+                             [view setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
                              [self addSubview:view];
                          }
                      }];

@@ -319,7 +319,7 @@
         } else if (btn.tag == KTabbarItem3Tag) {
             [self sendEmail:nil];
         } else if (btn.tag == KTabbarItem4Tag) {
-            [self showMoreRecorderList];
+            [self showMoreRecorderList:(UIButton*)sender];
         }
     } else {
         [[MAUtils shareUtils] showWeakRemind:MyLocal(@"file_cannot_open") time:1];
@@ -437,8 +437,8 @@
 }
 
 -(void)deleteFile:(id)sender{
-    [[[UIAlertView alloc] initWithTitle:MyLocal(@"more_user_management_title")
-                                message:MyLocal(@"more_user_management_title")
+    [[[UIAlertView alloc] initWithTitle:MyLocal(@"alert_remind_title")
+                                message:MyLocal(@"recorder_file_delete")
                                delegate:self
                       cancelButtonTitle:MyLocal(@"cancel")
                       otherButtonTitles:MyLocal(@"ok"), nil] show];
@@ -496,9 +496,10 @@
     [self popView:MATypeChangeViewCurlUp];
 }
 
--(void)showMoreRecorderList{
+-(void)showMoreRecorderList:(UIButton*)button{
     MAViewRecorderMoreFile* view = (MAViewRecorderMoreFile*)[self viewWithTag:9999];
     if (view) {
+        [button setSelected:NO];
         [view hideView];
     } else {
         view = [[MAViewRecorderMoreFile alloc] initWithFrame:(CGRect){CGPointZero, self.frame.size.width, self.frame.size.height - _tabbarView.frame.size.height}];
@@ -510,6 +511,7 @@
         };
         
         [self addSubview:view];
+        [button setSelected:YES];
         [view showView];
     }
 }
