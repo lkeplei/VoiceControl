@@ -11,6 +11,7 @@
 #import "MAViewController.h"
 #import "MACoreDataManager.h"
 #import "Appirater.h"
+#import "MAServerConfig.h"
 #import <AVFoundation/AVFoundation.h>
 
 #import "BaiduMobStat.h"
