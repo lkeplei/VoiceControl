@@ -55,25 +55,26 @@
 }
 
 -(void)initDescribe{
-    UITextView* textview=[[UITextView alloc]initWithFrame:CGRectMake(KAboutOffset, KAboutOffset + CGRectGetMaxY(_topView.frame),
-                                                                     self.frame.size.width - KAboutOffset * 2,
-                                                                     self.frame.size.height - KAboutOffset * 3)];
+    UILabel* label = [MAUtils labelWithTxt:MyLocal(@"about_us_content")
+                                     frame:CGRectMake(KAboutOffset, KAboutOffset + CGRectGetMaxY(_topView.frame),
+                                                      self.frame.size.width - KAboutOffset * 2,
+                                                      self.frame.size.height - KAboutOffset * 3)
+                                      font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize16]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+//    label.lineBreakMode = NSLineBreakByCharWrapping;
+    label.textAlignment = KTextAlignmentLeft;
+    label.numberOfLines = 0;
+    [self addSubview:label];
     
-    textview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    textview.font = [[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize16];
-    textview.backgroundColor = [[MAModel shareModel] getColorByType:MATypeColorDefault default:NO];
-    textview.text = MyLocal(@"about_us_content");
-    textview.editable = NO;
-    [self addSubview:textview];
     
     UIScrollView* scrollView = [[UIScrollView alloc]initWithFrame:(CGRect){CGPointZero, self.frame.size}];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.pagingEnabled = YES;
     [scrollView addSubview:_topView];
-    [scrollView addSubview:textview];
+    [scrollView addSubview:label];
     [self addSubview:scrollView];
     
-    scrollView.contentSize = CGSizeMake(self.frame.size.width, CGRectGetMaxY(textview.frame));
+    scrollView.contentSize = CGSizeMake(self.frame.size.width, CGRectGetMaxY(label.frame));
     scrollView.contentOffset  = CGPointMake(0, 0);
 }
 @end
