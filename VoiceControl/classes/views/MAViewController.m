@@ -50,6 +50,16 @@
     isMenuOpening = NO;
 }
 
+//- (UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;
+//}
+////
+//- (BOOL)prefersStatusBarHidden//for iOS7.0
+//{
+//    return YES;
+//}
+
 #pragma mark - init area
 -(void)initView{
     [self initTopView];

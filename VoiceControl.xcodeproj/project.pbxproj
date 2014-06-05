@@ -1028,8 +1028,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: liu kun (H775962835)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: liu kun (H775962835)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1038,7 +1038,7 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
@@ -1047,8 +1047,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
@@ -1062,8 +1062,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: liu kun (H775962835)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: liu kun (H775962835)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceControl/VoiceControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1072,7 +1072,7 @@
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
 				);
 				INFOPLIST_FILE = "VoiceControl/VoiceControl-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/VoiceControl/Classes/Tools/baidu",
@@ -1080,8 +1080,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A3192C38-8685-429D-9DBB-446F28512428";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A3192C38-8685-429D-9DBB-446F28512428";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EC9826C7-7EFD-4BE6-8CE8-B0F093C6D95E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
