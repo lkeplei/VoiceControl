@@ -64,8 +64,6 @@
 //    label.lineBreakMode = NSLineBreakByCharWrapping;
     label.textAlignment = KTextAlignmentLeft;
     label.numberOfLines = 0;
-    [self addSubview:label];
-    
     
     UIScrollView* scrollView = [[UIScrollView alloc]initWithFrame:(CGRect){CGPointZero, self.frame.size}];
     scrollView.showsHorizontalScrollIndicator = NO;
