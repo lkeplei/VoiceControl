@@ -128,12 +128,9 @@
         label.text = [resDic objectForKey:KContent];
     } else {
         label = [MAUtils labelWithTxt:[resDic objectForKey:KContent]
-                                          frame:CGRectMake(offx, 0,
-                                                           self.frame.size.width,
-                                                           self.frame.size.height)
-                                           font:[UIFont fontWithName:KLabelFontArial
-                                                                size:KLabelFontSize18]
-                                          color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
+                                frame:(CGRect){offx, 0, self.size}
+                                 font:[UIFont fontWithName:KLabelFontArial size:IsPad ? KLabelFontSize36 : KLabelFontSize18]
+                                color:[[MAModel shareModel] getColorByType:MATypeColorTableLabel default:NO]];
         label.textAlignment = KTextAlignmentLeft;
         label.tag = KLabelTag;
     }

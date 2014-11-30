@@ -280,7 +280,7 @@
         }
         
         [self addSoundMeterItem:KMaxLengthOfWave];
-        _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0, 0, 0, 0];
+        _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), 0.f, 0.f, 0.f, 0.f];
         
         if (isPlaying) {
             _labelDuration.text = [[MAModel shareModel] getStringTime:_avPlay.duration - _avPlay.currentTime type:MATypeTimeClock];

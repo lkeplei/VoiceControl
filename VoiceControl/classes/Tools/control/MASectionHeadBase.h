@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define KTableBaseHeaderHeight          (40)
+#define KTableBaseHeaderHeight          (IsPad ? 88.f : 44.f)
 
 @class MASectionHeadBase;
 

@@ -8,7 +8,7 @@
 
 #import "MAViewTableBase.h"
 
-#define KViewMenuWidth         (150)
+#define KViewMenuWidth         (self.view.width * 0.5)
 
 @interface MAViewSelectMenu : MAViewTableBase
 

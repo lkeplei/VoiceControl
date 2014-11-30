@@ -11,7 +11,7 @@
 #import "MAUtils.h"
 #import "MAModel.h"
 
-#define KTableBaseCellHeight            (40)
+#define KTableBaseCellHeight            (IsPad ? 88.f : 44.f)
 
 @interface MAViewTableBase ()
 @property (nonatomic,strong) NSArray* sectionArray;
@@ -125,6 +125,8 @@
             }
         }
     }
+    
+    [cell setHeight:KTableBaseCellHeight];
     
     [self cellWillLoad:cell];
     

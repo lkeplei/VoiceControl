@@ -41,8 +41,7 @@
 @synthesize viewFactory = _viewFactory;
 @synthesize adView = _adView;
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
@@ -56,29 +55,19 @@
     isMenuOpening = NO;
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
-////
-//- (BOOL)prefersStatusBarHidden//for iOS7.0
-//{
-//    return YES;
-//}
-
 #pragma mark - init area
--(void)initView{
+- (void)initView {
     [self initTopView];
 
     _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, KViewMenuWidth,
-                                                                     self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
+                                                                     self.view.height - KNavigationHeight - KStatusBarHeight)];
     [self.view addSubview:_selectMenu];
     
     _currentShowView = [self addView:MAViewTypeHome];
     [_titleLabel setText:_currentShowView.viewTitle];
 }
 
--(void)initTopView{
+- (void)initTopView {
     _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KNavigationHeight + KStatusBarHeight)];
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self.view addSubview:_topView];
@@ -122,7 +111,7 @@
 }
 
 #pragma mark - btn clicked
--(void)menuBtnClicked:(id)sender{
+- (void)menuBtnClicked:(id)sender {
     if ([_currentShowView subEventLeft]) {
         [_currentShowView eventTopBtnClicked:YES];
     } else {
@@ -130,7 +119,7 @@
     }
 }
 
--(void)resetMenu{
+- (void)resetMenu {
     isMenuOpening = !isMenuOpening;
     if (isMenuOpening) {
         [self showMenu];
@@ -139,7 +128,7 @@
     }
 }
 
--(void)homeBtnClicked:(id)sender{
+- (void)homeBtnClicked:(id)sender {
     if ([_currentShowView subEventRight]) {
         [_currentShowView eventTopBtnClicked:NO];
     } else {
@@ -147,7 +136,7 @@
     }
 }
 #pragma mark - about panel
--(void)hideMenu {
+- (void)hideMenu {
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _currentShowView.frame = CGRectMake(0, _currentShowView.frame.origin.y, _currentShowView.frame.size.width,
                                             _currentShowView.frame.size.height);
@@ -160,7 +149,7 @@
                      }];
 }
 
--(void)showMenu {
+- (void)showMenu {
     [UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         _currentShowView.frame = CGRectMake(KViewMenuWidth, _currentShowView.frame.origin.y,
                                             _currentShowView.frame.size.width, _currentShowView.frame.size.height);
@@ -174,7 +163,7 @@
 }
 
 #pragma mark Swipe Gesture Setup/Actions
--(void)setupGestures {
+- (void)setupGestures {
 	_panGestureRecongnize = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePanel:)];
 	[_panGestureRecongnize setMinimumNumberOfTouches:1];
 	[_panGestureRecongnize setMaximumNumberOfTouches:1];
@@ -219,19 +208,19 @@
 }
 
 #pragma mark - about view control
--(MAViewBase*)getView:(MAViewType)type{
+- (MAViewBase*)getView:(MAViewType)type {
     return [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
                                                                    self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
 }
 
--(MAViewBase*)addView:(MAViewType)type{
+- (MAViewBase*)addView:(MAViewType)type {
     MAViewBase* view = [_viewFactory getView:type frame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.view.frame.size.width,
                                                                    self.view.frame.size.height - KNavigationHeight - KStatusBarHeight)];
     [self.view addSubview:view];
     return view;
 }
 
--(void)pushView:(MAViewBase*)subView animatedType:(MAType)type{
+- (void)pushView:(MAViewBase*)subView animatedType:(MAType)type {
     _preShowView = _currentShowView;
     _currentShowView = subView;
     
@@ -248,7 +237,7 @@
     [_preShowView viewDidDisappear:YES];
 }
 
--(void)popView:(MAViewBase*)lastView preView:(MAViewBase*)preView animatedType:(MAType)type{
+- (void)popView:(MAViewBase*)lastView preView:(MAViewBase*)preView animatedType:(MAType)type {
     _currentShowView = preView;
     
     [[MAModel shareModel] changeView:lastView
@@ -265,7 +254,7 @@
     [_viewFactory removeView:lastView.viewType];
 }
 
--(void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType{
+- (void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType {
     //旧页面将切换
     [_preShowView viewWillDisappear:YES];
     
@@ -310,11 +299,11 @@
 }
 
 #pragma mark - other methods
--(void)setGestureEnabled:(BOOL)enabled{
+- (void)setGestureEnabled:(BOOL)enabled {
     [_panGestureRecongnize setEnabled:enabled];
 }
 
--(void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled{
+- (void)setTopBtn:(NSString*)leftBtn rightBtn:(NSString*)rightBtn enabled:(BOOL)enabled {
     if (enabled) {
         [_homeLabel setText:rightBtn];
         [_menuLabel setText:leftBtn];
@@ -335,7 +324,7 @@
 
 #pragma mark - email
 //点击按钮后，触发这个方法
--(void)sendEMail:(NSDictionary*)mailDic{
+- (void)sendEMail:(NSDictionary*)mailDic {
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
     
     if (mailClass != nil && mailDic){
@@ -508,6 +497,9 @@
 }
 
 -(void)resetAd{
+    return;
+    
+    
     [self removeAd];
     
     NSString* mogoId = KADIphoneId;

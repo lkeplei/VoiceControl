@@ -11,20 +11,17 @@
 #import "MAConfig.h"
 #import "MAUtils.h"
 
-#define KViewHorOffset      (10)
-#define KTopViewHeight      (150)
+#define KViewHorOffset      (20)
 
 @interface MAViewAboutUs ()
 @property (nonatomic, strong) UITableView* tableView;
-@property (nonatomic, strong) UIView* topView;
 @end
 
 #define KAboutOffset        (6)
 
 @implementation MAViewAboutUs
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
@@ -35,44 +32,72 @@
 }
 
 -(void)showView{
-    [self initTopView];
-    [self initDescribe];
+    _tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, self.size} style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.showsVerticalScrollIndicator = YES;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self addSubview:_tableView];
+    
+    [_tableView reloadData];
 }
 
-#pragma mark - init area
--(void)initTopView{
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, KViewHorOffset, self.frame.size.width, KTopViewHeight)];
-    
-    UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"werecorder_qr_code.png"]];
-    imgView.center = CGPointMake(_topView.center.x, _topView.center.y - KAboutOffset * 2);
-    [_topView addSubview:imgView];
-    
-    UILabel* label = [MAUtils labelWithTxt:[NSString stringWithFormat:@"V %@", [MAUtils getAppVersion]]
-                                     frame:CGRectMake(0, CGRectGetMaxY(imgView.frame), _topView.frame.size.width, 20)
-                                      font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize18]
-                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-    [_topView addSubview:label];
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
 }
 
--(void)initDescribe{
-    UILabel* label = [MAUtils labelWithTxt:MyLocal(@"about_us_content")
-                                     frame:CGRectMake(KAboutOffset, KAboutOffset + CGRectGetMaxY(_topView.frame),
-                                                      self.frame.size.width - KAboutOffset * 2,
-                                                      self.frame.size.height - KAboutOffset * 3)
-                                      font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize16]
-                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-//    label.lineBreakMode = NSLineBreakByCharWrapping;
-    label.textAlignment = KTextAlignmentLeft;
-    label.numberOfLines = 0;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [self getCellHeight:indexPath.row];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *reuseIdentifier = @"aboutUsCell";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
     
-    UIScrollView* scrollView = [[UIScrollView alloc]initWithFrame:(CGRect){CGPointZero, self.frame.size}];
-    scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.pagingEnabled = YES;
-    [scrollView addSubview:_topView];
-    [scrollView addSubview:label];
-    [self addSubview:scrollView];
+    [cell setFrame:(CGRect){cell.origin, cell.width, [self getCellHeight:indexPath.row]}];
     
-    scrollView.contentSize = CGSizeMake(self.frame.size.width, CGRectGetMaxY(label.frame));
-    scrollView.contentOffset  = CGPointMake(0, 0);
+    for (UIView *subview in cell.contentView.subviews) {
+        [subview removeFromSuperview];
+    }
+    
+    if (indexPath.row == 0) {
+        UIImageView* imgView =  [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"werecorder_qr_code.png"]];
+        imgView.center = CGPointMake(self.centerX, cell.centerY);
+        [cell.contentView addSubview:imgView];
+        
+        UILabel* label = [MAUtils labelWithTxt:[NSString stringWithFormat:@"V %@", [MAUtils getAppVersion]]
+                                         frame:CGRectMake(0, CGRectGetMaxY(imgView.frame), cell.width, 24)
+                                          font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica
+                                                                                 size:IsPad ? KLabelFontSize22 : KLabelFontSize18]
+                                         color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+        label.center = CGPointMake(self.centerX, CGRectGetMaxY(imgView.frame) + 20);
+        [cell.contentView addSubview:label];
+    } else {
+        UILabel* label = [MAUtils labelWithTxt:MyLocal(@"about_us_content")
+                                         frame:CGRectMake(KAboutOffset, 0, self.width - KAboutOffset * 2, cell.height)
+                                          font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica
+                                                                                 size:IsPad ? KLabelFontSize22 : KLabelFontSize16]
+                                         color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+        label.textAlignment = KTextAlignmentLeft;
+        label.numberOfLines = 0;
+        
+        [cell.contentView addSubview:label];
+    }
+    
+    return cell;
+}
+
+- (CGFloat)getCellHeight:(int8_t)index {
+    if (index == 0) {
+        return 160.f;
+    } else {
+        return 400.f;
+    }
 }
 @end
