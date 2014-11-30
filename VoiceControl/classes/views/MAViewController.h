@@ -10,6 +10,12 @@
 #import <MessageUI/MFMailComposeViewController.h>  
 #import "MAModel.h"
 
+#import "AdMoGoDelegateProtocol.h"
+#import "AdMoGoView.h"
+#import "AdMoGoWebBrowserControllerUserDelegate.h"
+
+#import "AdMoGoInterstitialDelegate.h"
+
 @class MAViewBase;
 @class MAViewFactory;
 
@@ -29,8 +35,22 @@ typedef enum {
     MaviewTypeTagManager,
 } MAViewType;
 
-@interface MAViewController : UIViewController<MFMailComposeViewControllerDelegate>
+@interface MAViewController : UIViewController<MFMailComposeViewControllerDelegate, AdMoGoDelegate, AdMoGoWebBrowserControllerUserDelegate, AdMoGoInterstitialDelegate>
 
+
+//ad
+@property (nonatomic, strong) AdMoGoView* adView;
+
+-(void)resetAd;
+-(void)removeAd;
+
+-(void)showFullAd;
+-(void)cancelFullAd;
+
+-(void)clearAllAd;
+
+
+//view
 -(void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType;
 -(void)setGestureEnabled:(BOOL)enabled;
 

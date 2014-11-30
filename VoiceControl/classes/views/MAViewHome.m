@@ -13,8 +13,7 @@
 #import "MADataManager.h"
 #import "MAViewAudioPlayControl.h"
 
-#define KHudSizeWidth           (self.frame.size.width * 1)
-#define KHudSizeHeight          220
+#define KHudSizeWidth           (self.width * 1)
 #define CANCEL_BUTTON_HEIGHT    50
 #define SOUND_METER_COUNT       60
 #define KMaxLengthOfWave        (50)
@@ -48,8 +47,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self initView];
         [self initHud];
+        [self initView];
         
         self.viewType = MAViewTypeHome;
         self.viewTitle = MyLocal(@"view_title_home");
@@ -78,10 +77,15 @@
     _avPlay = nil;
 }
 
+- (void)showView {
+    //添加广告
+    [SysDelegate.viewController resetAd];
+}
+
 #pragma mark - init area
 -(void)initHud{
 //    _imagePhone = [[MAModel shareModel] getImageByType:MATypeImgHomePhone default:NO];
-    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), 0, KHudSizeWidth, KHudSizeHeight);
+    hudRect = CGRectMake(self.center.x - (KHudSizeWidth / 2), 0, KHudSizeWidth, self.height * 0.45);
     for(int i = 0; i < SOUND_METER_COUNT; i++) {
         soundMeters[i] = KMaxLengthOfWave;
     }
@@ -98,7 +102,7 @@
                                imagesec:[[MAModel shareModel] getImageByType:MATypeImgBtnGreenCircleSec default:NO]
                                  target:self
                                  action:@selector(startBtnClicked:)];
-    _startBtn.frame = CGRectOffset(_startBtn.frame, 30, 300);
+    _startBtn.frame = CGRectOffset(_startBtn.frame, self.width * 0.1, self.height * 0.7);
     [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                     forState:UIControlStateNormal];
     [_startBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
@@ -115,7 +119,7 @@
                                 action:@selector(playRecordSound:)];
     [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgBtnGrayCircle default:NO]
                         forState:UIControlStateDisabled];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, 215, 300);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, self.width * 0.7, self.height * 0.7);
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                    forState:UIControlStateNormal];
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
@@ -127,18 +131,24 @@
     [self addSubview:_playBtn];
 }
 
--(void)initLabels{
+-(void)initLabels {
+    float off = 20;
+    float fontSize = KLabelFontSize14;
+    if (IsPad) {
+        off = 40;
+        fontSize = KLabelFontSize22;
+    }
     _labelVoice = [MAUtils labelWithTxt:[NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage]
-                                   frame:CGRectMake(10, 230, 300, 30)
-                                    font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                   frame:CGRectMake(10, CGRectGetMaxY(hudRect) + off, self.width, 30)
+                                    font:[UIFont fontWithName:KLabelFontArial size:fontSize]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
 //    _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
     
     _labelDuration = [MAUtils labelWithTxt:[[MAModel shareModel] getStringTime:0 type:MATypeTimeClock]
-                                  frame:CGRectMake(10, 260, 300, 30)
-                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                  frame:CGRectMake(10, CGRectGetMaxY(_labelVoice.frame), self.width, 30)
+                                   font:[UIFont fontWithName:KLabelFontArial size:fontSize]
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_labelDuration setNumberOfLines:0];
     [self addSubview:_labelDuration];

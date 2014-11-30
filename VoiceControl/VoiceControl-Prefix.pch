@@ -4,16 +4,16 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_4_0
-#warning "This project uses features only available in iOS SDK 4.0 and later."
-#endif
-
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 
     #import "MAAppDelegate.h"
     #define SysDelegate ((MAAppDelegate *)[[UIApplication sharedApplication] delegate])
+
+    #import "UIView+MAUIView.h"
+    #import "MAConfig.h"
+    #import "MAServerConfig.h"
 #endif
 
 
@@ -42,8 +42,4 @@
 #   define KLineBreakModeTruncatingTail UILineBreakModeTailTruncation
 #endif
 
-#define KMainScreenFrame [[UIScreen mainScreen] bounds]
-#define KMainScreenWidth kMainScreenFrame.size.width
-#define KMainScreenHeight kMainScreenFrame.size.height-20
-#define KApplicationFrame [[UIScreen mainScreen] applicationFrame]
 #endif
