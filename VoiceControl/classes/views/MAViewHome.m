@@ -11,7 +11,6 @@
 #import "MAModel.h"
 #import "MAUtils.h"
 #import "MADataManager.h"
-#import "MAViewAudioPlayControl.h"
 
 #define KHudSizeWidth           (self.width * 1)
 #define CANCEL_BUTTON_HEIGHT    50

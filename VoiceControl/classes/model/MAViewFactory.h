@@ -8,14 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "MAViewBase.h"
-#import "MAViewAudioPlayControl.h"
 
 @interface MAViewFactory : NSObject
 
 -(MAViewBase*)getView:(MAViewType)type frame:(CGRect)frame;
 -(void)removeView:(MAViewType)type;
-
--(MAViewAudioPlayControl*)getAudioPlayControl:(CGRect)frame;
--(BOOL)areadyExistAudioPlay;
 
 @end

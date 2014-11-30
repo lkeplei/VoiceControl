@@ -13,7 +13,6 @@
 #import "MAViewHome.h"
 #import "MAViewFileManager.h"
 #import "MAViewAboutUs.h"
-#import "MAViewSetting.h"
 #import "MAViewSystemSetting.h"
 #import "MAViewPlanCustomize.h"
 #import "MAViewAddPlan.h"
@@ -37,8 +36,6 @@
 @property (nonatomic, strong) MAViewSystemSetting* systemSettingView;
 @property (nonatomic, strong) MAViewRecorderFile* recorderFileView;
 @property (nonatomic, strong) MAViewTagManager* tagManagerView;
-
-@property (nonatomic, strong) MAViewAudioPlayControl* audioPlayControl;
 
 @end
 
@@ -241,24 +238,6 @@
             break;
         default:
             break;
-    }
-}
-
--(MAViewAudioPlayControl*)getAudioPlayControl:(CGRect)frame{
-    if (_audioPlayControl == nil) {
-        _audioPlayControl = [[MAViewAudioPlayControl alloc] initWithFrame:frame];
-    } else {
-        _audioPlayControl.frame = frame;
-    }
-
-    return _audioPlayControl;
-}
-
--(BOOL)areadyExistAudioPlay{
-    if (_audioPlayControl) {
-        return YES;
-    } else {
-        return NO;
     }
 }
 @end

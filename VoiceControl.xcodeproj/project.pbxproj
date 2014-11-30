@@ -265,8 +265,6 @@
 		04E73F8B190BD5830029227A /* MACellTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E73F8A190BD5830029227A /* MACellTag.m */; };
 		18051843190A3FFA00DDEC35 /* MAViewRecorderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */; };
 		18051846190A401700DDEC35 /* MAViewTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051845190A401700DDEC35 /* MAViewTagManager.m */; };
-		1805184B190A463600DDEC35 /* MAViewAudioPlayControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051848190A463600DDEC35 /* MAViewAudioPlayControl.m */; };
-		1805184C190A463600DDEC35 /* MAViewTagDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 1805184A190A463600DDEC35 /* MAViewTagDetail.m */; };
 		182AEDA618A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */; };
 		182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */; };
 		183DA90418BAF6A5005C6ABA /* slider_scrubber_knob.png in Resources */ = {isa = PBXBuildFile; fileRef = 183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */; };
@@ -280,7 +278,6 @@
 		187F5A981886863A00D72FA6 /* MACheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5A971886863A00D72FA6 /* MACheckBox.m */; };
 		187F5A9B18868D6E00D72FA6 /* checkbox_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */; };
 		187F5A9C18868D6E00D72FA6 /* checkbox_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */; };
-		188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F920D18FD35FE003EC721 /* MAViewSetting.m */; };
 		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
 		18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF13F318D70C7E0055B72A /* MACellFile.m */; };
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
@@ -681,10 +678,6 @@
 		18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewRecorderFile.m; sourceTree = "<group>"; };
 		18051844190A401700DDEC35 /* MAViewTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagManager.h; sourceTree = "<group>"; };
 		18051845190A401700DDEC35 /* MAViewTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagManager.m; sourceTree = "<group>"; };
-		18051847190A463600DDEC35 /* MAViewAudioPlayControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAudioPlayControl.h; sourceTree = "<group>"; };
-		18051848190A463600DDEC35 /* MAViewAudioPlayControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAudioPlayControl.m; sourceTree = "<group>"; };
-		18051849190A463600DDEC35 /* MAViewTagDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagDetail.h; sourceTree = "<group>"; };
-		1805184A190A463600DDEC35 /* MAViewTagDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagDetail.m; sourceTree = "<group>"; };
 		182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_plan_repeat_selected@2x.png"; sourceTree = "<group>"; };
 		182AEDA718A5FFAB00C6EC4E /* MAViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFactory.h; sourceTree = "<group>"; };
 		182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFactory.m; sourceTree = "<group>"; };
@@ -706,8 +699,6 @@
 		187F5A971886863A00D72FA6 /* MACheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACheckBox.m; sourceTree = "<group>"; };
 		187F5A9918868D6E00D72FA6 /* checkbox_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_off@2x.png"; sourceTree = "<group>"; };
 		187F5A9A18868D6E00D72FA6 /* checkbox_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_on@2x.png"; sourceTree = "<group>"; };
-		188F920C18FD35FE003EC721 /* MAViewSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSetting.h; sourceTree = "<group>"; };
-		188F920D18FD35FE003EC721 /* MAViewSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSetting.m; sourceTree = "<group>"; };
 		18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_accessory_indicator@2x.png"; sourceTree = "<group>"; };
 		18AF13F218D70C7E0055B72A /* MACellFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellFile.h; sourceTree = "<group>"; };
 		18AF13F318D70C7E0055B72A /* MACellFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellFile.m; sourceTree = "<group>"; };
@@ -1496,7 +1487,6 @@
 		04E65676178C5150003A6ACA /* views */ = {
 			isa = PBXGroup;
 			children = (
-				188F920518FD1428003EC721 /* unused */,
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
 				185F2908188E4325005D163B /* MAViewAddPlan.h */,
@@ -1531,19 +1521,6 @@
 				187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */,
 			);
 			path = views;
-			sourceTree = "<group>";
-		};
-		188F920518FD1428003EC721 /* unused */ = {
-			isa = PBXGroup;
-			children = (
-				18051847190A463600DDEC35 /* MAViewAudioPlayControl.h */,
-				18051848190A463600DDEC35 /* MAViewAudioPlayControl.m */,
-				18051849190A463600DDEC35 /* MAViewTagDetail.h */,
-				1805184A190A463600DDEC35 /* MAViewTagDetail.m */,
-				188F920C18FD35FE003EC721 /* MAViewSetting.h */,
-				188F920D18FD35FE003EC721 /* MAViewSetting.m */,
-			);
-			path = unused;
 			sourceTree = "<group>";
 		};
 		18E08B4C18DAE0BE00866C7B /* coreData */ = {
@@ -1916,7 +1893,6 @@
 				04891F951A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobFullAds.m in Sources */,
 				18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */,
 				04891FD51A2ACA27002F8C15 /* zip.c in Sources */,
-				1805184C190A463600DDEC35 /* MAViewTagDetail.m in Sources */,
 				04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */,
 				185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */,
 				04891FC91A2ACA27002F8C15 /* CFilteringJSONSerializer.m in Sources */,
@@ -1942,7 +1918,6 @@
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
 				04891FC11A2ACA27002F8C15 /* AdMoGoAdapterBaiduFullAds.m in Sources */,
 				04891F991A2ACA27002F8C15 /* AdMoGoAdapterAdwoSplash.m in Sources */,
-				188F920E18FD35FE003EC721 /* MAViewSetting.m in Sources */,
 				04D7DE7217A503F200AF0450 /* MAViewSelectMenu.m in Sources */,
 				04891FCD1A2ACA27002F8C15 /* CDataScanner_Extensions.m in Sources */,
 				04891FD41A2ACA27002F8C15 /* unzip.c in Sources */,
@@ -1959,7 +1934,6 @@
 				186E4A9018AC6F6800945619 /* MARecordController.m in Sources */,
 				04891FCA1A2ACA27002F8C15 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				044ADEDB18F437BF0000DB63 /* MAAnimatedLabel.m in Sources */,
-				1805184B190A463600DDEC35 /* MAViewAudioPlayControl.m in Sources */,
 				0497E87C191482DA007C6E2E /* Appirater.m in Sources */,
 				04891F941A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobAds.m in Sources */,
 				04C238DA17B6332000B8B388 /* MAViewAboutUs.m in Sources */,

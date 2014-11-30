@@ -13,7 +13,7 @@
 
 #import "MAVoiceFiles.h"
 
-#define KCellOffset             (5)
+#define KCellOffset             (10)
 #define KCellLabelNameTag       (1001)
 #define KCellImgTag             (1002)
 #define KCellImgSecTag          (1003)
@@ -57,7 +57,7 @@
                        tag:KCellLabelDurationTag alignment:KTextAlignmentRight
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefGray default:NO]
-                     frame:CGRectMake(KCellOffset, offsetY, self.frame.size.width - KCellOffset * 2, self.frame.size.height / 2)];
+                     frame:CGRectMake(KCellOffset, offsetY, KMainScreenWidth - KCellOffset * 2, self.frame.size.height / 2)];
         if (editing) {
             [self setCellImage:[[MAModel shareModel] getImageByType:MATypeImgCheckBoxNormal default:NO]
                            tag:KCellImgTag hide:file.status];
@@ -101,8 +101,8 @@
     imgView = [[UIImageView alloc] initWithImage:img];
     imgView.tag = tag;
     [imgView setHidden:hide];
-    imgView.center = CGPointMake(self.frame.size.width - imgView.frame.size.width,
-                                 (self.frame.size.height - imgView.frame.size.height) / 2 + KCellOffset * 2);
+    imgView.center = CGPointMake(KMainScreenWidth - imgView.frame.size.width,
+                                 (self.height - imgView.height) / 2 + KCellOffset);
     [self.contentView addSubview:imgView];
 }
 @end

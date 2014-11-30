@@ -39,7 +39,6 @@
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray* resourceArray;
 @property (nonatomic, strong) NSMutableDictionary* resourceDic;
-@property (nonatomic, strong) MAViewAudioPlayControl* audioPlayControl;
 @end
 
 @implementation MAViewFileManager
@@ -69,10 +68,7 @@
 
 #pragma mark - init area
 - (void) initTable{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
-                                                               self.frame.size.width,
-                                                               self.frame.size.height)
-                                              style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, self.size} style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;

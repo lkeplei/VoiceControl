@@ -90,7 +90,7 @@
     [self initControlView];
     
     //reanme
-    _renameField = [MAUtils textFieldInit:CGRectMake(10, KShowFileViewHeight, 300, KMessageViewHeight)
+    _renameField = [MAUtils textFieldInit:CGRectMake(10, KShowFileViewHeight, KMainScreenWidth - 20, KMessageViewHeight)
                                          color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
                                        bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefWhite default:NO]
                                           secu:NO
@@ -101,7 +101,7 @@
     [self addSubview:_renameField];
     
     //describle
-    _describleTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 15 + CGRectGetMaxY(_renameField.frame), 300,
+    _describleTextView = [[UITextView alloc] initWithFrame:CGRectMake(10, 15 + CGRectGetMaxY(_renameField.frame), KMainScreenWidth - 20,
                                                                       self.frame.size.height - 20 - KNavigationHeight - CGRectGetMaxY(_renameField.frame))];
     _describleTextView.scrollEnabled = YES;
     _describleTextView.textColor = [[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO];
@@ -150,14 +150,14 @@
     [mesView addSubview:_durationLabel];
     
     _dateLabel = [MAUtils labelWithTxt:nil
-                                 frame:CGRectMake(110, 0, 160, KMessageViewHeight / 2)
+                                 frame:CGRectMake(0, 0, KMainScreenWidth - 60, KMessageViewHeight / 2)
                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
     _dateLabel.textAlignment = KTextAlignmentRight;
     [view addSubview:_dateLabel];
     
     _timeLabel = [MAUtils labelWithTxt:nil
-                                 frame:CGRectMake(110, KMessageViewHeight / 2, 205, KMessageViewHeight / 2)
+                                 frame:CGRectMake(0, KMessageViewHeight / 2, KMainScreenWidth - 20, KMessageViewHeight / 2)
                                   font:[UIFont fontWithName:KLabelFontArial size:10]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
     _timeLabel.textAlignment = KTextAlignmentRight;
@@ -177,7 +177,7 @@
     _playButton.frame = (CGRect){KRecorderFileOffset, KRecorderFileOffset, _playButton.frame.size};
     [conView addSubview:_playButton];
     
-    _durationSlider = [[UISlider alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_playButton.frame) + KRecorderFileOffset, KRecorderFileOffset, 270, KMessageViewHeight)];
+    _durationSlider = [[UISlider alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_playButton.frame) + KRecorderFileOffset, KRecorderFileOffset, KMainScreenWidth - 50, KMessageViewHeight)];
     [_durationSlider addTarget:self action:@selector(durationSliderMoved:) forControlEvents:UIControlEventValueChanged];
     _durationSlider.minimumValue = 0;
     _durationSlider.maximumValue = 0;
@@ -203,7 +203,7 @@
     [_tabbarView addSubview:item1];
     
     UIImageView* tagNumberView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"file_tag_number.png"]];
-    tagNumberView.frame = (CGRect){width - 60, tagNumberView.frame.origin.y, tagNumberView.frame.size};
+    tagNumberView.frame = (CGRect){item1.width / 2, tagNumberView.frame.origin.y, tagNumberView.frame.size};
     _tagNumberLabel = [MAUtils labelWithTxt:@"0"
                                      frame:(CGRect){CGPointZero, tagNumberView.frame.size}
                                       font:[UIFont fontWithName:KLabelFontArial size:10]

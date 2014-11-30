@@ -15,7 +15,6 @@
 #import "BaiduMobStat.h"
 #import "MAUtils.h"
 #import "MARecordController.h"
-#import "MAViewSetting.h"
 #import "MAServerConfig.h"
 
 #import "MACoreDataManager.h"

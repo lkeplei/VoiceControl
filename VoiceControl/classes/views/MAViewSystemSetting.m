@@ -16,7 +16,6 @@
 #define KViewLabelHeight        (20)
 
 @interface MAViewSystemSetting ()
-@property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) UIView* durationView;
 @property (nonatomic, strong) UIView* markDBView;
 @property (nonatomic, strong) UIView* qualityView;
@@ -72,8 +71,7 @@
 #pragma mark - duration area
 -(void)initDurationView{
     _durationView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
-    _durationView.frame = (CGRect){(CGRectGetWidth(self.frame) - CGRectGetWidth(_durationView.frame)) / 2,
-        KViewVerOffset, _durationView.frame.size};
+    _durationView.frame = (CGRect){KViewVerOffset, KViewVerOffset, self.width - KViewVerOffset * 2, _durationView.height};
     [_durationView setUserInteractionEnabled:YES];
     
     //label
@@ -166,7 +164,7 @@
 #pragma mark - mark db area
 -(void)initMarkDBView{
     _markDBView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
-    _markDBView.frame = (CGRect){CGRectGetMinX(_durationView.frame), KViewVerOffset + CGRectGetMaxY(_durationView.frame), _markDBView.frame.size};
+    _markDBView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_durationView.frame), self.width - KViewVerOffset * 2, _markDBView.height};
     [_markDBView setUserInteractionEnabled:YES];
     
     //label
@@ -258,8 +256,7 @@
 #pragma mark - quality area
 -(void)initQualityView{
     _qualityView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
-    _qualityView.frame = (CGRect){CGRectGetMinX(_durationView.frame), KViewVerOffset + CGRectGetMaxY(_markDBView.frame),
-        _qualityView.frame.size};
+    _qualityView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_markDBView.frame), self.width - KViewVerOffset * 2, _qualityView.height};
     [_qualityView setUserInteractionEnabled:YES];
     
     UILabel* label = [MAUtils labelWithTxt:MyLocal(@"system_setting_quality_label")
@@ -314,6 +311,7 @@
     _contactView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
     _contactView.frame = CGRectMake(CGRectGetMinX(_durationView.frame), KViewVerOffset + CGRectGetMaxY(_qualityView.frame),
         _durationView.frame.size.width, 90);
+    _contactView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_qualityView.frame), self.width - KViewVerOffset * 2, 90};
     [_contactView setUserInteractionEnabled:YES];
     
     //label

@@ -43,10 +43,10 @@
 
 #define KCellTag(a,b)           ((a) * 100 + (b) + 1000)
 
-#define KMainScreenFrame [[UIScreen mainScreen] bounds]
-#define KMainScreenWidth kMainScreenFrame.size.width
-#define KMainScreenHeight kMainScreenFrame.size.height-20
-#define KApplicationFrame [[UIScreen mainScreen] applicationFrame]
+#define KMainScreenFrame    [[UIScreen mainScreen] bounds]
+#define KMainScreenWidth    KMainScreenFrame.size.width
+#define KMainScreenHeight   KMainScreenFrame.size.height-20
+#define KApplicationFrame   [[UIScreen mainScreen] applicationFrame]
 
 //字体、字号、颜色
 #define KLabelFontArial         @"Arial"
