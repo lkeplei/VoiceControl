@@ -26,13 +26,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VoiceControl/classes/views/fileManager/MAViewRecorderFile.m"
-            timestampString = "439134174.87486"
+            filePath = "VoiceControl/classes/model/MARecordController.m"
+            timestampString = "439135600.53042"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
-            landmarkName = "-setMessageFromIndex:"
+            startingLineNumber = "468"
+            endingLineNumber = "468"
+            landmarkName = "-saveData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
