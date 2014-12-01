@@ -47,9 +47,7 @@
 
 #pragma mark - init area
 - (void) initTable{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,
-                                                               self.frame.size.width,
-                                                               self.frame.size.height)
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -141,13 +139,13 @@
         [self setTopBtn:@"" rightBtn:MyLocal(@"plan_top_right") enabled:NO];
         
         UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_no_plan")
-                                         frame:CGRectMake(10, 150, 300, 30)
+                                         frame:CGRectMake(10, 150, self.width - 20, 30)
                                           font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize22]
                                          color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
         [self addSubview:label];
         
         UILabel* content = [MAUtils labelWithTxt:MyLocal(@"plan_nothing_content")
-                                           frame:CGRectMake(10, CGRectGetMaxY(label.frame), 300, 50)
+                                           frame:CGRectMake(10, CGRectGetMaxY(label.frame), self.width - 20, 50)
                                             font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
                                            color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
         content.numberOfLines = 0;

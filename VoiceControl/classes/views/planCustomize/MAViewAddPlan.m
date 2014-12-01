@@ -116,7 +116,7 @@
                     @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49", @"50", @"51", @"52", @"53", @"54", @"55",
                     @"56", @"57", @"58", @"59", nil];
     
-    _timePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 160)];
+    _timePicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.width, IsPad ? 300 : 160)];
     _timePicker.delegate = self;
     _timePicker.dataSource = self;
     [_timePicker setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:NO]];
@@ -157,7 +157,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if ([indexPath section] == 1) {
-            UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_add_delete") frame:cell.frame
+            UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_add_delete") frame:(CGRect){CGPointZero, KMainScreenWidth, cell.height}
                                               font:[[MAModel shareModel] getLabelFontSize:KLabelFontArial size:KLabelFontSize18]
                                              color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
             [cell.contentView addSubview:label];

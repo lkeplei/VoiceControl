@@ -72,7 +72,7 @@
                        tag:KCellLabelDurationTag alignment:KTextAlignmentRight
                       font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize12]
                      color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]
-                     frame:CGRectMake(self.frame.size.width - 120, self.frame.size.height * 0.7, 110, self.frame.size.height * 0.3)];
+                     frame:CGRectMake(KMainScreenWidth - 120, self.frame.size.height * 0.7, 110, self.frame.size.height * 0.3)];
         
         UIButton* button = (UIButton*)[self.contentView viewWithTag:KCellRenameButtonTag];
         if (button == nil) {
@@ -81,7 +81,7 @@
                                      imagesec:[UIImage imageNamed:@"recorder_tag_edit_sec.png"]
                                        target:self
                                        action:@selector(tagRename:)];
-            button.frame = (CGRect){self.frame.size.width - button.frame.size.width - KCellOffset, KCellOffset / 2, button.frame.size};
+            button.frame = (CGRect){KMainScreenWidth - button.frame.size.width - KCellOffset, KCellOffset / 2, button.frame.size};
             [self addSubview:button];
         }
     }

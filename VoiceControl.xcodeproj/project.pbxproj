@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407464E17ABEFF100B70537 /* MAViewHome.m */; };
-		0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0407465117ABFA7F00B70537 /* MAViewFileManager.m */; };
 		0422DDF917EC01660004C289 /* microphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422DDF817EC01660004C289 /* microphone.png */; };
 		042BDBB418C4BE200041C078 /* icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 042BDBB318C4BE200041C078 /* icon-120@2x.png */; };
 		0437E7991918F39B00026F0B /* recorder_file_item_tag_sec@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0437E7971918F39B00026F0B /* recorder_file_item_tag_sec@2x.png */; };
@@ -51,6 +50,15 @@
 		0471C2D318FEC8760049CEB5 /* button_color2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0471C2CF18FEC8760049CEB5 /* button_color2@2x.png */; };
 		0471C2D418FEC8760049CEB5 /* button_color3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0471C2D018FEC8760049CEB5 /* button_color3@2x.png */; };
 		0471C2D518FEC8760049CEB5 /* button_color4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0471C2D118FEC8760049CEB5 /* button_color4@2x.png */; };
+		0475A8991A2C9D5500986134 /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8981A2C9D5500986134 /* MAViewController.m */; };
+		0475A8AC1A2C9D5F00986134 /* MAViewFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A89C1A2C9D5F00986134 /* MAViewFileManager.m */; };
+		0475A8AD1A2C9D5F00986134 /* MAViewRecorderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A89E1A2C9D5F00986134 /* MAViewRecorderFile.m */; };
+		0475A8AE1A2C9D5F00986134 /* MAViewTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8A01A2C9D5F00986134 /* MAViewTagManager.m */; };
+		0475A8AF1A2C9D5F00986134 /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8A31A2C9D5F00986134 /* MAViewAddPlan.m */; };
+		0475A8B01A2C9D5F00986134 /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8A51A2C9D5F00986134 /* MAViewAddPlanDuration.m */; };
+		0475A8B11A2C9D5F00986134 /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8A71A2C9D5F00986134 /* MAViewAddPlanLabel.m */; };
+		0475A8B21A2C9D5F00986134 /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8A91A2C9D5F00986134 /* MAViewAddPlanRepeat.m */; };
+		0475A8B31A2C9D5F00986134 /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0475A8AB1A2C9D5F00986134 /* MAViewPlanCustomize.m */; };
 		04891EDD1A2ABEF4002F8C15 /* UIView+MAUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04891EDC1A2ABEF4002F8C15 /* UIView+MAUIView.m */; };
 		04891F941A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobAds.m in Sources */ = {isa = PBXBuildFile; fileRef = 04891EE21A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobAds.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		04891F951A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobFullAds.m in Sources */ = {isa = PBXBuildFile; fileRef = 04891EE41A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobFullAds.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -260,17 +268,12 @@
 		04E6566E178C4FF7003A6ACA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E6566D178C4FF7003A6ACA /* AVFoundation.framework */; };
 		04E65670178C5018003A6ACA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E6566F178C5018003A6ACA /* AudioToolbox.framework */; };
 		04E65679178C5150003A6ACA /* MAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65675178C5150003A6ACA /* MAUtils.m */; };
-		04E6567A178C5150003A6ACA /* MAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E65678178C5150003A6ACA /* MAViewController.m */; };
 		04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6567C178C5188003A6ACA /* MAAppDelegate.m */; };
 		04E73F8B190BD5830029227A /* MACellTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E73F8A190BD5830029227A /* MACellTag.m */; };
-		18051843190A3FFA00DDEC35 /* MAViewRecorderFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */; };
-		18051846190A401700DDEC35 /* MAViewTagManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18051845190A401700DDEC35 /* MAViewTagManager.m */; };
 		182AEDA618A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */; };
 		182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */; };
 		183DA90418BAF6A5005C6ABA /* slider_scrubber_knob.png in Resources */ = {isa = PBXBuildFile; fileRef = 183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */; };
 		185D6BF818C4762200D448F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D6BFA18C4762300D448F6 /* Default@2x.png */; };
-		185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */; };
-		185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F2909188E4325005D163B /* MAViewAddPlan.m */; };
 		1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */; };
 		186E4A9018AC6F6800945619 /* MARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186E4A8F18AC6F6800945619 /* MARecordController.m */; };
 		187719C319207A21005E1BFE /* MAViewRecorderMoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */; };
@@ -281,15 +284,12 @@
 		18A9123118AA254B0069A15B /* cell_accessory_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18A9123018AA254B0069A15B /* cell_accessory_indicator@2x.png */; };
 		18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AF13F318D70C7E0055B72A /* MACellFile.m */; };
 		18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27B18A47F6600C13CDC /* MACellPlan.m */; };
-		18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */; };
-		18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */; };
 		18E08B4F18DAE0BE00866C7B /* MACoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */; };
 		18E08B5218DAE7BD00866C7B /* ma_core_data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5018DAE7BD00866C7B /* ma_core_data.xcdatamodeld */; };
 		18E08B5D18DAFB1900866C7B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E08B5C18DAFB1900866C7B /* CoreData.framework */; };
 		18E08B6018DBD3E200866C7B /* MAVoiceFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E08B5F18DBD3E200866C7B /* MAVoiceFiles.m */; };
 		18EC3DE6186D311F00B3BC81 /* skin_set.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18EC3DE5186D311F00B3BC81 /* skin_set.plist */; };
 		18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */ = {isa = PBXBuildFile; fileRef = 18EC3DE8186D4A0700B3BC81 /* MASkinData.m */; };
-		18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */; };
 		BE0443FC179FC50C00537368 /* icon-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443F9179FC50C00537368 /* icon-ipad.png */; };
 		BE0443FD179FC50C00537368 /* icon-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443FA179FC50C00537368 /* icon-iphone.png */; };
 		BE0443FE179FC50C00537368 /* icon-iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE0443FB179FC50C00537368 /* icon-iphone@2x.png */; };
@@ -304,8 +304,6 @@
 /* Begin PBXFileReference section */
 		0407464D17ABEFF100B70537 /* MAViewHome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewHome.h; sourceTree = "<group>"; };
 		0407464E17ABEFF100B70537 /* MAViewHome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewHome.m; sourceTree = "<group>"; };
-		0407465017ABFA7F00B70537 /* MAViewFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFileManager.h; sourceTree = "<group>"; };
-		0407465117ABFA7F00B70537 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
 		0422DDF817EC01660004C289 /* microphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphone.png; sourceTree = "<group>"; };
 		042BDBB318C4BE200041C078 /* icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120@2x.png"; sourceTree = "<group>"; };
 		0437E7971918F39B00026F0B /* recorder_file_item_tag_sec@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recorder_file_item_tag_sec@2x.png"; sourceTree = "<group>"; };
@@ -354,6 +352,24 @@
 		0471C2CF18FEC8760049CEB5 /* button_color2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_color2@2x.png"; sourceTree = "<group>"; };
 		0471C2D018FEC8760049CEB5 /* button_color3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_color3@2x.png"; sourceTree = "<group>"; };
 		0471C2D118FEC8760049CEB5 /* button_color4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_color4@2x.png"; sourceTree = "<group>"; };
+		0475A8971A2C9D5500986134 /* MAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewController.h; sourceTree = "<group>"; };
+		0475A8981A2C9D5500986134 /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
+		0475A89B1A2C9D5F00986134 /* MAViewFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFileManager.h; sourceTree = "<group>"; };
+		0475A89C1A2C9D5F00986134 /* MAViewFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFileManager.m; sourceTree = "<group>"; };
+		0475A89D1A2C9D5F00986134 /* MAViewRecorderFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewRecorderFile.h; sourceTree = "<group>"; };
+		0475A89E1A2C9D5F00986134 /* MAViewRecorderFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewRecorderFile.m; sourceTree = "<group>"; };
+		0475A89F1A2C9D5F00986134 /* MAViewTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagManager.h; sourceTree = "<group>"; };
+		0475A8A01A2C9D5F00986134 /* MAViewTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagManager.m; sourceTree = "<group>"; };
+		0475A8A21A2C9D5F00986134 /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
+		0475A8A31A2C9D5F00986134 /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
+		0475A8A41A2C9D5F00986134 /* MAViewAddPlanDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanDuration.h; sourceTree = "<group>"; };
+		0475A8A51A2C9D5F00986134 /* MAViewAddPlanDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanDuration.m; sourceTree = "<group>"; };
+		0475A8A61A2C9D5F00986134 /* MAViewAddPlanLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanLabel.h; sourceTree = "<group>"; };
+		0475A8A71A2C9D5F00986134 /* MAViewAddPlanLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanLabel.m; sourceTree = "<group>"; };
+		0475A8A81A2C9D5F00986134 /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
+		0475A8A91A2C9D5F00986134 /* MAViewAddPlanRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanRepeat.m; sourceTree = "<group>"; };
+		0475A8AA1A2C9D5F00986134 /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
+		0475A8AB1A2C9D5F00986134 /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
 		04891EDB1A2ABEF4002F8C15 /* UIView+MAUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MAUIView.h"; sourceTree = "<group>"; };
 		04891EDC1A2ABEF4002F8C15 /* UIView+MAUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MAUIView.m"; sourceTree = "<group>"; };
 		04891EE11A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMoGoAdapterGoogleAdMobAds.h; sourceTree = "<group>"; };
@@ -668,26 +684,16 @@
 		04E65672178C5150003A6ACA /* MAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAConfig.h; sourceTree = "<group>"; };
 		04E65674178C5150003A6ACA /* MAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAUtils.h; sourceTree = "<group>"; };
 		04E65675178C5150003A6ACA /* MAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAUtils.m; sourceTree = "<group>"; };
-		04E65677178C5150003A6ACA /* MAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewController.h; sourceTree = "<group>"; };
-		04E65678178C5150003A6ACA /* MAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewController.m; sourceTree = "<group>"; };
 		04E6567B178C5188003A6ACA /* MAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAppDelegate.h; sourceTree = "<group>"; };
 		04E6567C178C5188003A6ACA /* MAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAppDelegate.m; sourceTree = "<group>"; };
 		04E73F89190BD5830029227A /* MACellTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellTag.h; sourceTree = "<group>"; };
 		04E73F8A190BD5830029227A /* MACellTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellTag.m; sourceTree = "<group>"; };
-		18051841190A3FFA00DDEC35 /* MAViewRecorderFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewRecorderFile.h; sourceTree = "<group>"; };
-		18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewRecorderFile.m; sourceTree = "<group>"; };
-		18051844190A401700DDEC35 /* MAViewTagManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTagManager.h; sourceTree = "<group>"; };
-		18051845190A401700DDEC35 /* MAViewTagManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTagManager.m; sourceTree = "<group>"; };
 		182AEDA518A5DCBB00C6EC4E /* add_plan_repeat_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_plan_repeat_selected@2x.png"; sourceTree = "<group>"; };
 		182AEDA718A5FFAB00C6EC4E /* MAViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewFactory.h; sourceTree = "<group>"; };
 		182AEDA818A5FFAB00C6EC4E /* MAViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewFactory.m; sourceTree = "<group>"; };
 		183DA90118BAF6A5005C6ABA /* slider_scrubber_knob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_scrubber_knob.png; sourceTree = "<group>"; };
 		185D6BF918C4762300D448F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
 		185D6BFB18C4762800D448F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
-		185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewPlanCustomize.h; sourceTree = "<group>"; };
-		185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewPlanCustomize.m; sourceTree = "<group>"; };
-		185F2908188E4325005D163B /* MAViewAddPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlan.h; sourceTree = "<group>"; };
-		185F2909188E4325005D163B /* MAViewAddPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlan.m; sourceTree = "<group>"; };
 		1864B3DB18FD134300E974BF /* MAViewSystemSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewSystemSetting.h; sourceTree = "<group>"; };
 		1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewSystemSetting.m; sourceTree = "<group>"; };
 		186E4A8E18AC6F6800945619 /* MARecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MARecordController.h; sourceTree = "<group>"; };
@@ -705,10 +711,6 @@
 		18BF40ED1905FECF00AA45B5 /* MAModelDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAModelDef.h; sourceTree = "<group>"; };
 		18DCB27A18A47F6600C13CDC /* MACellPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACellPlan.h; sourceTree = "<group>"; };
 		18DCB27B18A47F6600C13CDC /* MACellPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACellPlan.m; sourceTree = "<group>"; };
-		18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanRepeat.h; sourceTree = "<group>"; };
-		18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanRepeat.m; sourceTree = "<group>"; };
-		18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanLabel.h; sourceTree = "<group>"; };
-		18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanLabel.m; sourceTree = "<group>"; };
 		18E08B4D18DAE0BE00866C7B /* MACoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MACoreDataManager.h; sourceTree = "<group>"; };
 		18E08B4E18DAE0BE00866C7B /* MACoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MACoreDataManager.m; sourceTree = "<group>"; };
 		18E08B5118DAE7BD00866C7B /* ma_core_data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ma_core_data.xcdatamodel; sourceTree = "<group>"; };
@@ -719,8 +721,6 @@
 		18EC3DE5186D311F00B3BC81 /* skin_set.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skin_set.plist; sourceTree = "<group>"; };
 		18EC3DE7186D4A0700B3BC81 /* MASkinData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASkinData.h; sourceTree = "<group>"; };
 		18EC3DE8186D4A0700B3BC81 /* MASkinData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASkinData.m; sourceTree = "<group>"; };
-		18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewAddPlanDuration.h; sourceTree = "<group>"; };
-		18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewAddPlanDuration.m; sourceTree = "<group>"; };
 		BE0443F9179FC50C00537368 /* icon-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-ipad.png"; sourceTree = "<group>"; };
 		BE0443FA179FC50C00537368 /* icon-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iphone.png"; sourceTree = "<group>"; };
 		BE0443FB179FC50C00537368 /* icon-iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iphone@2x.png"; sourceTree = "<group>"; };
@@ -787,6 +787,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0475A8961A2C9D5500986134 /* viewControl */ = {
+			isa = PBXGroup;
+			children = (
+				0475A8971A2C9D5500986134 /* MAViewController.h */,
+				0475A8981A2C9D5500986134 /* MAViewController.m */,
+			);
+			path = viewControl;
+			sourceTree = "<group>";
+		};
+		0475A89A1A2C9D5F00986134 /* fileManager */ = {
+			isa = PBXGroup;
+			children = (
+				0475A89B1A2C9D5F00986134 /* MAViewFileManager.h */,
+				0475A89C1A2C9D5F00986134 /* MAViewFileManager.m */,
+				0475A89D1A2C9D5F00986134 /* MAViewRecorderFile.h */,
+				0475A89E1A2C9D5F00986134 /* MAViewRecorderFile.m */,
+				0475A89F1A2C9D5F00986134 /* MAViewTagManager.h */,
+				0475A8A01A2C9D5F00986134 /* MAViewTagManager.m */,
+			);
+			path = fileManager;
+			sourceTree = "<group>";
+		};
+		0475A8A11A2C9D5F00986134 /* planCustomize */ = {
+			isa = PBXGroup;
+			children = (
+				0475A8A21A2C9D5F00986134 /* MAViewAddPlan.h */,
+				0475A8A31A2C9D5F00986134 /* MAViewAddPlan.m */,
+				0475A8A41A2C9D5F00986134 /* MAViewAddPlanDuration.h */,
+				0475A8A51A2C9D5F00986134 /* MAViewAddPlanDuration.m */,
+				0475A8A61A2C9D5F00986134 /* MAViewAddPlanLabel.h */,
+				0475A8A71A2C9D5F00986134 /* MAViewAddPlanLabel.m */,
+				0475A8A81A2C9D5F00986134 /* MAViewAddPlanRepeat.h */,
+				0475A8A91A2C9D5F00986134 /* MAViewAddPlanRepeat.m */,
+				0475A8AA1A2C9D5F00986134 /* MAViewPlanCustomize.h */,
+				0475A8AB1A2C9D5F00986134 /* MAViewPlanCustomize.m */,
+			);
+			path = planCustomize;
+			sourceTree = "<group>";
+		};
 		04891EDA1A2ABEA7002F8C15 /* category */ = {
 			isa = PBXGroup;
 			children = (
@@ -1452,6 +1491,7 @@
 		04E65671178C5150003A6ACA /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				0475A8961A2C9D5500986134 /* viewControl */,
 				BE073A9D179EABFF00340A47 /* model */,
 				04E6567B178C5188003A6ACA /* MAAppDelegate.h */,
 				04E6567C178C5188003A6ACA /* MAAppDelegate.m */,
@@ -1487,36 +1527,20 @@
 		04E65676178C5150003A6ACA /* views */ = {
 			isa = PBXGroup;
 			children = (
+				0475A89A1A2C9D5F00986134 /* fileManager */,
+				0475A8A11A2C9D5F00986134 /* planCustomize */,
 				04C238D817B6332000B8B388 /* MAViewAboutUs.h */,
 				04C238D917B6332000B8B388 /* MAViewAboutUs.m */,
-				185F2908188E4325005D163B /* MAViewAddPlan.h */,
-				185F2909188E4325005D163B /* MAViewAddPlan.m */,
-				18ED434418AE1CD20085A36A /* MAViewAddPlanDuration.h */,
-				18ED434518AE1CD20085A36A /* MAViewAddPlanDuration.m */,
-				18DCB28018A4DE3000C13CDC /* MAViewAddPlanLabel.h */,
-				18DCB28118A4DE3000C13CDC /* MAViewAddPlanLabel.m */,
-				18DCB27D18A4DE1E00C13CDC /* MAViewAddPlanRepeat.h */,
-				18DCB27E18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m */,
 				04D444B217B13FED00F04486 /* MAViewBase.h */,
 				04D444B317B13FED00F04486 /* MAViewBase.m */,
-				04E65677178C5150003A6ACA /* MAViewController.h */,
-				04E65678178C5150003A6ACA /* MAViewController.m */,
-				0407465017ABFA7F00B70537 /* MAViewFileManager.h */,
-				0407465117ABFA7F00B70537 /* MAViewFileManager.m */,
 				0407464D17ABEFF100B70537 /* MAViewHome.h */,
 				0407464E17ABEFF100B70537 /* MAViewHome.m */,
-				185F2905188E1BD6005D163B /* MAViewPlanCustomize.h */,
-				185F2906188E1BD6005D163B /* MAViewPlanCustomize.m */,
 				04D7DE7017A503F200AF0450 /* MAViewSelectMenu.h */,
 				04D7DE7117A503F200AF0450 /* MAViewSelectMenu.m */,
 				045DFA9017A9422500F517AA /* MAViewTableBase.h */,
 				045DFA9117A9422500F517AA /* MAViewTableBase.m */,
 				1864B3DB18FD134300E974BF /* MAViewSystemSetting.h */,
 				1864B3DC18FD134300E974BF /* MAViewSystemSetting.m */,
-				18051841190A3FFA00DDEC35 /* MAViewRecorderFile.h */,
-				18051842190A3FFA00DDEC35 /* MAViewRecorderFile.m */,
-				18051844190A401700DDEC35 /* MAViewTagManager.h */,
-				18051845190A401700DDEC35 /* MAViewTagManager.m */,
 				187719C119207A21005E1BFE /* MAViewRecorderMoreFile.h */,
 				187719C219207A21005E1BFE /* MAViewRecorderMoreFile.m */,
 			);
@@ -1879,22 +1903,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18DCB28218A4DE3000C13CDC /* MAViewAddPlanLabel.m in Sources */,
+				0475A8B11A2C9D5F00986134 /* MAViewAddPlanLabel.m in Sources */,
 				04E65652178C4F15003A6ACA /* main.m in Sources */,
 				18DCB27C18A47F6600C13CDC /* MACellPlan.m in Sources */,
-				18DCB27F18A4DE1E00C13CDC /* MAViewAddPlanRepeat.m in Sources */,
-				18ED434618AE1CD20085A36A /* MAViewAddPlanDuration.m in Sources */,
 				04891FD61A2ACA27002F8C15 /* ZipArchive.mm in Sources */,
 				04E65679178C5150003A6ACA /* MAUtils.m in Sources */,
-				04E6567A178C5150003A6ACA /* MAViewController.m in Sources */,
 				04891FC81A2ACA27002F8C15 /* CDataScanner.m in Sources */,
+				0475A8AE1A2C9D5F00986134 /* MAViewTagManager.m in Sources */,
 				18EC3DE9186D4A0700B3BC81 /* MASkinData.m in Sources */,
 				04891FCE1A2ACA27002F8C15 /* NSDictionary_JSONExtensions.m in Sources */,
 				04891F951A2ACA26002F8C15 /* AdMoGoAdapterGoogleAdMobFullAds.m in Sources */,
+				0475A8AD1A2C9D5F00986134 /* MAViewRecorderFile.m in Sources */,
 				18AF13F418D70C7E0055B72A /* MACellFile.m in Sources */,
+				0475A8B01A2C9D5F00986134 /* MAViewAddPlanDuration.m in Sources */,
 				04891FD51A2ACA27002F8C15 /* zip.c in Sources */,
+				0475A8B21A2C9D5F00986134 /* MAViewAddPlanRepeat.m in Sources */,
 				04E6567D178C5188003A6ACA /* MAAppDelegate.m in Sources */,
-				185F290A188E4325005D163B /* MAViewAddPlan.m in Sources */,
 				04891FC91A2ACA27002F8C15 /* CFilteringJSONSerializer.m in Sources */,
 				04891FD21A2ACA27002F8C15 /* ioapi.c in Sources */,
 				04891FCF1A2ACA27002F8C15 /* CJSONDeserializer.m in Sources */,
@@ -1903,6 +1927,7 @@
 				04C6DE40179270BC00ED2EB5 /* SQLiteWrapper.cpp in Sources */,
 				04891F971A2ACA27002F8C15 /* AdMoGoAdapterAdwo.m in Sources */,
 				BE073A64179E998900340A47 /* MADataManager.mm in Sources */,
+				0475A8AF1A2C9D5F00986134 /* MAViewAddPlan.m in Sources */,
 				187719C319207A21005E1BFE /* MAViewRecorderMoreFile.m in Sources */,
 				04891FC71A2ACA27002F8C15 /* OpenUDID.m in Sources */,
 				BE073A68179E9A1400340A47 /* MBProgressHUD.m in Sources */,
@@ -1913,8 +1938,8 @@
 				04E73F8B190BD5830029227A /* MACellTag.m in Sources */,
 				04891FD31A2ACA27002F8C15 /* mztools.c in Sources */,
 				04891FC31A2ACA27002F8C15 /* AdMoGoAdapterBaiduSplash.m in Sources */,
-				185F2907188E1BD6005D163B /* MAViewPlanCustomize.m in Sources */,
 				04891FC61A2ACA27002F8C15 /* mongoose.c in Sources */,
+				0475A8B31A2C9D5F00986134 /* MAViewPlanCustomize.m in Sources */,
 				182AEDA918A5FFAB00C6EC4E /* MAViewFactory.m in Sources */,
 				04891FC11A2ACA27002F8C15 /* AdMoGoAdapterBaiduFullAds.m in Sources */,
 				04891F991A2ACA27002F8C15 /* AdMoGoAdapterAdwoSplash.m in Sources */,
@@ -1925,12 +1950,11 @@
 				045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */,
 				18E08B6018DBD3E200866C7B /* MAVoiceFiles.m in Sources */,
 				0407464F17ABEFF100B70537 /* MAViewHome.m in Sources */,
-				0407465217ABFA7F00B70537 /* MAViewFileManager.m in Sources */,
+				0475A8991A2C9D5500986134 /* MAViewController.m in Sources */,
 				04D444B417B13FED00F04486 /* MAViewBase.m in Sources */,
+				0475A8AC1A2C9D5F00986134 /* MAViewFileManager.m in Sources */,
 				04891FCC1A2ACA27002F8C15 /* CJSONSerializedData.m in Sources */,
 				1864B3DD18FD134300E974BF /* MAViewSystemSetting.m in Sources */,
-				18051846190A401700DDEC35 /* MAViewTagManager.m in Sources */,
-				18051843190A3FFA00DDEC35 /* MAViewRecorderFile.m in Sources */,
 				186E4A9018AC6F6800945619 /* MARecordController.m in Sources */,
 				04891FCA1A2ACA27002F8C15 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				044ADEDB18F437BF0000DB63 /* MAAnimatedLabel.m in Sources */,

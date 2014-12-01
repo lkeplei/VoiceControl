@@ -36,8 +36,7 @@
 
 #pragma mark - init area
 - (void)initTable{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40,
-                                                               self.frame.size.width, 240)
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, self.width, 240)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -57,13 +56,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *reuseIdentifier = @"cell";
+    NSString *reuseIdentifier = @"addPlanLabelCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         
-        _textFieldLabel = [MAUtils textFieldInit:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)
+        _textFieldLabel = [MAUtils textFieldInit:CGRectMake(15, 0, _tableView.width - 30, cell.height)
                                            color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:YES]
                                          bgcolor:[[MAModel shareModel] getColorByType:MATypeColorDefault default:YES]
                                             secu:NO

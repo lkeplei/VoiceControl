@@ -53,7 +53,7 @@
         _bgView = nil;
     }
     if (!_bgContentView) {
-        _bgContentView = [[UIView alloc] initWithFrame:self.contentView.frame];
+        _bgContentView = [[UIView alloc] initWithFrame:(CGRect){CGPointZero, KMainScreenWidth, self.contentView.height}];
         [self.contentView addSubview:_bgContentView];
     }
     
@@ -123,8 +123,8 @@
     if (switcher) {
         [switcher setOn:[[resDic objectForKey:KDataBaseStatus] boolValue]];
     } else {
-        switcher = [[UISwitch alloc] initWithFrame:CGRectMake((self.frame.size.width - KSwitchWidth) - offset / 2,
-                                                              (self.frame.size.height - KSwitchHeight) / 2,
+        switcher = [[UISwitch alloc] initWithFrame:CGRectMake((_bgContentView.width - KSwitchWidth) - offset / 2,
+                                                              (self.height - KSwitchHeight) / 2,
                                                               KSwitchWidth, KSwitchHeight)];
         switcher.tag = KSwitchTag;
         [switcher setOn:[[resDic objectForKey:KDataBaseStatus] boolValue]];
