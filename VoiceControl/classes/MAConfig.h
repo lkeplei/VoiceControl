@@ -62,6 +62,7 @@
 //NSUserDefaults key
 #define KUserDefaultFileTimeMax            @"default_file_time_max"
 #define KUserDefaultMarkVoice              @"default_mark_voice"
+#define KUserDefaultAutoRecorder           @"default_auto_recorder"
 #define KUserDefaultSetSkin                @"default_set_skin"
 #define KUserDefaultPassword               @"default_user_password"
 #define KUserDefaultResetPassword          @"default_user_reset_password"

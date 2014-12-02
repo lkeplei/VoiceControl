@@ -88,6 +88,10 @@
     if ([MADataManager getDataByKey:KUserDefaultQualityLevel] == nil) {
         [MADataManager setDataByKey:[NSNumber numberWithInt:MARecorderQualityNormal] forkey:KUserDefaultQualityLevel];
     }
+    
+    if ([MADataManager getDataByKey:KUserDefaultAutoRecorder] == nil) {
+        [MADataManager setDataByKey:[NSNumber numberWithBool:NO] forkey:KUserDefaultAutoRecorder];
+    }
 }
 
 -(void)dataTransfer{
@@ -445,5 +449,11 @@
     } else {
         [_recordController stopDefaultRecord];
     }
+}
+
+- (void)setAutoRecorder:(BOOL)autoRecorder {
+    [MADataManager setDataByKey:[NSNumber numberWithBool:autoRecorder] forkey:KUserDefaultAutoRecorder];
+    
+    //是否需要对当前的环境进行一次处理
 }
 @end

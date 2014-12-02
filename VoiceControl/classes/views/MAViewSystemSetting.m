@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIView* markDBView;
 @property (nonatomic, strong) UIView* qualityView;
 @property (nonatomic, strong) UIView* contactView;
+@property (nonatomic, strong) UIView* autoRecorderSwitchView;
 @property (nonatomic, strong) UISlider* progressSlider;
 @property (nonatomic, strong) UISlider* markSlider;
 @property (nonatomic, strong) UILabel* timeLabel;
@@ -53,6 +54,7 @@
     [self initDurationView];
     [self initMarkDBView];
     [self initQualityView];
+    [self initAutoRecorderView];
     [self initContactView];
     
     UIScrollView* scrollView = [[UIScrollView alloc]initWithFrame:(CGRect){CGPointZero, self.frame.size}];
@@ -61,6 +63,7 @@
     [scrollView addSubview:_durationView];
     [scrollView addSubview:_markDBView];
     [scrollView addSubview:_qualityView];
+    [scrollView addSubview:_autoRecorderSwitchView];
     [scrollView addSubview:_contactView];
     [self addSubview:scrollView];
 
@@ -306,12 +309,48 @@
     [[MAModel shareModel] resetRecorderQuality:[(UISegmentedControl*)sender selectedSegmentIndex] + MARecorderQualityLow];
 }
 
+#pragma mark - aruto recorder area
+- (void)initAutoRecorderView {
+    _autoRecorderSwitchView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
+    _autoRecorderSwitchView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_qualityView.frame),
+        self.width - KViewVerOffset * 2, 90};
+    [_autoRecorderSwitchView setUserInteractionEnabled:YES];
+ 
+    //label
+    UILabel* label = [MAUtils labelWithTxt:MyLocal(@"system_setting_auto_recorder")
+                                     frame:CGRectMake(KViewVerOffset / 2, KViewVerOffset, _durationView.frame.size.width, KViewLabelHeight)
+                                      font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize18]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
+    label.textAlignment = KTextAlignmentLeft;
+    [_autoRecorderSwitchView addSubview:label];
+
+    
+    //label
+    UILabel* descr = [MAUtils labelWithTxt:MyLocal(@"system_setting_auto_recorder_desc")
+                                     frame:CGRectMake(KViewVerOffset, CGRectGetMaxY(label.frame) + 15,
+                                                      _durationView.frame.size.width * 0.6, KViewLabelHeight * 2)
+                                      font:[UIFont fontWithName:KLabelFontHelvetica size:KLabelFontSize16]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+    descr.textAlignment = KTextAlignmentLeft;
+    descr.numberOfLines = 0;
+    [_autoRecorderSwitchView addSubview:descr];
+    
+    //switch
+    UISwitch *switcher = [[UISwitch alloc] initWithFrame:CGRectMake(_autoRecorderSwitchView.width - (IsPad ? 100 : 70),
+                                                                    CGRectGetMaxY(label.frame) + 15, 0, 0)];
+    [switcher setOn:[[MADataManager getDataByKey:KUserDefaultAutoRecorder] boolValue]];
+    [switcher addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    [_autoRecorderSwitchView addSubview:switcher];
+}
+
+-(void)switchAction:(UISwitch *)sender{
+    [[MAModel shareModel] setAutoRecorder:[sender isOn]];
+}
+
 #pragma mark - contact area
 -(void)initContactView{
     _contactView = [[UIImageView alloc] initWithImage:[[MAModel shareModel] getImageByType:MATypeImgSysSettingCellBg default:NO]];
-    _contactView.frame = CGRectMake(CGRectGetMinX(_durationView.frame), KViewVerOffset + CGRectGetMaxY(_qualityView.frame),
-        _durationView.frame.size.width, 90);
-    _contactView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_qualityView.frame), self.width - KViewVerOffset * 2, 90};
+    _contactView.frame = (CGRect){KViewVerOffset, KViewVerOffset + CGRectGetMaxY(_autoRecorderSwitchView.frame), self.width - KViewVerOffset * 2, 90};
     [_contactView setUserInteractionEnabled:YES];
     
     //label

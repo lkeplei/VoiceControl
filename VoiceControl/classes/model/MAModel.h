@@ -43,6 +43,9 @@
 -(NSString*)getcurrentFilePath;
 -(AVAudioRecorder*)getRecorder;
 
+//设置是否自动录音
+- (void)setAutoRecorder:(BOOL)autoRecorder;
+
 //百度统计统一入口
 -(void)setBaiduMobStat:(MAType)type eventName:(NSString*)eventName label:(NSString*)label;
 

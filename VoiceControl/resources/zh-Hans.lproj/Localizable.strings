@@ -232,3 +232,8 @@
 "Rate %@" = "给%@评分";
 "No, Thanks" = "不，谢谢";
 "Remind me later" = "稍后提醒我";
+
+
+////////////////////////////////////    1.3.0
+"system_setting_auto_recorder" = "开启/关闭 自动录音";
+"system_setting_auto_recorder_desc" = "关闭自动录音，私人定制的计划将不会自动起效";

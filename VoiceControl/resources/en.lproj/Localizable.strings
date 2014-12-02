@@ -231,3 +231,8 @@ You could set up a dividing line of the DB.It can mark the parts of the higher d
 "Rate %@" = "Rate %@";
 "No, Thanks" = "No, thanks";
 "Remind me later" = "Remind me later";
+
+
+////////////////////////////////////    1.3.0
+"system_setting_auto_recorder" = "switch on/off auto recorder";
+"system_setting_auto_recorder_desc" = "switch off, private plan will never work auto";
