@@ -237,3 +237,8 @@
 ////////////////////////////////////    1.3.0
 "system_setting_auto_recorder" = "开启/关闭 自动录音";
 "system_setting_auto_recorder_desc" = "关闭自动录音，私人定制的计划将不会自动起效";
+
+"private_customize_alert_title" = "温馨提示";
+"private_customize_alert_content" = "您没有开启自录音功能，订制内容不会在后台自动生效";
+"private_customize_alert_left_button" = "知道了";
+"private_customize_alert_right_button" = "开启";

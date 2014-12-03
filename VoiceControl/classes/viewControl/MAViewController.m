@@ -497,7 +497,7 @@
 }
 
 -(void)resetAd{
-//    return;
+    return;
     
     
     [self removeAd];

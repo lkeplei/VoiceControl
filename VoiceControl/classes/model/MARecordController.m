@@ -166,7 +166,7 @@
 }
 
 -(void)startDefaultRecord{
-    if (_isRecording) {
+    if (_isRecording || ![[MADataManager getDataByKey:KUserDefaultAutoRecorder] boolValue]) {
         return;
     }
     NSArray* array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

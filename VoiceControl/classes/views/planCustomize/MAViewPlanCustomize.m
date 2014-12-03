@@ -14,6 +14,7 @@
 #import "MACellPlan.h"
 #import "MAViewAddPlan.h"
 #import "MAUtils.h"
+#import "MADataManager.h"
 
 #define KCellPlanHeight         (65)
 #define KDelCellTag(a, b)       1000 + (100 * a + b)
@@ -171,8 +172,24 @@
             [self setViewStatusEdit:!_editing];
         }
     } else {
-        [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
-        [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
+        if ([[MADataManager getDataByKey:KUserDefaultAutoRecorder] boolValue]) {
+            [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
+            [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
+        } else {
+            UIAlertView* promptAlert = [[UIAlertView alloc] initWithTitle:MyLocal(@"private_customize_alert_title")
+                                                                  message:MyLocal(@"private_customize_alert_content")
+                                                                 delegate:self
+                                                        cancelButtonTitle:MyLocal(@"private_customize_alert_left_button")
+                                                        otherButtonTitles:MyLocal(@"private_customize_alert_right_button"), nil];
+            [promptAlert show];
+        }
+    }
+}
+
+#pragma mark - alert
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[MAModel shareModel] setAutoRecorder:YES];
     }
 }
 
