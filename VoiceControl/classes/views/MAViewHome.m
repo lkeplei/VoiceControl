@@ -118,7 +118,7 @@
                                 action:@selector(playRecordSound:)];
     [_playBtn setBackgroundImage:[[MAModel shareModel] getImageByType:MATypeImgBtnGrayCircle default:NO]
                         forState:UIControlStateDisabled];
-    _playBtn.frame = CGRectOffset(_playBtn.frame, self.width * 0.7, self.height * 0.7);
+    _playBtn.frame = CGRectOffset(_playBtn.frame, self.width * (IsPad ? 0.8 : 0.67), self.height * 0.7);
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnGreen default:NO]
                    forState:UIControlStateNormal];
     [_playBtn setTitleColor:[[MAModel shareModel] getColorByType:MATypeColorBtnDarkGreen default:NO]
