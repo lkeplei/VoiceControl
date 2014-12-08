@@ -141,7 +141,6 @@
                                    frame:CGRectMake(10, CGRectGetMaxY(hudRect) + off, self.width, 30)
                                     font:[UIFont fontWithName:KLabelFontArial size:fontSize]
                                    color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
-//    _labelVoice.textAlignment = KTextAlignmentLeft;
     [_labelVoice setNumberOfLines:0];
     [self addSubview:_labelVoice];
     
@@ -247,7 +246,7 @@
         //获取音量的平均值  [recorder averagePowerForChannel:0];
         //音量的最大值  [recorder peakPowerForChannel:0];
         double lowPassResults = pow(10, (0.05 * [[[MAModel shareModel] getRecorder] peakPowerForChannel:0]));
-        
+
         voiceAverage = [[[MAModel shareModel] getRecorder] averagePowerForChannel:0] + 100;
         voiceCurrent = lowPassResults * 120;
         voiceMax = [[[MAModel shareModel] getRecorder] peakPowerForChannel:0] + 100;
@@ -265,10 +264,13 @@
         
         voiceMin = level * 120;
         
-        _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
-        _labelDuration.text = [[MAModel shareModel] getStringTime:[[MAModel shareModel] getRecorder].currentTime type:MATypeTimeClock];
-        
-        [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
+        if (voiceAverage < 0.00001) {
+            [self startBtnClicked:nil];
+        } else {
+            _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
+            _labelDuration.text = [[MAModel shareModel] getStringTime:[[MAModel shareModel] getRecorder].currentTime type:MATypeTimeClock];
+            [self addSoundMeterItem:[[[MAModel shareModel] getRecorder] averagePowerForChannel:0]];
+        }
     } else {
         if (soundMeters[SOUND_METER_COUNT - 1] != KMaxLengthOfWave) {
             [self setStartBtnStatus:NO];
