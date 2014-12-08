@@ -297,6 +297,9 @@
         
         //添加或者修改计划之后重置
         [[MAModel shareModel] resetPlan];
+        
+        //显示全屏广告
+        [SysDelegate.viewController showFullAd];
     }
     
     [SysDelegate.viewController changeToViewByType:MAViewTypePlanCustomize changeType:MATypeTransitionRippleEffect];

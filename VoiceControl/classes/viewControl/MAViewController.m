@@ -64,6 +64,7 @@
     [self.view addSubview:_selectMenu];
     
     _currentShowView = [self addView:MAViewTypeHome];
+    [_currentShowView showView];
     [_titleLabel setText:_currentShowView.viewTitle];
 }
 
@@ -412,8 +413,6 @@
 #pragma mark - 广告相关内容
 #pragma mark - full admogo
 -(void)initFullMogo{
-    return;
-    
     NSString* mogoId = KADIphoneId;
     if (IsPad) {
         mogoId = KADIpadId;
@@ -497,9 +496,6 @@
 }
 
 -(void)resetAd{
-//    return;
-    
-    
     [self removeAd];
     
     NSString* mogoId = KADIphoneId;
@@ -509,9 +505,11 @@
 
     if (IsPad) {
         _adView = [[AdMoGoView alloc] initWithAppKey:mogoId adType:AdViewTypeLargeBanner adMoGoViewDelegate:self];
+//        _adView.frame = CGRectMake(0.0, _currentShowView.height - (KADViewHeight - 10), self.view.width, KADViewHeight - 10);
+        _adView.frame = CGRectOffset(_adView.frame, 0, -64);
     } else {
         _adView = [[AdMoGoView alloc] initWithAppKey:mogoId adType:AdViewTypeNormalBanner adMoGoViewDelegate:self];
-        _adView.frame = CGRectMake(0.0, _currentShowView.frame.size.height - 50, 320.0, 50.0);
+        _adView.frame = CGRectMake(0.0, _currentShowView.height - (KADViewHeight - 10), self.view.width, KADViewHeight - 10);
     }
     _adView.adWebBrowswerDelegate = self;
     [_currentShowView addSubview:_adView];

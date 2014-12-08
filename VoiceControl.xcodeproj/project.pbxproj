@@ -2109,7 +2109,7 @@
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/AdsMoGoSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2146,7 +2146,7 @@
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/AdSDK/Baidu_3.5.2_SDK/lib",
 					"$(PROJECT_DIR)/VoiceControl/classes/Tools/AdsMoGoSDK",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

@@ -68,7 +68,7 @@
 
 #pragma mark - init area
 - (void) initTable{
-    _tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, self.size} style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, self.width, self.height - KADViewHeight} style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
@@ -193,6 +193,9 @@
 }
 
 -(void)showView{
+    //添加广告
+    [SysDelegate.viewController resetAd];
+    
     NSArray* array = [[MACoreDataManager sharedCoreDataManager] queryFromDB:KCoreVoiceFiles sortKey:nil];
     if (array) {
         [self initResouce:array];

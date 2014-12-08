@@ -48,6 +48,9 @@
 #define KMainScreenHeight   KMainScreenFrame.size.height-20
 #define KApplicationFrame   [[UIScreen mainScreen] applicationFrame]
 
+
+#define KADViewHeight           (IsPad ? 110 : 60)
+
 //字体、字号、颜色
 #define KLabelFontArial         @"Arial"
 #define KLabelFontStd           @"Std"

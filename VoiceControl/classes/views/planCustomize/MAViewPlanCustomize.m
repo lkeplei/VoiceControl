@@ -46,9 +46,14 @@
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    //显示全屏广告
+    [SysDelegate.viewController cancelFullAd];
+}
+
 #pragma mark - init area
 - (void) initTable{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - KADViewHeight)
                                               style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
@@ -126,6 +131,9 @@
 
 #pragma mark - other
 -(void)showView{
+    //添加广告
+    [SysDelegate.viewController resetAd];
+    
     NSArray* array = [[MADataManager shareDataManager] selectValueFromTabel:nil tableName:KTablePlan];
     if (array && [array count] > 0) {
         [self initResouce:array];
@@ -172,7 +180,7 @@
             [self setViewStatusEdit:!_editing];
         }
     } else {
-        if ([[MADataManager getDataByKey:KUserDefaultAutoRecorder] boolValue]) {
+        if ([[MADataManager getDataByKey:KUserDefaultAutoRecorder] boolValue] || (_resourceArray && [_resourceArray count] > 0)) {
             [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
             [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
         } else {
@@ -191,6 +199,9 @@
     if (buttonIndex == 1) {
         [[MAModel shareModel] setAutoRecorder:YES];
     }
+    
+    [SysDelegate.viewController changeToViewByType:MAViewTypeAddPlan changeType:MATypeTransitionRippleEffect];
+    [[MAModel shareModel] setBaiduMobStat:MATypeBaiduMobLogEvent eventName:KPlanCustomAdd label:nil];
 }
 
 -(void)setViewStatusEdit:(BOOL)edit{
