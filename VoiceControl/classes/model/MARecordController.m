@@ -227,6 +227,8 @@
     _fileTime = [NSDate date];
     _markResource = nil;
     
+
+    
     NSURL* url = [NSURL fileURLWithPath:_filePath];
     urlPlay = url;
     
@@ -241,6 +243,19 @@
     if ([_recorder prepareToRecord]) {
         //开始
         [_recorder record];
+        
+        _fileName = [NSString stringWithFormat:@"%@", [formatter stringFromDate:[NSDate date]]];
+        _filePath = [NSString stringWithFormat:@"%@/%@.aac", strUrl, _fileName];
+        _fileTime = [NSDate date];
+        _markResource = nil;
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            //解决后台录音，在ios8.0以上系统无法进行的问题，文件被安全保护了
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSDictionary *attributes = [NSDictionary dictionaryWithObject:NSFileProtectionNone forKey:NSFileProtectionKey];
+            //设置文件权限等级
+            [fileManager setAttributes:attributes ofItemAtPath:_filePath error:nil];
+        }
     }
 }
 
@@ -419,6 +434,10 @@
 /* audioRecorderDidFinishRecording:successfully: is called when a recording has been finished or stopped. This method is NOT called if the recorder is stopped due to an interruption. */
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     DebugLog(@"audioRecorderDidFinishRecording flag = %d", flag);
+    if (!flag) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNotificationRecorderFinish
+                                                            object:[NSNumber numberWithBool:flag]];
+    }
 }
 
 /* if an error occurs while encoding it will be reported to the delegate. */

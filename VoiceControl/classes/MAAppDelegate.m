@@ -79,24 +79,23 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     //保证计时器继续运行
-//    UIApplication*   app = [UIApplication sharedApplication];
-    __block    UIBackgroundTaskIdentifier bgTask;
-    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
-            {
-                bgTask = UIBackgroundTaskInvalid;
-            }
-        });
-    }];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (bgTask != UIBackgroundTaskInvalid)
-            {
-                bgTask = UIBackgroundTaskInvalid;
-            }
-        });
-    });
+//    __block    UIBackgroundTaskIdentifier bgTask;
+//    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    }];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    });
     
     [[MAModel shareModel] setAppForeground:YES];
 }
@@ -120,12 +119,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-

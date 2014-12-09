@@ -223,4 +223,7 @@
 
 #define KTagDetail              @"tag_detail"
 
+
+//
+#define KNotificationRecorderFinish             @"notification_recorder_finish"
 #endif

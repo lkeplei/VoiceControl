@@ -79,6 +79,14 @@
 - (void)showView {
     //添加广告
     [SysDelegate.viewController resetAd];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationRecorderFinish:)
+                                                 name:KNotificationRecorderFinish object:NULL];
+}
+
+#pragma mark - notification
+- (void)notificationRecorderFinish:(id)object {
+    [self startBtnClicked:nil];
 }
 
 #pragma mark - init area
@@ -264,7 +272,8 @@
         
         voiceMin = level * 120;
         
-        if (voiceAverage < 0.00001) {
+        DebugLog(@"av = %.2f, cu = %.2f, ma = %.2f", voiceAverage, voiceCurrent, voiceMax);
+        if (voiceAverage < -50 && voiceMax < -50) {
             [self startBtnClicked:nil];
         } else {
             _labelVoice.text = [NSString stringWithFormat:MyLocal(@"voice_message"), voiceMax, voiceMin, voiceCurrent, voiceAverage];
