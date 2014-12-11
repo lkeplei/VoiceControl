@@ -11,13 +11,9 @@
 #import "MAUtils.h"
 #import "MAModel.h"
 
-#define KTableBaseCellHeight            (IsPad ? 88.f : 44.f)
-
 @interface MAViewTableBase ()
-@property (nonatomic,strong) NSArray* sectionArray;
 @property (nonatomic,strong) NSMutableArray* headArray;
 @property (nonatomic,strong) NSDictionary* tableResourceDic;
-@property (nonatomic,strong) UITableView* tableView;
 @end
 
 @implementation MAViewTableBase
@@ -41,8 +37,7 @@
 - (void) initTable{
     [self initHead];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,self.frame.size.width,self.frame.size.height)
-                                              style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:[self getTableFrame] style:UITableViewStylePlain];
 	_tableView.delegate = self;
 	_tableView.dataSource = self;
 	_tableView.showsVerticalScrollIndicator = YES;
@@ -52,6 +47,10 @@
 	[self addSubview:_tableView];
     
     [_tableView reloadData];
+}
+
+- (CGRect)getTableFrame {
+    return CGRectMake(0, 0,self.frame.size.width,self.frame.size.height);
 }
 
 -(void)initHead{

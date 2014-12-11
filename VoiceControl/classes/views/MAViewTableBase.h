@@ -10,13 +10,18 @@
 #import "MACellBase.h"
 #import "MASectionHeadBase.h"
 
+#define KTableBaseCellHeight            (IsPad ? 88.f : 44.f)
+
 @interface MAViewTableBase : MAViewBase<UITableViewDataSource, UITableViewDelegate, MASectionHeadDelegate>
 
 @property (assign) BOOL cellEnabled;
+@property (nonatomic,strong) NSArray* sectionArray;
+@property (nonatomic,strong) UITableView* tableView;
 
-- (void) setTableResource:(NSString*)res;
+- (void)setTableResource:(NSString*)res;
 
--(void)cellWillLoad:(MACellBase*)cell;
--(void)cellDidLoad:(MACellBase*)cell;
+- (CGRect)getTableFrame;
+- (void)cellWillLoad:(MACellBase*)cell;
+- (void)cellDidLoad:(MACellBase*)cell;
 
 @end

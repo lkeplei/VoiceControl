@@ -36,6 +36,7 @@
 		04559A1E17C990BB00DCEB8A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04559A1D17C990BB00DCEB8A /* QuartzCore.framework */; };
 		04559A2317CA076300DCEB8A /* MASectionHeadBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 04559A2217CA076300DCEB8A /* MASectionHeadBase.m */; };
 		0458CF5F18EAF548007B7C3D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0458CF5E18EAF548007B7C3D /* Accelerate.framework */; };
+		045B8F901A39EC710053A679 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 045B8F8F1A39EC710053A679 /* Images.xcassets */; };
 		045D8E5218E04B7B0086BC33 /* slider_tag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 045D8E5118E04B7B0086BC33 /* slider_tag@2x.png */; };
 		045DFA9217A9422500F517AA /* MAViewTableBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 045DFA9117A9422500F517AA /* MAViewTableBase.m */; };
 		0465B28118C0BD83007919AC /* table_resource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0465B27F18C0BD83007919AC /* table_resource.plist */; };
@@ -335,6 +336,7 @@
 		04559A2117CA076300DCEB8A /* MASectionHeadBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASectionHeadBase.h; sourceTree = "<group>"; };
 		04559A2217CA076300DCEB8A /* MASectionHeadBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASectionHeadBase.m; sourceTree = "<group>"; };
 		0458CF5E18EAF548007B7C3D /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		045B8F8F1A39EC710053A679 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		045D8E5118E04B7B0086BC33 /* slider_tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_tag@2x.png"; sourceTree = "<group>"; };
 		045DFA9017A9422500F517AA /* MAViewTableBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAViewTableBase.h; sourceTree = "<group>"; };
 		045DFA9117A9422500F517AA /* MAViewTableBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAViewTableBase.m; sourceTree = "<group>"; };
@@ -1452,6 +1454,7 @@
 			children = (
 				04E65671178C5150003A6ACA /* classes */,
 				04E6566B178C4F76003A6ACA /* resources */,
+				045B8F8F1A39EC710053A679 /* Images.xcassets */,
 				04E6564C178C4F15003A6ACA /* Supporting Files */,
 			);
 			path = VoiceControl;
@@ -1795,6 +1798,7 @@
 				048920621A2ACA32002F8C15 /* adsmogo_bannerface305.png in Resources */,
 				048920571A2ACA32002F8C15 /* adsmogo_star@2x.png in Resources */,
 				0489209A1A2ACA32002F8C15 /* webview_bar_close_hover_ipad.png in Resources */,
+				045B8F901A39EC710053A679 /* Images.xcassets in Resources */,
 				048920971A2ACA32002F8C15 /* bg_ipad.png in Resources */,
 				0471C2D318FEC8760049CEB5 /* button_color2@2x.png in Resources */,
 				0489209E1A2ACA32002F8C15 /* webview_bar_pause_ipad.png in Resources */,
@@ -2086,6 +2090,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2124,6 +2129,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

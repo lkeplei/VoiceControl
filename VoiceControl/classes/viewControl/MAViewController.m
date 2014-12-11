@@ -57,11 +57,10 @@
 
 #pragma mark - init area
 - (void)initView {
-    [self initTopView];
-
-    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, KNavigationHeight + KStatusBarHeight, KViewMenuWidth,
-                                                                     self.view.height - KNavigationHeight - KStatusBarHeight)];
+    _selectMenu = [[MAViewSelectMenu alloc] initWithFrame:CGRectMake(0, 0, KViewMenuWidth, self.view.height)];
     [self.view addSubview:_selectMenu];
+    
+    [self initTopView];
     
     _currentShowView = [self addView:MAViewTypeHome];
     [_currentShowView showView];
@@ -69,7 +68,7 @@
 }
 
 - (void)initTopView {
-    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, KNavigationHeight + KStatusBarHeight)];
+    _topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, KNavigationHeight + KStatusBarHeight)];
     [_topView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self.view addSubview:_topView];
     
@@ -139,9 +138,9 @@
 #pragma mark - about panel
 - (void)hideMenu {
 	[UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        _currentShowView.frame = CGRectMake(0, _currentShowView.frame.origin.y, _currentShowView.frame.size.width,
-                                            _currentShowView.frame.size.height);
+        _currentShowView.frame = (CGRect){0, _currentShowView.originY, _currentShowView.size};
 //        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, -M_PI_2);
+        _topView.frame = (CGRect){CGPointZero, _topView.size};
     }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -152,9 +151,9 @@
 
 - (void)showMenu {
     [UIView animateWithDuration:KAnimationTime delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        _currentShowView.frame = CGRectMake(KViewMenuWidth, _currentShowView.frame.origin.y,
-                                            _currentShowView.frame.size.width, _currentShowView.frame.size.height);
+        _currentShowView.frame = (CGRect){KViewMenuWidth, _currentShowView.originY, _currentShowView.size};
 //        _menuBtn.transform = CGAffineTransformRotate(_menuBtn.transform, M_PI_2);
+        _topView.frame = (CGRect){KViewMenuWidth, _topView.originY, _topView.size};
     }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -202,6 +201,7 @@
             float x = _currentShowView.frame.origin.x + offx;
             if (x >= 0 && x <= KViewMenuWidth) {
                 _currentShowView.frame = CGRectOffset(_currentShowView.frame, offx, 0);
+                _topView.frame = CGRectOffset(_topView.frame, offx, 0);
                 preTransX = translatedPoint.x;
             }
         }

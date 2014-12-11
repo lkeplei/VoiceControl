@@ -27,11 +27,47 @@
         [self addSubview:separatorLine];
         
         [self setBackgroundColor:[UIColor whiteColor]];
+        
+        [self initTopView];
     }
     return self;
 }
 
+- (CGRect)getTableFrame {
+    return CGRectMake(0, KNavigationHeight + KStatusBarHeight, self.width, self.height - (KNavigationHeight + KStatusBarHeight));
+}
+
+- (void)initTopView {
+    UIView *line = [[UIView alloc] initWithFrame:(CGRect){0, CGRectGetMinY(self.tableView.frame), self.width, 0.5}];
+    [line setBackgroundColor:[UIColor lightGrayColor]];
+    [self addSubview:line];
+}
+
 #pragma mark - UITableViewDelegate
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *reuseIdentifier = @"cellMenu";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
+    
+    [cell setHeight:KTableBaseCellHeight];
+    
+    //cell
+    NSDictionary* dic = [self.sectionArray objectAtIndex:indexPath.section];
+    NSMutableDictionary* resDic = [[dic objectForKey:KCellArray] objectAtIndex:indexPath.row];
+    [cell.imageView setImage:[UIImage imageNamed:[resDic objectForKey:KImage]]];
+    [cell.textLabel setText:[resDic objectForKey:KContent]];
+    
+    float offset = IsPad ? 100 : 50;
+    UIView *line = [[UIView alloc] initWithFrame:(CGRect){offset, cell.height, self.tableView.width - offset, 0.5}];
+    [line setBackgroundColor:[UIColor lightGrayColor]];
+    [cell.contentView addSubview:line];
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0 && indexPath.row == 0) {
         [SysDelegate.viewController changeToViewByType:MAViewTypeHome changeType:MATypeTransitionRippleEffect];

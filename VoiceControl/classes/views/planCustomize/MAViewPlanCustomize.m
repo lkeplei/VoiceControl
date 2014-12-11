@@ -76,7 +76,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *reuseIdentifier = @"cell";
+    NSString *reuseIdentifier = @"cellPlan";
     MACellPlan* cell = (MACellPlan*)[tableView cellForRowAtIndexPath:indexPath];
     if (!cell) {
         cell = [[MACellPlan alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
@@ -118,16 +118,21 @@
         [_resourceArray removeObjectAtIndex:[indexPath row]];
         
         if ([_resourceArray count] <= 0) {
-            [self setViewStatusEdit:NO];
+            [self showNonePlanView];
+        } else {
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [_tableView reloadData];
+                });
+            } else {
+                [_tableView reloadData];
+            }
         }
-        
-        [_tableView reloadData];
         
         //删除计划之后重置
         [[MAModel shareModel] resetPlan];
     }
 }
-
 
 #pragma mark - other
 -(void)showView{
@@ -145,20 +150,29 @@
         
         [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:MyLocal(@"plan_top_right") enabled:NO];
     } else {
-        [self setTopBtn:@"" rightBtn:MyLocal(@"plan_top_right") enabled:NO];
-        
-        UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_no_plan")
-                                         frame:CGRectMake(10, 150, self.width - 20, 30)
-                                          font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize22]
-                                         color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
-        [self addSubview:label];
-        
-        UILabel* content = [MAUtils labelWithTxt:MyLocal(@"plan_nothing_content")
-                                           frame:CGRectMake(10, CGRectGetMaxY(label.frame), self.width - 20, 50)
-                                            font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
-                                           color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
-        content.numberOfLines = 0;
-        [self addSubview:content];
+        [self showNonePlanView];
+    }
+}
+
+- (void)showNonePlanView {
+    [self setTopBtn:@"" rightBtn:MyLocal(@"plan_top_right") enabled:NO];
+    
+    UILabel* label = [MAUtils labelWithTxt:MyLocal(@"plan_no_plan")
+                                     frame:CGRectMake(10, 150, self.width - 20, 30)
+                                      font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize22]
+                                     color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+    [self addSubview:label];
+    
+    UILabel* content = [MAUtils labelWithTxt:MyLocal(@"plan_nothing_content")
+                                       frame:CGRectMake(10, CGRectGetMaxY(label.frame), self.width - 20, 50)
+                                        font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize14]
+                                       color:[[MAModel shareModel] getColorByType:MATypeColorBtnGray default:NO]];
+    content.numberOfLines = 0;
+    [self addSubview:content];
+    
+    //table
+    if (_tableView) {
+        [self setViewStatusEdit:NO];
     }
 }
 
@@ -216,6 +230,12 @@
         [self setTopBtn:MyLocal(@"plan_top_left") rightBtn:MyLocal(@"plan_top_right") enabled:NO];
     }
     
-    [_tableView reloadData];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_tableView reloadData];
+        });
+    } else {
+        [_tableView reloadData];
+    }
 }
 @end
