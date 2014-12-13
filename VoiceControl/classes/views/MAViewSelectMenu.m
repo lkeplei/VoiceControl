@@ -26,9 +26,10 @@
         separatorLine.frame = CGRectMake(self.frame.size.width - 1, 0, 1, self.frame.size.height);
         [self addSubview:separatorLine];
         
-        [self setBackgroundColor:[UIColor whiteColor]];
-        
         [self initTopView];
+        
+        [self.tableView setBackgroundColor:RGBCOLOR(244, 245, 247)];
+        [self setBackgroundColor:RGBCOLOR(244, 245, 247)];
     }
     return self;
 }
@@ -54,11 +55,15 @@
     
     [cell setHeight:KTableBaseCellHeight];
     
+    
+    [cell.contentView setBackgroundColor:RGBCOLOR(244, 245, 247)];
+    
     //cell
     NSDictionary* dic = [self.sectionArray objectAtIndex:indexPath.section];
     NSMutableDictionary* resDic = [[dic objectForKey:KCellArray] objectAtIndex:indexPath.row];
     [cell.imageView setImage:[UIImage imageNamed:[resDic objectForKey:KImage]]];
     [cell.textLabel setText:[resDic objectForKey:KContent]];
+    [cell.textLabel setTextColor:RGBCOLOR(138, 138, 138)];
     
     float offset = IsPad ? 100 : 50;
     UIView *line = [[UIView alloc] initWithFrame:(CGRect){offset, cell.height, self.tableView.width - offset, 0.5}];
