@@ -15,7 +15,7 @@
 
 #import "AdMoGoInterstitialManager.h"
 
-#define KTopButtonWidth     (80)
+#define KTopButtonWidth     (IsPad ? 120 : 80)
 
 @interface MAViewController (){
     float   preTransX;
