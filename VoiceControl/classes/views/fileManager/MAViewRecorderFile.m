@@ -185,8 +185,9 @@
 }
 
 -(void)initTabbarView{
-    _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - KNavigationHeight,
-                                                           self.frame.size.width, KNavigationHeight)];
+    float height = IsPad ? KNavigationHeight / 2 : KNavigationHeight;
+    _tabbarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - height,
+                                                           self.frame.size.width, height)];
     [_tabbarView setBackgroundColor:[[MAModel shareModel] getColorByType:MATypeColorTopView default:NO]];
     [self addSubview:_tabbarView];
     
@@ -199,7 +200,7 @@
                                       target:self
                                       action:@selector(tabbarItemClicked:)];
     item1.tag = KTabbarItem1Tag;
-    item1.frame = CGRectMake(offX, 0, imgTag.size.width, _tabbarView.frame.size.height);
+    item1.frame = CGRectMake(offX, 0, imgTag.size.width, _tabbarView.height);
     [_tabbarView addSubview:item1];
     
     UIImageView* tagNumberView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"file_tag_number.png"]];

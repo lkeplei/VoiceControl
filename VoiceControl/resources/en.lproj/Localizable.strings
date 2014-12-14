@@ -234,6 +234,8 @@ You could set up a dividing line of the DB.It can mark the parts of the higher d
 
 
 ////////////////////////////////////    1.3.0
+"app_name" = "We Recorder";
+
 "system_setting_auto_recorder" = "switch on/off auto recorder";
 "system_setting_auto_recorder_desc" = "switch off, private plan will never work auto";
 

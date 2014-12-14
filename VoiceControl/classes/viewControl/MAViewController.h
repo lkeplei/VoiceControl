@@ -49,6 +49,9 @@ typedef enum {
 
 -(void)clearAllAd;
 
+//self
+- (void)showMenu;
+- (void)hideMenu;
 
 //view
 -(void)changeToViewByType:(MAViewType)type changeType:(MAType)changeType;

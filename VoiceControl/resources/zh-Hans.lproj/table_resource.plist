@@ -31,7 +31,7 @@
 						<key>content</key>
 						<string>录音</string>
 						<key>image</key>
-						<string>checkbox_off.png</string>
+						<string>menu_home.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -53,7 +53,7 @@
 						<key>content</key>
 						<string>文件管理</string>
 						<key>image</key>
-						<string>checkbox_off.png</string>
+						<string>menu_file.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -71,7 +71,7 @@
 						<key>content</key>
 						<string>系统设置</string>
 						<key>image</key>
-						<string>checkbox_off.png</string>
+						<string>menu_setting.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -89,7 +89,7 @@
 						<key>content</key>
 						<string>私人订制</string>
 						<key>image</key>
-						<string>checkbox_off.png</string>
+						<string>menu_private.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -107,7 +107,7 @@
 						<key>content</key>
 						<string>关于微录</string>
 						<key>image</key>
-						<string>checkbox_off.png</string>
+						<string>menu_about.png</string>
 					</dict>
 				</array>
 			</dict>

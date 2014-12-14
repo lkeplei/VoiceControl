@@ -60,6 +60,8 @@
 #define KLabelFontSize16        (16)
 #define KLabelFontSize18        (18)
 #define KLabelFontSize22        (22)
+#define KLabelFontSize28        (28)
+#define KLabelFontSize32        (32)
 #define KLabelFontSize36        (36)
 
 //NSUserDefaults key
@@ -100,7 +102,7 @@
 
 //其它
 #define KCAPWidth               (5.0)
-#define KNavigationHeight       (44)
+#define KNavigationHeight       (IsPad ? 88 : 44)
 #define KStatusBarHeight        (20)
 #define KZipMinSize             (32 * 1024)       //kb
 #define KAnimationTime          (0.5)  

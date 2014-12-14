@@ -7,21 +7,21 @@
     {
       "idiom" : "iphone",
       "scale" : "2x",
-      "filename" : "menu_bg@2x-1.png"
+      "filename" : "系统44.png"
     },
     {
       "idiom" : "iphone",
-      "scale" : "3x",
-      "filename" : "menu_bg@3x.png"
+      "scale" : "3x"
     },
     {
       "idiom" : "ipad",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "系统44-1.png"
     },
     {
       "idiom" : "ipad",
       "scale" : "2x",
-      "filename" : "menu_bg_pad@2x.png"
+      "filename" : "系统88.png"
     }
   ],
   "info" : {

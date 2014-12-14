@@ -8,6 +8,7 @@
 
 #import "MAViewSelectMenu.h"
 #import "MAConfig.h"
+#import "MAUtils.h"
 #import "MAViewController.h"
 
 @implementation MAViewSelectMenu
@@ -20,16 +21,16 @@
         self.viewType = MAViewTypeSelectMenu;
         self.viewTitle = MyLocal(@"view_title_select_menu");
         
+        //bg
+        UIImageView *bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_bg.png"]];
+        bgView.frame = (CGRect){CGPointZero, self.size};
+        [self addSubview:bgView];
+        //table
         [self setTableResource:KMenuTableView];
-        
-        UIImageView* separatorLine = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"view_separator_line.png"]];
-        separatorLine.frame = CGRectMake(self.frame.size.width - 1, 0, 1, self.frame.size.height);
-        [self addSubview:separatorLine];
-        
+        //top view
         [self initTopView];
         
-        [self.tableView setBackgroundColor:RGBCOLOR(244, 245, 247)];
-        [self setBackgroundColor:RGBCOLOR(244, 245, 247)];
+        [self.tableView setBackgroundColor:[UIColor clearColor]];
     }
     return self;
 }
@@ -42,6 +43,30 @@
     UIView *line = [[UIView alloc] initWithFrame:(CGRect){0, CGRectGetMinY(self.tableView.frame), self.width, 0.5}];
     [line setBackgroundColor:[UIColor lightGrayColor]];
     [self addSubview:line];
+    
+    //
+    UIImageView *bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_head.png"]];
+    bgView.center = CGPointMake(IsPad ? 40 : 25, KStatusBarHeight + KNavigationHeight / 2);
+    [self addSubview:bgView];
+    
+    UIButton *button = [MAUtils buttonWithImg:nil off:0 zoomIn:NO
+                                        image:nil
+                                     imagesec:nil
+                                       target:self
+                                       action:@selector(hideBtnClick)];
+    button.frame = (CGRect){CGPointZero, self.width, KNavigationHeight + KStatusBarHeight};
+    [self addSubview:button];
+    
+    float offsetX = IsPad ? 80 : 50;
+    UILabel *head = [MAUtils labelWithTxt:MyLocal(@"app_name") frame:(CGRect){offsetX, KStatusBarHeight, self.width - offsetX, KNavigationHeight}
+                                     font:[UIFont fontWithName:KLabelFontArial size:IsPad ? KLabelFontSize36 : KLabelFontSize22]
+                                    color:RGBCOLOR(138, 138, 138)];
+    head.textAlignment = KTextAlignmentLeft;   //first deprecated in IOS 6.0
+    [self addSubview:head];
+}
+
+- (void)hideBtnClick {
+    [SysDelegate.viewController hideMenu];
 }
 
 #pragma mark - UITableViewDelegate
@@ -51,21 +76,22 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        [cell setBackgroundColor:[UIColor clearColor]];
     }
     
     [cell setHeight:KTableBaseCellHeight];
-    
-    
-    [cell.contentView setBackgroundColor:RGBCOLOR(244, 245, 247)];
     
     //cell
     NSDictionary* dic = [self.sectionArray objectAtIndex:indexPath.section];
     NSMutableDictionary* resDic = [[dic objectForKey:KCellArray] objectAtIndex:indexPath.row];
     [cell.imageView setImage:[UIImage imageNamed:[resDic objectForKey:KImage]]];
     [cell.textLabel setText:[resDic objectForKey:KContent]];
+    if (IsPad) {
+        [cell.textLabel setFont:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize32]];
+    }
     [cell.textLabel setTextColor:RGBCOLOR(138, 138, 138)];
     
-    float offset = IsPad ? 100 : 50;
+    float offset = IsPad ? 80 : 50;
     UIView *line = [[UIView alloc] initWithFrame:(CGRect){offset, cell.height, self.tableView.width - offset, 0.5}];
     [line setBackgroundColor:[UIColor lightGrayColor]];
     [cell.contentView addSubview:line];

@@ -79,7 +79,7 @@
     
     _titleLabel = [MAUtils labelWithTxt:nil
                                   frame:CGRectMake(0, KStatusBarHeight, _topView.frame.size.width, KNavigationHeight)
-                                   font:[UIFont fontWithName:KLabelFontArial size:KLabelFontSize18]
+                                   font:[UIFont fontWithName:KLabelFontArial size:IsPad ? KLabelFontSize22 : KLabelFontSize18]
                                   color:[[MAModel shareModel] getColorByType:MATypeColorDefBlack default:NO]];
     [_topView addSubview:_titleLabel];
     
@@ -92,7 +92,7 @@
     
     _homeLabel = [MAUtils labelWithTxt:nil
                                  frame:CGRectMake(0, 0, _homeBtn.frame.size.width, _homeBtn.frame.size.height)
-                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:IsPad ? KLabelFontSize32 : KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_homeBtn addSubview:_homeLabel];
     
@@ -105,7 +105,7 @@
     
     _menuLabel = [MAUtils labelWithTxt:MyLocal(@"home_top_left")
                                  frame:CGRectMake(0, 0, _menuBtn.frame.size.width, _menuBtn.frame.size.height)
-                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:KLabelFontSize22]
+                                  font:[[MAModel shareModel] getLabelFontSize:KLabelFontHelvetica size:IsPad ? KLabelFontSize28 : KLabelFontSize22]
                                  color:[[MAModel shareModel] getColorByType:MATypeColorBtnRed default:NO]];
     [_menuBtn addSubview:_menuLabel];
 }
@@ -506,7 +506,7 @@
     if (IsPad) {
         _adView = [[AdMoGoView alloc] initWithAppKey:mogoId adType:AdViewTypeLargeBanner adMoGoViewDelegate:self];
 //        _adView.frame = CGRectMake(0.0, _currentShowView.height - (KADViewHeight - 10), self.view.width, KADViewHeight - 10);
-        _adView.frame = CGRectOffset(_adView.frame, 0, -64);
+        _adView.frame = CGRectOffset(_adView.frame, 0, -110);
     } else {
         _adView = [[AdMoGoView alloc] initWithAppKey:mogoId adType:AdViewTypeNormalBanner adMoGoViewDelegate:self];
         _adView.frame = CGRectMake(0.0, _currentShowView.height - (KADViewHeight - 10), self.view.width, KADViewHeight - 10);

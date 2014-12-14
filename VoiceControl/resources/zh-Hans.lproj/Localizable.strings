@@ -235,6 +235,8 @@
 
 
 ////////////////////////////////////    1.3.0
+"app_name" = "微录";
+
 "system_setting_auto_recorder" = "开启/关闭 自动录音";
 "system_setting_auto_recorder_desc" = "关闭自动录音，私人定制的计划将不会自动起效";
 
